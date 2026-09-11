@@ -75,7 +75,7 @@ class RpcTests(unittest.TestCase):
 
     def test_malformed_large_and_unterminated_frames_are_rejected(self):
         replies = [b'{"id":"wrong"}\n', b'{"id":"request","id":"request"}\n',
-                   b'{"id":"request"}', b'x' * 1000 + b'\n', b'[]\n']
+                   b'{"id":"request"}', b'x' * 1000 + b'\n', b'[]\n', b'{"id":"request","value":1e999}\n']
         index = [0]
         def handler(_):
             reply = replies[index[0]]

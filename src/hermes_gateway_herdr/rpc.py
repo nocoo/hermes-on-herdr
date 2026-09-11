@@ -15,6 +15,7 @@ import uuid
 from .config import Config, HERDR_VERSION, HERMES_SHA, PLUGIN_ID, private_bytes
 from .errors import GatewayError
 from .identity import capture, hermes_start_matches, same_process
+from .paths import json_object as decode_object
 from .state import check_private
 
 
@@ -42,25 +43,6 @@ def check_peer(connection: socket.socket) -> None:
         uid, _ = connection.getpeereid()
         if uid != os.getuid():
             raise GatewayError("UNSAFE_PEER", "Socket peer belongs to another user")
-
-
-def decode_object(raw: bytes) -> dict:
-    def mapping(pairs):
-        result = {}
-        for key, value in pairs:
-            if key in result:
-                raise ValueError("duplicate key")
-            result[key] = value
-        return result
-
-    try:
-        result = json.loads(raw, object_pairs_hook=mapping,
-                            parse_constant=lambda _: (_ for _ in ()).throw(ValueError("non-finite number")))
-        if not isinstance(result, dict):
-            raise ValueError("object required")
-        return result
-    except (ValueError, UnicodeError) as exc:
-        raise GatewayError("PROTOCOL_ERROR", "Malformed JSON frame") from exc
 
 
 def exchange(path: Path, payload: dict, *, timeout: float = 2, limit: int = 512 * 1024) -> dict:

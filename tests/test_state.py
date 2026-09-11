@@ -82,7 +82,8 @@ with Store(sys.argv[2]) as store:
 
     def test_corrupt_or_future_intent_is_not_replaced(self):
         path = self.path / "intent.json"
-        for raw in ('{"schema":', '{"schema":999}', '{"schema":1,"revision":true,"desired":"running"}'):
+        for raw in ('{"schema":', '{"schema":999}', '{"schema":1,"revision":true,"desired":"running"}',
+                    '{"schema":999,"schema":1}', '{"schema":1,"revision":1e999}'):
             path.write_text(raw)
             with self.store.mutation(), self.assertRaises(GatewayError):
                 self.store.set_intent("pause")

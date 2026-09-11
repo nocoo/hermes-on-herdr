@@ -1,11 +1,9 @@
 """Configuration inspection never imports Hermes or loads another profile's credentials."""
 
 from dataclasses import dataclass
-import json
 import os
 from pathlib import Path
 import re
-import stat
 import subprocess
 import time
 from urllib.parse import parse_qsl, urlsplit
@@ -14,6 +12,7 @@ import yaml
 
 from .errors import GatewayError
 from .identity import owner_key
+from .paths import json_object, private_bytes, trusted_path
 from .state import CONTROL_DIR, check_private
 
 PLUGIN_ID = "nocoo.hermes-gateway"
@@ -21,40 +20,6 @@ HERDR_VERSION = "0.9.0"
 HERMES_SHA = "b7ac3ba1cdf89f94dfe86de27e01358b194f4053"
 PANE_KEYS = ("HERDR_SOCKET_PATH", "HERDR_WORKSPACE_ID", "HERDR_TAB_ID", "HERDR_PANE_ID")
 ID_PATTERN = re.compile(r"[A-Za-z0-9_.:-]{1,160}\Z")
-
-
-def private_bytes(path: Path, limit: int = 1024 * 1024) -> bytes:
-    try:
-        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
-        with os.fdopen(fd, "rb") as stream:
-            check_private(os.fstat(stream.fileno()))
-            raw = stream.read(limit + 1)
-        if len(raw) > limit:
-            raise GatewayError("CONFIG_ERROR", "Configuration exceeds its size limit")
-        return raw
-    except OSError as exc:
-        raise GatewayError("CONFIG_ERROR", "Required private configuration is unavailable") from exc
-
-
-def trusted_path(value: str, *, directory: bool = False) -> Path:
-    """Preserve venv interpreter spelling: resolving its symlink would bypass the venv."""
-    if not isinstance(value, str) or not value or not Path(value).is_absolute() or any(ord(c) < 32 for c in value):
-        raise GatewayError("CONFIG_ERROR", "Paths must be absolute and contain no control characters")
-    path = Path(value)
-    try:
-        resolved = path.resolve(strict=True)
-        st = resolved.stat()
-        if not (stat.S_ISDIR(st.st_mode) if directory else stat.S_ISREG(st.st_mode)):
-            raise GatewayError("UNSAFE_PATH", "Unexpected path type")
-        # Trust the current user and OS-owned ancestors, including symlink targets.
-        for candidate in (path, *path.parents, resolved, *resolved.parents):
-            info = candidate.stat()
-            sticky_dir = stat.S_ISDIR(info.st_mode) and bool(info.st_mode & stat.S_ISVTX)
-            if info.st_uid not in {0, os.getuid()} or (info.st_mode & 0o022 and not sticky_dir):
-                raise GatewayError("UNSAFE_PATH", "Path is writable outside the trusted owner")
-        return path
-    except OSError as exc:
-        raise GatewayError("CONFIG_ERROR", "Configured path is unavailable") from exc
 
 
 @dataclass(frozen=True)
@@ -75,7 +40,7 @@ class Config:
     @classmethod
     def load(cls, path: Path):
         try:
-            raw = json.loads(private_bytes(path, 64 * 1024))
+            raw = json_object(private_bytes(path, 64 * 1024), code="CONFIG_ERROR")
             if not isinstance(raw, dict) or type(raw.get("schema")) is not int or raw["schema"] != 1:
                 raise ValueError("schema")
             expected = {field for field in cls.__dataclass_fields__ if field != "config_dir"}

@@ -5,24 +5,16 @@ import fcntl
 import json
 import os
 from pathlib import Path
-import stat
 import time
 import uuid
 
 from .errors import GatewayError
+from .paths import check_private, json_object
 
 SCHEMA = 1
 CONTROL_DIR = ".herdr-gateway-herdr"
 DATA_FILES = frozenset({"binding.json", "intent.json", "pending.json", "runtime.json", "fuse.json"})
 MAX_STATE_BYTES = 256 * 1024
-
-
-def check_private(st: os.stat_result, *, directory: bool = False, allow_unlinked: bool = False) -> None:
-    expected = 0o700 if directory else 0o600
-    right_type = stat.S_ISDIR(st.st_mode) if directory else stat.S_ISREG(st.st_mode)
-    if (not right_type or st.st_uid != os.getuid() or stat.S_IMODE(st.st_mode) != expected
-            or (not directory and st.st_nlink not in ({0, 1} if allow_unlinked else {1}))):
-        raise GatewayError("UNSAFE_PATH", "Expected a private, current-user-owned resource")
 
 
 def validate_state(name: str, value: object) -> dict:
@@ -199,7 +191,7 @@ class Store:
                 raw = stream.read(MAX_STATE_BYTES + 1)
             if len(raw) > MAX_STATE_BYTES:
                 raise GatewayError("STATE_SCHEMA", "State exceeds the size limit")
-            return validate_state(name, json.loads(raw))
+            return validate_state(name, json_object(raw, code="STATE_SCHEMA"))
         except FileNotFoundError as exc:
             if required:
                 raise GatewayError("SETUP_REQUIRED", "Required state is missing") from exc

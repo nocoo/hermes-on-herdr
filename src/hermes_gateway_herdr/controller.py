@@ -171,7 +171,10 @@ class Controller:
                 notified = False
             if intent["desired"] == "paused":
                 return self._summary(intent, "ACCEPTED", accepted=True, notified=notified)
-        result = self.ensure(env)
+        try:
+            result = self.ensure(env)
+        except GatewayError as exc:
+            return self._summary(intent, "ACCEPTED", accepted=True, code=exc.code)
         result.update(accepted=True)
         return result
 
