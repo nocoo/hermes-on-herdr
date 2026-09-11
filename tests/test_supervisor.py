@@ -336,10 +336,12 @@ class SupervisorTests(unittest.TestCase):
         self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
 
     def test_repeated_failure_fuses_without_overlapping_children(self):
-        self.start({"exits": [1], "exit_after": 0.02})
+        # Keep this crash-budget check independent of the fixture's very short
+        # owner-loss deadlines; dedicated tests exercise owner expiry separately.
+        self.start({"exits": [1], "exit_after": 0.02, "limits": {"rpc": 1, "owner_grace": 3}})
         self.assertEqual(0, self.process.wait(timeout=5))
         self.assertEqual(6, len(json_lines(self.fixture.root / "launches.jsonl")))
-        self.assertEqual("CRASH_LOOP", self.store.read("fuse.json")["reason"])
+        self.assertEqual("CRASH_LOOP", self.store.read("fuse.json")["reason"], self.store.read("runtime.json"))
         self.assert_single()
 
     def test_owner_loss_beyond_grace_stops_without_pausing(self):
