@@ -51,9 +51,21 @@ class IdentityTests(unittest.TestCase):
 
     def test_hermes_fingerprint_units_are_explicit(self):
         identity = capture(os.getpid())
-        self.assertTrue(hermes_start_matches(identity, int(identity["create_time"] * 100)))
+        self.assertTrue(hermes_start_matches(identity, int(round(identity["create_time"] * 100))))
         self.assertFalse(hermes_start_matches(identity, identity["create_time"]))
         self.assertFalse(hermes_start_matches(identity, "2026-09-11T00:00:00Z"))
+
+    def test_hermes_psutil_start_rounding_rejects_adjacent_centiseconds(self):
+        for kind in ["epoch_centiseconds", "linux_ticks"]:
+            for created, expected in [(1234.564, 123456), (1234.566, 123457)]:
+                with self.subTest(kind=kind, created=created):
+                    record = {"create_time": created,
+                              "start_fingerprint": {"kind": kind, "value": "9001"}}
+                    self.assertTrue(hermes_start_matches(record, expected))
+                    self.assertFalse(hermes_start_matches(record, expected - 1))
+                    self.assertFalse(hermes_start_matches(record, expected + 1))
+                    if kind == "linux_ticks":
+                        self.assertTrue(hermes_start_matches(record, 9001))
 
     def test_permission_race_requires_proof_of_disappearance(self):
         proc = psutil.Process(os.getpid())

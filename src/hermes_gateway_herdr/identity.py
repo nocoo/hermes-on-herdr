@@ -67,11 +67,11 @@ def same_process(expected: dict, actual: dict | None = None) -> bool:
 
 
 def hermes_start_matches(record: dict, start_time: object) -> bool:
-    """Hermes may fall back to psutil even on Linux; both units are derived locally."""
+    """Match Hermes' Linux ticks or rounded psutil centiseconds, without a tolerance window."""
     if type(start_time) is not int:
         return False
     fingerprint = record["start_fingerprint"]
-    candidates = {int(record["create_time"] * 100)}
+    candidates = {int(round(record["create_time"] * 100))}
     if fingerprint["kind"] == "linux_ticks":
         candidates.add(int(fingerprint["value"]))
     return start_time in candidates

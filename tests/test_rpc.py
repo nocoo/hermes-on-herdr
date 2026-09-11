@@ -16,8 +16,11 @@ from helpers import Fixture, SocketServer, private_file
 
 
 def gateway_payloads(config, child):
+    fingerprint = child["start_fingerprint"]
+    start = (int(fingerprint["value"]) if fingerprint["kind"] == "linux_ticks"
+             else int(round(child["create_time"] * 100)))
     identity = {"protocol": 1, "kind": "hermes-gateway", "pid": child["pid"],
-                "start_time": int(child["start_fingerprint"]["value"]), "hermes_home": str(config.profile_home),
+                "start_time": start, "hermes_home": str(config.profile_home),
                 "profile": config.profile_id, "supervisor": "external", "code_sha": HERMES_SHA}
     status = dict(identity, answering_pid=child["pid"], answered_at=time.time(), gateway_state="running",
                   platforms={"telegram": {"state": "connected", "writer_pid": child["pid"],
