@@ -1,6 +1,6 @@
 """Responsive hqtui view. Rendering only consumes immutable telemetry snapshots."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import math
 from pathlib import Path
 import sys
@@ -9,7 +9,7 @@ import time
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "vendor" / "hqtui"))
 
 from hqtui import Layout, Panel, ScrollHandlers
-from hqtui.buffer import Attrs, Style
+from hqtui.buffer import Attrs, FrameBuffer, Style
 from hqtui.color import Color
 from hqtui.graphics import PlotOptions
 from hqtui.surface import TextOptions
@@ -145,21 +145,25 @@ class ViewState:
 class DashboardView:
     def __init__(self, state, *, session="default", embedded=False, demo=False):
         self.state, self.session, self.embedded, self.demo = state, text(session, 80), embedded, demo
+        self._cache = None
 
     def has_mascot(self, width, height):
         return width >= 100 and height >= 34 and not self.state.help and not self.state.quiet
 
-    def _header(self, ui, healthy, count, pose):
+    def _mascot(self, surface, pose):
+        theme = surface.theme
+        wing = WINGS[pose if self.state.animation else 0]
+        for y, (left, head) in enumerate(zip(wing, HELMET)):
+            surface.text(2, y, left, TextOptions(fg=theme.title))
+            surface.text(9, y, head, TextOptions(fg=theme.accent, attrs=Attrs.BOLD))
+            surface.text(16, y, left[::-1].translate(MIRROR), TextOptions(fg=theme.title))
+
+    def _header(self, ui, healthy, count):
         state, theme = self.state, ui.theme
         live = "DEMO" if self.demo else f"LIVE / {state.interval}s"
         if self.has_mascot(ui.width, ui.height):
             def banner(s):
                 s.fill(Style(bg=theme.surface))
-                wing = WINGS[pose if state.animation else 0]
-                for y, (left, head) in enumerate(zip(wing, HELMET)):
-                    s.text(2, y, left, TextOptions(fg=theme.title))
-                    s.text(9, y, head, TextOptions(fg=theme.accent, attrs=Attrs.BOLD))
-                    s.text(16, y, left[::-1].translate(MIRROR), TextOptions(fg=theme.title))
                 s.text(28, 0, "T A L A R I A", TextOptions(fg=theme.accent, attrs=Attrs.BOLD))
                 s.text(28, 1, "HERMES on HERDR", TextOptions(fg=theme.title))
                 s.text(28, 3, f"{healthy}/{count} gateways online", TextOptions(fg=theme.foreground))
@@ -181,6 +185,25 @@ class DashboardView:
 
     def render(self, ui, snapshot, *, now=None, pose=0):
         now = time.time() if now is None else now
+        key = (replace(self.state), ui.width, ui.height, ui.theme, ui.capabilities)
+        cached = self._cache
+        if (cached is None or cached["snapshot"] is not snapshot or cached["key"] != key
+                or not 0 <= now - cached["at"] < self.state.interval):
+            self._content(ui, snapshot, now)
+            ui.flush()
+            buffer = FrameBuffer(ui.width, ui.height)
+            buffer.copy_from(ui.surface.buffer)
+            self._cache = {"snapshot": snapshot, "key": key, "at": now,
+                           "buffer": buffer, "hits": tuple(ui.ctx.hits)}
+        else:
+            # Copy one native framebuffer instead of rebuilding every graph and
+            # profile row for a wingbeat. Preserve the table's click/scroll regions.
+            ui.surface.buffer.copy_from(cached["buffer"])
+            ui.ctx.hits.extend(cached["hits"])
+        if self.has_mascot(ui.width, ui.height):
+            self._mascot(ui.surface, pose)
+
+    def _content(self, ui, snapshot, now):
         state = self.state
         rows = state.rows(snapshot)
         owned = next((p for p in snapshot.profiles if p.managed), None)
@@ -192,7 +215,7 @@ class DashboardView:
         width, height, theme = ui.width, ui.height, ui.theme
         healthy = sum(state_of(p, now, state.interval, count) in {"READY", "RUNNING", "SHARED"} for p in snapshot.profiles)
 
-        self._header(ui, healthy, count, pose)
+        self._header(ui, healthy, count)
         height -= 4 if self.has_mascot(width, height) else 0
         if snapshot.error:
             ui.text(f" Monitoring unavailable: {text(snapshot.error)}", w.TextStyle(fg=theme.warning), Layout(size=1))

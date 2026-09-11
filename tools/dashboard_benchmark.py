@@ -17,7 +17,7 @@ sys.path[:0] = [str(ROOT / "src"), str(ROOT / "tests")]
 import psutil
 
 from hermes_gateway_herdr.dashboard_demo import demo_snapshot
-from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, theme_for
+from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, WING_BEAT, theme_for
 from hermes_gateway_herdr.identity import capture
 from hqtui import render_to_screen
 from helpers import SocketServer, Terminal, wait_until
@@ -93,13 +93,16 @@ def embedded(profiles, width, height, seconds):
         return result
 
 
-def render_cost(count, width, height):
+def render_cost(count, width, height, *, animation=False):
     snapshot = demo_snapshot(count)
     view = DashboardView(ViewState(selected="cherry"), demo=True)
     durations = []
-    for _ in range(32):
+    for index in range(32):
+        if not animation:
+            view = DashboardView(ViewState(selected="cherry"), demo=True)
         started = time.perf_counter()
-        render_to_screen(width, height, theme_for("herdr"), lambda ui: view.render(ui, snapshot, now=snapshot.updated))
+        render_to_screen(width, height, theme_for("herdr"),
+                         lambda ui: view.render(ui, snapshot, now=snapshot.updated, pose=WING_BEAT[index % len(WING_BEAT)]))
         durations.append((time.perf_counter() - started) * 1000)
     values = sorted(durations[1:])
     return {"profiles": count, "terminal": [width, height], "median_ms": round(statistics.median(values), 3),
@@ -121,8 +124,10 @@ def main():
               "python": platform.python_version(), "hqtui_commit": "d9a841494bab910403737a8c791d6d96ef52e878",
               "scope": "Actual embedded TUI process, real PTY, local fixture RPC and process metrics; backend fixtures excluded.",
               "fixture_note": "One supervised fake Gateway; other profile sockets are served by the benchmark process. No installed services are used.",
+              "animation": "Default wingbeats enabled; unchanged telemetry frames are reused.",
               "embedded": [embedded(count, args.width, args.height, args.seconds) for count in args.profiles],
-              "render_only": [render_cost(count, args.width, args.height) for count in (1, 2, 50, 1000)]}
+              "render_only": [render_cost(count, args.width, args.height) for count in (1, 2, 50, 1000)],
+              "animation_only": [render_cost(count, args.width, args.height, animation=True) for count in (1, 2, 50, 1000)]}
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(f"Saved offline benchmark: {args.output}", flush=True)
 

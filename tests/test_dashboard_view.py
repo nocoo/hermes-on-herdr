@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 from unittest import TestCase
+from unittest.mock import patch
 
 from hermes_gateway_herdr.dashboard_demo import demo_snapshot
 from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, mascot_pose, theme_for
@@ -45,7 +46,8 @@ class DashboardViewTests(TestCase):
 
     def test_layouts_remain_usable_at_narrow_and_short_terminal_sizes(self):
         for count in (1, 2, 25):
-            for width, height in ((24, 10), (40, 16), (64, 20), (80, 24), (100, 30), (160, 44)):
+            for width, height in ((24, 10), (40, 16), (64, 20), (80, 24), (99, 34),
+                                  (100, 30), (100, 33), (100, 34), (131, 64), (160, 44)):
                 with self.subTest(count=count, width=width, height=height):
                     screen = self.render(count, width, height)
                     self.assertEqual(len(screen.text().split("\n")), height)
@@ -170,3 +172,41 @@ class DashboardViewTests(TestCase):
         self.assertEqual((0, 10), mascot_pose(2))
         self.assertEqual((0, 4), mascot_pose(8))
         self.assertEqual(mascot_pose(0.25), mascot_pose(1200.25))
+
+    def test_animation_reuses_the_view_and_preserves_clicks_themes_and_resizing(self):
+        data = demo_snapshot(50)
+        state = ViewState(selected="cherry")
+        view = DashboardView(state, demo=True)
+        def draw(width=160, height=44, pose=0):
+            return render_to_screen(width, height, theme_for(state.theme),
+                                    lambda ui: view.render(ui, data, now=data.updated, pose=pose))
+        draw()
+        with patch.object(view, "_content", side_effect=AssertionError("Rebuilt profiles during a wingbeat")):
+            cached = draw(pose=1)
+        table = next(hit for hit in cached.regions if hit.on_click)
+        table.on_click(1, 2, "left")
+        self.assertNotEqual("cherry", state.selected)
+        self.assertTrue(draw().contains("INSPECT / " + state.selected))
+        for width, height, theme in ((80, 24, "nord"), (100, 34, "monochrome"), (160, 44, "herdr")):
+            state.theme = theme
+            actual = draw(width, height, pose=2)
+            fresh = self.render(50, width, height, state=state, data=data, pose=2)
+            for field in ("chars", "fg", "bg", "attrs"):
+                self.assertEqual(getattr(fresh.buffer, field), getattr(actual.buffer, field))
+
+    def test_cached_views_refresh_new_telemetry_and_expire_old_status(self):
+        data = demo_snapshot(1)
+        view = DashboardView(ViewState(), demo=True)
+        def draw(snapshot, now):
+            return render_to_screen(160, 44, theme_for("herdr"),
+                                    lambda ui: view.render(ui, snapshot, now=now))
+        draw(data, data.updated)
+        changed = replace(data, profiles=(replace(data.profiles[0], state="DEGRADED", rss=42 * 1048576),))
+        current = draw(changed, data.updated)
+        self.assertTrue(current.contains("DEGRADED"))
+        self.assertTrue(current.contains("42.0 MiB"))
+        expired = draw(changed, data.updated + 120)
+        self.assertTrue(expired.contains("STALE"))
+        self.assertFalse(expired.contains("discord connected"))
+        self.assertFalse(expired.contains("42.0 MiB"))
+        self.assertTrue(draw(changed, data.updated).contains("DEGRADED"))
