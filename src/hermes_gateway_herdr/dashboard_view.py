@@ -9,7 +9,7 @@ import time
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "vendor" / "hqtui"))
 
 from hqtui import Layout, Panel, ScrollHandlers
-from hqtui.buffer import Attrs, FrameBuffer, Style
+from hqtui.buffer import FrameBuffer
 from hqtui.color import Color
 from hqtui.graphics import PlotOptions
 from hqtui.surface import TextOptions
@@ -23,14 +23,25 @@ THEMES = ("herdr", "nord", "high-contrast", "monochrome")
 LAYOUTS = ("auto", "cards", "table")
 INTERVALS = (2, 5, 10)
 MOTION_FPS = 4
-WING_BEAT = (0, 1, 0, 2, 0, 1, 0, 2, 0)
-HELMET = (" .---. ", "/_____\\", "| - - |", "|  >  |", " \\_-_/ ")
-WINGS = (
-    ("       ", "____   ", "\\___`--", " `-----", "       "),
-    ("\\\\\\    ", " \\\\\\   ", "  \\\\\\__", "   `---", "       "),
-    ("       ", "       ", "    .--", " __/---", " \\\\\\   "),
+GLOW_CYCLE = (0, 1, 1, 2, 2, 2, 1, 1, 0)
+CADUCEUS = (
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⣀⣀⠀⢀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⣇⠸⣿⣿⠇⣸⣿⣿⣷⣦⣄⡀⠀⠀⠀⠀⠀⠀",
+    "⠀⢀⣠⣴⣶⠿⠋⣩⡿⣿⡿⠻⣿⡇⢠⡄⢸⣿⠟⢿⣿⢿⣍⠙⠿⣶⣦⣄⡀⠀",
+    "⠀⠀⠉⠉⠁⠶⠟⠋⠀⠉⠀⢀⣈⣁⡈⢁⣈⣁⡀⠀⠉⠀⠙⠻⠶⠈⠉⠉⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⡿⠛⢁⡈⠛⢿⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⣿⣦⣤⣈⠁⢠⣴⣿⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠻⢿⣿⣦⡉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢷⣦⣈⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣴⠦⠈⠙⠿⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣤⡈⠁⢤⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠑⢶⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠁⢰⡆⠈⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⠈⣡⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
 )
-MIRROR = str.maketrans("/\\`'", "\\/'`")
+ART_WIDTH = max(map(len, CADUCEUS))
 HERDR_THEME = define_theme(name="herdr", background=Color.hex(0x080C12), surface=Color.hex(0x0C131D),
                            muted=Color.hex(0x8092A6), border=Color.hex(0x263549),
                            title=Color.hex(0x7BDDE8), accent=Color.hex(0xE9BA73),
@@ -38,11 +49,11 @@ HERDR_THEME = define_theme(name="herdr", background=Color.hex(0x080C12), surface
 
 
 def mascot_pose(elapsed):
-    """Two short wingbeats, then ten seconds at rest; return the next change deadline."""
+    """A gentle two-second glow, then ten seconds at rest; no glyphs move."""
     position = max(0, elapsed) % 12
     index = int(position * MOTION_FPS)
-    if index < len(WING_BEAT) - 1:
-        return WING_BEAT[index], (index + 1) / MOTION_FPS - position
+    if index < len(GLOW_CYCLE) - 1:
+        return GLOW_CYCLE[index], (index + 1) / MOTION_FPS - position
     return 0, 12 - position
 
 
@@ -146,42 +157,27 @@ class DashboardView:
     def __init__(self, state, *, session="default", embedded=False, demo=False):
         self.state, self.session, self.embedded, self.demo = state, text(session, 80), embedded, demo
         self._cache = None
+        self._art_rect = None
 
     def has_mascot(self, width, height):
         return width >= 100 and height >= 34 and not self.state.help and not self.state.quiet
 
     def _mascot(self, surface, pose):
         theme = surface.theme
-        wing = WINGS[pose if self.state.animation else 0]
-        for y, (left, head) in enumerate(zip(wing, HELMET)):
-            surface.text(2, y, left, TextOptions(fg=theme.title))
-            surface.text(9, y, head, TextOptions(fg=theme.accent, attrs=Attrs.BOLD))
-            surface.text(16, y, left[::-1].translate(MIRROR), TextOptions(fg=theme.title))
+        pose = pose if self.state.animation else 0
+        color = theme.accent.mix(theme.title, (0, .12, .24)[pose])
+        x = (surface.width - ART_WIDTH) // 2
+        for y, line in enumerate(CADUCEUS):
+            surface.text(x, y, line, TextOptions(fg=color))
 
-    def _header(self, ui, healthy, count):
-        state, theme = self.state, ui.theme
-        live = "DEMO" if self.demo else f"LIVE / {state.interval}s"
-        if self.has_mascot(ui.width, ui.height):
-            def banner(s):
-                s.fill(Style(bg=theme.surface))
-                s.text(28, 0, "T A L A R I A", TextOptions(fg=theme.accent, attrs=Attrs.BOLD))
-                s.text(28, 1, "HERMES on HERDR", TextOptions(fg=theme.title))
-                s.text(28, 3, f"{healthy}/{count} gateways online", TextOptions(fg=theme.foreground))
-                s.text(28, 4, f"{self.session} / local profiles",
-                       TextOptions(fg=theme.muted, max_width=s.width - 50))
-                s.text(s.width - 18, 0, live, TextOptions(fg=theme.warning if self.demo else theme.success))
-                s.text(s.width - 18, 3, "a Motion " + ("on" if state.animation else "off"),
-                       TextOptions(fg=theme.muted))
-            ui.draw(banner, Layout(size=5, background=theme.surface))
-            return
-
-        def header(r):
-            r.text(" TALARIA", w.TextStyle(fg=theme.accent, bold=True), Layout(size=10))
-            if ui.width >= 76:
-                r.text("HERMES on HERDR", w.TextStyle(fg=theme.title), Layout(size=17))
-            r.text(f"{healthy}/{count} online", w.TextStyle(fg=theme.muted))
-            r.text(live + " ", w.TextStyle(fg=theme.warning if self.demo else theme.success, align="right"), Layout(size=12))
-        ui.row(Layout(size=1, background=theme.surface), header)
+    def _art(self, ui):
+        def region(surface):
+            # Save the resolved region, not a header coordinate. Cached frames
+            # can recolor just the artwork without rebuilding profile widgets.
+            self._art_rect = surface.rect
+        ui.panel(Panel(title=" hermes on herdr ", title_color=ui.theme.accent,
+                       size=len(CADUCEUS) + 2, background=ui.theme.surface),
+                 lambda p: p.draw(region))
 
     def render(self, ui, snapshot, *, now=None, pose=0):
         now = time.time() if now is None else now
@@ -189,6 +185,7 @@ class DashboardView:
         cached = self._cache
         if (cached is None or cached["snapshot"] is not snapshot or cached["key"] != key
                 or not 0 <= now - cached["at"] < self.state.interval):
+            self._art_rect = None
             self._content(ui, snapshot, now)
             ui.flush()
             buffer = FrameBuffer(ui.width, ui.height)
@@ -197,11 +194,11 @@ class DashboardView:
                            "buffer": buffer, "hits": tuple(ui.ctx.hits)}
         else:
             # Copy one native framebuffer instead of rebuilding every graph and
-            # profile row for a wingbeat. Preserve the table's click/scroll regions.
+            # profile row for a glow frame. Preserve the table's click/scroll regions.
             ui.surface.buffer.copy_from(cached["buffer"])
             ui.ctx.hits.extend(cached["hits"])
-        if self.has_mascot(ui.width, ui.height):
-            self._mascot(ui.surface, pose)
+        if self._art_rect is not None:
+            self._mascot(ui.surface.region(self._art_rect), pose)
 
     def _content(self, ui, snapshot, now):
         state = self.state
@@ -213,12 +210,10 @@ class DashboardView:
         count = len(snapshot.profiles)
         self._now, self._count = now, count
         width, height, theme = ui.width, ui.height, ui.theme
-        healthy = sum(state_of(p, now, state.interval, count) in {"READY", "RUNNING", "SHARED"} for p in snapshot.profiles)
-
-        self._header(ui, healthy, count)
-        height -= 4 if self.has_mascot(width, height) else 0
+        self._healthy = sum(state_of(p, now, state.interval, count) in {"READY", "RUNNING", "SHARED"} for p in snapshot.profiles)
         if snapshot.error:
             ui.text(f" Monitoring unavailable: {text(snapshot.error)}", w.TextStyle(fg=theme.warning), Layout(size=1))
+            height -= 1
         if height < 10 or width < 36:
             ui.text(f"{text(owned.name)} [HERDR] {self._status(owned)}")
             ui.label(f"{count} profiles / expand pane for details")
@@ -231,52 +226,58 @@ class DashboardView:
             ui.spacer()
             self._footer(ui)
             return
-        ui.spacer(1)
         compact = width < 100 or height < 30
-        hero_height = 8 if compact else min(17, max(12, height // 2 - 2))
-        if (count == 1 and not compact and not state.help and state.layout != "table"
-                and not state.filter and not state.filtering):
-            def single(r):
-                self._profile_panel(r, owned, hero=True, size="2fr")
-                def side(c):
-                    if state.system:
-                        self._system(c, snapshot, size=min(17, height // 2 - 2))
-                        c.spacer(1)
-                    c.panel(Panel(title=" ACTIVITY ", background=c.theme.surface), lambda p: self._activity_content(p, snapshot))
-                r.column(Layout(size="1fr"), side)
-            ui.row(Layout(gap=1), single)
-            ui.spacer(1)
-            self._footer(ui)
-            return
+        mode = "cards" if state.layout == "cards" or (state.layout == "auto" and count <= 2) else "table"
+        if compact:
+            mode = "table"
         if state.help:
             self._help(ui)
         else:
-            def top(r):
-                self._profile_panel(r, owned, hero=True, size="2fr" if state.system and not compact else None)
-                if state.system and not compact:
-                    self._system(r, snapshot)
-            ui.row(Layout(size=min(hero_height, max(5, height - 9)), gap=1), top)
-            ui.spacer(1)
-            if state.filter or state.filtering:
-                ui.text(f" Filter: /{text(state.filter, 64)}{'_' if state.filtering else ''}  ({len(rows)}/{count})",
-                        w.TextStyle(fg=theme.accent))
-            mode = "cards" if state.layout == "cards" or (state.layout == "auto" and count <= 2) else "table"
-            if compact:
-                mode = "table"
-            if mode == "cards" and rows:
-                self._cards(ui, rows, selected, snapshot)
-            else:
-                def bottom(r):
-                    self._table(r, rows, selected, snapshot, size="3fr" if not compact else None)
-                    if not compact:
-                        def details(p):
-                            self._profile_content(p, selected, graphs=False)
-                            if p.height >= 12:
-                                p.spacer(1)
-                                self._activity_content(p, snapshot)
-                        r.panel(Panel(title=" INSPECT / " + text(selected.name), size="2fr",
-                                      background=theme.surface), details)
-                ui.row(Layout(gap=1), bottom)
+            def profiles(c):
+                single = count == 1 and mode == "cards" and not state.filter and not state.filtering
+                hero_height = min(8 if compact else 17, max(5, c.height - 8))
+                if mode == "cards" and count <= 2:
+                    hero_height = max(hero_height, (c.height - 1) * 11 // 20)
+                self._profile_panel(c, owned, hero=True, size=None if single else hero_height)
+                if single:
+                    return
+                c.spacer(1)
+                if state.filter or state.filtering:
+                    c.text(f" Filter: /{text(state.filter, 64)}{'_' if state.filtering else ''}  ({len(rows)}/{count})",
+                           w.TextStyle(fg=theme.accent))
+                if mode == "cards" and rows:
+                    self._cards(c, rows, selected, snapshot)
+                else:
+                    self._table(c, rows, selected, snapshot)
+
+            def side(c):
+                remaining = c.height
+                if self.has_mascot(width, ui.height):
+                    self._art(c)
+                    c.spacer(1)
+                    remaining -= len(CADUCEUS) + 3
+                if state.system:
+                    system_height = min(17, max(9, c.height // 3))
+                    if remaining < system_height + 8:
+                        self._system(c, snapshot, size=None)
+                        return
+                    self._system(c, snapshot, size=system_height)
+                    c.spacer(1)
+                if mode == "table":
+                    def details(p):
+                        self._profile_content(p, selected)
+                        if p.height >= 14:
+                            p.spacer(1)
+                            self._activity_content(p, snapshot)
+                    c.panel(Panel(title=" INSPECT / " + text(selected.name), background=theme.surface), details)
+                else:
+                    c.panel(Panel(title=" ACTIVITY ", background=theme.surface), lambda p: self._activity_content(p, snapshot))
+
+            def body(r):
+                r.column(Layout(), profiles)
+                if not compact:
+                    r.column(Layout(size=max(ART_WIDTH + 4, width // 3)), side)
+            ui.row(Layout(gap=1), body)
             if compact and state.system and height >= 24:
                 ui.text(f" Host CPU {percent(snapshot.host_cpu)}  RAM {amount(snapshot.host_used)} / {amount(snapshot.host_total)}",
                         w.TextStyle(fg=theme.muted))
@@ -369,10 +370,9 @@ class DashboardView:
         visible = others[(index // 2) * 2:(index // 2) * 2 + 2]
         def cards(r):
             for profile in visible:
-                self._profile_panel(r, profile, size="2fr" if len(visible) == 1 else None)
-            if len(visible) == 1:
-                r.panel(Panel(title=" ACTIVITY ", size="1fr", background=r.theme.surface), lambda p: self._activity_content(p, snapshot))
-        ui.row(Layout(gap=1), cards)
+                self._profile_panel(r, profile)
+        container = ui.row if ui.width >= 110 else ui.column
+        container(Layout(gap=1), cards)
 
     def _table(self, ui, rows, selected, snapshot, *, size=None):
         def content(p):
@@ -421,23 +421,32 @@ class DashboardView:
         p.label("Metadata only / message contents stay private")
 
     def _footer(self, ui):
-        items = [w.StatusItem("Help", "?"), w.StatusItem("Layout", "l"), w.StatusItem("Theme", "t"),
-                 w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/"),
-                 w.StatusItem("Hide" if self.embedded else "Quit", "q")]
-        if ui.width >= 110:
-            items[3:3] = [w.StatusItem("Motion", "a")]
-        if ui.width >= 132:
-            items[4:4] = [w.StatusItem("System", "s"), w.StatusItem("Rate", "+/-")]
-        ui.status_bar(w.StatusBarOptions(items=items, right=[w.StatusItem(f"{self.state.layout} / {self.state.interval}s")]))
+        items = [w.StatusItem("Help", "?"), w.StatusItem("Hide" if self.embedded else "Quit", "q")]
+        if ui.width >= 60:
+            items += [w.StatusItem("Layout", "l"), w.StatusItem("Theme", "t")]
+        if ui.width >= 100:
+            items += [w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/")]
+        if ui.width >= 120:
+            items += [w.StatusItem("Motion " + ("on" if self.state.animation else "off"), "a")]
+        if ui.width >= 150:
+            items += [w.StatusItem("System", "s"), w.StatusItem("Rate", "+/-")]
+        summary = f"{'DEMO' if self.demo else 'LIVE'} {self._healthy}/{self._count} online"
+        if ui.width >= 100:
+            summary = f"{self.state.layout} / {self.state.interval}s  " + summary
+        def footer(r):
+            r.status_bar(w.StatusBarOptions(items=items))
+            r.text(summary + " ", w.TextStyle(fg=r.theme.warning if self.demo else r.theme.muted, align="right"),
+                   Layout(size=len(summary) + 1, background=r.theme.surface))
+        ui.row(Layout(size=1), footer)
 
     def _help(self, ui):
         def content(p):
-            p.heading("TALARIA / KEYBOARD")
+            p.heading("hermes on herdr / KEYBOARD")
             for line in ("j / k, arrows     Select a profile", "PgUp / PgDn       Move through a larger fleet",
                          "Home / End        First / last profile", "/, then Enter     Filter profile names; Esc clears",
                          "l                 Layout: auto / cards / table", "t                 Theme: herdr / nord / high-contrast / monochrome",
                          "s                 Toggle lightweight system sampling", "+ / -             Sample faster / slower: 2s / 5s / 10s",
-                         "a                 Toggle the Hermes wing animation",
+                         "a                 Toggle the caduceus glow",
                          "q                 Hide / show this view" if self.embedded else "q / Ctrl+C        Close the monitor",
                          "Ctrl+C            Pause the managed Gateway" if self.embedded else "",
                          "", "The pinned profile belongs to Herdr. Other profiles are observed only.",

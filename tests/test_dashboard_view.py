@@ -6,7 +6,7 @@ from unittest import TestCase
 from unittest.mock import patch
 
 from hermes_gateway_herdr.dashboard_demo import demo_snapshot
-from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, mascot_pose, theme_for
+from hermes_gateway_herdr.dashboard_view import CADUCEUS, DashboardView, ViewState, mascot_pose, theme_for
 from hqtui import render_to_screen
 from hqtui.input import KeyEvent
 
@@ -88,7 +88,7 @@ class DashboardViewTests(TestCase):
         data = demo_snapshot(2)
         screen = self.render(data=data, now=data.updated + 120)
         self.assertTrue(screen.contains("STALE"))
-        self.assertTrue(screen.contains("0/2 gateways online"))
+        self.assertTrue(screen.contains("0/2 online"))
         self.assertFalse(screen.contains("discord connected"))
         self.assertFalse(screen.contains("149.3 MiB"))
 
@@ -119,7 +119,7 @@ class DashboardViewTests(TestCase):
     def test_empty_filter_quiet_help_and_unavailable_states_have_clear_output(self):
         for state, expected in ((ViewState(filter="no-match"), "No matching profiles"),
                                 (ViewState(quiet=True), "supervision continues"),
-                                (ViewState(help=True), "TALARIA / KEYBOARD")):
+                                (ViewState(help=True), "hermes on herdr / KEYBOARD")):
             self.assertTrue(self.render(20, state=state).contains(expected))
         data = demo_snapshot(1)
         bad = replace(data.profiles[0], state="UNKNOWN", observed=data.updated, cpu=None, rss=None,
@@ -132,24 +132,41 @@ class DashboardViewTests(TestCase):
         self.assertTrue(self.render().contains("DEMO"))
         narrow = self.render(width=80, height=24, embedded=True)
         self.assertTrue(narrow.contains("Hide"))
-        self.assertGreater(narrow.find("DEMO")[0], 70)
+        self.assertEqual(narrow.find("DEMO")[1], narrow.height - 1)
         standalone = self.render(state=ViewState(help=True))
         embedded = self.render(state=ViewState(help=True), embedded=True)
         self.assertTrue(standalone.contains("Close the monitor"))
         self.assertTrue(embedded.contains("Pause the managed Gateway"))
 
-    def test_wing_animation_only_changes_its_small_ascii_region(self):
+    def test_caduceus_is_intact_above_system_without_a_separate_header(self):
+        for count in (1, 2, 25):
+            for width, height in ((100, 34), (131, 64), (160, 44)):
+                with self.subTest(count=count, width=width, height=height):
+                    screen = self.render(count, width, height)
+                    self.assertEqual(screen.find("HERDR MANAGED")[1], 0)
+                    self.assertEqual(screen.find("hermes on herdr")[1], 0)
+                    x, y = screen.find(CADUCEUS[2])
+                    self.assertGreater(x, width // 2)
+                    for offset, line in enumerate(CADUCEUS):
+                        actual = "".join(screen.cell(x + i, y - 2 + offset).char for i in range(len(line)))
+                        self.assertEqual(line, actual)
+                    self.assertGreater(screen.find("SYSTEM")[1], y - 2 + len(CADUCEUS))
+                    self.assertFalse(screen.contains("TALARIA"))
+
+    def test_animation_changes_only_art_colors_and_preserves_every_glyph(self):
         data = demo_snapshot(2)
         still = self.render(data=data)
-        self.assertTrue(still.contains("HERMES on HERDR"))
+        self.assertTrue(still.contains("hermes on herdr"))
+        x0, y0 = still.find(CADUCEUS[2])
         for pose in (1, 2):
             animated = self.render(data=data, pose=pose)
             changed = [(x, y) for y in range(still.height) for x in range(still.width)
                        if still.cell(x, y) != animated.cell(x, y)]
             self.assertGreater(len(changed), 0)
-            self.assertLess(len(changed), 70)
-            self.assertTrue(all(2 <= x < 23 and y < 5 for x, y in changed))
-            self.assertTrue(all(animated.cell(x, y).char.isascii() for x, y in changed))
+            self.assertLessEqual(len(changed), sum(map(len, CADUCEUS)))
+            self.assertTrue(all(x0 <= x < x0 + len(CADUCEUS[2]) and y0 - 2 <= y < y0 - 2 + len(CADUCEUS)
+                                for x, y in changed))
+            self.assertEqual(still.text(), animated.text())
         for width, height in ((80, 24), (160, 30)):
             self.assertEqual(self.render(width=width, height=height, data=data).text(),
                              self.render(width=width, height=height, data=data, pose=1).text())
@@ -159,11 +176,11 @@ class DashboardViewTests(TestCase):
         state = ViewState()
         state.key(KeyEvent("a", "a"), data)
         self.assertFalse(state.animation)
-        self.assertEqual(self.render(state=state, data=data).text(),
-                         self.render(state=state, data=data, pose=1).text())
+        self.assertEqual(self.render(state=state, data=data).buffer.fg,
+                         self.render(state=state, data=data, pose=1).buffer.fg)
         self.assertTrue(self.render(state=state).contains("Motion off"))
         state.help = True
-        self.assertTrue(self.render(state=state).contains("Toggle the Hermes wing animation"))
+        self.assertTrue(self.render(state=state).contains("Toggle the caduceus glow"))
 
     def test_animation_sleeps_through_its_rest_and_repeats_without_drift(self):
         self.assertEqual((0, 0.25), mascot_pose(0))
@@ -181,7 +198,7 @@ class DashboardViewTests(TestCase):
             return render_to_screen(width, height, theme_for(state.theme),
                                     lambda ui: view.render(ui, data, now=data.updated, pose=pose))
         draw()
-        with patch.object(view, "_content", side_effect=AssertionError("Rebuilt profiles during a wingbeat")):
+        with patch.object(view, "_content", side_effect=AssertionError("Rebuilt profiles during a glow frame")):
             cached = draw(pose=1)
         table = next(hit for hit in cached.regions if hit.on_click)
         table.on_click(1, 2, "left")

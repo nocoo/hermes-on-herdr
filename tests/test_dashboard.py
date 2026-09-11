@@ -180,7 +180,7 @@ class DashboardTerminalTests(unittest.TestCase):
 
     def test_filter_q_is_text_and_standalone_quit_restores_the_terminal(self):
         self.start()
-        self.expect("HERMES")
+        self.expect("HERDR MANAGED")
         self.terminal.send(b"/quiet\r")
         self.expect("No matching profiles")
         self.assertIsNone(self.process.poll())
@@ -191,7 +191,7 @@ class DashboardTerminalTests(unittest.TestCase):
 
     def test_real_keyboard_preferences_resize_and_help(self):
         self.start()
-        self.expect("HERMES")
+        self.expect("HERDR MANAGED")
         wait_until(lambda: b"\x1b[?1003l\x1b[?1002l\x1b[?1000h\x1b[?1006h" in self.terminal.read())
         self.terminal.send(b"llts--")
         path = self.config.config_dir / "dashboard.json"
@@ -206,7 +206,7 @@ class DashboardTerminalTests(unittest.TestCase):
 
     def test_input_flood_cannot_accelerate_profile_sampling(self):
         self.start()
-        self.expect("HERMES")
+        self.expect("HERDR MANAGED")
         wait_until(lambda: self.samples())
         deadline = time.monotonic() + 2.5
         while time.monotonic() < deadline:
@@ -222,7 +222,7 @@ class DashboardTerminalTests(unittest.TestCase):
 
     def test_focus_loss_slows_sampling_and_focus_return_resumes_it(self):
         self.start(mode="motion")
-        self.expect("HERMES")
+        self.expect("HERDR MANAGED")
         wait_until(lambda: self.samples())
         self.terminal.send(b"\x1b[O")
         time.sleep(0.4)
@@ -238,7 +238,7 @@ class DashboardTerminalTests(unittest.TestCase):
         path = self.config.config_dir / "dashboard.json"
         private_file(path, json.dumps(dashboard.preferences(ViewState(interval=10))))
         self.start(mode="motion")
-        self.expect("HERMES")
+        self.expect("HERDR MANAGED")
         wait_until(lambda: len(self.frames()) >= 5, timeout=3)
         self.assertEqual(1, len(self.samples()))
         self.terminal.send(b"a")
@@ -254,7 +254,7 @@ class DashboardTerminalTests(unittest.TestCase):
 
     def test_collector_exception_is_visible_and_does_not_crash_the_view(self):
         self.start(mode="error")
-        self.expect("HERMES")
+        self.expect("HERDR MANAGED")
         self.expect("Monitoring unavailable")
         self.expect("COLLECTOR_UNAVAILABLE")
         self.assertIsNone(self.process.poll())
@@ -266,7 +266,7 @@ class DashboardTerminalTests(unittest.TestCase):
         self.addCleanup(child.close)
         self.start(parent=child)
         child.close()
-        self.expect("HERMES")
+        self.expect("HERDR MANAGED")
         self.terminal.send(b"q")
         self.expect("Dashboard hidden")
         parent.settimeout(0.05)

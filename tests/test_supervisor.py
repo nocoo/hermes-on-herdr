@@ -140,7 +140,7 @@ class SupervisorTests(unittest.TestCase):
         self.addCleanup(terminal.close)
         self.start(terminal=terminal)
         child = self.wait_child()
-        wait_until(lambda: terminal.contains("HERMES"))
+        wait_until(lambda: terminal.contains("HERDR MANAGED"))
         wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
         terminal.send(b"q")
         wait_until(lambda: terminal.contains("Dashboard hidden"))
@@ -160,7 +160,7 @@ class SupervisorTests(unittest.TestCase):
         self.addCleanup(terminal.close)
         self.start(terminal=terminal)
         child = self.wait_child()
-        wait_until(lambda: terminal.contains("HERMES"))
+        wait_until(lambda: terminal.contains("HERDR MANAGED"))
         wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
         # Inspect only children of this fixture's supervisor, never the host process table.
         renderers = [p for p in psutil.Process(self.process.pid).children() if p.pid != child["pid"]]

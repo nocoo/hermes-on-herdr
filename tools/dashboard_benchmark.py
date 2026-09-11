@@ -17,7 +17,7 @@ sys.path[:0] = [str(ROOT / "src"), str(ROOT / "tests")]
 import psutil
 
 from hermes_gateway_herdr.dashboard_demo import demo_snapshot
-from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, WING_BEAT, theme_for
+from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, GLOW_CYCLE, theme_for
 from hermes_gateway_herdr.identity import capture
 from hqtui import render_to_screen
 from helpers import SocketServer, Terminal, wait_until
@@ -69,7 +69,7 @@ def embedded(profiles, width, height, seconds):
             servers.append(server)
         case.start({"limits": {"poll": 0.05, "probe": 2, "ready": 5, "owner_grace": 3}}, terminal=terminal)
         child = case.wait_child()
-        wait_until(lambda: terminal.contains("HERMES") and case.store.read("runtime.json")["state"] == "READY", timeout=8)
+        wait_until(lambda: terminal.contains("HERDR MANAGED") and case.store.read("runtime.json")["state"] == "READY", timeout=8)
         renderers = [p for p in psutil.Process(case.process.pid).children() if p.pid != child["pid"]]
         if len(renderers) != 1:
             raise RuntimeError("Expected exactly one isolated renderer")
@@ -102,7 +102,7 @@ def render_cost(count, width, height, *, animation=False):
             view = DashboardView(ViewState(selected="cherry"), demo=True)
         started = time.perf_counter()
         render_to_screen(width, height, theme_for("herdr"),
-                         lambda ui: view.render(ui, snapshot, now=snapshot.updated, pose=WING_BEAT[index % len(WING_BEAT)]))
+                         lambda ui: view.render(ui, snapshot, now=snapshot.updated, pose=GLOW_CYCLE[index % len(GLOW_CYCLE)]))
         durations.append((time.perf_counter() - started) * 1000)
     values = sorted(durations[1:])
     return {"profiles": count, "terminal": [width, height], "median_ms": round(statistics.median(values), 3),
@@ -124,7 +124,7 @@ def main():
               "python": platform.python_version(), "hqtui_commit": "d9a841494bab910403737a8c791d6d96ef52e878",
               "scope": "Actual embedded TUI process, real PTY, local fixture RPC and process metrics; backend fixtures excluded.",
               "fixture_note": "One supervised fake Gateway; other profile sockets are served by the benchmark process. No installed services are used.",
-              "animation": "Default wingbeats enabled; unchanged telemetry frames are reused.",
+              "animation": "Default caduceus glow enabled; unchanged telemetry frames are reused.",
               "embedded": [embedded(count, args.width, args.height, args.seconds) for count in args.profiles],
               "render_only": [render_cost(count, args.width, args.height) for count in (1, 2, 50, 1000)],
               "animation_only": [render_cost(count, args.width, args.height, animation=True) for count in (1, 2, 50, 1000)]}
