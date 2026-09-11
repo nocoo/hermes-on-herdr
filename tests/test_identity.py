@@ -5,12 +5,12 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import psutil
 
 from hermes_gateway_herdr.errors import GatewayError
-from hermes_gateway_herdr.identity import capture, hermes_start_matches, owner_key, signal_verified
+from hermes_gateway_herdr.identity import capture, descendants, hermes_start_matches, owner_key, signal_verified
 
 
 class IdentityTests(unittest.TestCase):
@@ -61,3 +61,16 @@ class IdentityTests(unittest.TestCase):
                 patch.object(proc, "uids", side_effect=psutil.AccessDenied()), \
                 patch.object(proc, "is_running", return_value=False):
             self.assertIsNone(capture(os.getpid()))
+
+    def test_stale_descendant_snapshot_cannot_claim_a_reused_pid(self):
+        def record(pid, ppid, sid=10):
+            return {"pid": pid, "ppid": ppid, "uid": os.getuid(), "sid": sid,
+                    "start_fingerprint": {"kind": "fixture", "value": str(pid), "boot": "fixture"}}
+        records = {10: record(10, 1), 11: record(11, 900), 12: record(12, 11),
+                   13: record(13, 10), 14: record(14, 13, sid=14)}
+        with patch("hermes_gateway_herdr.identity.capture", side_effect=records.get), \
+                patch("hermes_gateway_herdr.identity.psutil.Process") as process:
+            # PID 11 used to be a child; its replacement belongs to an unrelated parent.
+            # Return the real grandchild before its parent to also exercise recursive discovery.
+            process.return_value.children.return_value = [Mock(pid=14), Mock(pid=11), Mock(pid=12), Mock(pid=13)]
+            self.assertEqual({13, 14}, {item["pid"] for item in descendants(records[10])})

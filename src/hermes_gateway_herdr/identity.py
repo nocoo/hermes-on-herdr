@@ -109,10 +109,25 @@ def descendants(parent: dict) -> list[dict]:
         return []
     try:
         children = psutil.Process(parent["pid"]).children(recursive=True)
-        result = [record for proc in children if (record := capture(proc.pid)) is not None]
+        candidates = [record for proc in children if (record := capture(proc.pid)) is not None]
         if not same_process(parent):
             return []
-        return [record for record in result if record["uid"] == os.getuid()]
+        # children() is only a snapshot of PIDs. Reused PIDs must still have a
+        # verified parent chain, including for tasks that created a new session.
+        owned = {parent["pid"]: parent}
+        while candidates:
+            remaining = []
+            for record in candidates:
+                ancestor = owned.get(record["ppid"])
+                if (ancestor and record["uid"] == os.getuid()
+                        and same_process(ancestor) and same_process(record)):
+                    owned[record["pid"]] = record
+                else:
+                    remaining.append(record)
+            if len(remaining) == len(candidates):
+                break
+            candidates = remaining
+        return [record for pid, record in owned.items() if pid != parent["pid"]]
     except psutil.NoSuchProcess:
         return []
     except psutil.AccessDenied as exc:
