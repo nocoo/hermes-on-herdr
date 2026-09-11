@@ -1,4 +1,6 @@
-# hermes-gateway-herdr
+<h1 align="center">Hermes Gateway for Herdr</h1>
+<p align="center">在真实 Herdr pane 内监督专用 Hermes Gateway，保留明确的运行意图与进程所有权。</p>
+<p align="center"><a href="docs/README.en.md">English</a></p>
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
@@ -13,6 +15,50 @@
 测试使用临时目录、假 Herdr RPC 和受控 Python 假 Gateway，覆盖并发创建、响应丢失、进程退出、暂停竞态、PID 复用、后台任务清理和日志背压。[完整输出](docs/evidence/offline-unittest.txt)记录了 macOS 上的实际结果；Linux、真实 PTY/handoff 和消息往返均未验证。
 
 `status`、`doctor`、`logs` 提供 JSON 诊断；`bind` 默认只展示既有专用 Profile 的绑定计划；Start/Resume 才持久允许运行。新 Profile 初始化器、孤儿自动回收、维护/升级工具和系统服务仍未实现。识别到孤儿或未知启动结果时会阻止替代实例；`stop --wait` 不会把这种状态报告为已停止。
+
+## 使用与开发
+
+当前交付是离线实现和开发用 manifest。先阅读 [配置示例](examples/README.md) 与 [真实环境验证清单](docs/05-实现步骤.md)，再准备独立的测试 session、专用 Profile 和配置；没有一键安装或自动创建 Profile 的流程。
+
+查看 launcher 帮助无需配置，也不会连接 Herdr 或 Hermes：
+
+```sh
+./bin/hermes-gateway-herdr --help
+```
+
+运行时使用 Python 3.11+，复用已配置的 Hermes venv；依赖见 [requirements.txt](requirements.txt)。入口用系统 Python 检查私有解释器提示文件，再以隔离模式启动配置中的 venv Python。配置目录需为 `0700`，`config.json` 与 `runtime-python` 需为 `0600`；后者的一行绝对路径必须与 `python_bin` 一致。
+
+完成独立配置后，以下命令可读取状态或查看绑定计划。路径为占位符，需要替换为已审阅的配置：
+
+```sh
+./bin/hermes-gateway-herdr --config /absolute/config.json status --json
+./bin/hermes-gateway-herdr --config /absolute/config.json doctor --json
+./bin/hermes-gateway-herdr --config /absolute/config.json bind --dry-run
+```
+
+| 命令 | 行为 |
+| --- | --- |
+| `bind` / `bind --dry-run` | 展示既有专用 Profile 的控制目录计划 |
+| `bind --apply` | 初始化控制目录，初始暂停；不创建 Profile 或启动 Gateway |
+| `start` / `resume` | 明确允许运行，再执行 ensure；收到 ACK 不代表就绪 |
+| `pause` / `stop` | 先持久记录暂停，再通知 supervisor |
+| `stop --wait 30` | 最多等待 30 秒，核验完成后才报告已停止 |
+| `restart` | 仅对允许运行的实例请求重启，不隐式恢复暂停 |
+| `status --require-ready` | 仅已确认 READY 返回成功；不证明模型或 bot 消息往返可用 |
+| `logs --lines 50` | 读取结构化生命周期事件，不导出原始 child 输出 |
+
+Herdr hooks 使用 `ensure`，真实 pane 使用 `supervise`。从 hook 外手动执行控制动作时，使用全局 `--owner-socket /absolute/bound.sock` 指明绑定的 owner。完整参数、返回码与重试契约见 [离线实现与验证](docs/12-离线实现与验证.md#124-当前命令契约)。
+
+## 技术栈
+
+| 技术 | 用途 |
+| --- | --- |
+| Python / 标准库 unittest | Controller、supervisor、CLI 与离线故障测试 |
+| Unix sockets / JSONL | 有时限的 Herdr 与 Hermes 控制协议 |
+| flock / 原子 JSON 文件 | 单例锁、持久意图、revision 与请求去重 |
+| psutil | 进程身份和已确认的后代进程检查 |
+| PyYAML | 专用 Hermes Profile 的配置预检 |
+| Herdr plugin TOML | 开发用 startup、events、actions 与 pane 注册 |
 
 ## 结论
 
