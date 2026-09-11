@@ -33,5 +33,5 @@ description: 通过当前 Gateway 所在的 Herdr session 读取 workspace、pan
 
 不要向本 Gateway 的 supervisor pane 输入命令；它不是交互式 shell。
 不要调用 Hermes 的服务安装、`gateway start`、`--replace` 或全 Profile 重启。
-停止/暂停/重启本 Gateway 由 Herdr 的 Hermes Gateway actions 或本插件 CLI 完成。
+停止/暂停/重启本 Gateway 由 Herdr 的 hermes on herdr actions 或本插件 CLI 完成。
 涉及关闭已有 pane、停止其他 Agent 或修改系统服务时，先确认用户明确指定了该对象和动作。

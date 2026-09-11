@@ -293,7 +293,7 @@ class Controller:
             if ticket["phase"] == "reserved":
                 self._remaining()
                 ticket = self._advance(store, ticket, "workspace_requested", request_id=uuid.uuid4().hex)
-                result = self.herdr.call("workspace.create", {"label": "Hermes Control", "cwd": str(self.config.agent_cwd), "focus": False},
+                result = self.herdr.call("workspace.create", {"label": "hermes on herdr", "cwd": str(self.config.agent_cwd), "focus": False},
                                          request_id=ticket["request_id"])
                 workspace = result.get("workspace")
                 workspace_id = identifier(workspace.get("workspace_id") if isinstance(workspace, dict) else None)

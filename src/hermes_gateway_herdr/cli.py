@@ -20,7 +20,7 @@ ACTIONS = ("start", "resume", "pause", "stop", "restart")
 
 
 def parser():
-    result = argparse.ArgumentParser(prog="hermes-gateway-herdr", allow_abbrev=False,
+    result = argparse.ArgumentParser(prog="hermes-on-herdr", allow_abbrev=False,
                                      description="Control a dedicated, pane-owned Gateway. Real-host validation is pending.")
     result.add_argument("--config", type=Path, required=True)
     result.add_argument("--owner-socket", type=Path, help="Explicit owner context for commands outside a Herdr hook")

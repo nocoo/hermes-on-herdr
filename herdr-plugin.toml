@@ -1,68 +1,68 @@
 # Development manifest. Full lifecycle and message validation remain pending.
 id = "nocoo.hermes-gateway"
-name = "Hermes Gateway"
+name = "hermes on herdr"
 version = "0.1.0-alpha.0"
 min_herdr_version = "0.9.0"
 platforms = ["macos", "linux"]
 description = "A dedicated Gateway supervised inside its owning Herdr pane."
 
 [[startup]]
-command = ["./bin/hermes-gateway-herdr", "ensure", "--source", "startup"]
+command = ["./bin/hermes-on-herdr", "ensure", "--source", "startup"]
 
 [[events]]
 on = "workspace.focused"
-command = ["./bin/hermes-gateway-herdr", "ensure", "--source", "event"]
+command = ["./bin/hermes-on-herdr", "ensure", "--source", "event"]
 
 [[events]]
 on = "pane.exited"
-command = ["./bin/hermes-gateway-herdr", "ensure", "--source", "event"]
+command = ["./bin/hermes-on-herdr", "ensure", "--source", "event"]
 
 [[events]]
 on = "pane.closed"
-command = ["./bin/hermes-gateway-herdr", "ensure", "--source", "event"]
+command = ["./bin/hermes-on-herdr", "ensure", "--source", "event"]
 
 [[panes]]
 id = "gateway"
-title = "Hermes Gateway"
+title = "hermes on herdr"
 placement = "tab"
-command = ["./bin/hermes-gateway-herdr", "supervise"]
+command = ["./bin/hermes-on-herdr", "supervise"]
 
 [[actions]]
 id = "start"
-title = "Hermes Gateway: Start"
-command = ["./bin/hermes-gateway-herdr", "start"]
+title = "hermes on herdr: Start"
+command = ["./bin/hermes-on-herdr", "start"]
 
 [[actions]]
 id = "resume"
-title = "Hermes Gateway: Resume"
-command = ["./bin/hermes-gateway-herdr", "resume"]
+title = "hermes on herdr: Resume"
+command = ["./bin/hermes-on-herdr", "resume"]
 
 [[actions]]
 id = "pause"
-title = "Hermes Gateway: Pause"
-command = ["./bin/hermes-gateway-herdr", "pause"]
+title = "hermes on herdr: Pause"
+command = ["./bin/hermes-on-herdr", "pause"]
 
 [[actions]]
 id = "stop"
-title = "Hermes Gateway: Stop"
-command = ["./bin/hermes-gateway-herdr", "stop"]
+title = "hermes on herdr: Stop"
+command = ["./bin/hermes-on-herdr", "stop"]
 
 [[actions]]
 id = "restart"
-title = "Hermes Gateway: Restart"
-command = ["./bin/hermes-gateway-herdr", "restart"]
+title = "hermes on herdr: Restart"
+command = ["./bin/hermes-on-herdr", "restart"]
 
 [[actions]]
 id = "status"
-title = "Hermes Gateway: Status"
-command = ["./bin/hermes-gateway-herdr", "status", "--json"]
+title = "hermes on herdr: Status"
+command = ["./bin/hermes-on-herdr", "status", "--json"]
 
 [[actions]]
 id = "doctor"
-title = "Hermes Gateway: Doctor"
-command = ["./bin/hermes-gateway-herdr", "doctor", "--json"]
+title = "hermes on herdr: Doctor"
+command = ["./bin/hermes-on-herdr", "doctor", "--json"]
 
 [[actions]]
 id = "logs"
-title = "Hermes Gateway: Lifecycle Logs"
-command = ["./bin/hermes-gateway-herdr", "logs", "--json"]
+title = "hermes on herdr: Lifecycle Logs"
+command = ["./bin/hermes-on-herdr", "logs", "--json"]

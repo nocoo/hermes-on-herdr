@@ -18,7 +18,7 @@ class FakeOwner:
         self.fixture, self.config = fixture, fixture.config
         private_file(fixture.root / "plan.json", json.dumps(plan or {}))
         self.processes, self.records = [], []
-        self.workspaces = [{"workspace_id": "w-user", "label": "Hermes Control"}]
+        self.workspaces = [{"workspace_id": "w-user", "label": "hermes on herdr"}]
         self.panes = {"pane-user": {"workspace_id": "w-user", "tab_id": "tab-user", "pane_id": "pane-user", "terminal_id": "terminal-user"}}
         self.pids = {"pane-user": os.getpid()}
         self.enabled = True

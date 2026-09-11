@@ -56,6 +56,21 @@ class CliTests(unittest.TestCase):
         self.assertEqual("PAUSED", json.loads(result.stdout)["state"])
         self.assertFalse(sentinel.exists())
 
+    def test_rebranded_launcher_and_legacy_alias_share_the_existing_installation(self):
+        outputs = []
+        for name in ("hermes-on-herdr", "hermes-gateway-herdr"):
+            binary = ROOT / "bin" / name
+            help_result = subprocess.run([str(binary), "--help"], env=self.fixture.context(), capture_output=True, text=True, timeout=3)
+            self.assertEqual(0, help_result.returncode, help_result.stderr)
+            self.assertIn("Usage: hermes-on-herdr ", help_result.stdout)
+            result = subprocess.run([str(binary), "--config", str(self.config.config_dir / "config.json"), "status", "--json"],
+                                    env=self.fixture.context(), stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=3)
+            self.assertEqual(0, result.returncode, result.stderr)
+            outputs.append(json.loads(result.stdout))
+        self.assertEqual(outputs[0], outputs[1])
+        self.assertEqual("PAUSED", outputs[0]["state"])
+        self.assertEqual([], self.owner.processes)
+
     def test_status_exit_code_is_separate_from_require_ready(self):
         ordinary = self.invoke("status", "--json")
         required = self.invoke("status", "--json", "--require-ready")
@@ -227,6 +242,8 @@ class CliTests(unittest.TestCase):
 
     def test_manifest_registers_only_implemented_commands_and_one_startup(self):
         manifest = tomllib.loads((ROOT / "herdr-plugin.toml").read_text())
+        self.assertEqual("hermes on herdr", manifest["name"])
+        self.assertEqual("nocoo.hermes-gateway", manifest["id"])
         self.assertEqual(1, len(manifest["startup"]))
         self.assertEqual(["gateway"], [pane["id"] for pane in manifest["panes"]])
         self.assertEqual({"workspace.focused", "pane.exited", "pane.closed"}, {event["on"] for event in manifest["events"]})

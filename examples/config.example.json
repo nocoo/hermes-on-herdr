@@ -9,6 +9,6 @@
   "hermes_root": "/absolute/hermes-agent",
   "herdr_bin": "/absolute/bin/herdr",
   "agent_cwd": "/absolute/herdr-agent-work",
-  "plugin_root": "/absolute/hermes-gateway-herdr",
+  "plugin_root": "/absolute/hermes-on-herdr",
   "expected_platforms": ["telegram"]
 }

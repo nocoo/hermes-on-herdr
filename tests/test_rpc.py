@@ -7,7 +7,7 @@ from pathlib import Path
 import time
 import unittest
 
-from hermes_gateway_herdr.config import HERMES_SHA
+from hermes_gateway_herdr.config import HERMES_SHA, PLUGIN_ID
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.identity import capture
 from hermes_gateway_herdr.paths import private_bytes
@@ -35,6 +35,24 @@ class RpcTests(unittest.TestCase):
         self.config = self.fixture.config
         self.child = capture(os.getpid())
         self.identity, self.status = gateway_payloads(self.config, self.child)
+
+    def test_checkout_alias_preserves_live_ownership_but_a_different_directory_is_rejected(self):
+        old, new = self.fixture.root / "old-checkout", self.fixture.root / "new-checkout"
+        old.mkdir()
+        new.mkdir()
+        registered = {"plugin_id": PLUGIN_ID, "enabled": True, "plugin_root": str(old)}
+        self.serve(self.config.owner_socket, lambda req: {"id": req["id"], "result": {"plugins": [registered]}})
+        # This client already holds the old configuration, like a running supervisor.
+        client = Herdr(replace(self.config, plugin_root=old))
+        self.assertTrue(client.enabled())
+        registered["plugin_root"] = str(new)
+        with self.assertRaises(GatewayError) as error:
+            client.enabled()
+        self.assertEqual("OWNERSHIP_CONFLICT", error.exception.code)
+        old.rename(old.with_name("archived-checkout"))
+        old.symlink_to(new, target_is_directory=True)
+        self.assertTrue(client.enabled())
+        self.assertTrue(Herdr(replace(self.config, plugin_root=new)).enabled())
 
     def serve(self, path, handler):
         server = SocketServer(path, handler)
