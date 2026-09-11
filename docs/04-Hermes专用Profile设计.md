@@ -59,6 +59,7 @@ env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config se
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set terminal.shell_init_files '[]'
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set plugins.enabled '[]'
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set gateway.multiplex_profiles false
+env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set nous.keepalive_interval_seconds 0
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config get terminal.cwd --json
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config get terminal.home_mode --json
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config check
@@ -127,6 +128,8 @@ env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control gateway r
 首版expected platform至少一个；专用bot使用全新token和明确的用户allowlist/pairing，不复用当前Gateway token。不启用all-users开关。以Telegram为例，真实env key为 `TELEGRAM_BOT_TOKEN/TELEGRAM_ALLOWED_USERS`，后者接受数值ID或通过DM pairing；不要把显示名当用户身份。[M17](09-源码证据索引.md#m17)
 
 不自动读取、复制、迁移或刷新其他Profile的secrets/OAuth。新Profile运行时仍可能从root auth回退，所以必须显式选provider、填专用凭据并验证使用来源。若选用OAuth且允许共享root登录，需明确记录这是共享账户和可能写回root的授权选择，不能继续声称凭据独立。[M03](09-源码证据索引.md#m03) 严格禁止访问root凭据需要OS隔离或上游硬开关，单个Profile不能保证。
+
+静态模型凭据也不会自动关闭 Nous 后台 keepalive：固定版本 Gateway 在启动时无条件调用 `start_nous_auth_keepalive()`，它可能读取／刷新 root Nous 登录。专用 Profile 必须设置 `nous.keepalive_interval_seconds: 0`；离线预检拒绝缺失或非零值。该开关只关闭这条后台路径，不构成完整凭据隔离。[M19](09-源码证据索引.md#m19)
 
 Herdr控制凭借真实HERDR_*、绝对herdr CLI、同UID Unix socket；socket不作为网络端口导出，不引入socat bridge。逻辑上只操作owner session和声明资源；技术上裸terminal仍可改环境连接其他同UID socket，安全边界应在运维说明和用户界面中如实表达。
 
