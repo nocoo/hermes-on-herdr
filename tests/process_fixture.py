@@ -146,7 +146,14 @@ def dashboard_fixture(config_path, mode):
             if mode == "error" and self.count > 1:
                 raise RuntimeError("fixture collector failure")
             return demo_snapshot(20, now=time.time())
-    with patch.object(dashboard, "Monitor", Samples):
+    original_app = dashboard.App
+    def app(options):
+        result = original_app(options)
+        if mode == "motion":
+            result.on("frame", lambda stats: append(config.agent_cwd / "frames.jsonl",
+                                                     {"time": time.monotonic(), "cells": stats.changed_cells}))
+        return result
+    with patch.object(dashboard, "Monitor", Samples), patch.object(dashboard, "App", app):
         return dashboard.run_dashboard(config)
 
 

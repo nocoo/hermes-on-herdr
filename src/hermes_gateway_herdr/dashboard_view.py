@@ -9,8 +9,10 @@ import time
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "vendor" / "hqtui"))
 
 from hqtui import Layout, Panel, ScrollHandlers
+from hqtui.buffer import Attrs, Style
 from hqtui.color import Color
 from hqtui.graphics import PlotOptions
+from hqtui.surface import TextOptions
 from hqtui.theme import define_theme, resolve_theme
 from hqtui.widgets.table import resolve_offset
 import hqtui.widgets as w
@@ -20,10 +22,28 @@ from .monitor import Profile, text
 THEMES = ("herdr", "nord", "high-contrast", "monochrome")
 LAYOUTS = ("auto", "cards", "table")
 INTERVALS = (2, 5, 10)
+MOTION_FPS = 4
+WING_BEAT = (0, 1, 0, 2, 0, 1, 0, 2, 0)
+HELMET = (" .---. ", "/_____\\", "| - - |", "|  >  |", " \\_-_/ ")
+WINGS = (
+    ("       ", "____   ", "\\___`--", " `-----", "       "),
+    ("\\\\\\    ", " \\\\\\   ", "  \\\\\\__", "   `---", "       "),
+    ("       ", "       ", "    .--", " __/---", " \\\\\\   "),
+)
+MIRROR = str.maketrans("/\\`'", "\\/'`")
 HERDR_THEME = define_theme(name="herdr", background=Color.hex(0x080C12), surface=Color.hex(0x0C131D),
                            muted=Color.hex(0x8092A6), border=Color.hex(0x263549),
                            title=Color.hex(0x7BDDE8), accent=Color.hex(0xE9BA73),
                            selection=Color.hex(0x20384B), warning=Color.hex(0xE9BA73))
+
+
+def mascot_pose(elapsed):
+    """Two short wingbeats, then ten seconds at rest; return the next change deadline."""
+    position = max(0, elapsed) % 12
+    index = int(position * MOTION_FPS)
+    if index < len(WING_BEAT) - 1:
+        return WING_BEAT[index], (index + 1) / MOTION_FPS - position
+    return 0, 12 - position
 
 
 def theme_for(name):
@@ -73,6 +93,7 @@ class ViewState:
     theme: str = "herdr"
     system: bool = True
     interval: int = 2
+    animation: bool = True
     filter: str = ""
     filtering: bool = False
     help: bool = False
@@ -108,6 +129,8 @@ class ViewState:
             self.theme = THEMES[(THEMES.index(self.theme) + 1) % len(THEMES)]
         elif event.name == "s":
             self.system = not self.system
+        elif event.name == "a":
+            self.animation = not self.animation
         elif event.name in {"+", "=", "-"}:
             index = INTERVALS.index(self.interval) + (-1 if event.name in {"+", "="} else 1)
             self.interval = INTERVALS[max(0, min(len(INTERVALS) - 1, index))]
@@ -123,7 +146,40 @@ class DashboardView:
     def __init__(self, state, *, session="default", embedded=False, demo=False):
         self.state, self.session, self.embedded, self.demo = state, text(session, 80), embedded, demo
 
-    def render(self, ui, snapshot, *, now=None):
+    def has_mascot(self, width, height):
+        return width >= 100 and height >= 34 and not self.state.help and not self.state.quiet
+
+    def _header(self, ui, healthy, count, pose):
+        state, theme = self.state, ui.theme
+        live = "DEMO" if self.demo else f"LIVE / {state.interval}s"
+        if self.has_mascot(ui.width, ui.height):
+            def banner(s):
+                s.fill(Style(bg=theme.surface))
+                wing = WINGS[pose if state.animation else 0]
+                for y, (left, head) in enumerate(zip(wing, HELMET)):
+                    s.text(2, y, left, TextOptions(fg=theme.title))
+                    s.text(9, y, head, TextOptions(fg=theme.accent, attrs=Attrs.BOLD))
+                    s.text(16, y, left[::-1].translate(MIRROR), TextOptions(fg=theme.title))
+                s.text(28, 0, "T A L A R I A", TextOptions(fg=theme.accent, attrs=Attrs.BOLD))
+                s.text(28, 1, "HERMES on HERDR", TextOptions(fg=theme.title))
+                s.text(28, 3, f"{healthy}/{count} gateways online", TextOptions(fg=theme.foreground))
+                s.text(28, 4, f"{self.session} / local profiles",
+                       TextOptions(fg=theme.muted, max_width=s.width - 50))
+                s.text(s.width - 18, 0, live, TextOptions(fg=theme.warning if self.demo else theme.success))
+                s.text(s.width - 18, 3, "a Motion " + ("on" if state.animation else "off"),
+                       TextOptions(fg=theme.muted))
+            ui.draw(banner, Layout(size=5, background=theme.surface))
+            return
+
+        def header(r):
+            r.text(" TALARIA", w.TextStyle(fg=theme.accent, bold=True), Layout(size=10))
+            if ui.width >= 76:
+                r.text("HERMES on HERDR", w.TextStyle(fg=theme.title), Layout(size=17))
+            r.text(f"{healthy}/{count} online", w.TextStyle(fg=theme.muted))
+            r.text(live + " ", w.TextStyle(fg=theme.warning if self.demo else theme.success, align="right"), Layout(size=12))
+        ui.row(Layout(size=1, background=theme.surface), header)
+
+    def render(self, ui, snapshot, *, now=None, pose=0):
         now = time.time() if now is None else now
         state = self.state
         rows = state.rows(snapshot)
@@ -136,17 +192,8 @@ class DashboardView:
         width, height, theme = ui.width, ui.height, ui.theme
         healthy = sum(state_of(p, now, state.interval, count) in {"READY", "RUNNING", "SHARED"} for p in snapshot.profiles)
 
-        def header(r):
-            r.text(" HERMES", w.TextStyle(fg=theme.title, bold=True), Layout(size=9))
-            r.text(" CONTROL", w.TextStyle(fg=theme.accent), Layout(size=9))
-            r.text(f"  {healthy}/{count} online", w.TextStyle(fg=theme.muted), Layout(size=16))
-            if width >= 90:
-                r.text(f"{self.session} / local gateways", w.TextStyle(fg=theme.muted))
-            else:
-                r.spacer()
-            r.text("DEMO " if self.demo else f"LIVE / {state.interval}s ",
-                   w.TextStyle(fg=theme.warning if self.demo else theme.success, align="right"), Layout(size=12))
-        ui.row(Layout(size=1, background=theme.surface), header)
+        self._header(ui, healthy, count, pose)
+        height -= 4 if self.has_mascot(width, height) else 0
         if snapshot.error:
             ui.text(f" Monitoring unavailable: {text(snapshot.error)}", w.TextStyle(fg=theme.warning), Layout(size=1))
         if height < 10 or width < 36:
@@ -355,16 +402,19 @@ class DashboardView:
                  w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/"),
                  w.StatusItem("Hide" if self.embedded else "Quit", "q")]
         if ui.width >= 110:
-            items[3:3] = [w.StatusItem("System", "s"), w.StatusItem("Rate", "+/-")]
+            items[3:3] = [w.StatusItem("Motion", "a")]
+        if ui.width >= 132:
+            items[4:4] = [w.StatusItem("System", "s"), w.StatusItem("Rate", "+/-")]
         ui.status_bar(w.StatusBarOptions(items=items, right=[w.StatusItem(f"{self.state.layout} / {self.state.interval}s")]))
 
     def _help(self, ui):
         def content(p):
-            p.heading("HERMES CONTROL / KEYBOARD")
+            p.heading("TALARIA / KEYBOARD")
             for line in ("j / k, arrows     Select a profile", "PgUp / PgDn       Move through a larger fleet",
                          "Home / End        First / last profile", "/, then Enter     Filter profile names; Esc clears",
                          "l                 Layout: auto / cards / table", "t                 Theme: herdr / nord / high-contrast / monochrome",
                          "s                 Toggle lightweight system sampling", "+ / -             Sample faster / slower: 2s / 5s / 10s",
+                         "a                 Toggle the Hermes wing animation",
                          "q                 Hide / show this view" if self.embedded else "q / Ctrl+C        Close the monitor",
                          "Ctrl+C            Pause the managed Gateway" if self.embedded else "",
                          "", "The pinned profile belongs to Herdr. Other profiles are observed only.",

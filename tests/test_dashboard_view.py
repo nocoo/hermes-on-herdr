@@ -5,18 +5,18 @@ from pathlib import Path
 from unittest import TestCase
 
 from hermes_gateway_herdr.dashboard_demo import demo_snapshot
-from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, theme_for
+from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, mascot_pose, theme_for
 from hqtui import render_to_screen
 from hqtui.input import KeyEvent
 
 
 class DashboardViewTests(TestCase):
-    def render(self, count=2, width=160, height=44, *, state=None, data=None, now=None, embedded=False):
+    def render(self, count=2, width=160, height=44, *, state=None, data=None, now=None, embedded=False, pose=0):
         data = data or demo_snapshot(count)
         state = state or ViewState(selected="cherry")
         view = DashboardView(state, demo=True, embedded=embedded)
         return render_to_screen(width, height, theme_for(state.theme),
-                                lambda ui: view.render(ui, data, now=now or data.updated))
+                                lambda ui: view.render(ui, data, now=now or data.updated, pose=pose))
 
     def test_uses_the_unmodified_pinned_hqtui_library(self):
         root = Path(__file__).resolve().parents[1] / "vendor" / "hqtui"
@@ -40,7 +40,7 @@ class DashboardViewTests(TestCase):
         self.assertTrue(screen.contains("cherry  / HERDR MANAGED"))
         self.assertTrue(screen.contains("INSPECT / agent-12"))
         x, y = screen.find("cherry")
-        self.assertLess(y, 4)
+        self.assertLess(y, 8)
         self.assertEqual(screen.cell(x, y).fg, theme_for(state.theme).accent)
 
     def test_layouts_remain_usable_at_narrow_and_short_terminal_sizes(self):
@@ -86,7 +86,7 @@ class DashboardViewTests(TestCase):
         data = demo_snapshot(2)
         screen = self.render(data=data, now=data.updated + 120)
         self.assertTrue(screen.contains("STALE"))
-        self.assertTrue(screen.contains("0/2 online"))
+        self.assertTrue(screen.contains("0/2 gateways online"))
         self.assertFalse(screen.contains("discord connected"))
         self.assertFalse(screen.contains("149.3 MiB"))
 
@@ -117,7 +117,7 @@ class DashboardViewTests(TestCase):
     def test_empty_filter_quiet_help_and_unavailable_states_have_clear_output(self):
         for state, expected in ((ViewState(filter="no-match"), "No matching profiles"),
                                 (ViewState(quiet=True), "supervision continues"),
-                                (ViewState(help=True), "HERMES CONTROL / KEYBOARD")):
+                                (ViewState(help=True), "TALARIA / KEYBOARD")):
             self.assertTrue(self.render(20, state=state).contains(expected))
         data = demo_snapshot(1)
         bad = replace(data.profiles[0], state="UNKNOWN", observed=data.updated, cpu=None, rss=None,
@@ -135,3 +135,38 @@ class DashboardViewTests(TestCase):
         embedded = self.render(state=ViewState(help=True), embedded=True)
         self.assertTrue(standalone.contains("Close the monitor"))
         self.assertTrue(embedded.contains("Pause the managed Gateway"))
+
+    def test_wing_animation_only_changes_its_small_ascii_region(self):
+        data = demo_snapshot(2)
+        still = self.render(data=data)
+        self.assertTrue(still.contains("HERMES on HERDR"))
+        for pose in (1, 2):
+            animated = self.render(data=data, pose=pose)
+            changed = [(x, y) for y in range(still.height) for x in range(still.width)
+                       if still.cell(x, y) != animated.cell(x, y)]
+            self.assertGreater(len(changed), 0)
+            self.assertLess(len(changed), 70)
+            self.assertTrue(all(2 <= x < 23 and y < 5 for x, y in changed))
+            self.assertTrue(all(animated.cell(x, y).char.isascii() for x, y in changed))
+        for width, height in ((80, 24), (160, 30)):
+            self.assertEqual(self.render(width=width, height=height, data=data).text(),
+                             self.render(width=width, height=height, data=data, pose=1).text())
+
+    def test_static_motion_preference_and_help_keep_the_view_still(self):
+        data = demo_snapshot(2)
+        state = ViewState()
+        state.key(KeyEvent("a", "a"), data)
+        self.assertFalse(state.animation)
+        self.assertEqual(self.render(state=state, data=data).text(),
+                         self.render(state=state, data=data, pose=1).text())
+        self.assertTrue(self.render(state=state).contains("Motion off"))
+        state.help = True
+        self.assertTrue(self.render(state=state).contains("Toggle the Hermes wing animation"))
+
+    def test_animation_sleeps_through_its_rest_and_repeats_without_drift(self):
+        self.assertEqual((0, 0.25), mascot_pose(0))
+        self.assertEqual((1, 0.25), mascot_pose(0.25))
+        self.assertEqual((2, 0.25), mascot_pose(0.75))
+        self.assertEqual((0, 10), mascot_pose(2))
+        self.assertEqual((0, 4), mascot_pose(8))
+        self.assertEqual(mascot_pose(0.25), mascot_pose(1200.25))

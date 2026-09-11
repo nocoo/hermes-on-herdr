@@ -47,10 +47,10 @@ class DashboardTests(unittest.TestCase):
 
     def test_preferences_are_private_atomic_and_only_persist_presentation_settings(self):
         state = ViewState(layout="table", theme="nord", system=False, interval=10,
-                          filter="private-filter", selected="another", quiet=True, help=True)
+                          animation=False, filter="private-filter", selected="another", quiet=True, help=True)
         self.assertTrue(dashboard.save_preferences(self.config, state))
         self.assertEqual(0o600, stat.S_IMODE(self.path.stat().st_mode))
-        self.assertEqual({"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10},
+        self.assertEqual({"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10, "animation": False},
                          json.loads(self.path.read_text()))
         loaded = dashboard.load_preferences(self.config)
         self.assertEqual(dashboard.preferences(state), dashboard.preferences(loaded))
@@ -60,6 +60,13 @@ class DashboardTests(unittest.TestCase):
             self.assertFalse(dashboard.save_preferences(self.config, ViewState()))
         self.assertEqual(dashboard.preferences(loaded), json.loads(self.path.read_text()))
         self.assertEqual([], list(self.config.config_dir.glob(".dashboard-*")))
+
+    def test_existing_preferences_keep_their_settings_when_animation_is_added(self):
+        old = {"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10}
+        private_file(self.path, json.dumps(old))
+        self.assertEqual(dict(old, animation=True), dashboard.preferences(dashboard.load_preferences(self.config)))
+        private_file(self.path, json.dumps(dict(old, animation="false")))
+        self.assertEqual(dashboard.preferences(ViewState()), dashboard.preferences(dashboard.load_preferences(self.config)))
 
     def test_malformed_or_unsafe_preferences_fall_back_without_overwriting_foreign_files(self):
         baseline = dashboard.preferences(ViewState())
@@ -161,6 +168,9 @@ class DashboardTerminalTests(unittest.TestCase):
     def samples(self):
         return json_lines(self.fixture.root / "samples.jsonl")
 
+    def frames(self):
+        return json_lines(self.fixture.root / "frames.jsonl")
+
     def quit(self):
         self.terminal.send(b"q")
         # Drain the terminal while its normal teardown writes the last frame.
@@ -185,7 +195,7 @@ class DashboardTerminalTests(unittest.TestCase):
         wait_until(lambda: b"\x1b[?1003l\x1b[?1002l\x1b[?1000h\x1b[?1006h" in self.terminal.read())
         self.terminal.send(b"llts--")
         path = self.config.config_dir / "dashboard.json"
-        expected = {"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10}
+        expected = {"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10, "animation": True}
         wait_until(lambda: path.exists() and json.loads(path.read_text()) == expected)
         self.terminal.resize(64, 20)
         self.process.send_signal(signal.SIGWINCH)
@@ -200,7 +210,7 @@ class DashboardTerminalTests(unittest.TestCase):
         wait_until(lambda: self.samples())
         deadline = time.monotonic() + 2.5
         while time.monotonic() < deadline:
-            self.terminal.send(b"jkttss--++")
+            self.terminal.send(b"jkttssaa--++")
             self.terminal.read()
             time.sleep(0.04)
         samples = self.samples()
@@ -211,14 +221,35 @@ class DashboardTerminalTests(unittest.TestCase):
         self.quit()
 
     def test_focus_loss_slows_sampling_and_focus_return_resumes_it(self):
-        self.start()
+        self.start(mode="motion")
         self.expect("HERMES")
         wait_until(lambda: self.samples())
         self.terminal.send(b"\x1b[O")
-        time.sleep(2.2)
+        time.sleep(0.4)
+        frames = len(self.frames())
+        time.sleep(1.8)
+        self.assertEqual(frames, len(self.frames()))
         self.assertEqual(1, len(self.samples()))
         self.terminal.send(b"\x1b[I")
         wait_until(lambda: len(self.samples()) == 2)
+        self.quit()
+
+    def test_animation_does_not_sample_and_static_mode_stops_its_frames(self):
+        path = self.config.config_dir / "dashboard.json"
+        private_file(path, json.dumps(dashboard.preferences(ViewState(interval=10))))
+        self.start(mode="motion")
+        self.expect("HERMES")
+        wait_until(lambda: len(self.frames()) >= 5, timeout=3)
+        self.assertEqual(1, len(self.samples()))
+        self.terminal.send(b"a")
+        wait_until(lambda: json.loads(path.read_text())["animation"] is False)
+        time.sleep(0.4)
+        frames = len(self.frames())
+        time.sleep(0.8)
+        self.assertEqual(frames, len(self.frames()))
+        self.terminal.send(b"a")
+        wait_until(lambda: len(self.frames()) >= frames + 3, timeout=2)
+        self.assertEqual(1, len(self.samples()))
         self.quit()
 
     def test_collector_exception_is_visible_and_does_not_crash_the_view(self):

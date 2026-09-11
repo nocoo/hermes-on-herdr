@@ -12,7 +12,7 @@ import threading
 import time
 
 from .dashboard_demo import demo_snapshot
-from .dashboard_view import DashboardView, INTERVALS, LAYOUTS, THEMES, ViewState, theme_for
+from .dashboard_view import DashboardView, INTERVALS, LAYOUTS, MOTION_FPS, THEMES, ViewState, mascot_pose, theme_for
 from .display import restore_terminal
 from .errors import GatewayError
 from .monitor import Monitor, Snapshot
@@ -20,7 +20,7 @@ from .paths import json_object, private_bytes
 
 from hqtui import App, AppOptions, render_to_screen
 
-PREFERENCE_KEYS = ("layout", "theme", "system", "interval")
+PREFERENCE_KEYS = ("layout", "theme", "system", "interval", "animation")
 
 
 def preferences(state):
@@ -33,9 +33,10 @@ def load_preferences(config):
         data = json_object(private_bytes(config.config_dir / "dashboard.json", 4096))
         if (type(data.get("schema")) is int and data["schema"] == 1
                 and data.get("layout") in LAYOUTS and data.get("theme") in THEMES
-                and type(data.get("system")) is bool and type(data.get("interval")) is int and data["interval"] in INTERVALS):
+                and type(data.get("system")) is bool and type(data.get("interval")) is int and data["interval"] in INTERVALS
+                and type(data.get("animation", True)) is bool):
             for key in PREFERENCE_KEYS:
-                setattr(state, key, data[key])
+                setattr(state, key, data.get(key, getattr(state, key)))
     except (GatewayError, OSError, ValueError, TypeError):
         pass
     return state
@@ -102,11 +103,11 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
         return 0
 
     # Rendering and socket/disk sampling cannot block one another. Only one sampler exists.
-    data = {"snapshot": Snapshot(), "focused": True}
+    data = {"snapshot": Snapshot(), "focused": True, "pose": 0}
     stopped, wake = threading.Event(), threading.Event()
-    app = App(AppOptions(theme=theme_for(state.theme), fps=1, remote_fps=1, always_render=False,
+    app = App(AppOptions(theme=theme_for(state.theme), fps=MOTION_FPS, remote_fps=MOTION_FPS, always_render=False,
                          quit_keys=(), focus_navigation=False))
-    app.render(lambda frame: view.render(frame.ui, data["snapshot"]))
+    app.render(lambda frame: view.render(frame.ui, data["snapshot"], pose=data["pose"]))
     # hqtui enables all pointer motion by default; only clicks and wheel events
     # are useful here. Avoid repainting whenever a pointer crosses the pane.
     app.on("frame", lambda stats: app.terminal.write("\x1b[?1003l\x1b[?1002l\x1b[?1000h\x1b[?1006h")
@@ -127,11 +128,25 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
 
     def sampling():
         last_started = float("-inf")
+        animating, motion_started = False, 0
         while not stopped.is_set():
-            interval = state.interval if data["focused"] and not state.quiet else 10
-            remaining = last_started + interval - time.monotonic()
+            now = time.monotonic()
+            visible = data["focused"] and not state.quiet
+            motion = visible and state.animation and view.has_mascot(app.width, app.height)
+            if motion and not animating:
+                motion_started = now
+            animating = motion
+            pose, next_pose = mascot_pose(now - motion_started) if motion else (0, float("inf"))
+            if pose != data["pose"]:
+                data["pose"] = pose
+                if visible:
+                    app.invalidate()
+            interval = state.interval if visible else 10
+            remaining = last_started + interval - now
             if remaining > 0:
-                wake.wait(remaining)
+                # Animation shares this wait, never the sampling deadline. Resting,
+                # hidden and compact views add no animation wakeups or RPC calls.
+                wake.wait(max(0.001, min(remaining, next_pose)))
                 wake.clear()
                 continue
             last_started = time.monotonic()
@@ -142,7 +157,7 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
                 data["snapshot"] = replace(old, error="COLLECTOR_UNAVAILABLE", profiles=tuple(
                     replace(p, state="UNKNOWN", cpu=None, rss=None, active=None, platforms=(), error="COLLECTOR_UNAVAILABLE")
                     for p in old.profiles))
-            if data["focused"]:
+            if data["focused"] and not state.quiet:
                 app.invalidate()
 
     def key(event):
@@ -170,7 +185,7 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
                 app.set_theme(theme_for(state.theme))
             if monitor is not None:
                 save_preferences(config, state)
-            wake.set()
+        wake.set()
 
     def focus(event):
         data["focused"] = event.focused
@@ -180,6 +195,7 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
 
     app.on("key", key)
     app.on("focus", focus)
+    app.on("resize", lambda size: wake.set())
     worker = threading.Thread(target=sampling, daemon=True, name="profile-monitor")
     if embedded:
         threading.Thread(target=lifetime, daemon=True, name="dashboard-lifetime").start()
