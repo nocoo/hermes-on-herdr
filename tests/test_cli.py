@@ -78,6 +78,18 @@ class CliTests(unittest.TestCase):
         self.assertEqual(20, self.invoke("status").returncode)
         self.assertFalse(sentinel.exists())
 
+    def test_fifo_configuration_and_state_are_rejected_without_waiting_for_a_writer(self):
+        for path in (self.config.config_dir / "runtime-python", self.config.state_dir / "intent.json"):
+            with self.subTest(path=path.name):
+                original = path.read_text()
+                path.unlink()
+                os.mkfifo(path, 0o600)
+                result = self.invoke("status")
+                self.assertEqual(20, result.returncode)
+                self.assertEqual("UNSAFE_PATH", json.loads(result.stdout)["code"])
+                path.unlink()
+                private_file(path, original)
+
     def test_unconfigured_hook_reports_setup_required_without_creating_profile(self):
         before = set(self.fixture.profile.iterdir())
         result = subprocess.run([str(ROOT / "bin" / "hermes-gateway-herdr"), "ensure", "--source", "startup"],

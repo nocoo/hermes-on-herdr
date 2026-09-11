@@ -52,7 +52,7 @@ def check_private(st: os.stat_result, *, directory: bool = False, allow_unlinked
 
 def private_bytes(path: Path, limit: int = 1024 * 1024, *, allow_owner_execute: bool = False) -> bytes:
     try:
-        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC)
         with os.fdopen(fd, "rb") as stream:
             check_private(os.fstat(stream.fileno()), allow_owner_execute=allow_owner_execute)
             raw = stream.read(limit + 1)

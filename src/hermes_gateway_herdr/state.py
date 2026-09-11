@@ -123,7 +123,7 @@ class Store:
         self.close()
 
     def _open(self, name: str, flags: int) -> int:
-        fd = os.open(name, flags | os.O_NOFOLLOW | os.O_CLOEXEC, 0o600, dir_fd=self.fd)
+        fd = os.open(name, flags | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC, 0o600, dir_fd=self.fd)
         try:
             # A reader may open the old inode immediately before an atomic replacement.
             # Its nlink then becomes zero; the opened, private snapshot is still valid.
