@@ -54,3 +54,10 @@ class IdentityTests(unittest.TestCase):
         self.assertTrue(hermes_start_matches(identity, int(identity["create_time"] * 100)))
         self.assertFalse(hermes_start_matches(identity, identity["create_time"]))
         self.assertFalse(hermes_start_matches(identity, "2026-09-11T00:00:00Z"))
+
+    def test_permission_race_requires_proof_of_disappearance(self):
+        proc = psutil.Process(os.getpid())
+        with patch("hermes_gateway_herdr.identity.psutil.Process", return_value=proc), \
+                patch.object(proc, "uids", side_effect=psutil.AccessDenied()), \
+                patch.object(proc, "is_running", return_value=False):
+            self.assertIsNone(capture(os.getpid()))

@@ -5,12 +5,27 @@ import socket
 import sys
 import tempfile
 import threading
+import time
 
 import yaml
 
 from hermes_gateway_herdr.config import Config
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def wait_until(check, timeout=5):
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        result = check()
+        if result:
+            return result
+        time.sleep(0.01)
+    raise AssertionError("Fixture condition did not complete before its deadline")
+
+
+def json_lines(path):
+    return [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
 
 
 def private_file(path: Path, value: str) -> None:

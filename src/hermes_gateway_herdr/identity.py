@@ -46,6 +46,14 @@ def capture(pid: int) -> dict | None:
     except (psutil.NoSuchProcess, ProcessLookupError, FileNotFoundError):
         return None
     except (psutil.AccessDenied, PermissionError) as exc:
+        # macOS can report EPERM for exe/argv while a process is exiting. Only a
+        # subsequent confirmed disappearance makes that race equivalent to absence.
+        if "proc" in locals():
+            try:
+                if not proc.is_running():
+                    return None
+            except (psutil.AccessDenied, PermissionError):
+                pass
         raise GatewayError("UNKNOWN", "Process identity is not readable") from exc
 
 

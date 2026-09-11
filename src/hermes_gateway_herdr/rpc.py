@@ -176,7 +176,7 @@ def hermes_socket(config: Config) -> Path:
     return expected
 
 
-def profile_in_use(config: Config, *, timeout: float = 2) -> bool:
+def profile_in_use(config: Config, *, timeout: float = 2, probe_socket: bool = True) -> bool:
     """Inspect Hermes' own fences without deleting, replacing or claiming its state."""
     lock = config.profile_home / "gateway.lock"
     try:
@@ -206,6 +206,8 @@ def profile_in_use(config: Config, *, timeout: float = 2) -> bool:
                 raise GatewayError("UNKNOWN", "Live legacy PID record requires inspection")
             if hermes_start_matches(actual, record["start_time"]):
                 return True
+    if not probe_socket:
+        return False
     try:
         path = hermes_socket(config)
     except GatewayError as exc:
@@ -224,10 +226,16 @@ def profile_in_use(config: Config, *, timeout: float = 2) -> bool:
         raise GatewayError("UNKNOWN", "Existing Gateway socket cannot be identified") from exc
 
 
-def control_query(path: Path, verb: str, *, timeout: float = 2, **fields) -> dict:
-    response = exchange(path, {"protocol": 1, "id": uuid.uuid4().hex, "verb": verb, **fields}, timeout=timeout)
-    if type(response.get("protocol")) is not int or response["protocol"] != 1 or response.get("ok") is not True:
+def control_query(path: Path, verb: str, *, timeout: float = 2, request_id: str | None = None, **fields) -> dict:
+    response = exchange(path, {"protocol": 1, "id": request_id or uuid.uuid4().hex, "verb": verb, **fields}, timeout=timeout)
+    if type(response.get("protocol")) is not int or response["protocol"] != 1:
         raise GatewayError("PROTOCOL_ERROR", "Control protocol was rejected")
+    if response.get("ok") is not True:
+        code = response.get("code")
+        # Only expose locally defined rejection codes, never arbitrary peer text.
+        if code not in {"STALE_REQUEST", "UNSUPPORTED_VERB", "PROTOCOL_ERROR", "BUSY", "IO_ERROR", "STATE_SCHEMA"}:
+            code = "PROTOCOL_ERROR"
+        raise GatewayError(code, "Control request was rejected")
     result = response.get("result")
     if not isinstance(result, dict):
         raise GatewayError("PROTOCOL_ERROR", "Control result must be an object")
