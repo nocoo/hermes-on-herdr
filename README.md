@@ -7,7 +7,7 @@
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
-**当前状态：首轮离线核心已实现，84 项测试通过，真实环境验证待确认。** 已有 controller、pane supervisor、开发用 manifest、隔离 launcher 和命令入口。目前未安装插件、未创建或修改用户 Hermes Profile、未启动真实 Gateway。实现范围、原子提交和测试证据见 [12 · 离线实现与验证](docs/12-离线实现与验证.md)。
+**当前状态：核心已实现，86 项离线测试通过，cherry 接入准备完成，切换待停服确认。** 已有 controller、pane supervisor、开发用 manifest、隔离 launcher 和命令入口。本机插件已注册为禁用状态，候选配置通过预检，原 cherry Gateway 仍由 LaunchAgent 运行。完整生命周期和消息往返尚未验证，当前记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)，首轮实现和历史测试证据见 [12](docs/12-离线实现与验证.md)。
 
 离线测试使用已配置 Hermes venv 中的 Python 3.11+、psutil 和 PyYAML，不导入 Hermes main，不调用已安装的 Herdr／Hermes：
 
@@ -15,7 +15,7 @@
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC 和受控 Python 假 Gateway，覆盖并发创建、响应丢失、进程退出、暂停竞态、PID 复用、后台任务清理和日志背压。[完整输出](docs/evidence/offline-unittest.txt)记录了 macOS 上的实际结果；Linux、真实 PTY/handoff 和消息往返均未验证。
+测试使用临时目录、假 Herdr RPC 和受控 Python 假 Gateway，覆盖并发创建、响应丢失、进程退出、暂停竞态、PID 复用、后台任务清理和日志背压。[首轮 84 项完整输出](docs/evidence/offline-unittest.txt)保留了 macOS 上的历史结果；新增配置回归和 86 项运行结果见 [13](docs/13-cherry接入与验证.md)。Linux、真实 PTY/handoff 和消息往返均未验证。
 
 `status`、`doctor`、`logs` 提供 JSON 诊断；`bind` 默认只展示既有专用 Profile 的绑定计划；Start/Resume 才持久允许运行。新 Profile 初始化器、孤儿自动回收、维护/升级工具和系统服务仍未实现。识别到孤儿或未知启动结果时会阻止替代实例；`stop --wait` 不会把这种状态报告为已停止。
 

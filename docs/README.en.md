@@ -9,7 +9,7 @@
 
 This Herdr plugin implementation aims to ensure that one dedicated Hermes Gateway runs inside its owning Herdr pane. The Gateway inherits the actual `HERDR_SOCKET_PATH`, `HERDR_WORKSPACE_ID`, `HERDR_TAB_ID` and `HERDR_PANE_ID`, so it can act as a control agent for that session.
 
-**Current status: the offline core is implemented; real Herdr/Hermes integration remains unverified.** The repository includes a controller, pane supervisor, development manifest, isolated launcher and command entry point. The recorded offline test run passed 84 tests. The plugin has not been installed, a user Hermes Profile has not been created or changed, and a real Gateway has not been started as part of that validation. See the [implementation and evidence](12-离线实现与验证.md).
+**Current status: 86 offline tests pass; preparation for the existing cherry Profile is complete, with shutdown approval required before cutover.** The repository includes a controller, pane supervisor, development manifest, isolated launcher and command entry point. The local plugin is registered but disabled, and candidate configuration passes preflight. The original cherry Gateway continues under its LaunchAgent. Full lifecycle and message round-trip validation remain pending. See the [cherry preparation and validation record](13-cherry接入与验证.md) and the [initial implementation and evidence](12-离线实现与验证.md).
 
 ## Features
 

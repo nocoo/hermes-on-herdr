@@ -3,6 +3,7 @@
 model:
   provider: "<explicit-provider>"
   default: "<explicit-model>"
+  # A custom provider may use api_key: '${PROFILE_API_KEY}'; the actual key stays in the private .env.
 terminal:
   backend: local
   home_mode: profile
