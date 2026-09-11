@@ -20,7 +20,7 @@ from .paths import json_object, private_bytes
 
 from hqtui import App, AppOptions, render_to_screen
 
-PREFERENCE_KEYS = ("layout", "theme", "system", "interval", "animation")
+PREFERENCE_KEYS = ("layout", "theme", "system", "interval", "animation", "auto_open")
 
 
 def preferences(state):
@@ -34,7 +34,7 @@ def load_preferences(config):
         if (type(data.get("schema")) is int and data["schema"] == 1
                 and data.get("layout") in LAYOUTS and data.get("theme") in THEMES
                 and type(data.get("system")) is bool and type(data.get("interval")) is int and data["interval"] in INTERVALS
-                and type(data.get("animation", True)) is bool):
+                and type(data.get("animation", True)) is bool and type(data.get("auto_open", False)) is bool):
             for key in PREFERENCE_KEYS:
                 setattr(state, key, data.get(key, getattr(state, key)))
     except (GatewayError, OSError, ValueError, TypeError):
@@ -75,7 +75,7 @@ def parent_alive(fd):
 
 
 def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=False,
-                  width=100, height=30, parent_fd=None):
+                  width=100, height=30, parent_fd=None, startup=False):
     if not 20 <= width <= 300 or not 8 <= height <= 100 or (demo_profiles is not None and not 1 <= demo_profiles <= 1000):
         raise GatewayError("INVALID_ARGUMENT")
     embedded = parent_fd is not None
@@ -84,14 +84,15 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
     if not parent_alive(parent_fd):
         return 0
     state = ViewState(selected="cherry") if demo_profiles is not None else load_preferences(config)
+    state.startup = (embedded or startup) and not state.auto_open
     view = DashboardView(state, session=config.owner_session, embedded=embedded, demo=demo_profiles is not None)
-    monitor = Monitor(config, host=state.system) if demo_profiles is None else None
+    monitor = Monitor(config, host=state.system and not state.startup) if demo_profiles is None else None
 
     def collect():
         if monitor is None:
             return demo_snapshot(demo_profiles, now=time.time())
-        monitor.selected, monitor.host = state.selected, state.system and not state.quiet
-        return monitor.collect()
+        monitor.selected, monitor.host = state.selected, state.system and not state.startup
+        return monitor.collect(managed_only=state.startup)
 
     if snapshot or json_output or not (sys.stdin.isatty() and sys.stdout.isatty()):
         data = collect()
@@ -131,7 +132,7 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
         animating, motion_started = False, 0
         while not stopped.is_set():
             now = time.monotonic()
-            visible = data["focused"] and not state.quiet
+            visible = data["focused"]
             motion = visible and state.animation and view.has_mascot(app.width, app.height)
             if motion and not animating:
                 motion_started = now
@@ -145,7 +146,7 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
             remaining = last_started + interval - now
             if remaining > 0:
                 # Animation shares this wait, never the sampling deadline. Resting,
-                # hidden and compact views add no animation wakeups or RPC calls.
+                # startup and compact views add no animation wakeups or RPC calls.
                 wake.wait(max(0.001, min(remaining, next_pose)))
                 wake.clear()
                 continue
@@ -157,8 +158,26 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
                 data["snapshot"] = replace(old, error="COLLECTOR_UNAVAILABLE", profiles=tuple(
                     replace(p, state="UNKNOWN", cpu=None, rss=None, active=None, platforms=(), error="COLLECTOR_UNAVAILABLE")
                     for p in old.profiles))
-            if data["focused"] and not state.quiet:
+            if data["focused"]:
                 app.invalidate()
+
+    saved_preferences = preferences(state)
+
+    def changed():
+        nonlocal saved_preferences
+        current = preferences(state)
+        if current != saved_preferences:
+            if current["theme"] != saved_preferences["theme"]:
+                app.set_theme(theme_for(state.theme))
+            if monitor is not None:
+                if save_preferences(config, state):
+                    state.preference_error = ""
+                else:
+                    # Do not show an enabled startup promise that wasn't saved.
+                    state.auto_open = saved_preferences["auto_open"]
+                    state.preference_error = "Could not save preferences."
+            saved_preferences = preferences(state)
+        wake.set()
 
     def key(event):
         if event.key == "ctrl+c":
@@ -173,19 +192,13 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
             return
         if event.name == "q" and not state.filtering:
             if embedded:
-                state.quiet = not state.quiet
+                state.startup, state.help = True, False
             else:
                 app.quit()
             wake.set()
             return
-        before = preferences(state)
         state.key(event, data["snapshot"])
-        if preferences(state) != before:
-            if before["theme"] != state.theme:
-                app.set_theme(theme_for(state.theme))
-            if monitor is not None:
-                save_preferences(config, state)
-        wake.set()
+        changed()
 
     def focus(event):
         data["focused"] = event.focused
@@ -194,6 +207,7 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
             app.invalidate()
 
     app.on("key", key)
+    app.on("mouse", lambda event: changed())
     app.on("focus", focus)
     app.on("resize", lambda size: wake.set())
     worker = threading.Thread(target=sampling, daemon=True, name="profile-monitor")

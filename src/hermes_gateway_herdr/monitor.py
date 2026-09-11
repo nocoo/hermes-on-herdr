@@ -212,17 +212,19 @@ class Monitor:
         self._host_primed = False
         self._events = deque(maxlen=24)
 
-    def collect(self, *, now=None):
+    def collect(self, *, now=None, managed_only=False):
         now = time.monotonic() if now is None else now
         wall = time.time()
-        if now >= self._next_discovery:
+        if managed_only:
+            self._profiles.setdefault(self.config.profile_id, Profile(self.config.profile_id, self.config.profile_home, managed=True))
+        elif now >= self._next_discovery:
             discovered = discover(self.config)
             self._profiles = {p.name: self._profiles.get(p.name, p) for p in discovered}
             self._cpu = {k: v for k, v in self._cpu.items() if k in self._profiles}
             self._histories = {k: v for k, v in self._histories.items() if k in self._profiles}
             self._next_discovery = now + DISCOVERY_INTERVAL
-        names = list(self._profiles)
-        priority = list(dict.fromkeys(n for n in (self.config.profile_id, self.selected) if n in self._profiles))
+        names = [self.config.profile_id] if managed_only else list(self._profiles)
+        priority = list(dict.fromkeys(n for n in (self.config.profile_id, self.selected) if n in names))
         others = [n for n in names if n not in priority]
         batch = priority[:]
         if others:
@@ -269,7 +271,7 @@ class Monitor:
             if current.state != previous.state or current.pid != previous.pid:
                 self._events.append((wall, name, current.state, current.error))
             self._profiles[name] = current
-        rows = list(self._profiles.values())
+        rows = [self._profiles[name] for name in names]
         # Multiplexed profiles share one process; do not invent per-profile resource/connection data.
         served = {name: p for p in rows if p.pid and not p.error and wall - p.observed < max(10, len(rows) * 2)
                   for name in p.served if name != p.name}
@@ -278,7 +280,7 @@ class Monitor:
                         cpu=None, rss=None, active=None, platforms=())
                 if not p.managed and p.pid is None and p.name in served and p.state == "STOPPED" else p for p in rows]
         cpu = used = total = None
-        if self.host:
+        if self.host and not managed_only:
             try:
                 value = psutil.cpu_percent(interval=None)
                 if self._host_primed:

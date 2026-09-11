@@ -105,10 +105,12 @@ class ViewState:
     system: bool = True
     interval: int = 2
     animation: bool = True
+    auto_open: bool = False
     filter: str = ""
     filtering: bool = False
     help: bool = False
-    quiet: bool = False
+    startup: bool = False
+    preference_error: str = ""
 
     def rows(self, snapshot):
         return [p for p in snapshot.profiles if self.filter.lower() in p.name.lower()]
@@ -120,6 +122,12 @@ class ViewState:
             self.selected = rows[max(0, min(len(rows) - 1, index + delta))].name
 
     def key(self, event, snapshot):
+        if self.startup:
+            if event.name == "space":
+                self.auto_open = not self.auto_open
+            elif event.name in {"enter", "m"}:
+                self.startup = False
+            return
         if self.filtering:
             if event.name in {"enter", "escape"}:
                 self.filtering = False
@@ -151,6 +159,8 @@ class ViewState:
             self.filter, self.help = "", False
         elif event.name in {"?", "f1"}:
             self.help = not self.help
+        elif event.name == "b":
+            self.startup, self.help = True, False
 
 
 class DashboardView:
@@ -160,7 +170,7 @@ class DashboardView:
         self._art_rect = None
 
     def has_mascot(self, width, height):
-        return width >= 100 and height >= 34 and not self.state.help and not self.state.quiet
+        return width >= 100 and height >= 34 and not self.state.help and not self.state.startup
 
     def _mascot(self, surface, pose):
         theme = surface.theme
@@ -214,17 +224,12 @@ class DashboardView:
         if snapshot.error:
             ui.text(f" Monitoring unavailable: {text(snapshot.error)}", w.TextStyle(fg=theme.warning), Layout(size=1))
             height -= 1
+        if state.startup:
+            self._startup(ui, owned)
+            return
         if height < 10 or width < 36:
             ui.text(f"{text(owned.name)} [HERDR] {self._status(owned)}")
             ui.label(f"{count} profiles / expand pane for details")
-            return
-        if state.quiet:
-            ui.spacer(1)
-            ui.heading(f" {text(owned.name)} / {self._status(owned)}")
-            ui.label(" Dashboard hidden. Gateway supervision continues.")
-            ui.label(" Press q to return to the dashboard.")
-            ui.spacer()
-            self._footer(ui)
             return
         compact = width < 100 or height < 30
         mode = "cards" if state.layout == "cards" or (state.layout == "auto" and count <= 2) else "table"
@@ -283,6 +288,52 @@ class DashboardView:
                         w.TextStyle(fg=theme.muted))
         ui.spacer(1)
         self._footer(ui)
+
+    def _startup(self, ui, profile):
+        state, status = self.state, self._status(profile)
+        messages = {"READY": "Gateway started successfully.", "RUNNING": "Checking Gateway connections...",
+                    "STARTING": "Gateway is starting...", "SCANNING": "Checking Gateway startup...",
+                    "PENDING": "Waiting for Gateway startup...", "DEGRADED": "A Gateway connection needs attention.",
+                    "BACKOFF": "Waiting to retry Gateway startup.", "FUSED": "Startup stopped after repeated failures.",
+                    "PAUSED": "Gateway is paused.", "DRAINING": "Gateway is stopping...",
+                    "STOPPED": "Gateway is not running.", "ABSENT": "Gateway is not running."}
+        def content(p):
+            p.text(f"{text(profile.name, 32)} / HERDR MANAGED", w.TextStyle(fg=p.theme.accent, bold=True))
+            p.text("Gateway " + status, w.TextStyle(fg=state_color(status, p.theme), bold=True))
+            if p.height >= 9:
+                p.label(messages.get(status, "Gateway status is not confirmed."))
+                if profile.error:
+                    p.text(text(profile.error), w.TextStyle(fg=p.theme.warning))
+                elif profile.pid:
+                    p.label(f"PID {profile.pid} / seen {max(0, int(self._now - profile.observed))}s ago")
+                else:
+                    p.spacer(1)
+                p.spacer(1)
+            if p.height >= 7:
+                p.text("Open the monitoring dashboard?" if p.width >= 32 else "Open monitor?", w.TextStyle(fg=p.theme.title))
+            p.button(w.ButtonOptions(label="Open monitor [Enter]" if p.width >= 24 else "Open [Enter]", color=p.theme.accent),
+                     lambda: setattr(state, "startup", False))
+            p.checkbox(w.CheckboxOptions(label="Always open on startup [Space]" if p.width >= 36 else "Auto-open [Space]",
+                                         checked=state.auto_open, color=p.theme.accent),
+                       lambda: setattr(state, "auto_open", not state.auto_open))
+            if p.height >= 11:
+                p.label("Leave unchecked to keep this status page.")
+            if state.preference_error:
+                p.text(state.preference_error, w.TextStyle(fg=p.theme.warning))
+
+        ui.spacer()
+        def centered(r):
+            r.spacer()
+            r.panel(Panel(title=" hermes on herdr ", subtitle=" DEMO " if self.demo else "",
+                          size=min(70, ui.width - 2), border_color=ui.theme.accent, background=ui.theme.surface), content)
+            r.spacer()
+        ui.row(Layout(size=min(14, max(6, ui.height - 2))), centered)
+        ui.spacer()
+        items = [w.StatusItem("Open", "Enter")]
+        if ui.width >= 60:
+            items += [w.StatusItem("Auto-open", "Space")]
+        items += [w.StatusItem("Pause", "^C")] if self.embedded else [w.StatusItem("Quit", "q")]
+        ui.status_bar(w.StatusBarOptions(items=items))
 
     def _status(self, profile):
         return state_of(profile, self._now, self.state.interval, self._count)
@@ -421,11 +472,11 @@ class DashboardView:
         p.label("Metadata only / message contents stay private")
 
     def _footer(self, ui):
-        items = [w.StatusItem("Help", "?"), w.StatusItem("Hide" if self.embedded else "Quit", "q")]
+        items = [w.StatusItem("Help", "?"), w.StatusItem("Status" if self.embedded else "Quit", "q")]
         if ui.width >= 60:
             items += [w.StatusItem("Layout", "l"), w.StatusItem("Theme", "t")]
         if ui.width >= 100:
-            items += [w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/")]
+            items += [w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/"), w.StatusItem("Startup", "b")]
         if ui.width >= 120:
             items += [w.StatusItem("Motion " + ("on" if self.state.animation else "off"), "a")]
         if ui.width >= 150:
@@ -447,7 +498,8 @@ class DashboardView:
                          "l                 Layout: auto / cards / table", "t                 Theme: herdr / nord / high-contrast / monochrome",
                          "s                 Toggle lightweight system sampling", "+ / -             Sample faster / slower: 2s / 5s / 10s",
                          "a                 Toggle the caduceus glow",
-                         "q                 Hide / show this view" if self.embedded else "q / Ctrl+C        Close the monitor",
+                         "b                 Gateway status and auto-open preference",
+                         "q                 Return to Gateway status" if self.embedded else "q / Ctrl+C        Close the monitor",
                          "Ctrl+C            Pause the managed Gateway" if self.embedded else "",
                          "", "The pinned profile belongs to Herdr. Other profiles are observed only.",
                          "CPU is per Gateway process (100% = one core); RSS excludes descendants.",

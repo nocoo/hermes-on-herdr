@@ -14,7 +14,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 from hermes_gateway_herdr import dashboard
-from hermes_gateway_herdr.dashboard_view import ViewState
+from hermes_gateway_herdr.dashboard_view import DashboardView, ViewState, theme_for
 from hermes_gateway_herdr.display import Display
 from helpers import Fixture, ROOT, Terminal, json_lines, private_file, wait_until
 
@@ -47,26 +47,28 @@ class DashboardTests(unittest.TestCase):
 
     def test_preferences_are_private_atomic_and_only_persist_presentation_settings(self):
         state = ViewState(layout="table", theme="nord", system=False, interval=10,
-                          animation=False, filter="private-filter", selected="another", quiet=True, help=True)
+                          animation=False, auto_open=True, filter="private-filter", selected="another", startup=True, help=True)
         self.assertTrue(dashboard.save_preferences(self.config, state))
         self.assertEqual(0o600, stat.S_IMODE(self.path.stat().st_mode))
-        self.assertEqual({"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10, "animation": False},
+        self.assertEqual({"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10,
+                          "animation": False, "auto_open": True},
                          json.loads(self.path.read_text()))
         loaded = dashboard.load_preferences(self.config)
         self.assertEqual(dashboard.preferences(state), dashboard.preferences(loaded))
         self.assertEqual((self.config.profile_id, "", False, False),
-                         (loaded.selected, loaded.filter, loaded.quiet, loaded.help))
+                         (loaded.selected, loaded.filter, loaded.startup, loaded.help))
         with patch.object(dashboard.os, "replace", side_effect=OSError("fixture full disk")):
             self.assertFalse(dashboard.save_preferences(self.config, ViewState()))
         self.assertEqual(dashboard.preferences(loaded), json.loads(self.path.read_text()))
         self.assertEqual([], list(self.config.config_dir.glob(".dashboard-*")))
 
-    def test_existing_preferences_keep_their_settings_when_animation_is_added(self):
+    def test_existing_preferences_keep_their_settings_without_opting_into_auto_open(self):
         old = {"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10}
         private_file(self.path, json.dumps(old))
-        self.assertEqual(dict(old, animation=True), dashboard.preferences(dashboard.load_preferences(self.config)))
-        private_file(self.path, json.dumps(dict(old, animation="false")))
-        self.assertEqual(dashboard.preferences(ViewState()), dashboard.preferences(dashboard.load_preferences(self.config)))
+        self.assertEqual(dict(old, animation=True, auto_open=False), dashboard.preferences(dashboard.load_preferences(self.config)))
+        for field, value in (("animation", "false"), ("auto_open", "true"), ("auto_open", 1)):
+            private_file(self.path, json.dumps(dict(old, **{field: value})))
+            self.assertEqual(dashboard.preferences(ViewState()), dashboard.preferences(dashboard.load_preferences(self.config)))
 
     def test_malformed_or_unsafe_preferences_fall_back_without_overwriting_foreign_files(self):
         baseline = dashboard.preferences(ViewState())
@@ -93,6 +95,10 @@ class DashboardTests(unittest.TestCase):
         self.assertIn(b"DEMO", result.stdout)
         self.assertNotIn(b"\x1b", result.stdout)
         self.assertFalse(self.config.state_dir.exists())
+        startup = subprocess.run([*argv, "--startup"], stdin=subprocess.DEVNULL, capture_output=True, timeout=3)
+        self.assertEqual(0, startup.returncode, startup.stderr)
+        self.assertIn(b"Open the monitoring dashboard?", startup.stdout)
+        self.assertNotIn(b"SYSTEM", startup.stdout)
         result = subprocess.run([*argv, "--width", "10"], capture_output=True, timeout=3)
         self.assertEqual(20, result.returncode)
         self.assertEqual("INVALID_ARGUMENT", json.loads(result.stdout)["code"])
@@ -195,7 +201,8 @@ class DashboardTerminalTests(unittest.TestCase):
         wait_until(lambda: b"\x1b[?1003l\x1b[?1002l\x1b[?1000h\x1b[?1006h" in self.terminal.read())
         self.terminal.send(b"llts--")
         path = self.config.config_dir / "dashboard.json"
-        expected = {"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10, "animation": True}
+        expected = {"schema": 1, "layout": "table", "theme": "nord", "system": False, "interval": 10,
+                    "animation": True, "auto_open": False}
         wait_until(lambda: path.exists() and json.loads(path.read_text()) == expected)
         self.terminal.resize(64, 20)
         self.process.send_signal(signal.SIGWINCH)
@@ -260,15 +267,76 @@ class DashboardTerminalTests(unittest.TestCase):
         self.assertIsNone(self.process.poll())
         self.quit()
 
-    def test_embedded_hide_and_ctrl_c_only_use_the_private_parent_channel(self):
+    def test_startup_waits_for_explicit_open_and_does_not_make_it_the_default(self):
+        self.start(mode="startup")
+        self.expect("Open the monitoring dashboard?")
+        wait_until(lambda: self.samples())
+        self.assertFalse(self.terminal.contains("SYSTEM"))
+        self.assertTrue(all(s["managed_only"] and not s["host"] for s in self.samples()))
+        self.terminal.send(b"\r")
+        self.expect("SYSTEM")
+        wait_until(lambda: not self.samples()[-1]["managed_only"])
+        self.terminal.send(b"b")
+        wait_until(lambda: self.samples()[-1]["managed_only"])
+        self.assertFalse(self.samples()[-1]["host"])
+        self.assertFalse((self.config.config_dir / "dashboard.json").exists())
+        self.quit()
+
+    def test_mouse_opt_in_and_keyboard_opt_out_apply_to_subsequent_processes(self):
+        path = self.config.config_dir / "dashboard.json"
+        for run in range(3):
+            self.start(mode="startup")
+            if run == 1:
+                self.expect("SYSTEM")
+                self.terminal.send(b"b")
+            self.expect("Always open on startup [Space]")
+            if run != 1:
+                self.assertFalse(self.terminal.contains("SYSTEM"))
+            if run == 0:
+                from hqtui import render_to_screen
+                view = DashboardView(ViewState(startup=True))
+                screen = render_to_screen(120, 36, theme_for("herdr"),
+                                          lambda ui: view.render(ui, dashboard.demo_snapshot(1)))
+                checkbox = screen.regions[-1].rect
+                self.terminal.send(f"\x1b[<0;{checkbox.x + 1};{checkbox.y + 1}M\x1b[<0;{checkbox.x + 1};{checkbox.y + 1}m".encode())
+            elif run == 1:
+                self.terminal.send(b" ")
+            if run < 2:
+                wait_until(lambda: path.exists() and json.loads(path.read_text())["auto_open"] is (run == 0))
+            self.quit()
+            self.cleanup()
+            self.process = None
+            with self.terminal.lock:
+                self.terminal.output = b""
+
+    def test_unsaved_startup_checkbox_reports_failure_and_stays_unchecked(self):
+        path = self.config.config_dir / "dashboard.json"
+        target = self.fixture.root / "foreign-preferences"
+        private_file(target, "unchanged")
+        path.symlink_to(target)
+        self.start(mode="startup")
+        self.expect("Open the monitoring dashboard?")
+        self.terminal.send(b" ")
+        self.expect("Could not save preferences.")
+        self.assertEqual("unchanged", target.read_text())
+        self.assertFalse(self.terminal.contains("[✓]"))
+        self.quit()
+
+    def test_embedded_startup_open_return_and_ctrl_c_only_use_the_private_parent_channel(self):
         parent, child = socket.socketpair()
         self.addCleanup(parent.close)
         self.addCleanup(child.close)
         self.start(parent=child)
         child.close()
         self.expect("HERDR MANAGED")
+        self.expect("Open the monitoring dashboard?")
+        self.assertFalse(self.terminal.contains("SYSTEM"))
+        self.terminal.send(b"\r")
+        self.expect("SYSTEM")
+        with self.terminal.lock:
+            self.terminal.output = b""
         self.terminal.send(b"q")
-        self.expect("Dashboard hidden")
+        self.expect("Open the monitoring dashboard?")
         parent.settimeout(0.05)
         with self.assertRaises(TimeoutError):
             parent.recv(1)

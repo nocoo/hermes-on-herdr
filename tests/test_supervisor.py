@@ -142,8 +142,14 @@ class SupervisorTests(unittest.TestCase):
         child = self.wait_child()
         wait_until(lambda: terminal.contains("HERDR MANAGED"))
         wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
+        wait_until(lambda: terminal.contains("Open the monitoring dashboard?"))
+        self.assertFalse(terminal.contains("SYSTEM"))
+        terminal.send(b"\r")
+        wait_until(lambda: terminal.contains("SYSTEM"))
+        with terminal.lock:
+            terminal.output = b""
         terminal.send(b"q")
-        wait_until(lambda: terminal.contains("Dashboard hidden"))
+        wait_until(lambda: terminal.contains("Open the monitoring dashboard?"))
         self.assertTrue(same_process(child))
         self.assertEqual("READY", self.status()["state"])
         self.assertEqual("running", self.store.intent()["desired"])

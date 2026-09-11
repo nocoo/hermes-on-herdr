@@ -140,12 +140,13 @@ def dashboard_fixture(config_path, mode):
         def __init__(self, _, *, host):
             self.host, self.selected, self.count = host, config.profile_id, 0
 
-        def collect(self):
+        def collect(self, *, managed_only=False):
             self.count += 1
-            append(config.agent_cwd / "samples.jsonl", {"time": time.monotonic(), "host": self.host, "selected": self.selected})
+            append(config.agent_cwd / "samples.jsonl", {"time": time.monotonic(), "host": self.host,
+                                                       "selected": self.selected, "managed_only": managed_only})
             if mode == "error" and self.count > 1:
                 raise RuntimeError("fixture collector failure")
-            return demo_snapshot(20, now=time.time())
+            return demo_snapshot(1 if managed_only else 20, now=time.time())
     original_app = dashboard.App
     def app(options):
         result = original_app(options)
@@ -154,7 +155,7 @@ def dashboard_fixture(config_path, mode):
                                                      {"time": time.monotonic(), "cells": stats.changed_cells}))
         return result
     with patch.object(dashboard, "Monitor", Samples), patch.object(dashboard, "App", app):
-        return dashboard.run_dashboard(config)
+        return dashboard.run_dashboard(config, startup=mode == "startup")
 
 
 if __name__ == "__main__":

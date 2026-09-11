@@ -197,6 +197,26 @@ class MonitorTests(TestCase):
         self.assertEqual(len(profile.cpu_history), HISTORY)
         self.assertEqual(len(profile.memory_history), HISTORY)
 
+    def test_startup_only_inspects_managed_gateway_and_defers_discovery_and_host_metrics(self):
+        self.profile("other")
+        inspect = mock.Mock(side_effect=lambda c, p: (replace(p, state="STOPPED"), None))
+        monitor = Monitor(self.config, inspect=inspect, managed_status=lambda: {"state": "PAUSED"})
+        monitor.selected = "other"
+        for now in (1, 70):
+            with mock.patch("hermes_gateway_herdr.monitor.discover", side_effect=AssertionError("Startup discovery")), \
+                    mock.patch("psutil.cpu_percent", side_effect=AssertionError("Startup host sampling")), \
+                    mock.patch("psutil.virtual_memory", side_effect=AssertionError("Startup host sampling")):
+                result = monitor.collect(now=now, managed_only=True)
+            self.assertEqual([self.config.profile_id], [p.name for p in result.profiles])
+            self.assertEqual("PAUSED", result.profiles[0].state)
+            self.assertIsNone(result.host_cpu)
+            if now == 1:
+                self.assertEqual([self.config.profile_id], [c.args[1].name for c in inspect.call_args_list])
+                full = monitor.collect(now=2)
+                self.assertEqual({self.config.profile_id, "default", "other"}, {p.name for p in full.profiles})
+                inspect.reset_mock()
+        self.assertEqual([self.config.profile_id], [c.args[1].name for c in inspect.call_args_list])
+
     def test_managed_state_cannot_promote_wrong_native_pid_or_disconnected_platform(self):
         sampled = {"state": "RUNNING", "pid": 123, "started": 1, "rss": 100}
         monitor = Monitor(self.config, inspect=lambda c, p: (replace(p, **sampled), 1), host=False,

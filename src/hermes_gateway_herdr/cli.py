@@ -44,6 +44,7 @@ def parser():
             choice.add_argument("--apply", action="store_true", help="Initialize control state in the existing dedicated Profile")
             choice.add_argument("--dry-run", action="store_true", help="Show the binding plan (default)")
         if name == "dashboard":
+            command.add_argument("--startup", action="store_true", help="Show Gateway startup status and offer to open monitoring")
             command.add_argument("--snapshot", action="store_true", help="Print one read-only text frame and exit")
             command.add_argument("--demo-profiles", type=int, metavar="COUNT", help="Use offline demo profiles; no live sampling")
             command.add_argument("--width", type=int, default=100, help="Snapshot width (20..300)")
@@ -162,7 +163,7 @@ def main(argv=None):
             from .dashboard import run_dashboard
             return run_dashboard(config, snapshot=arguments.snapshot, json_output=arguments.json,
                                  demo_profiles=arguments.demo_profiles, width=arguments.width,
-                                 height=arguments.height, parent_fd=arguments.parent_fd)
+                                 height=arguments.height, parent_fd=arguments.parent_fd, startup=arguments.startup)
         if command == "bind":
             result = binding_plan(config, apply=arguments.apply)
         elif command == "logs":
