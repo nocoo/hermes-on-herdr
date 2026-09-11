@@ -44,7 +44,7 @@ def main():
     if not 20 <= args.width <= 300 or not 8 <= args.height <= 100:
         parser.error("Preview size must be 20..300 columns and 8..100 rows")
     data = demo_snapshot(args.profiles)
-    view = DashboardView(ViewState(selected=args.selected, layout=args.layout), demo=True)
+    view = DashboardView(ViewState(selected=args.selected, layout=args.layout), embedded=True, demo=True)
     screen = render_to_screen(args.width, args.height, theme_for("herdr"), lambda ui: view.render(ui, data, now=data.updated))
     args.output.write_text(fixed_cell_html(screen))
     print(f"Rendered {args.profiles} demo profiles at {args.width}x{args.height}: {args.output}")

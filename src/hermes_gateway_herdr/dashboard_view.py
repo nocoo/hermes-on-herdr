@@ -142,6 +142,8 @@ class DashboardView:
             r.text(f"  {healthy}/{count} online", w.TextStyle(fg=theme.muted), Layout(size=16))
             if width >= 90:
                 r.text(f"{self.session} / local gateways", w.TextStyle(fg=theme.muted))
+            else:
+                r.spacer()
             r.text("DEMO " if self.demo else f"LIVE / {state.interval}s ",
                    w.TextStyle(fg=theme.warning if self.demo else theme.success, align="right"), Layout(size=12))
         ui.row(Layout(size=1, background=theme.surface), header)
@@ -350,9 +352,10 @@ class DashboardView:
 
     def _footer(self, ui):
         items = [w.StatusItem("Help", "?"), w.StatusItem("Layout", "l"), w.StatusItem("Theme", "t"),
-                 w.StatusItem("System", "s"), w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/")]
+                 w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/"),
+                 w.StatusItem("Hide" if self.embedded else "Quit", "q")]
         if ui.width >= 110:
-            items.extend([w.StatusItem("Rate", "+/-"), w.StatusItem("Hide" if self.embedded else "Quit", "q")])
+            items[3:3] = [w.StatusItem("System", "s"), w.StatusItem("Rate", "+/-")]
         ui.status_bar(w.StatusBarOptions(items=items, right=[w.StatusItem(f"{self.state.layout} / {self.state.interval}s")]))
 
     def _help(self, ui):

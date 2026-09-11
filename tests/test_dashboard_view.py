@@ -128,6 +128,9 @@ class DashboardViewTests(TestCase):
 
     def test_demo_marker_and_stop_semantics_are_visible(self):
         self.assertTrue(self.render().contains("DEMO"))
+        narrow = self.render(width=80, height=24, embedded=True)
+        self.assertTrue(narrow.contains("Hide"))
+        self.assertGreater(narrow.find("DEMO")[0], 70)
         standalone = self.render(state=ViewState(help=True))
         embedded = self.render(state=ViewState(help=True), embedded=True)
         self.assertTrue(standalone.contains("Close the monitor"))
