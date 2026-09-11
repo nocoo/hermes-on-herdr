@@ -16,7 +16,7 @@ from hermes_gateway_herdr.controller import Controller
 from hermes_gateway_herdr.identity import same_process, signal_verified
 from hermes_gateway_herdr.state import Store
 from fake_owner import FakeOwner
-from helpers import Fixture, ROOT, private_file, wait_until
+from helpers import Fixture, ROOT, json_lines, private_file, wait_until
 
 
 class CliTests(unittest.TestCase):
@@ -104,6 +104,33 @@ class CliTests(unittest.TestCase):
         self.assertEqual("PAUSED", stopped["runtime"]["state"])
         self.assertFalse(self.store.lifetime_held())
         self.assertEqual(1, len(self.owner.processes))
+
+    def test_disabled_start_arms_startup_without_launching_before_enable(self):
+        self.owner.enabled = False
+        code, result = self.inline("start")
+        self.assertEqual(0, code)
+        self.assertTrue(result["accepted"])
+        self.assertEqual("DISABLED", result["state"])
+        self.assertEqual("running", self.store.intent()["desired"])
+        hook = self.invoke("ensure", "--source", "startup")
+        self.assertEqual(0, hook.returncode)
+        self.assertEqual("DISABLED", json.loads(hook.stdout)["state"])
+        self.assertIsNone(self.store.read("runtime.json"))
+        self.assertIsNone(self.store.read("pending.json"))
+        self.assertEqual([], self.owner.processes)
+        self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
+
+        self.owner.enabled = True
+        self.assertEqual(0, self.inline("ensure", "--source", "startup")[0])
+        wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
+        child = self.store.read("runtime.json")["gateway"]
+        code, repeated = self.inline("ensure", "--source", "startup")
+        self.assertEqual(0, code)
+        self.assertEqual("READY", repeated["state"])
+        self.assertTrue(same_process(child))
+        self.assertEqual(child, self.store.read("runtime.json")["gateway"])
+        self.assertEqual(1, len(self.owner.processes))
+        self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
 
     def test_hook_busy_and_nonowner_return_quick_normal_results(self):
         with self.store.mutation():
