@@ -10,6 +10,7 @@ import unittest
 from hermes_gateway_herdr.config import HERMES_SHA
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.identity import capture
+from hermes_gateway_herdr.paths import private_bytes
 from hermes_gateway_herdr.rpc import GatewayProbe, Herdr, evaluate_gateway, exchange, hermes_socket, profile_in_use
 from helpers import Fixture, SocketServer, private_file
 
@@ -146,3 +147,34 @@ class RpcTests(unittest.TestCase):
         with self.assertRaises(GatewayError) as error:
             profile_in_use(self.config, timeout=0.01)
         self.assertEqual("UNKNOWN", error.exception.code)
+
+    def test_private_executable_hermes_pid_blocks_live_but_not_stale_process(self):
+        pid = self.config.profile_home / "gateway.pid"
+        for start, expected in [(self.identity["start_time"], True), (1, False)]:
+            with self.subTest(start=start):
+                private_file(pid, json.dumps({"pid": self.child["pid"], "start_time": start}))
+                pid.chmod(0o700)
+                before = pid.read_bytes(), pid.stat().st_ino, pid.stat().st_mode
+                self.assertIs(expected, profile_in_use(self.config))
+                self.assertEqual(before, (pid.read_bytes(), pid.stat().st_ino, pid.stat().st_mode))
+                # Configuration and plugin state retain their strict 0600 contract.
+                with self.assertRaises(GatewayError):
+                    private_bytes(pid)
+
+    def test_hermes_pid_permissions_exception_keeps_privacy_and_link_checks(self):
+        pid = self.config.profile_home / "gateway.pid"
+        private_file(pid, json.dumps({"pid": self.child["pid"], "start_time": 1}))
+        for mode in [0o644, 0o755, 0o710, 0o701]:
+            with self.subTest(mode=oct(mode)):
+                pid.chmod(mode)
+                with self.assertRaises(GatewayError):
+                    profile_in_use(self.config)
+        pid.chmod(0o700)
+        linked = self.fixture.root / "linked-pid"
+        os.link(pid, linked)
+        with self.assertRaises(GatewayError):
+            profile_in_use(self.config)
+        pid.unlink()
+        pid.symlink_to(linked)
+        with self.assertRaises(GatewayError):
+            profile_in_use(self.config)

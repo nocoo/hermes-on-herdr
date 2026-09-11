@@ -38,19 +38,23 @@ def json_object(raw: bytes, *, code: str = "PROTOCOL_ERROR") -> dict:
         raise GatewayError(code, "Malformed JSON object") from exc
 
 
-def check_private(st: os.stat_result, *, directory: bool = False, allow_unlinked: bool = False) -> None:
+def check_private(st: os.stat_result, *, directory: bool = False, allow_unlinked: bool = False,
+                  allow_owner_execute: bool = False) -> None:
     expected = 0o700 if directory else 0o600
+    mode = stat.S_IMODE(st.st_mode)
+    if allow_owner_execute and not directory:
+        mode &= ~stat.S_IXUSR
     right_type = stat.S_ISDIR(st.st_mode) if directory else stat.S_ISREG(st.st_mode)
-    if (not right_type or st.st_uid != os.getuid() or stat.S_IMODE(st.st_mode) != expected
+    if (not right_type or st.st_uid != os.getuid() or mode != expected
             or (not directory and st.st_nlink not in ({0, 1} if allow_unlinked else {1}))):
         raise GatewayError("UNSAFE_PATH", "Expected a private, current-user-owned resource")
 
 
-def private_bytes(path: Path, limit: int = 1024 * 1024) -> bytes:
+def private_bytes(path: Path, limit: int = 1024 * 1024, *, allow_owner_execute: bool = False) -> bytes:
     try:
         fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
         with os.fdopen(fd, "rb") as stream:
-            check_private(os.fstat(stream.fileno()))
+            check_private(os.fstat(stream.fileno()), allow_owner_execute=allow_owner_execute)
             raw = stream.read(limit + 1)
         if len(raw) > limit:
             raise GatewayError("CONFIG_ERROR", "Configuration exceeds its size limit")

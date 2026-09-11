@@ -178,7 +178,8 @@ def profile_in_use(config: Config, *, timeout: float = 2, probe_socket: bool = T
             os.close(fd)
     pid_path = config.profile_home / "gateway.pid"
     if pid_path.exists() or pid_path.is_symlink():
-        record = decode_object(private_bytes(pid_path, 64 * 1024))
+        # Hermes creates PID metadata with os.open's 0777 default (0700 under our umask).
+        record = decode_object(private_bytes(pid_path, 64 * 1024, allow_owner_execute=True))
         pid = record.get("pid")
         if type(pid) is not int or pid <= 0:
             raise GatewayError("UNKNOWN", "Hermes PID record is not verifiable")
