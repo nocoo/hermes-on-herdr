@@ -9,7 +9,7 @@
 
 This Herdr plugin implementation aims to ensure that one dedicated Hermes Gateway runs inside its owning Herdr pane. The Gateway inherits the actual `HERDR_SOCKET_PATH`, `HERDR_WORKSPACE_ID`, `HERDR_TAB_ID` and `HERDR_PANE_ID`, so it can act as a control agent for that session.
 
-**Current status: 87 offline tests pass; cherry is configured and bound, and the plugin is enabled for the user's upcoming Herdr restart.** The repository includes a controller, pane supervisor, development manifest, isolated launcher and command entry point. The original LaunchAgent has been removed, persistent intent is running, and the Doctor action executed through the real Herdr plugin passes all checks. The Gateway is currently ABSENT. Full lifecycle and message round-trip validation remain pending. See the [cherry preparation and validation record](13-cherry接入与验证.md) and the [initial implementation and evidence](12-离线实现与验证.md).
+**Current status: 90 offline tests pass; cherry is READY under plugin supervision, and the user has confirmed message connectivity.** The first restart exposed PID-file permission and process-timestamp compatibility bugs. Both are fixed; a manual `ensure` then restored the Gateway. Live pane ownership, parent/child identity, a single cherry instance and Discord connectivity have been checked. The native LaunchAgent remains removed. A fresh cold start and shutdown after the fixes, plus an explicit pane write/read round trip, remain unverified. See the [cherry integration and validation record](13-cherry接入与验证.md) and the [initial implementation and evidence](12-离线实现与验证.md).
 
 ## Features
 
@@ -24,7 +24,7 @@ A new-Profile initializer, automatic orphan recovery, maintenance/upgrade tools,
 
 ## Usage and development
 
-The current delivery is an offline implementation and development manifest. Read the [configuration examples](../examples/README.md) and [real-environment validation plan](05-实现步骤.md) before preparing a separate test session, dedicated Profile and configuration. There is no one-step installation or automatic Profile creation.
+The current delivery includes the core implementation and a development manifest, with real cherry validation in progress. Read the [configuration examples](../examples/README.md) and [real-environment validation plan](05-实现步骤.md) before preparing a separate test session, dedicated Profile and configuration. There is no one-step installation or automatic Profile creation.
 
 The launcher help requires no configuration and does not connect to Herdr or Hermes:
 
@@ -65,7 +65,7 @@ Run isolated tests with the configured Hermes venv Python:
 
 Tests use temporary directories, fake Herdr RPC and controlled Python Gateway fixtures. They do not import Hermes main or invoke installed Herdr/Hermes entry points. Scenarios cover concurrent creation, lost responses, process exits, pause races, PID reuse, background-process cleanup and log backpressure.
 
-The [recorded output](evidence/offline-unittest.txt) is evidence from macOS. Linux, real PTY/handoff behavior, independent Profile setup and end-to-end model or bot-message exchange have not been validated. Source inspection and fake-process tests do not establish those integration results.
+The [recorded output](evidence/offline-unittest.txt) preserves the initial 84-test macOS run. The latest 90-test result, including configuration, startup preparation and native identity compatibility regressions, is recorded in the [cherry validation document](13-cherry接入与验证.md). Linux and live handoff remain unverified. Real Gateway observations and user-confirmed messaging are recorded separately from offline tests.
 
 ## Stack
 
@@ -120,6 +120,7 @@ The detailed design and evidence documents are in Chinese.
 | [10 · Task list](10-实施任务清单.md) | Priorities, dependencies and completion criteria |
 | [11 · Research record](11-研究与验证记录.md) | Completed research and document checks |
 | [12 · Offline implementation](12-离线实现与验证.md) | Implemented commands, test evidence, limits and remaining validation |
+| [13 · Cherry integration](13-cherry接入与验证.md) | Native shutdown, configuration, restart fixes, live READY and user-confirmed messaging |
 
 ## Pinned baseline
 
@@ -135,8 +136,8 @@ Six local reference implementations and additional candidates are pinned in the 
 
 The host integration is a **Herdr plugin**, registered through `herdr-plugin.toml`. Hermes Python plugins use `plugin.yaml` and load inside Hermes; the lifecycle design does not depend on adding one.
 
-The first version targets host macOS/Linux, one user, one machine and one explicitly bound session. Windows, cross-machine high availability, hot migration of bot tokens, keeping the Gateway available without Herdr, and strong isolation from arbitrary malicious local code are outside that scope. The current work does not change existing Hermes integrations, other Profiles, system services or reference repositories.
+The first version targets host macOS/Linux, one user, one machine and one explicitly bound session. Windows, cross-machine high availability, hot migration of bot tokens, keeping the Gateway available without Herdr, and strong isolation from arbitrary malicious local code are outside that scope. Local integration changes cover plugin installation and configuration, the cherry Profile and its native LaunchAgent. Other Profiles and upstream Hermes/Herdr source code remain unchanged.
 
 The repository follows the observed `<thing>-herdr` naming pattern. Its development manifest uses ID `nocoo.hermes-gateway` and pane entry `gateway`; these identifiers do not need to match the repository name.
 
-The next integration step is the separately authorized [P0 spike](05-实现步骤.md). A development manifest does not establish that real integration or release acceptance has passed. Configuration templates remain review material; see [examples](../examples/README.md).
+Next, complete the cold-start, shutdown-cleanup and explicit pane interaction checks in the [cherry acceptance record](13-cherry接入与验证.md), then review the [P0 validation checklist](05-实现步骤.md). Further service stops performed by the agent require user confirmation. Configuration templates are in [examples](../examples/README.md).

@@ -7,7 +7,7 @@
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
-**当前状态：核心已实现，87 项离线测试通过；cherry 已配置、绑定并启用插件，等待用户重启 Herdr 验证首次启动。** 已有 controller、pane supervisor、开发用 manifest、隔离 launcher 和命令入口。原生 LaunchAgent 已移除，插件的持久意图为 running，实际 Herdr Doctor action 检查通过；当前 Gateway 为 ABSENT。完整生命周期和消息往返尚未验证，当前记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)，首轮实现和历史测试证据见 [12](docs/12-离线实现与验证.md)。
+**当前状态：核心已实现，90 项离线测试通过；cherry 在插件监管下为 READY，用户已确认消息连通。** 首次重启暴露的 PID 文件权限和进程时间戳兼容性问题已修复，随后通过手动 `ensure` 恢复；真实 pane 归属、父子进程、单实例和 Discord 连接均已核对，原生 LaunchAgent 保持移除。修复后的冷启动、退出清理及指定 pane 的双向交互仍待验证。当前记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)，首轮实现和历史测试证据见 [12](docs/12-离线实现与验证.md)。
 
 离线测试使用已配置 Hermes venv 中的 Python 3.11+、psutil 和 PyYAML，不导入 Hermes main，不调用已安装的 Herdr／Hermes：
 
@@ -15,13 +15,13 @@
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC 和受控 Python 假 Gateway，覆盖并发创建、响应丢失、进程退出、暂停竞态、PID 复用、后台任务清理和日志背压。[首轮 84 项完整输出](docs/evidence/offline-unittest.txt)保留了 macOS 上的历史结果；新增配置和启动准备回归、87 项运行结果见 [13](docs/13-cherry接入与验证.md)。Linux、真实 PTY/handoff 和消息往返均未验证。
+测试使用临时目录、假 Herdr RPC 和受控 Python 假 Gateway，覆盖并发创建、响应丢失、进程退出、暂停竞态、PID 复用、后台任务清理和日志背压。[首轮 84 项完整输出](docs/evidence/offline-unittest.txt)保留了 macOS 上的历史结果；新增配置、启动准备及原生身份兼容回归、90 项运行结果见 [13](docs/13-cherry接入与验证.md)。Linux 和 live handoff 尚未验证；真实运行结果与离线测试分别记录。
 
 `status`、`doctor`、`logs` 提供 JSON 诊断；`bind` 默认只展示既有专用 Profile 的绑定计划；Start/Resume 才持久允许运行。新 Profile 初始化器、孤儿自动回收、维护/升级工具和系统服务仍未实现。识别到孤儿或未知启动结果时会阻止替代实例；`stop --wait` 不会把这种状态报告为已停止。
 
 ## 使用与开发
 
-当前交付是离线实现和开发用 manifest。先阅读 [配置示例](examples/README.md) 与 [真实环境验证清单](docs/05-实现步骤.md)，再准备独立的测试 session、专用 Profile 和配置；没有一键安装或自动创建 Profile 的流程。
+当前交付是核心实现和开发用 manifest，正在进行 cherry 的真实验证。先阅读 [配置示例](examples/README.md) 与 [真实环境验证清单](docs/05-实现步骤.md)，再准备独立的测试 session、专用 Profile 和配置；没有一键安装或自动创建 Profile 的流程。
 
 查看 launcher 帮助无需配置，也不会连接 Herdr 或 Hermes：
 
@@ -103,6 +103,7 @@ Profile 是状态隔离，不是 sandbox。持有真实 Herdr socket 并能执�
 | [10 · 实施任务清单](docs/10-实施任务清单.md) | P0/P1/P2、依赖和 DoD |
 | [11 · 研究与验证记录](docs/11-研究与验证记录.md) | 实际执行的研究与文档检查、未执行项 |
 | [12 · 离线实现与验证](docs/12-离线实现与验证.md) | 已实现命令、测试证据、已知限制与下一步门禁 |
+| [13 · cherry 接入与验证](docs/13-cherry接入与验证.md) | 原生停服、配置、重启修复、真实 READY 与用户消息验证 |
 
 ## 固定基线
 
@@ -118,8 +119,8 @@ Profile 是状态隔离，不是 sandbox。持有真实 Herdr socket 并能执�
 
 目标宿主是 **Herdr plugin**：`herdr-plugin.toml` 注册外部命令、hooks、actions、panes。Hermes Python plugin 使用 `plugin.yaml` 并加载进 Hermes 进程；后续可作为受审计的辅助能力，本架构不依赖新增 Hermes plugin 管理生命周期。
 
-首版面向 host macOS/Linux、单用户、单机、明确绑定的一个 session。Windows、跨机器 HA、热迁移 bot token、Herdr 不在时 Gateway 继续服务、对任意恶意本地代码的强隔离都不在首版范围。本阶段也不改变现有 Hermes integration、其他 Profile、系统服务或 reference 仓库。
+首版面向 host macOS/Linux、单用户、单机、明确绑定的一个 session。Windows、跨机器 HA、热迁移 bot token、Herdr 不在时 Gateway 继续服务、对任意恶意本地代码的强隔离都不在首版范围。本机接入变更限于插件安装和配置、cherry Profile 与其原生 LaunchAgent；未修改其他 Profile 或 Hermes/Herdr 上游源码。
 
 仓库名 `hermes-gateway-herdr` 符合已观察到的 `<thing>-herdr` 命名惯例；拟定 manifest ID 为 `nocoo.hermes-gateway`，entrypoint 为 `gateway`，两者不要求与 repo 名相同。
 
-下一步经确认后执行 [P0 spike](docs/05-实现步骤.md)。开发用 manifest 的存在不代表真实集成或发布门禁已经通过；配置示例只供审阅，见 [examples](examples/README.md)。
+下一步按 [cherry 验收记录](docs/13-cherry接入与验证.md) 补齐冷启动、退出清理和指定 pane 的双向交互，再核对 [P0 验证清单](docs/05-实现步骤.md)。后续由 Agent 执行停服仍需先确认；配置示例见 [examples](examples/README.md)。
