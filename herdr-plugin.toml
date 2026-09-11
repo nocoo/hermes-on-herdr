@@ -1,4 +1,4 @@
-# Development manifest. Installation and real-host validation have not been run.
+# Development manifest. Full lifecycle and message validation remain pending.
 id = "nocoo.hermes-gateway"
 name = "Hermes Gateway"
 version = "0.1.0-alpha.0"
