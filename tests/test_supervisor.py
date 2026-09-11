@@ -240,6 +240,7 @@ class SupervisorTests(unittest.TestCase):
         child = self.wait_child()
         wait_until(lambda: self.store.read("runtime.json")["state"] == "READY")
         self.assertEqual(2, self.status()["last_probe"]["level"])
+        self.assertEqual(0o600, (self.config.profile_home / "gateway.lock").stat().st_mode & 0o777)
         duplicate = subprocess.run(self.process.args, env=self.fixture.context(), stdin=subprocess.DEVNULL,
                                    capture_output=True, timeout=3, start_new_session=True)
         self.assertEqual(10, duplicate.returncode)

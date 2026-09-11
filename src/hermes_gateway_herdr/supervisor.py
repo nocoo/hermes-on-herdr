@@ -348,7 +348,7 @@ class Supervisor:
             try:
                 self.child = self.launch(self.config.gateway_argv(), stdin=subprocess.DEVNULL,
                                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=self.config.agent_cwd,
-                                         env=self.config.child_env(self.env), close_fds=True, start_new_session=False)
+                                         env=self.config.child_env(self.env), close_fds=True, start_new_session=False, umask=0o077)
             except OSError as exc:
                 self.runtime.update(spawn_pending=False, state="FUSED")
                 budget.update(fused=True, reason="SPAWN_FAILED", updated_at=time.time())

@@ -44,8 +44,8 @@ def gateway(config_path, index):
     for number in (signal.SIGTERM, signal.SIGUSR1):
         signal.signal(number, request_stop)
     lock_path = config.profile_home / "gateway.lock"
-    private_file(lock_path, "fixture lock\n")
-    lock = lock_path.open()
+    # Match upstream open(a+): privacy must come from the supervisor's child umask.
+    lock = lock_path.open("a+")
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     identity, status = gateway_payloads(config, record)
     private_file(config.profile_home / "gateway.pid", json.dumps({"pid": record["pid"], "start_time": identity["start_time"]}))
@@ -99,6 +99,7 @@ def supervise(config_path):
         assert argv == config.gateway_argv(), argv
         assert kwargs["start_new_session"] is False
         assert kwargs["stdin"] == subprocess.DEVNULL
+        assert kwargs["umask"] == 0o077
         index = len(launch_file.read_text().splitlines()) if launch_file.exists() else 0
         append(launch_file, {"argv": argv, "active_previous": sum(same_process(item) for item in launched),
                              "stdin": "DEVNULL", "same_session": True})
