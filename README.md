@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="assets/brand/icon-rounded.png" width="128" alt="Hermes Gateway for Herdr logo" />
+</p>
 <h1 align="center">Hermes Gateway for Herdr</h1>
 <p align="center">在真实 Herdr pane 内监督专用 Hermes Gateway，保留明确的运行意图与进程所有权。</p>
 <p align="center"><a href="docs/README.en.md">English</a></p>
