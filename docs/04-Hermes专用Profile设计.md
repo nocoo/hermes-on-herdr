@@ -1,6 +1,6 @@
 # 04 · Hermes 专用 Profile 设计
 
-本章是未来初始化和运维规范，**本轮没有执行创建、配置、授权、安装或启动命令**。命令按本机 v0.21.1 parser／配置消费者和 [官方 Profiles 文档](https://hermes-agent.nousresearch.com/docs/user-guide/profiles) 对照；不把文档中的命令片段当成本仓库当前已实现的工具。
+本章是初始化和运维规范，**本轮没有对用户 Profile 执行创建、配置、授权、安装或启动命令**。已有 `bind` 仅负责既有专用 Profile 的控制目录，默认 dry-run；新 Profile 初始化器、SOUL/skill 安装仍未实现。下文 Hermes 命令按固定 parser／配置消费者和 [官方 Profiles 文档](https://hermes-agent.nousresearch.com/docs/user-guide/profiles) 对照，不能当成已通过真实验证的流程。[当前接口](12-离线实现与验证.md)
 
 ## 4.1 Profile 身份和隔离范围
 

@@ -50,4 +50,3 @@ class LifecycleTests(unittest.TestCase):
         self.assertTrue(retry_budget(budget, 75, 10000, Limits())[0]["fused"])
         self.assertEqual(1.2, retry_budget(None, 1, 1, Limits(), jitter=999)[1])
         self.assertEqual(0.8, retry_budget(None, 1, 1, Limits(), jitter=-999)[1])
-

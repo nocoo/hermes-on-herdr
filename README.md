@@ -2,13 +2,17 @@
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
-**当前状态：离线核心实现中，尚未通过真实环境验证。** `src/` 与 `tests/` 开始实现设计约定；目前不提供经过验证的安装包。本阶段不创建或修改用户 Hermes Profile、不安装插件、不启动真实 Gateway。真实 Herdr／Hermes、消息平台和系统服务验证需要另行确认。
+**当前状态：首轮离线核心已实现，84 项测试通过，真实环境验证待确认。** 已有 controller、pane supervisor、开发用 manifest、隔离 launcher 和命令入口。目前未安装插件、未创建或修改用户 Hermes Profile、未启动真实 Gateway。实现范围、原子提交和测试证据见 [12 · 离线实现与验证](docs/12-离线实现与验证.md)。
 
 离线测试使用已配置 Hermes venv 中的 Python 3.11+、psutil 和 PyYAML，不导入 Hermes main，不调用已安装的 Herdr／Hermes：
 
 ```sh
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
+
+测试使用临时目录、假 Herdr RPC 和受控 Python 假 Gateway，覆盖并发创建、响应丢失、进程退出、暂停竞态、PID 复用、后台任务清理和日志背压。[完整输出](docs/evidence/offline-unittest.txt)记录了 macOS 上的实际结果；Linux、真实 PTY/handoff 和消息往返均未验证。
+
+`status`、`doctor`、`logs` 提供 JSON 诊断；`bind` 默认只展示既有专用 Profile 的绑定计划；Start/Resume 才持久允许运行。新 Profile 初始化器、孤儿自动回收、维护/升级工具和系统服务仍未实现。识别到孤儿或未知启动结果时会阻止替代实例；`stop --wait` 不会把这种状态报告为已停止。
 
 ## 结论
 
@@ -49,6 +53,7 @@ Profile 是状态隔离，不是 sandbox。持有真实 Herdr socket 并能执�
 | [09 · 源码证据索引](docs/09-源码证据索引.md) | commit、path、symbol、官方文档、GitHub 查询 |
 | [10 · 实施任务清单](docs/10-实施任务清单.md) | P0/P1/P2、依赖和 DoD |
 | [11 · 研究与验证记录](docs/11-研究与验证记录.md) | 实际执行的研究与文档检查、未执行项 |
+| [12 · 离线实现与验证](docs/12-离线实现与验证.md) | 已实现命令、测试证据、已知限制与下一步门禁 |
 
 ## 固定基线
 
@@ -68,4 +73,4 @@ Profile 是状态隔离，不是 sandbox。持有真实 Herdr socket 并能执�
 
 仓库名 `hermes-gateway-herdr` 符合已观察到的 `<thing>-herdr` 命名惯例；拟定 manifest ID 为 `nocoo.hermes-gateway`，entrypoint 为 `gateway`，两者不要求与 repo 名相同。
 
-下一轮从 [P0 spike](docs/05-实现步骤.md) 开始。文档里的拟实现命令和配置示例均有执行前提，不能视为当前可用产品。
+下一步经确认后执行 [P0 spike](docs/05-实现步骤.md)。开发用 manifest 的存在不代表真实集成或发布门禁已经通过；配置示例只供审阅，见 [examples](examples/README.md)。

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "profile_id": "herdr-control",
+  "profile_home": "/absolute/hermes-data/profiles/herdr-control",
+  "owner_session": "default",
+  "owner_socket": "/absolute/herdr-runtime/api.sock",
+  "python_bin": "/absolute/hermes-agent/venv/bin/python",
+  "hermes_bin": "/absolute/hermes-agent/venv/bin/hermes",
+  "hermes_root": "/absolute/hermes-agent",
+  "herdr_bin": "/absolute/bin/herdr",
+  "agent_cwd": "/absolute/herdr-agent-work",
+  "plugin_root": "/absolute/hermes-gateway-herdr",
+  "expected_platforms": ["telegram"]
+}

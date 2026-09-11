@@ -1,0 +1,24 @@
+# Review template only. Fill the provider/model and paths in an isolated Profile after approval.
+# Credentials and platform access policy belong in that Profile's private configuration.
+model:
+  provider: "<explicit-provider>"
+  default: "<explicit-model>"
+terminal:
+  backend: local
+  home_mode: profile
+  cwd: /absolute/herdr-agent-work
+  auto_source_bashrc: false
+  shell_init_files: []
+plugins:
+  enabled: []
+gateway:
+  multiplex_profiles: false
+multiplex_profiles: false
+nous:
+  keepalive_interval_seconds: 0
+mcp_servers: {}
+hooks: []
+platform_toolsets:
+  telegram: [terminal, skills, memory]
+agent:
+  disabled_toolsets: [cronjob, browser, file]
