@@ -155,7 +155,11 @@ def profile_preflight(config: Config) -> None:
                 or model["provider"].strip() in {"", "auto"}
                 or not isinstance(model.get("default"), str) or not model["default"].strip()):
             raise ValueError("model")
-        if any(key in model for key in ("api_key", "token", "password", "secret")):
+        if any(key in model for key in ("token", "password", "secret")):
+            raise ValueError("model secret")
+        # Hermes setup writes literal ${NAME} references; only Hermes resolves the private .env.
+        if "api_key" in model and (not isinstance(model["api_key"], str)
+                                   or not re.fullmatch(r"\$\{[A-Za-z_][A-Za-z0-9_]*\}", model["api_key"])):
             raise ValueError("model secret")
         for key in ("base_url", "api_base"):
             if model.get(key):

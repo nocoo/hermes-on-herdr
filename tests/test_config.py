@@ -53,6 +53,23 @@ class ConfigTests(unittest.TestCase):
                 with self.assertRaises(GatewayError):
                     profile_preflight(self.config)
 
+    def test_model_key_can_reference_a_profile_environment_secret_without_resolving_it(self):
+        self.fixture.profile_data["model"]["api_key"] = "${HERMES_CUSTOM_TEST_API_KEY}"
+        self.fixture.write_profile()
+        private_file(self.fixture.profile / ".env", "HERMES_CUSTOM_TEST_API_KEY=fixture-private-sentinel\n")
+        before = {name: (self.fixture.profile / name).read_bytes() for name in ("config.yaml", ".env")}
+        profile_preflight(self.config)
+        self.assertEqual(before, {name: (self.fixture.profile / name).read_bytes() for name in before})
+
+    def test_model_key_rejects_inline_secrets_and_nonliteral_environment_references(self):
+        for value in ("fixture-private-sentinel", "${KEY}suffix", "${KEY:-fallback}", "$(command)", None, []):
+            with self.subTest(value=value):
+                self.fixture.profile_data["model"]["api_key"] = value
+                self.fixture.write_profile()
+                with self.assertRaises(GatewayError) as error:
+                    profile_preflight(self.config)
+                self.assertNotIn("fixture-private-sentinel", str(error.exception))
+
     def test_env_overrides_and_duplicate_yaml_fail_closed_without_secret_output(self):
         for line in ("HERDR_SOCKET_PATH=/wrong", "GATEWAY_MULTIPLEX_PROFILES=1", "HERMES_HOME=/wrong"):
             private_file(self.fixture.profile / ".env", line + "\nTOKEN=fixture-private-sentinel\n")
