@@ -1,0 +1,131 @@
+"""Widgets draw straight onto a :class:`~hqtui.surface.Surface`.
+
+The builder in :mod:`hqtui.ui` wraps every one of these with layout, so reach
+for these directly only when you are drawing inside a ``draw`` escape hatch.
+"""
+
+from .controls import (
+    ButtonOptions,
+    ButtonVariant,
+    CheckboxOptions,
+    CheckboxVariant,
+    CommandPaletteOptions,
+    ModalButton,
+    ModalOptions,
+    PaletteItem,
+    SelectOptions,
+    TabsOptions,
+    TabVariant,
+    TextInputOptions,
+    TooltipOptions,
+    draw_button,
+    draw_checkbox,
+    draw_command_palette,
+    draw_modal,
+    draw_select,
+    draw_tabs,
+    draw_text_input,
+    draw_tooltip,
+)
+from .meters import (
+    ColumnsOptions,
+    GraphOptions,
+    HeatBarOptions,
+    MeterItem,
+    MeterOptions,
+    MetersOptions,
+    ProgressOptions,
+    SparklineWidgetOptions,
+    clamp_ratio,
+    draw_columns,
+    draw_donut,
+    draw_gauge,
+    draw_graph,
+    draw_heat_bar,
+    draw_meter,
+    draw_meters,
+    draw_progress,
+    draw_sparkline,
+    nice_label,
+)
+from .table import (
+    ListItem,
+    ListOptions,
+    LogEntry,
+    LogOptions,
+    TableColumn,
+    TableOptions,
+    TableRow,
+    TreeNode,
+    TreeOptions,
+    TreeValue,
+    draw_list,
+    draw_log,
+    draw_table,
+    draw_tree,
+    resolve_offset,
+)
+from .calendar import (
+    CALENDAR_WIDTH,
+    CalendarMark,
+    CalendarOptions,
+    calendar_height,
+    day_of_week,
+    days_in_month,
+    draw_calendar,
+    is_leap_year,
+)
+from .chart import ChartOptions, draw_chart
+from .shadow import ShadowOptions, dim_rect, draw_shadow
+from .world import WorldMapOptions, country_at_cell, draw_world_map
+from .surface import ClearOptions, FillOptions, draw_clear, draw_fill
+from .scrollbar import (
+    ScrollbarOptions,
+    ScrollbarOrientation,
+    draw_scrollbar,
+    draw_scrollbar_widget,
+    is_vertical,
+    offset_for_position,
+    thumb,
+)
+from .text import (
+    BadgeOptions,
+    BadgeVariant,
+    DividerOptions,
+    KeyStyle,
+    KeyValueOptions,
+    KeyValueRow,
+    StatusBarOptions,
+    StatusItem,
+    TextStyle,
+    draw_badge,
+    draw_divider,
+    draw_key_values,
+    draw_status_bar,
+    draw_text,
+)
+
+__all__ = [
+    "BadgeOptions", "BadgeVariant", "ButtonOptions", "ButtonVariant",
+    "CheckboxOptions", "CheckboxVariant", "ColumnsOptions",
+    "CommandPaletteOptions", "DividerOptions", "GraphOptions", "HeatBarOptions",
+    "KeyStyle", "KeyValueOptions", "KeyValueRow", "ListItem", "ListOptions",
+    "LogEntry", "LogOptions", "MeterItem", "MeterOptions", "MetersOptions",
+    "ModalButton", "ModalOptions", "PaletteItem", "ProgressOptions",
+    "SelectOptions", "SparklineWidgetOptions", "StatusBarOptions", "StatusItem",
+    "TabVariant", "TableColumn", "TableOptions", "TableRow", "TabsOptions",
+    "TextInputOptions", "TextStyle", "TooltipOptions", "TreeNode", "TreeOptions",
+    "TreeValue", "clamp_ratio", "draw_badge", "draw_button", "draw_checkbox",
+    "draw_columns", "draw_command_palette", "draw_divider", "draw_donut",
+    "draw_gauge", "draw_graph", "draw_heat_bar", "draw_key_values", "draw_list",
+    "draw_log", "draw_meter", "draw_meters", "draw_modal", "draw_progress",
+    "CalendarMark", "CalendarOptions", "calendar_height", "day_of_week", "days_in_month",
+    "draw_calendar", "is_leap_year", "CALENDAR_WIDTH",
+    "ChartOptions", "draw_chart", "ClearOptions", "FillOptions", "draw_clear", "draw_fill",
+    "ShadowOptions", "dim_rect", "draw_shadow",
+    "WorldMapOptions", "country_at_cell", "draw_world_map",
+    "ScrollbarOptions", "ScrollbarOrientation", "is_vertical", "offset_for_position",
+    "thumb", "draw_scrollbar", "draw_scrollbar_widget", "draw_select", "draw_sparkline", "draw_status_bar",
+    "draw_table", "draw_tabs", "draw_text", "draw_text_input", "draw_tooltip",
+    "draw_tree", "nice_label", "resolve_offset",
+]
