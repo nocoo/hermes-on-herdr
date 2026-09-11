@@ -118,3 +118,18 @@ with Store(sys.argv[2]) as store:
                 self.store.set_intent("resume", request_id="new", expected_revision=1)
             self.assertEqual("STALE_REQUEST", error.exception.code)
             self.assertEqual(pause, self.store.intent())
+
+    def test_atomic_replace_between_open_and_fstat_keeps_reader_snapshot_valid(self):
+        old = self.store.intent()
+        replacement = self.path / "replacement"
+        replacement.write_text(json.dumps(dict(old, revision=old["revision"] + 1)))
+        replacement.chmod(0o600)
+        original_open = os.open
+        def racing_open(name, flags, *args, **kwargs):
+            fd = original_open(name, flags, *args, **kwargs)
+            if name == "intent.json" and replacement.exists():
+                os.replace(replacement, self.path / "intent.json")
+            return fd
+        with patch("hermes_gateway_herdr.state.os.open", side_effect=racing_open):
+            self.assertEqual(old, self.store.intent())
+        self.assertEqual(old["revision"] + 1, self.store.intent()["revision"])

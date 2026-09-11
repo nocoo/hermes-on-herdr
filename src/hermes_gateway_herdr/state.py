@@ -17,11 +17,11 @@ DATA_FILES = frozenset({"binding.json", "intent.json", "pending.json", "runtime.
 MAX_STATE_BYTES = 256 * 1024
 
 
-def check_private(st: os.stat_result, *, directory: bool = False) -> None:
+def check_private(st: os.stat_result, *, directory: bool = False, allow_unlinked: bool = False) -> None:
     expected = 0o700 if directory else 0o600
     right_type = stat.S_ISDIR(st.st_mode) if directory else stat.S_ISREG(st.st_mode)
     if (not right_type or st.st_uid != os.getuid() or stat.S_IMODE(st.st_mode) != expected
-            or (not directory and st.st_nlink != 1)):
+            or (not directory and st.st_nlink not in ({0, 1} if allow_unlinked else {1}))):
         raise GatewayError("UNSAFE_PATH", "Expected a private, current-user-owned resource")
 
 
@@ -133,7 +133,9 @@ class Store:
     def _open(self, name: str, flags: int) -> int:
         fd = os.open(name, flags | os.O_NOFOLLOW | os.O_CLOEXEC, 0o600, dir_fd=self.fd)
         try:
-            check_private(os.fstat(fd))
+            # A reader may open the old inode immediately before an atomic replacement.
+            # Its nlink then becomes zero; the opened, private snapshot is still valid.
+            check_private(os.fstat(fd), allow_unlinked=name in DATA_FILES and flags & os.O_ACCMODE == os.O_RDONLY)
             return fd
         except BaseException:
             os.close(fd)
