@@ -145,6 +145,8 @@ class DashboardView:
             r.text("DEMO " if self.demo else f"LIVE / {state.interval}s ",
                    w.TextStyle(fg=theme.warning if self.demo else theme.success, align="right"), Layout(size=12))
         ui.row(Layout(size=1, background=theme.surface), header)
+        if snapshot.error:
+            ui.text(f" Monitoring unavailable: {text(snapshot.error)}", w.TextStyle(fg=theme.warning), Layout(size=1))
         if height < 10 or width < 36:
             ui.text(f"{text(owned.name)} [HERDR] {self._status(owned)}")
             ui.label(f"{count} profiles / expand pane for details")
@@ -160,7 +162,8 @@ class DashboardView:
         ui.spacer(1)
         compact = width < 100 or height < 30
         hero_height = 8 if compact else min(17, max(12, height // 2 - 2))
-        if count == 1 and not compact and not state.help and state.layout != "table":
+        if (count == 1 and not compact and not state.help and state.layout != "table"
+                and not state.filter and not state.filtering):
             def single(r):
                 self._profile_panel(r, owned, hero=True, size="2fr")
                 def side(c):

@@ -1,9 +1,13 @@
 import json
+import fcntl
 import os
 from pathlib import Path
+import select
 import socket
+import struct
 import sys
 import tempfile
+import termios
 import threading
 import time
 
@@ -31,6 +35,67 @@ def json_lines(path):
 def private_file(path: Path, value: str) -> None:
     path.write_text(value)
     path.chmod(0o600)
+
+
+class Terminal:
+    """A real, isolated PTY. Only the explicitly created test process uses it."""
+
+    def __init__(self, width=120, height=36, *, drain=True):
+        self.master, self.slave = os.openpty()
+        self.mode = termios.tcgetattr(self.slave)
+        self.output = b""
+        self.bytes_received = 0
+        self.lock, self.stopped = threading.Lock(), threading.Event()
+        self.reader = None
+        os.set_blocking(self.master, False)
+        self.resize(width, height)
+        if drain:
+            self.reader = threading.Thread(target=self._drain, daemon=True)
+            self.reader.start()
+
+    def resize(self, width, height):
+        fcntl.ioctl(self.slave, termios.TIOCSWINSZ, struct.pack("HHHH", height, width, 0, 0))
+
+    def send(self, data):
+        os.write(self.master, data)
+
+    def read(self):
+        with self.lock:
+            while True:
+                try:
+                    chunk = os.read(self.master, 65536)
+                    if not chunk:
+                        break
+                    self.bytes_received += len(chunk)
+                    self.output = (self.output + chunk)[-262144:]
+                except (BlockingIOError, OSError):
+                    break
+        return self.output
+
+    def _drain(self):
+        while not self.stopped.is_set():
+            if select.select([self.master], [], [], 0.05)[0]:
+                self.read()
+
+    def stop_draining(self):
+        self.stopped.set()
+        if self.reader:
+            self.reader.join(timeout=1)
+
+    def restored(self):
+        actual, expected = termios.tcgetattr(self.slave), self.mode[:]
+        # macOS sets this internal "retype pending input" bit during termios changes.
+        actual[3] &= ~getattr(termios, "PENDIN", 0)
+        expected[3] &= ~getattr(termios, "PENDIN", 0)
+        return actual == expected
+
+    def contains(self, text):
+        return text.encode() in self.read()
+
+    def close(self):
+        self.stop_draining()
+        os.close(self.master)
+        os.close(self.slave)
 
 
 class Fixture:

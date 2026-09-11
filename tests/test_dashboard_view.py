@@ -90,6 +90,12 @@ class DashboardViewTests(TestCase):
         self.assertFalse(screen.contains("discord connected"))
         self.assertFalse(screen.contains("149.3 MiB"))
 
+    def test_single_profile_filter_and_collector_error_are_visible(self):
+        self.assertTrue(self.render(1, state=ViewState(filter="no-match")).contains("No matching profiles"))
+        self.assertTrue(self.render(1, state=ViewState(filtering=True)).contains("Filter: /_"))
+        data = replace(demo_snapshot(1), error="COLLECTOR_UNAVAILABLE")
+        self.assertTrue(self.render(data=data).contains("Monitoring unavailable"))
+
     def test_layout_theme_rate_and_system_controls_change_the_actual_view(self):
         data = demo_snapshot(2)
         state = ViewState(selected="cherry")

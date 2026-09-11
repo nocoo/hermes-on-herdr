@@ -1,19 +1,23 @@
 import json
 import os
 from pathlib import Path
+import select
 import signal
 import socket
 import subprocess
 import sys
+import termios
 import time
 import unittest
+
+import psutil
 
 from hermes_gateway_herdr.config import PLUGIN_ID
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.identity import capture, same_process, signal_verified
 from hermes_gateway_herdr.rpc import control_query, exchange, supervisor_socket
 from hermes_gateway_herdr.state import Store
-from helpers import Fixture, SocketServer, json_lines, private_file, wait_until
+from helpers import Fixture, SocketServer, Terminal, json_lines, private_file, wait_until
 
 
 class SupervisorTests(unittest.TestCase):
@@ -59,7 +63,8 @@ class SupervisorTests(unittest.TestCase):
             except subprocess.TimeoutExpired:
                 signal_verified(self.record, signal.SIGKILL)
                 self.process.wait(timeout=3)
-            self.process.stdout.close()
+            if self.process.stdout is not None:
+                self.process.stdout.close()
             errors = self.process.stderr.read().decode()
             self.process.stderr.close()
         paths = (self.fixture.root / "children.jsonl",)
@@ -74,7 +79,7 @@ class SupervisorTests(unittest.TestCase):
         if errors:
             raise AssertionError(errors)
 
-    def start(self, plan=None, *, paused=False):
+    def start(self, plan=None, *, paused=False, terminal=None):
         private_file(self.fixture.root / "plan.json", json.dumps(plan or {}))
         with self.store.mutation():
             intent = self.store.set_intent("resume")
@@ -84,8 +89,9 @@ class SupervisorTests(unittest.TestCase):
                 self.store.set_intent("pause")
         self.process = subprocess.Popen([sys.executable, "-I", "-B", str(Path(__file__).with_name("process_fixture.py")),
                                          "supervisor", str(self.config.config_dir / "config.json")],
-                                        env=self.fixture.context(), stdin=subprocess.DEVNULL,
-                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+                                        env=self.fixture.context(), stdin=terminal.slave if terminal else subprocess.DEVNULL,
+                                        stdout=terminal.slave if terminal else subprocess.PIPE,
+                                        stderr=subprocess.PIPE, start_new_session=True)
         self.record = capture(self.process.pid)
         return self.process
 
@@ -106,6 +112,87 @@ class SupervisorTests(unittest.TestCase):
 
     def assert_single(self):
         self.assertTrue(all(item["active_previous"] == 0 for item in json_lines(self.fixture.root / "launches.jsonl")))
+
+    def display_failure(self, stage):
+        self.start({"dashboard_failure": stage})
+        child = self.wait_child()
+        wait_until(lambda: (self.fixture.root / "gateway-up").exists())
+        self.assertTrue(same_process(child))
+        self.action("pause", send=False)
+        self.assertEqual(0, self.process.wait(timeout=3))
+        self.assertFalse(same_process(child))
+        self.assertFalse(self.store.lifetime_held())
+        events = json_lines(self.config.state_dir / "logs" / "events.jsonl")
+        self.assertTrue(any(e["event"] == "dashboard_unavailable" and e["stage"] == stage for e in events))
+        self.assertFalse(any(e["event"] == "supervisor_error" for e in events))
+
+    def test_display_start_failure_does_not_prevent_gateway_start_or_pause(self):
+        self.display_failure("start")
+
+    def test_display_poll_failure_does_not_trigger_gateway_emergency_cleanup(self):
+        self.display_failure("poll")
+
+    def test_display_cleanup_failure_does_not_leak_gateway_or_lifetime_lock(self):
+        self.display_failure("close")
+
+    def test_embedded_q_keeps_gateway_running_and_ctrl_c_durably_pauses(self):
+        terminal = Terminal()
+        self.addCleanup(terminal.close)
+        self.start(terminal=terminal)
+        child = self.wait_child()
+        wait_until(lambda: terminal.contains("HERMES"))
+        wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
+        terminal.send(b"q")
+        wait_until(lambda: terminal.contains("Dashboard hidden"))
+        self.assertTrue(same_process(child))
+        self.assertEqual("READY", self.status()["state"])
+        self.assertEqual("running", self.store.intent()["desired"])
+        terminal.send(b"\x03")
+        wait_until(lambda: terminal.read() is not None and self.process.poll() is not None)
+        self.assertEqual(0, self.process.returncode)
+        self.assertEqual("paused", self.store.intent()["desired"])
+        self.assertEqual("supervisor_interrupt", self.store.intent()["reason"])
+        self.assertFalse(same_process(child))
+        self.assertTrue(terminal.restored())
+
+    def test_renderer_crash_leaves_supervision_healthy_and_does_not_get_tracked_as_a_gateway_task(self):
+        terminal = Terminal()
+        self.addCleanup(terminal.close)
+        self.start(terminal=terminal)
+        child = self.wait_child()
+        wait_until(lambda: terminal.contains("HERMES"))
+        wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
+        # Inspect only children of this fixture's supervisor, never the host process table.
+        renderers = [p for p in psutil.Process(self.process.pid).children() if p.pid != child["pid"]]
+        self.assertEqual(1, len(renderers))
+        renderer = capture(renderers[0].pid)
+        self.assertNotIn(renderer["pid"], [p["pid"] for p in self.store.read("runtime.json")["descendants"]])
+        signal_verified(renderer, signal.SIGKILL)
+        wait_until(lambda: terminal.contains("Dashboard unavailable"))
+        self.assertTrue(same_process(child))
+        self.assertEqual("READY", self.status()["state"])
+        self.action("pause", send=False)
+        self.assertEqual(0, self.process.wait(timeout=3))
+        self.assertFalse(same_process(child))
+        self.assertTrue(terminal.restored())
+
+    def test_blocked_renderer_output_cannot_delay_pause_or_terminal_cleanup(self):
+        terminal = Terminal(300, 100, drain=False)
+        self.addCleanup(terminal.close)
+        self.start(terminal=terminal)
+        child = self.wait_child()
+        wait_until(lambda: (self.fixture.root / "gateway-up").exists())
+        wait_until(lambda: select.select([terminal.master], [], [], 0)[0])
+        os.read(terminal.master, 4096)  # Let terminal setup complete, then block the large first frame.
+        wait_until(lambda: not termios.tcgetattr(terminal.slave)[3] & termios.ICANON)
+        # The PTY master is deliberately not drained during the stop.
+        before = time.monotonic()
+        self.action("pause", send=False)
+        self.assertEqual(0, self.process.wait(timeout=3))
+        self.assertLess(time.monotonic() - before, 2)
+        self.assertFalse(same_process(child))
+        self.assertFalse(self.store.lifetime_held())
+        self.assertTrue(terminal.restored())
 
     def test_75_restarts_child_and_clean_zero_latches_pause(self):
         self.start({"exits": [75, 75, 0]})

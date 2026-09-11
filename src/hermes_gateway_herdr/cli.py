@@ -25,9 +25,9 @@ def parser():
     result.add_argument("--config", type=Path, required=True)
     result.add_argument("--owner-socket", type=Path, help="Explicit owner context for commands outside a Herdr hook")
     commands = result.add_subparsers(dest="command", required=True)
-    for name in ("ensure", "supervise", *ACTIONS, "status", "doctor", "logs", "bind"):
+    for name in ("ensure", "supervise", *ACTIONS, "status", "doctor", "logs", "bind", "dashboard"):
         command = commands.add_parser(name, allow_abbrev=False)
-        command.add_argument("--json", action="store_true", help="JSON output (also the default)")
+        command.add_argument("--json", action="store_true", help="JSON output" if name == "dashboard" else "JSON output (also the default)")
         if name == "ensure":
             command.add_argument("--source", choices=("manual", "startup", "event", "timer"), default="manual")
         if name in ACTIONS:
@@ -43,6 +43,12 @@ def parser():
             choice = command.add_mutually_exclusive_group()
             choice.add_argument("--apply", action="store_true", help="Initialize control state in the existing dedicated Profile")
             choice.add_argument("--dry-run", action="store_true", help="Show the binding plan (default)")
+        if name == "dashboard":
+            command.add_argument("--snapshot", action="store_true", help="Print one read-only text frame and exit")
+            command.add_argument("--demo-profiles", type=int, metavar="COUNT", help="Use offline demo profiles; no live sampling")
+            command.add_argument("--width", type=int, default=100, help="Snapshot width (20..300)")
+            command.add_argument("--height", type=int, default=30, help="Snapshot height (8..100)")
+            command.add_argument("--parent-fd", type=int, help=argparse.SUPPRESS)
     return result
 
 
@@ -152,6 +158,11 @@ def main(argv=None):
         command = arguments.command
         if command == "supervise":
             return Supervisor(config, env).run()
+        if command == "dashboard":
+            from .dashboard import run_dashboard
+            return run_dashboard(config, snapshot=arguments.snapshot, json_output=arguments.json,
+                                 demo_profiles=arguments.demo_profiles, width=arguments.width,
+                                 height=arguments.height, parent_fd=arguments.parent_fd)
         if command == "bind":
             result = binding_plan(config, apply=arguments.apply)
         elif command == "logs":

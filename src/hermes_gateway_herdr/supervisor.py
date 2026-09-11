@@ -1,6 +1,7 @@
 """The pane process owns one foreground Gateway and keeps all waits bounded."""
 
 import json
+from contextlib import suppress
 import os
 import queue
 import random
@@ -13,6 +14,7 @@ import time
 import uuid
 
 from .config import Config, ID_PATTERN, preflight
+from .display import Display
 from .errors import GatewayError
 from .event_log import EventLog
 from .identity import capture, descendants, public_identity, same_process, signal_verified
@@ -50,6 +52,7 @@ class Supervisor:
         self.next_probe = self.next_track = self.retry_at = 0
         self.owner_lost = self.ready_since = None
         self.outcome = 0
+        self.display = None
 
     def _validate_ticket(self):
         self.config.check_binding(self.store.read("binding.json", required=True))
@@ -478,6 +481,7 @@ class Supervisor:
 
     def _tick(self):
         now = time.monotonic()
+        self._update_display("poll")
         received, self.signal_received = self.signal_received, None
         if received == signal.SIGINT:
             with self.store.mutation():
@@ -535,12 +539,30 @@ class Supervisor:
         except Exception:
             self.outcome = 30
 
+    def _update_display(self, action):
+        # A best-effort view must never enter the supervisor's emergency cleanup path.
+        try:
+            if action == "start":
+                self.display = Display.start(self.config, self.env)
+            elif self.display is not None:
+                if getattr(self.display, action)() and self.signal_received is None:
+                    self.signal_received = signal.SIGINT
+        except Exception:
+            with suppress(Exception):
+                if self.display is not None and action != "close":
+                    self.display.close(failed=True)
+            self.display = None
+            with suppress(Exception):
+                if self.log:
+                    self.log.event("dashboard_unavailable", stage=action)
+
     def run(self):
         previous = {}
         try:
             for signum in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP):
                 previous[signum] = signal.signal(signum, lambda number, _: setattr(self, "signal_received", number))
             self._claim()
+            self._update_display("start")
             budget = effective_budget(self.store.intent(), self.store.read("fuse.json"))
             self.retry_at = time.monotonic() + min(self.limits.backoff[-1], max(0, budget.get("retry_not_before", 0) - time.time()))
             while self._tick():
@@ -557,6 +579,7 @@ class Supervisor:
                 except GatewayError:
                     pass
         finally:
+            self._update_display("close")
             for signum, handler in previous.items():
                 signal.signal(signum, handler)
             for key in list(self.selector.get_map().values()):

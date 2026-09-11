@@ -110,7 +110,44 @@ def supervise(config_path):
         if record:
             launched.append(record)
         return child
+    if plan.get("dashboard_failure"):
+        from unittest.mock import patch
+        class BrokenDisplay:
+            @classmethod
+            def start(cls, *_):
+                if plan["dashboard_failure"] == "start":
+                    raise RuntimeError("fixture display startup failure")
+                return cls()
+
+            def poll(self):
+                if plan["dashboard_failure"] == "poll":
+                    raise RuntimeError("fixture display polling failure")
+
+            def close(self, **_):
+                if plan["dashboard_failure"] == "close":
+                    raise RuntimeError("fixture display cleanup failure")
+        with patch("hermes_gateway_herdr.supervisor.Display", BrokenDisplay):
+            return Supervisor(config, dict(os.environ), limits=limits, launch=launch, check=profile_preflight).run()
     return Supervisor(config, dict(os.environ), limits=limits, launch=launch, check=profile_preflight).run()
+
+
+def dashboard_fixture(config_path, mode):
+    from unittest.mock import patch
+    from hermes_gateway_herdr import dashboard
+    from hermes_gateway_herdr.dashboard_demo import demo_snapshot
+    config = Config.load(config_path)
+    class Samples:
+        def __init__(self, _, *, host):
+            self.host, self.selected, self.count = host, config.profile_id, 0
+
+        def collect(self):
+            self.count += 1
+            append(config.agent_cwd / "samples.jsonl", {"time": time.monotonic(), "host": self.host, "selected": self.selected})
+            if mode == "error" and self.count > 1:
+                raise RuntimeError("fixture collector failure")
+            return demo_snapshot(20, now=time.time())
+    with patch.object(dashboard, "Monitor", Samples):
+        return dashboard.run_dashboard(config)
 
 
 if __name__ == "__main__":
@@ -132,6 +169,8 @@ if __name__ == "__main__":
         raise SystemExit(supervise(Path(sys.argv[2])))
     if sys.argv[1] == "gateway":
         raise SystemExit(gateway(Path(sys.argv[2]), int(sys.argv[3])))
+    if sys.argv[1] == "dashboard":
+        raise SystemExit(dashboard_fixture(Path(sys.argv[2]), sys.argv[3]))
     if sys.argv[1] == "task":
         root = Path(sys.argv[2])
         plan = json.loads((root / "plan.json").read_text())

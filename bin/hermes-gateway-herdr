@@ -25,7 +25,7 @@ def launch():
         if not directory:
             if "--help" in arguments or "-h" in arguments:
                 print("Usage: hermes-gateway-herdr --config /absolute/config.json COMMAND\n"
-                      "Commands: ensure, supervise, start, resume, pause, stop, restart, status, doctor, logs, bind\n"
+                      "Commands: ensure, supervise, start, resume, pause, stop, restart, status, doctor, logs, bind, dashboard\n"
                       "Configure a private config.json and runtime-python before use. bind defaults to a dry run.")
                 return 0
             raise GatewayError("SETUP_REQUIRED")
