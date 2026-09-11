@@ -6,7 +6,7 @@
   "hqtui_commit": "d9a841494bab910403737a8c791d6d96ef52e878",
   "scope": "Actual embedded TUI process, real PTY, local fixture RPC and process metrics; backend fixtures excluded.",
   "fixture_note": "One supervised fake Gateway; other profile sockets are served by the benchmark process. No installed services are used.",
-  "animation": "Default wingbeats enabled; unchanged telemetry frames are reused.",
+  "animation": "Default caduceus glow enabled; unchanged telemetry frames are reused.",
   "embedded": [
     {
       "profiles": 2,
@@ -14,23 +14,31 @@
         160,
         44
       ],
-      "foreground": {
-        "seconds": 20.027,
-        "cpu_percent_one_core": 0.609,
-        "rss_mib_median": 35.62,
-        "rss_mib_peak": 35.62,
-        "tty_bytes_per_second": 337.8
-      },
-      "hidden": {
-        "seconds": 20.022,
-        "cpu_percent_one_core": 0.041,
-        "rss_mib_median": 35.62,
-        "rss_mib_peak": 35.62,
+      "startup": {
+        "seconds": 20.001,
+        "cpu_percent_one_core": 0.239,
+        "rss_mib_median": 35.86,
+        "rss_mib_peak": 35.86,
         "tty_bytes_per_second": 0.0
       },
+      "foreground": {
+        "seconds": 20.048,
+        "cpu_percent_one_core": 0.582,
+        "rss_mib_median": 35.92,
+        "rss_mib_peak": 35.92,
+        "tty_bytes_per_second": 875.6
+      },
+      "unfocused": {
+        "seconds": 20.035,
+        "cpu_percent_one_core": 0.052,
+        "rss_mib_median": 35.97,
+        "rss_mib_peak": 35.97,
+        "tty_bytes_per_second": 0.0
+      },
+      "startup_background_native_requests": 0,
       "background_profiles_seen_during_foreground": 1,
-      "background_native_requests": 32,
-      "fixture_pause_seconds": 0.126
+      "background_native_requests": 24,
+      "fixture_pause_seconds": 0.18
     },
     {
       "profiles": 50,
@@ -38,23 +46,31 @@
         160,
         44
       ],
-      "foreground": {
-        "seconds": 20.045,
-        "cpu_percent_one_core": 0.755,
-        "rss_mib_median": 35.61,
-        "rss_mib_peak": 35.64,
-        "tty_bytes_per_second": 565.6
-      },
-      "hidden": {
-        "seconds": 20.021,
-        "cpu_percent_one_core": 0.05,
-        "rss_mib_median": 35.64,
-        "rss_mib_peak": 35.64,
+      "startup": {
+        "seconds": 20.01,
+        "cpu_percent_one_core": 0.255,
+        "rss_mib_median": 35.5,
+        "rss_mib_peak": 35.53,
         "tty_bytes_per_second": 0.0
       },
-      "background_profiles_seen_during_foreground": 48,
-      "background_native_requests": 96,
-      "fixture_pause_seconds": 0.128
+      "foreground": {
+        "seconds": 20.033,
+        "cpu_percent_one_core": 0.914,
+        "rss_mib_median": 35.58,
+        "rss_mib_peak": 35.59,
+        "tty_bytes_per_second": 1034.8
+      },
+      "unfocused": {
+        "seconds": 20.035,
+        "cpu_percent_one_core": 0.058,
+        "rss_mib_median": 35.61,
+        "rss_mib_peak": 35.61,
+        "tty_bytes_per_second": 0.0
+      },
+      "startup_background_native_requests": 0,
+      "background_profiles_seen_during_foreground": 39,
+      "background_native_requests": 78,
+      "fixture_pause_seconds": 0.172
     }
   ],
   "render_only": [
@@ -64,8 +80,8 @@
         160,
         44
       ],
-      "median_ms": 5.111,
-      "p95_ms": 5.285
+      "median_ms": 6.033,
+      "p95_ms": 6.309
     },
     {
       "profiles": 2,
@@ -73,8 +89,8 @@
         160,
         44
       ],
-      "median_ms": 6.157,
-      "p95_ms": 6.45
+      "median_ms": 7.102,
+      "p95_ms": 7.295
     },
     {
       "profiles": 50,
@@ -82,8 +98,8 @@
         160,
         44
       ],
-      "median_ms": 7.383,
-      "p95_ms": 7.72
+      "median_ms": 8.748,
+      "p95_ms": 9.6
     },
     {
       "profiles": 1000,
@@ -91,8 +107,8 @@
         160,
         44
       ],
-      "median_ms": 8.704,
-      "p95_ms": 9.21
+      "median_ms": 10.156,
+      "p95_ms": 10.667
     }
   ],
   "animation_only": [
@@ -102,8 +118,8 @@
         160,
         44
       ],
-      "median_ms": 0.118,
-      "p95_ms": 0.121
+      "median_ms": 0.782,
+      "p95_ms": 0.874
     },
     {
       "profiles": 2,
@@ -111,8 +127,8 @@
         160,
         44
       ],
-      "median_ms": 0.117,
-      "p95_ms": 0.124
+      "median_ms": 0.787,
+      "p95_ms": 0.837
     },
     {
       "profiles": 50,
@@ -120,8 +136,8 @@
         160,
         44
       ],
-      "median_ms": 0.116,
-      "p95_ms": 0.121
+      "median_ms": 0.786,
+      "p95_ms": 0.827
     },
     {
       "profiles": 1000,
@@ -129,8 +145,8 @@
         160,
         44
       ],
-      "median_ms": 0.118,
-      "p95_ms": 0.121
+      "median_ms": 0.784,
+      "p95_ms": 0.927
     }
   ]
 }

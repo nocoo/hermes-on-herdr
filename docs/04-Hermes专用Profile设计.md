@@ -46,7 +46,7 @@ env -i HOME="$HOME" PATH=/usr/bin:/bin:/usr/sbin:/sbin HERMES_HOME="$HGH_STAGING
 ```sh
 HGH_HERMES_BIN="$HOME/.hermes/hermes-agent/venv/bin/hermes"
 HGH_PROFILE_HOME="$HOME/.hermes/profiles/herdr-control"
-HGH_AGENT_CWD="$HOME/workspace/personal/hermes-gateway-herdr"
+HGH_AGENT_CWD="$HOME/workspace/personal/hermes-on-herdr"
 : "${HGH_MODEL_PROVIDER:?设置明确的 provider ID}"
 : "${HGH_MODEL_ID:?设置该 provider 支持的模型 ID}"
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config path

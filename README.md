@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="assets/brand/icon-rounded.png" width="128" alt="Hermes Gateway for Herdr logo" />
+  <img src="assets/brand/icon-rounded.png" width="128" alt="hermes on herdr logo" />
 </p>
-<h1 align="center">Hermes Gateway for Herdr</h1>
+<h1 align="center">hermes on herdr</h1>
 <p align="center">在真实 Herdr pane 内监督专用 Hermes Gateway，保留明确的运行意图与进程所有权。</p>
 <p align="center"><a href="docs/README.en.md">English</a></p>
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
-**当前状态：核心与 hqtui 监控面板已实现，142 项离线测试通过。** Talaria 面板带有 Hermes 飞翼字符动画，自动适配 1–2 个或更多 profile，突出 Herdr 专属实例；同一 Hermes 根目录下的其他 profile 只读监控。默认每 2 秒有界采样，支持布局、主题、静态模式和采样频率调整。[面板预览、快捷键与资源测量](docs/14-hqtui监控面板.md)。
+**当前状态：核心、启动状态页和可选 hqtui 监控面板已实现，153 项离线测试通过。** 插件启动后先显示专属 Gateway 状态，按 Enter 打开完整监控；“以后自动打开”默认未勾选，可用空格或鼠标更改并保存。完整面板在右上 SYSTEM 上方展示 Hermes 双蛇杖字符图，适配 1–2 个或更多 profile，并突出 Herdr 专属实例。默认每 2 秒有界采样，支持布局、主题、静态模式和采样频率调整。[面板预览、快捷键与资源测量](docs/14-hqtui监控面板.md)。
 
 cherry 此前在插件监管下达到 READY，用户已确认消息连通；原生 LaunchAgent 保持移除。独立面板已在旁边的 Herdr pane 中进行真实只读预览，cherry 和 default 均在线。Herdr/cherry 没有停止或重启；自动嵌入面板、修复后的冷启动、退出清理及指定 pane 的双向交互仍待确认后验证，记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)。
 
-![hqtui 双 profile 面板，离线演示](docs/evidence/dashboard-two.png)
+![手动打开后的 hqtui 双 profile 面板，离线演示](docs/evidence/dashboard-two.png)
 
 离线测试使用已配置 Hermes venv 中的 Python 3.11+、psutil 和 PyYAML，不导入 Hermes main，不调用已安装的 Herdr／Hermes：
 
@@ -19,7 +19,7 @@ cherry 此前在插件监管下达到 READY，用户已确认消息连通；原�
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC、受控 Python 假 Gateway 和真实 PTY，覆盖并发创建、响应丢失、暂停竞态、PID 复用、后台任务清理、日志背压、多 profile 采样、动画与采样隔离、画面缓存刷新、终端交互与渲染异常隔离。[142 项完整输出](docs/evidence/dashboard-unittest.txt)及[测量方法](docs/14-hqtui监控面板.md#146-测试与测量)已保存；[首轮 84 项](docs/evidence/offline-unittest.txt)和 [cherry 接入阶段的 90 项](docs/13-cherry接入与验证.md)保留为历史记录。Linux 和 live handoff 尚未验证。
+测试使用临时目录、假 Herdr RPC、受控 Python 假 Gateway 和真实 PTY，覆盖并发创建、响应丢失、暂停竞态、PID 复用、后台任务清理、日志背压、多 profile 采样、动画与采样隔离、画面缓存刷新、自动打开偏好跨进程保存、原子替换读取竞态、终端交互与渲染异常隔离。[153 项完整测试输出](docs/evidence/dashboard-unittest.txt)及[测量方法](docs/14-hqtui监控面板.md#146-测试与测量)已保存；[首轮 84 项](docs/evidence/offline-unittest.txt)和 [cherry 接入阶段的 90 项](docs/13-cherry接入与验证.md)保留为历史记录。Linux 和 live handoff 尚未验证。
 
 `status`、`doctor`、`logs` 提供 JSON 诊断；`bind` 默认只展示既有专用 Profile 的绑定计划；Start/Resume 才持久允许运行。新 Profile 初始化器、孤儿自动回收、维护/升级工具和系统服务仍未实现。识别到孤儿或未知启动结果时会阻止替代实例；`stop --wait` 不会把这种状态报告为已停止。
 
@@ -30,7 +30,7 @@ cherry 此前在插件监管下达到 READY，用户已确认消息连通；原�
 查看 launcher 帮助无需配置，也不会连接 Herdr 或 Hermes：
 
 ```sh
-./bin/hermes-gateway-herdr --help
+./bin/hermes-on-herdr --help
 ```
 
 运行时使用 Python 3.11+，复用已配置的 Hermes venv；依赖见 [requirements.txt](requirements.txt)。入口用系统 Python 检查私有解释器提示文件，再以隔离模式启动配置中的 venv Python。配置目录需为 `0700`，`config.json` 与 `runtime-python` 需为 `0600`；后者的一行绝对路径必须与 `python_bin` 一致。
@@ -38,9 +38,9 @@ cherry 此前在插件监管下达到 READY，用户已确认消息连通；原�
 完成独立配置后，以下命令可读取状态或查看绑定计划。路径为占位符，需要替换为已审阅的配置：
 
 ```sh
-./bin/hermes-gateway-herdr --config /absolute/config.json status --json
-./bin/hermes-gateway-herdr --config /absolute/config.json doctor --json
-./bin/hermes-gateway-herdr --config /absolute/config.json bind --dry-run
+./bin/hermes-on-herdr --config /absolute/config.json status --json
+./bin/hermes-on-herdr --config /absolute/config.json doctor --json
+./bin/hermes-on-herdr --config /absolute/config.json bind --dry-run
 ```
 
 | 命令 | 行为 |
@@ -54,6 +54,7 @@ cherry 此前在插件监管下达到 READY，用户已确认消息连通；原�
 | `status --require-ready` | 仅已确认 READY 返回成功；不证明模型或 bot 消息往返可用 |
 | `logs --lines 50` | 读取结构化生命周期事件，不导出原始 child 输出 |
 | `dashboard` | 独立打开只读 TUI；非 TTY 时打印一帧 |
+| `dashboard --startup` | 显示启动状态页，按需进入监控；遵守自动打开偏好 |
 | `dashboard --snapshot` / `dashboard --json` | 一次性文本或 JSON 监控快照 |
 | `dashboard --demo-profiles 2` | 使用合成数据预览，不采样真实 profile |
 
@@ -130,6 +131,6 @@ Profile 是状态隔离，不是 sandbox。持有真实 Herdr socket 并能执�
 
 首版面向 host macOS/Linux、单用户、单机、明确绑定的一个 session。Windows、跨机器 HA、热迁移 bot token、Herdr 不在时 Gateway 继续服务、对任意恶意本地代码的强隔离都不在首版范围。本机接入变更限于插件安装和配置、cherry Profile 与其原生 LaunchAgent；未修改其他 Profile 或 Hermes/Herdr 上游源码。
 
-仓库名 `hermes-gateway-herdr` 符合已观察到的 `<thing>-herdr` 命名惯例；拟定 manifest ID 为 `nocoo.hermes-gateway`，entrypoint 为 `gateway`，两者不要求与 repo 名相同。
+品牌为 **hermes on herdr**，仓库为 [`nocoo/hermes-on-herdr`](https://github.com/nocoo/hermes-on-herdr)，命令入口为 `bin/hermes-on-herdr`。旧入口 `bin/hermes-gateway-herdr` 保留为兼容链接；稳定的 manifest ID `nocoo.hermes-gateway` 和 entrypoint `gateway` 继续沿用既有安装与所有权记录。
 
 下一步按 [cherry 验收记录](docs/13-cherry接入与验证.md) 补齐冷启动、退出清理和指定 pane 的双向交互，再核对 [P0 验证清单](docs/05-实现步骤.md)。后续由 Agent 执行停服仍需先确认；配置示例见 [examples](examples/README.md)。

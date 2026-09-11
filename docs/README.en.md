@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="../assets/brand/icon-rounded.png" width="128" alt="Hermes Gateway for Herdr logo" />
+  <img src="../assets/brand/icon-rounded.png" width="128" alt="hermes on herdr logo" />
 </p>
-<h1 align="center">Hermes Gateway for Herdr</h1>
+<h1 align="center">hermes on herdr</h1>
 <p align="center">Supervise a dedicated Hermes Gateway inside a real Herdr pane, with explicit run intent and process ownership.</p>
 <p align="center"><a href="../README.md">简体中文</a></p>
 
@@ -9,11 +9,11 @@
 
 This Herdr plugin implementation aims to ensure that one dedicated Hermes Gateway runs inside its owning Herdr pane. The Gateway inherits the actual `HERDR_SOCKET_PATH`, `HERDR_WORKSPACE_ID`, `HERDR_TAB_ID` and `HERDR_PANE_ID`, so it can act as a control agent for that session.
 
-**Current status: the core and hqtui dashboard are implemented; 142 offline tests pass.** The Talaria dashboard includes an ASCII Hermes wing animation, adapts to small and large profile collections, pins the Herdr-managed profile and provides adjustable layouts, themes, an animation toggle and bounded sampling. See [previews, controls and resource measurements](14-hqtui监控面板.md).
+**Current status: the core, startup status page and optional hqtui dashboard are implemented; 153 offline tests pass.** The plugin first shows its managed Gateway status. Press Enter to open monitoring; “Always open on startup” is unchecked by default and can be saved with Space or a mouse click. The full dashboard places the Hermes caduceus above SYSTEM, adapts to small and large profile collections and pins the Herdr-managed profile. Layouts, themes, animation and sampling frequency are adjustable. See [previews, controls and resource measurements](14-hqtui监控面板.md).
 
 Cherry previously reached READY under plugin supervision, and the user confirmed message connectivity. The native LaunchAgent remains removed. A standalone dashboard has been previewed in an adjacent Herdr pane with cherry and default online. Herdr and cherry were not stopped or restarted. Embedded activation, cold-start, shutdown and explicit pane interaction checks still require confirmation before live validation; see the [cherry record](13-cherry接入与验证.md).
 
-![Two-profile hqtui dashboard with offline demo data](evidence/dashboard-two.png)
+![Optional two-profile hqtui dashboard with offline demo data](evidence/dashboard-two.png)
 
 ## Features
 
@@ -34,7 +34,7 @@ The current delivery includes the core implementation and a development manifest
 The launcher help requires no configuration and does not connect to Herdr or Hermes:
 
 ```sh
-./bin/hermes-gateway-herdr --help
+./bin/hermes-on-herdr --help
 ```
 
 Use Python 3.11 or newer from the configured Hermes virtual environment, with the dependencies in [requirements.txt](../requirements.txt). The launcher first uses OS Python to validate the private interpreter hint, then starts the selected venv Python in isolated mode. The configuration directory must have mode `0700`; `config.json` and `runtime-python` must have mode `0600`. The interpreter hint contains one absolute path matching `python_bin`.
@@ -42,9 +42,9 @@ Use Python 3.11 or newer from the configured Hermes virtual environment, with th
 After preparing a reviewed, separate configuration, these commands read status or show a binding plan. Replace the placeholder path with that configuration:
 
 ```sh
-./bin/hermes-gateway-herdr --config /absolute/config.json status --json
-./bin/hermes-gateway-herdr --config /absolute/config.json doctor --json
-./bin/hermes-gateway-herdr --config /absolute/config.json bind --dry-run
+./bin/hermes-on-herdr --config /absolute/config.json status --json
+./bin/hermes-on-herdr --config /absolute/config.json doctor --json
+./bin/hermes-on-herdr --config /absolute/config.json bind --dry-run
 ```
 
 | Command | Behavior |
@@ -58,6 +58,7 @@ After preparing a reviewed, separate configuration, these commands read status o
 | `status --require-ready` | Succeed only for verified READY; this does not prove model or bot-message operation |
 | `logs --lines 50` | Read structured lifecycle events without exporting raw child output |
 | `dashboard` | Open a standalone read-only monitor; print one frame outside a TTY |
+| `dashboard --startup` | Show startup status and offer monitoring, respecting the saved auto-open choice |
 | `dashboard --snapshot` / `dashboard --json` | Print one text or JSON monitoring snapshot |
 | `dashboard --demo-profiles 2` | Preview synthetic data without sampling real profiles |
 
@@ -73,7 +74,7 @@ Run isolated tests with the configured Hermes venv Python:
 
 Tests use temporary directories, fake Herdr RPC and controlled Python Gateway fixtures. They do not import Hermes main or invoke installed Herdr/Hermes entry points. Scenarios cover concurrent creation, lost responses, process exits, pause races, PID reuse, background-process cleanup and log backpressure.
 
-The [142-test output](evidence/dashboard-unittest.txt) includes bounded multi-profile sampling, animation and sampling isolation, cached frame invalidation, real PTY input and renderer failure isolation. The [dashboard record](14-hqtui监控面板.md) includes reproducible resource measurements. The initial [84-test run](evidence/offline-unittest.txt) and [90-test cherry integration run](13-cherry接入与验证.md) remain available as historical evidence. Linux and live handoff remain unverified.
+The [153-test output](evidence/dashboard-unittest.txt) includes bounded multi-profile sampling, animation and sampling isolation, cached frame invalidation, persistent startup opt-in and opt-out across processes, atomic state replacement races, real PTY input and renderer failure isolation. The [dashboard record](14-hqtui监控面板.md) includes reproducible resource measurements. The initial [84-test run](evidence/offline-unittest.txt) and [90-test cherry integration run](13-cherry接入与验证.md) remain available as historical evidence. Linux and live handoff remain unverified.
 
 ## Stack
 
@@ -151,3 +152,5 @@ The first version targets host macOS/Linux, one user, one machine and one explic
 The repository follows the observed `<thing>-herdr` naming pattern. Its development manifest uses ID `nocoo.hermes-gateway` and pane entry `gateway`; these identifiers do not need to match the repository name.
 
 Next, complete the cold-start, shutdown-cleanup and explicit pane interaction checks in the [cherry acceptance record](13-cherry接入与验证.md), then review the [P0 validation checklist](05-实现步骤.md). Further service stops performed by the agent require user confirmation. Configuration templates are in [examples](../examples/README.md).
+
+The brand is **hermes on herdr** and the repository is [`nocoo/hermes-on-herdr`](https://github.com/nocoo/hermes-on-herdr). The canonical launcher is `bin/hermes-on-herdr`; `bin/hermes-gateway-herdr` remains a compatibility alias. Existing installations retain the `nocoo.hermes-gateway` plugin ID and `gateway` entrypoint.
