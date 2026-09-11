@@ -69,7 +69,7 @@ class MonitorTests(TestCase):
         path.chmod(0o600)
         alias = path.with_name("alias")
         alias.symlink_to(path)
-        with self.assertRaises(OSError):
+        with self.assertRaises(GatewayError):
             metadata(alias)
         alias.unlink()
         os.link(path, alias)

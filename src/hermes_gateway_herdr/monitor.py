@@ -36,6 +36,8 @@ def text(value, limit=100):
 def metadata(path: Path):
     """Native metadata may be 0644/0700. No links, writable peers or special files."""
     try:
+        if not stat.S_ISREG(path.lstat().st_mode):
+            raise GatewayError("UNSAFE_PATH")
         fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC)
     except FileNotFoundError:
         return None

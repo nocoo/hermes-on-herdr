@@ -123,6 +123,11 @@ class Store:
         self.close()
 
     def _open(self, name: str, flags: int) -> int:
+        try:
+            check_private(os.stat(name, dir_fd=self.fd, follow_symlinks=False))
+        except FileNotFoundError:
+            if not flags & os.O_CREAT:
+                raise
         fd = os.open(name, flags | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC, 0o600, dir_fd=self.fd)
         try:
             # A reader may open the old inode immediately before an atomic replacement.
