@@ -7,7 +7,11 @@
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
-**当前状态：核心已实现，90 项离线测试通过；cherry 在插件监管下为 READY，用户已确认消息连通。** 首次重启暴露的 PID 文件权限和进程时间戳兼容性问题已修复，随后通过手动 `ensure` 恢复；真实 pane 归属、父子进程、单实例和 Discord 连接均已核对，原生 LaunchAgent 保持移除。修复后的冷启动、退出清理及指定 pane 的双向交互仍待验证。当前记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)，首轮实现和历史测试证据见 [12](docs/12-离线实现与验证.md)。
+**当前状态：核心与 hqtui 监控面板已实现，135 项离线测试通过。** 面板自动适配 1–2 个或更多 profile，突出 Herdr 专属实例；同一 Hermes 根目录下的其他 profile 只读监控。默认每 2 秒有界采样，支持布局、主题和采样频率调整。[面板预览、快捷键与资源测量](docs/14-hqtui监控面板.md)。
+
+cherry 此前在插件监管下达到 READY，用户已确认消息连通；原生 LaunchAgent 保持移除。本轮没有停止或重启 Herdr/cherry，新面板待下一次 supervisor 启动后进行真实验证。修复后的冷启动、退出清理及指定 pane 的双向交互仍待验证，记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)。
+
+![hqtui 双 profile 面板，离线演示](docs/evidence/dashboard-two.png)
 
 离线测试使用已配置 Hermes venv 中的 Python 3.11+、psutil 和 PyYAML，不导入 Hermes main，不调用已安装的 Herdr／Hermes：
 
@@ -15,7 +19,7 @@
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC 和受控 Python 假 Gateway，覆盖并发创建、响应丢失、进程退出、暂停竞态、PID 复用、后台任务清理和日志背压。[首轮 84 项完整输出](docs/evidence/offline-unittest.txt)保留了 macOS 上的历史结果；新增配置、启动准备及原生身份兼容回归、90 项运行结果见 [13](docs/13-cherry接入与验证.md)。Linux 和 live handoff 尚未验证；真实运行结果与离线测试分别记录。
+测试使用临时目录、假 Herdr RPC、受控 Python 假 Gateway 和真实 PTY，覆盖并发创建、响应丢失、暂停竞态、PID 复用、后台任务清理、日志背压、多 profile 采样、终端交互与渲染异常隔离。[135 项完整输出](docs/evidence/dashboard-unittest.txt)及[测量方法](docs/14-hqtui监控面板.md#146-测试与测量)已保存；[首轮 84 项](docs/evidence/offline-unittest.txt)和 [cherry 接入阶段的 90 项](docs/13-cherry接入与验证.md)保留为历史记录。Linux 和 live handoff 尚未验证。
 
 `status`、`doctor`、`logs` 提供 JSON 诊断；`bind` 默认只展示既有专用 Profile 的绑定计划；Start/Resume 才持久允许运行。新 Profile 初始化器、孤儿自动回收、维护/升级工具和系统服务仍未实现。识别到孤儿或未知启动结果时会阻止替代实例；`stop --wait` 不会把这种状态报告为已停止。
 
@@ -49,6 +53,9 @@
 | `restart` | 仅对允许运行的实例请求重启，不隐式恢复暂停 |
 | `status --require-ready` | 仅已确认 READY 返回成功；不证明模型或 bot 消息往返可用 |
 | `logs --lines 50` | 读取结构化生命周期事件，不导出原始 child 输出 |
+| `dashboard` | 独立打开只读 TUI；非 TTY 时打印一帧 |
+| `dashboard --snapshot` / `dashboard --json` | 一次性文本或 JSON 监控快照 |
+| `dashboard --demo-profiles 2` | 使用合成数据预览，不采样真实 profile |
 
 Herdr hooks 使用 `ensure`，真实 pane 使用 `supervise`。从 hook 外手动执行控制动作时，使用全局 `--owner-socket /absolute/bound.sock` 指明绑定的 owner。完整参数、返回码与重试契约见 [离线实现与验证](docs/12-离线实现与验证.md#124-当前命令契约)。
 
@@ -60,6 +67,7 @@ Herdr hooks 使用 `ensure`，真实 pane 使用 `supervise`。从 hook 外手�
 | Unix sockets / JSONL | 有时限的 Herdr 与 Hermes 控制协议 |
 | flock / 原子 JSON 文件 | 单例锁、持久意图、revision 与请求去重 |
 | psutil | 进程身份和已确认的后代进程检查 |
+| hqtui / Python | 自适应终端面板、图表、增量绘制与输入处理；固定源码随仓库提供 |
 | PyYAML | 专用 Hermes Profile 的配置预检 |
 | Herdr plugin TOML | 开发用 startup、events、actions 与 pane 注册 |
 
@@ -104,6 +112,7 @@ Profile 是状态隔离，不是 sandbox。持有真实 Herdr socket 并能执�
 | [11 · 研究与验证记录](docs/11-研究与验证记录.md) | 实际执行的研究与文档检查、未执行项 |
 | [12 · 离线实现与验证](docs/12-离线实现与验证.md) | 已实现命令、测试证据、已知限制与下一步门禁 |
 | [13 · cherry 接入与验证](docs/13-cherry接入与验证.md) | 原生停服、配置、重启修复、真实 READY 与用户消息验证 |
+| [14 · hqtui 监控面板](docs/14-hqtui监控面板.md) | 多 profile 布局、采样策略、快捷键、PTY 测试、资源测量与启用方式 |
 
 ## 固定基线
 

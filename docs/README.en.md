@@ -9,7 +9,11 @@
 
 This Herdr plugin implementation aims to ensure that one dedicated Hermes Gateway runs inside its owning Herdr pane. The Gateway inherits the actual `HERDR_SOCKET_PATH`, `HERDR_WORKSPACE_ID`, `HERDR_TAB_ID` and `HERDR_PANE_ID`, so it can act as a control agent for that session.
 
-**Current status: 90 offline tests pass; cherry is READY under plugin supervision, and the user has confirmed message connectivity.** The first restart exposed PID-file permission and process-timestamp compatibility bugs. Both are fixed; a manual `ensure` then restored the Gateway. Live pane ownership, parent/child identity, a single cherry instance and Discord connectivity have been checked. The native LaunchAgent remains removed. A fresh cold start and shutdown after the fixes, plus an explicit pane write/read round trip, remain unverified. See the [cherry integration and validation record](13-cherry接入与验证.md) and the [initial implementation and evidence](12-离线实现与验证.md).
+**Current status: the core and hqtui dashboard are implemented; 135 offline tests pass.** The dashboard adapts to small and large profile collections, pins the Herdr-managed profile and provides adjustable layouts, themes and bounded sampling. See [previews, controls and resource measurements](14-hqtui监控面板.md).
+
+Cherry previously reached READY under plugin supervision, and the user confirmed message connectivity. The native LaunchAgent remains removed. This dashboard work did not stop or restart Herdr or cherry; activation requires a new supervisor process and user confirmation before live validation. Cold-start, shutdown and explicit pane interaction checks remain pending in the [cherry record](13-cherry接入与验证.md).
+
+![Two-profile hqtui dashboard with offline demo data](evidence/dashboard-two.png)
 
 ## Features
 
@@ -19,8 +23,9 @@ This Herdr plugin implementation aims to ensure that one dedicated Hermes Gatewa
 - JSON diagnostics through `status`, `doctor` and `logs`.
 - A binding plan for an existing dedicated Profile; `bind` defaults to a dry run. Explicit Start/Resume allows running, while Pause/Stop persists the stopped intent before notifying the supervisor.
 - A development manifest for Herdr startup, events, actions and the Gateway pane.
+- An isolated hqtui companion with profile cards, scrolling tables, CPU/RSS graphs, lightweight host metrics and persistent presentation preferences.
 
-A new-Profile initializer, automatic orphan recovery, maintenance/upgrade tools, a pane status UI and operating-system services are not implemented. `stop --wait` does not report an orphan or unknown launch as successfully stopped.
+A new-Profile initializer, automatic orphan recovery, maintenance/upgrade tools and operating-system services are not implemented. `stop --wait` does not report an orphan or unknown launch as successfully stopped.
 
 ## Usage and development
 
@@ -52,6 +57,9 @@ After preparing a reviewed, separate configuration, these commands read status o
 | `restart` | Request a restart only when running is allowed; never implicitly resume |
 | `status --require-ready` | Succeed only for verified READY; this does not prove model or bot-message operation |
 | `logs --lines 50` | Read structured lifecycle events without exporting raw child output |
+| `dashboard` | Open a standalone read-only monitor; print one frame outside a TTY |
+| `dashboard --snapshot` / `dashboard --json` | Print one text or JSON monitoring snapshot |
+| `dashboard --demo-profiles 2` | Preview synthetic data without sampling real profiles |
 
 Herdr hooks use `ensure`; the real pane uses `supervise`. Manual control outside a hook supplies the bound owner through the global `--owner-socket /absolute/bound.sock` option. The [command contract](12-离线实现与验证.md#124-当前命令契约) documents all flags, exit codes and retry rules.
 
@@ -65,7 +73,7 @@ Run isolated tests with the configured Hermes venv Python:
 
 Tests use temporary directories, fake Herdr RPC and controlled Python Gateway fixtures. They do not import Hermes main or invoke installed Herdr/Hermes entry points. Scenarios cover concurrent creation, lost responses, process exits, pause races, PID reuse, background-process cleanup and log backpressure.
 
-The [recorded output](evidence/offline-unittest.txt) preserves the initial 84-test macOS run. The latest 90-test result, including configuration, startup preparation and native identity compatibility regressions, is recorded in the [cherry validation document](13-cherry接入与验证.md). Linux and live handoff remain unverified. Real Gateway observations and user-confirmed messaging are recorded separately from offline tests.
+The [135-test output](evidence/dashboard-unittest.txt) includes bounded multi-profile sampling, real PTY input and renderer failure isolation. The [dashboard record](14-hqtui监控面板.md) includes reproducible resource measurements. The initial [84-test run](evidence/offline-unittest.txt) and [90-test cherry integration run](13-cherry接入与验证.md) remain available as historical evidence. Linux and live handoff remain unverified.
 
 ## Stack
 
@@ -75,6 +83,7 @@ The [recorded output](evidence/offline-unittest.txt) preserves the initial 84-te
 | Unix sockets / JSONL | Bounded Herdr and Hermes control exchanges |
 | flock / atomic JSON files | Singleton locks, persistent intent, revisions and request deduplication |
 | psutil | Process identity and verified descendant inspection |
+| hqtui / Python | Adaptive terminal panels, graphs, incremental rendering and input; pinned source is vendored |
 | PyYAML | Dedicated Hermes Profile configuration checks |
 | Herdr plugin TOML | Development startup, events, actions and pane registration |
 
@@ -121,6 +130,7 @@ The detailed design and evidence documents are in Chinese.
 | [11 · Research record](11-研究与验证记录.md) | Completed research and document checks |
 | [12 · Offline implementation](12-离线实现与验证.md) | Implemented commands, test evidence, limits and remaining validation |
 | [13 · Cherry integration](13-cherry接入与验证.md) | Native shutdown, configuration, restart fixes, live READY and user-confirmed messaging |
+| [14 · hqtui dashboard](14-hqtui监控面板.md) | Layouts, sampling, controls, PTY tests, resource measurements and activation |
 
 ## Pinned baseline
 

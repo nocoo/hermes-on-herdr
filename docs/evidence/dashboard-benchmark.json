@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "platform": "Darwin",
+  "architecture": "arm64",
+  "python": "3.11.15",
+  "hqtui_commit": "d9a841494bab910403737a8c791d6d96ef52e878",
+  "scope": "Actual embedded TUI process, real PTY, local fixture RPC and process metrics; backend fixtures excluded.",
+  "fixture_note": "One supervised fake Gateway; other profile sockets are served by the benchmark process. No installed services are used.",
+  "embedded": [
+    {
+      "profiles": 2,
+      "terminal": [
+        160,
+        44
+      ],
+      "foreground": {
+        "seconds": 20.012,
+        "cpu_percent_one_core": 0.482,
+        "rss_mib_median": 35.34,
+        "rss_mib_peak": 35.36,
+        "tty_bytes_per_second": 370.9
+      },
+      "hidden": {
+        "seconds": 20.005,
+        "cpu_percent_one_core": 0.053,
+        "rss_mib_median": 35.41,
+        "rss_mib_peak": 35.41,
+        "tty_bytes_per_second": 0.0
+      },
+      "background_profiles_seen_during_foreground": 1,
+      "background_native_requests": 32,
+      "fixture_pause_seconds": 0.126
+    },
+    {
+      "profiles": 50,
+      "terminal": [
+        160,
+        44
+      ],
+      "foreground": {
+        "seconds": 20.009,
+        "cpu_percent_one_core": 0.635,
+        "rss_mib_median": 35.2,
+        "rss_mib_peak": 35.22,
+        "tty_bytes_per_second": 662.8
+      },
+      "hidden": {
+        "seconds": 20.02,
+        "cpu_percent_one_core": 0.059,
+        "rss_mib_median": 35.23,
+        "rss_mib_peak": 35.23,
+        "tty_bytes_per_second": 2.2
+      },
+      "background_profiles_seen_during_foreground": 48,
+      "background_native_requests": 96,
+      "fixture_pause_seconds": 0.13
+    }
+  ],
+  "render_only": [
+    {
+      "profiles": 1,
+      "terminal": [
+        160,
+        44
+      ],
+      "median_ms": 5.295,
+      "p95_ms": 5.569
+    },
+    {
+      "profiles": 2,
+      "terminal": [
+        160,
+        44
+      ],
+      "median_ms": 6.304,
+      "p95_ms": 6.508
+    },
+    {
+      "profiles": 50,
+      "terminal": [
+        160,
+        44
+      ],
+      "median_ms": 7.909,
+      "p95_ms": 7.999
+    },
+    {
+      "profiles": 1000,
+      "terminal": [
+        160,
+        44
+      ],
+      "median_ms": 9.529,
+      "p95_ms": 9.899
+    }
+  ]
+}
