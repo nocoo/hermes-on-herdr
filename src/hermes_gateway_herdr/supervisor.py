@@ -490,6 +490,7 @@ class Supervisor:
             self.shutdown = True
         if self.child:
             if now >= self.next_track:
+                # ponytail: polling misses tasks reparented between scans; OS containment needs its own host validation.
                 self._track()
                 self.next_track = now + 0.2
             if self.shutdown or intent["desired"] == "paused" or budget["fused"]:

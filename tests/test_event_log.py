@@ -9,6 +9,21 @@ from hermes_gateway_herdr.event_log import EventLog
 
 
 class LogTests(unittest.TestCase):
+    def test_default_retention_counts_include_the_active_file(self):
+        original = EventLog._append
+        def small_files(writer, name, data, limit, backups):
+            original(writer, name, data, 2 * len(data), backups)
+        with tempfile.TemporaryDirectory() as root, patch.object(EventLog, "_append", small_files):
+            directory = Path(root) / "logs"
+            log = EventLog(directory)
+            for _ in range(30):
+                log.event("child_exit", code=75)
+                log.raw(b"fixture\n")
+            log.close()
+            self.assertFalse(log.worker.is_alive())
+            self.assertEqual(5, len(list(directory.glob("events.jsonl*"))))
+            self.assertEqual(3, len(list(directory.glob("gateway-output.log*"))))
+
     def test_slow_disk_has_bounded_queue_and_does_not_block_producer(self):
         with tempfile.TemporaryDirectory() as root:
             blocked, release = threading.Event(), threading.Event()

@@ -29,10 +29,10 @@ class EventLog:
     def event(self, name: str, **fields):
         # Callers supply only lifecycle metadata; raw adapter errors never enter this stream.
         payload = dict(time=time.time(), event=name, **fields)
-        self._put(("events.jsonl", (json.dumps(payload, allow_nan=False) + "\n").encode(), 5 * 1024 * 1024, 5))
+        self._put(("events.jsonl", (json.dumps(payload, allow_nan=False) + "\n").encode(), 5 * 1024 * 1024, 4))
 
     def raw(self, data: bytes):
-        self._put(("gateway-output.log", data[:16384], 10 * 1024 * 1024, 3))
+        self._put(("gateway-output.log", data[:16384], 10 * 1024 * 1024, 2))
 
     def _append(self, name: str, data: bytes, limit: int, backups: int):
         path = self.directory / name
