@@ -6,6 +6,7 @@
   "hqtui_commit": "d9a841494bab910403737a8c791d6d96ef52e878",
   "scope": "Actual embedded TUI process, real PTY, local fixture RPC and process metrics; backend fixtures excluded.",
   "fixture_note": "One supervised fake Gateway; other profile sockets are served by the benchmark process. No installed services are used.",
+  "animation": "Default wingbeats enabled; unchanged telemetry frames are reused.",
   "embedded": [
     {
       "profiles": 2,
@@ -14,17 +15,17 @@
         44
       ],
       "foreground": {
-        "seconds": 20.012,
-        "cpu_percent_one_core": 0.482,
-        "rss_mib_median": 35.34,
-        "rss_mib_peak": 35.36,
-        "tty_bytes_per_second": 370.9
+        "seconds": 20.027,
+        "cpu_percent_one_core": 0.609,
+        "rss_mib_median": 35.62,
+        "rss_mib_peak": 35.62,
+        "tty_bytes_per_second": 337.8
       },
       "hidden": {
-        "seconds": 20.005,
-        "cpu_percent_one_core": 0.053,
-        "rss_mib_median": 35.41,
-        "rss_mib_peak": 35.41,
+        "seconds": 20.022,
+        "cpu_percent_one_core": 0.041,
+        "rss_mib_median": 35.62,
+        "rss_mib_peak": 35.62,
         "tty_bytes_per_second": 0.0
       },
       "background_profiles_seen_during_foreground": 1,
@@ -38,22 +39,22 @@
         44
       ],
       "foreground": {
-        "seconds": 20.009,
-        "cpu_percent_one_core": 0.635,
-        "rss_mib_median": 35.2,
-        "rss_mib_peak": 35.22,
-        "tty_bytes_per_second": 662.8
+        "seconds": 20.045,
+        "cpu_percent_one_core": 0.755,
+        "rss_mib_median": 35.61,
+        "rss_mib_peak": 35.64,
+        "tty_bytes_per_second": 565.6
       },
       "hidden": {
-        "seconds": 20.02,
-        "cpu_percent_one_core": 0.059,
-        "rss_mib_median": 35.23,
-        "rss_mib_peak": 35.23,
-        "tty_bytes_per_second": 2.2
+        "seconds": 20.021,
+        "cpu_percent_one_core": 0.05,
+        "rss_mib_median": 35.64,
+        "rss_mib_peak": 35.64,
+        "tty_bytes_per_second": 0.0
       },
       "background_profiles_seen_during_foreground": 48,
       "background_native_requests": 96,
-      "fixture_pause_seconds": 0.13
+      "fixture_pause_seconds": 0.128
     }
   ],
   "render_only": [
@@ -63,8 +64,8 @@
         160,
         44
       ],
-      "median_ms": 5.295,
-      "p95_ms": 5.569
+      "median_ms": 5.111,
+      "p95_ms": 5.285
     },
     {
       "profiles": 2,
@@ -72,8 +73,8 @@
         160,
         44
       ],
-      "median_ms": 6.304,
-      "p95_ms": 6.508
+      "median_ms": 6.157,
+      "p95_ms": 6.45
     },
     {
       "profiles": 50,
@@ -81,8 +82,8 @@
         160,
         44
       ],
-      "median_ms": 7.909,
-      "p95_ms": 7.999
+      "median_ms": 7.383,
+      "p95_ms": 7.72
     },
     {
       "profiles": 1000,
@@ -90,8 +91,46 @@
         160,
         44
       ],
-      "median_ms": 9.529,
-      "p95_ms": 9.899
+      "median_ms": 8.704,
+      "p95_ms": 9.21
+    }
+  ],
+  "animation_only": [
+    {
+      "profiles": 1,
+      "terminal": [
+        160,
+        44
+      ],
+      "median_ms": 0.118,
+      "p95_ms": 0.121
+    },
+    {
+      "profiles": 2,
+      "terminal": [
+        160,
+        44
+      ],
+      "median_ms": 0.117,
+      "p95_ms": 0.124
+    },
+    {
+      "profiles": 50,
+      "terminal": [
+        160,
+        44
+      ],
+      "median_ms": 0.116,
+      "p95_ms": 0.121
+    },
+    {
+      "profiles": 1000,
+      "terminal": [
+        160,
+        44
+      ],
+      "median_ms": 0.118,
+      "p95_ms": 0.121
     }
   ]
 }

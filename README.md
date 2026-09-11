@@ -7,9 +7,9 @@
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
-**当前状态：核心与 hqtui 监控面板已实现，135 项离线测试通过。** 面板自动适配 1–2 个或更多 profile，突出 Herdr 专属实例；同一 Hermes 根目录下的其他 profile 只读监控。默认每 2 秒有界采样，支持布局、主题和采样频率调整。[面板预览、快捷键与资源测量](docs/14-hqtui监控面板.md)。
+**当前状态：核心与 hqtui 监控面板已实现，142 项离线测试通过。** Talaria 面板带有 Hermes 飞翼字符动画，自动适配 1–2 个或更多 profile，突出 Herdr 专属实例；同一 Hermes 根目录下的其他 profile 只读监控。默认每 2 秒有界采样，支持布局、主题、静态模式和采样频率调整。[面板预览、快捷键与资源测量](docs/14-hqtui监控面板.md)。
 
-cherry 此前在插件监管下达到 READY，用户已确认消息连通；原生 LaunchAgent 保持移除。本轮没有停止或重启 Herdr/cherry，新面板待下一次 supervisor 启动后进行真实验证。修复后的冷启动、退出清理及指定 pane 的双向交互仍待验证，记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)。
+cherry 此前在插件监管下达到 READY，用户已确认消息连通；原生 LaunchAgent 保持移除。独立面板已在旁边的 Herdr pane 中进行真实只读预览，cherry 和 default 均在线。Herdr/cherry 没有停止或重启；自动嵌入面板、修复后的冷启动、退出清理及指定 pane 的双向交互仍待确认后验证，记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)。
 
 ![hqtui 双 profile 面板，离线演示](docs/evidence/dashboard-two.png)
 
@@ -19,7 +19,7 @@ cherry 此前在插件监管下达到 READY，用户已确认消息连通；原�
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC、受控 Python 假 Gateway 和真实 PTY，覆盖并发创建、响应丢失、暂停竞态、PID 复用、后台任务清理、日志背压、多 profile 采样、终端交互与渲染异常隔离。[135 项完整输出](docs/evidence/dashboard-unittest.txt)及[测量方法](docs/14-hqtui监控面板.md#146-测试与测量)已保存；[首轮 84 项](docs/evidence/offline-unittest.txt)和 [cherry 接入阶段的 90 项](docs/13-cherry接入与验证.md)保留为历史记录。Linux 和 live handoff 尚未验证。
+测试使用临时目录、假 Herdr RPC、受控 Python 假 Gateway 和真实 PTY，覆盖并发创建、响应丢失、暂停竞态、PID 复用、后台任务清理、日志背压、多 profile 采样、动画与采样隔离、画面缓存刷新、终端交互与渲染异常隔离。[142 项完整输出](docs/evidence/dashboard-unittest.txt)及[测量方法](docs/14-hqtui监控面板.md#146-测试与测量)已保存；[首轮 84 项](docs/evidence/offline-unittest.txt)和 [cherry 接入阶段的 90 项](docs/13-cherry接入与验证.md)保留为历史记录。Linux 和 live handoff 尚未验证。
 
 `status`、`doctor`、`logs` 提供 JSON 诊断；`bind` 默认只展示既有专用 Profile 的绑定计划；Start/Resume 才持久允许运行。新 Profile 初始化器、孤儿自动回收、维护/升级工具和系统服务仍未实现。识别到孤儿或未知启动结果时会阻止替代实例；`stop --wait` 不会把这种状态报告为已停止。
 

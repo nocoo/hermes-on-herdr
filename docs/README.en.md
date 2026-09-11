@@ -9,9 +9,9 @@
 
 This Herdr plugin implementation aims to ensure that one dedicated Hermes Gateway runs inside its owning Herdr pane. The Gateway inherits the actual `HERDR_SOCKET_PATH`, `HERDR_WORKSPACE_ID`, `HERDR_TAB_ID` and `HERDR_PANE_ID`, so it can act as a control agent for that session.
 
-**Current status: the core and hqtui dashboard are implemented; 135 offline tests pass.** The dashboard adapts to small and large profile collections, pins the Herdr-managed profile and provides adjustable layouts, themes and bounded sampling. See [previews, controls and resource measurements](14-hqtui监控面板.md).
+**Current status: the core and hqtui dashboard are implemented; 142 offline tests pass.** The Talaria dashboard includes an ASCII Hermes wing animation, adapts to small and large profile collections, pins the Herdr-managed profile and provides adjustable layouts, themes, an animation toggle and bounded sampling. See [previews, controls and resource measurements](14-hqtui监控面板.md).
 
-Cherry previously reached READY under plugin supervision, and the user confirmed message connectivity. The native LaunchAgent remains removed. This dashboard work did not stop or restart Herdr or cherry; activation requires a new supervisor process and user confirmation before live validation. Cold-start, shutdown and explicit pane interaction checks remain pending in the [cherry record](13-cherry接入与验证.md).
+Cherry previously reached READY under plugin supervision, and the user confirmed message connectivity. The native LaunchAgent remains removed. A standalone dashboard has been previewed in an adjacent Herdr pane with cherry and default online. Herdr and cherry were not stopped or restarted. Embedded activation, cold-start, shutdown and explicit pane interaction checks still require confirmation before live validation; see the [cherry record](13-cherry接入与验证.md).
 
 ![Two-profile hqtui dashboard with offline demo data](evidence/dashboard-two.png)
 
@@ -73,7 +73,7 @@ Run isolated tests with the configured Hermes venv Python:
 
 Tests use temporary directories, fake Herdr RPC and controlled Python Gateway fixtures. They do not import Hermes main or invoke installed Herdr/Hermes entry points. Scenarios cover concurrent creation, lost responses, process exits, pause races, PID reuse, background-process cleanup and log backpressure.
 
-The [135-test output](evidence/dashboard-unittest.txt) includes bounded multi-profile sampling, real PTY input and renderer failure isolation. The [dashboard record](14-hqtui监控面板.md) includes reproducible resource measurements. The initial [84-test run](evidence/offline-unittest.txt) and [90-test cherry integration run](13-cherry接入与验证.md) remain available as historical evidence. Linux and live handoff remain unverified.
+The [142-test output](evidence/dashboard-unittest.txt) includes bounded multi-profile sampling, animation and sampling isolation, cached frame invalidation, real PTY input and renderer failure isolation. The [dashboard record](14-hqtui监控面板.md) includes reproducible resource measurements. The initial [84-test run](evidence/offline-unittest.txt) and [90-test cherry integration run](13-cherry接入与验证.md) remain available as historical evidence. Linux and live handoff remain unverified.
 
 ## Stack
 

@@ -1,10 +1,10 @@
 # 14 · hqtui 监控面板
 
-记录日期：2026-09-12。面板已实现并完成离线验证；本轮没有停止或重启 Herdr、cherry，也没有将新面板接入正在运行的实例。
+记录日期：2026-09-12。独立面板已按用户要求在现有 Herdr pane 中进行真实只读预览。Herdr、cherry 均未停止或重启；自动嵌入现有 supervisor 的验证仍需另行确认。
 
 ## 14.1 界面与布局
 
-新的 supervisor 在真实 TTY 中自动打开 `HERMES CONTROL`，使用 [hqtui](https://github.com/profullstack/hqtui) 的 Python 实现。依赖固定到 `d9a841494bab910403737a8c791d6d96ef52e878`，以未修改的源码随仓库提供；无需安装 Node 或从 PyPI 下载同名包。[来源、MIT 许可与文件摘要](../vendor/README.md)。
+面板显示名为 **Talaria**，取自赫尔墨斯的飞翼凉鞋，副标题为 `HERMES on HERDR`。新的 supervisor 在真实 TTY 中自动打开面板，使用 [hqtui](https://github.com/profullstack/hqtui) 的 Python 实现。依赖固定到 `d9a841494bab910403737a8c791d6d96ef52e878`，以未修改的源码随仓库提供；无需安装 Node 或从 PyPI 下载同名包。[来源、MIT 许可与文件摘要](../vendor/README.md)。
 
 ![双 profile 面板，离线演示数据](evidence/dashboard-two.png)
 
@@ -15,6 +15,8 @@
 - Herdr 管理的 profile 始终以金色边框、`HERDR MANAGED` 和 `PINNED` 标识；选择或过滤其他 profile 时仍保留。
 
 其他尺寸预览：[单 profile](evidence/dashboard-one.png)、[20 个 profile](evidence/dashboard-fleet.png)、[80×24 窄窗口](evidence/dashboard-narrow.png)。这些图片由真实 hqtui framebuffer 导出，右上角标有 `DEMO`，内容全部为合成数据。
+
+窗口达到 100 列、34 行时，顶部显示五行 ASCII 飞翼头盔。青色飞翼以每秒最多 4 个姿态轻拍两秒，然后静置十秒；金色面部保持固定。动画表示品牌形象，服务是否健康仍以状态文字为准。窄窗口、帮助页和隐藏模式收起图案；失焦时停止动画。`a` 可随时切换为静态形象，偏好会被保存。
 
 ## 14.2 监控范围与数据含义
 
@@ -47,7 +49,8 @@ CPU 的 `100%` 表示占满一个逻辑核；RSS 只计算 Gateway 本进程。�
 | 主机指标 | 仅非阻塞 CPU 利用率与内存概况，可关闭；不扫描全机进程表 |
 | 失焦 | 终端支持并发送 focus 事件时，降为 10 秒采样并暂停自动绘制 |
 | 隐藏 | `q` 隐藏后按 10 秒采样，并关闭主机指标采样 |
-| 渲染 | 数据或交互变化时重绘；只输出变化的字符单元；不订阅无按键的鼠标移动 |
+| 渲染 | 数据、交互或观测年龄变化时重绘监控内容；动画复用一张 hqtui framebuffer，只绘制 21×5 的吉祥物区域；只输出变化的字符单元 |
+| 动画 | 两秒振翼、十秒静置；与采样共享一个等待器，使用独立的截止时间，不增加 RPC 或主机指标采样；不订阅无按键的鼠标移动 |
 | 并发 | 一个采样线程；嵌入模式另有一个阻塞等待父进程生命周期的线程 |
 
 1–2 个 profile 每轮都能覆盖。大量 profile 的首次完整状态采样和后台刷新会分散到多个周期；选中任意 profile 后，它在下一轮获得优先采样。界面显示观测年龄，过期数据不会继续以健康状态展示。
@@ -62,6 +65,7 @@ CPU 的 `100%` 表示占满一个逻辑核；RSS 只计算 Gateway 本进程。�
 | `/`、输入名称、`Enter` | 按名称过滤；`Esc` 清除过滤 |
 | `l` | 切换自动、卡片、列表布局 |
 | `t` | 切换 Herdr、Nord、高对比度、单色主题 |
+| `a` | 开关飞翼动画；关闭后保留静态形象 |
 | `s` | 开关主机指标 |
 | `+/-` | 在 2、5、10 秒之间加快／减慢采样 |
 | `?` / `F1` | 帮助 |
@@ -69,7 +73,7 @@ CPU 的 `100%` 表示占满一个逻辑核；RSS 只计算 Gateway 本进程。�
 | 嵌入面板中的 `Ctrl+C` | 沿用原有 supervisor 契约，持久暂停专属 Gateway |
 | 独立监控窗口中的 `q` / `Ctrl+C` | 关闭该监控窗口 |
 
-布局、主题、主机指标开关和采样间隔保存在插件配置目录的 `dashboard.json`，权限 `0600`，原子替换。过滤内容和选择项不持久化。损坏的偏好回退为默认值；符号链接、共享文件或其他不安全目标不会被覆盖。
+布局、主题、主机指标开关、采样间隔和动画开关保存在插件配置目录的 `dashboard.json`，权限 `0600`，原子替换。旧偏好文件保留原有设置，缺少的动画开关默认为开启。过滤内容和选择项不持久化。损坏的偏好回退为默认值；符号链接、共享文件或其他不安全目标不会被覆盖。
 
 ## 14.5 生命周期隔离
 
@@ -81,24 +85,26 @@ CPU 的 `100%` 表示占满一个逻辑核；RSS 只计算 Gateway 本进程。�
 
 ## 14.6 测试与测量
 
-完整离线回归 **135 项通过**，[完整输出](evidence/dashboard-unittest.txt)。最终窄窗口布局调整后，12 项渲染测试也全部通过。
+完整离线回归 **142 项通过**，[完整输出](evidence/dashboard-unittest.txt)。
 
 新增测试覆盖身份伪造和 PID 复用、慢 socket、轮询公平性和上限、共享 Gateway 计数、CPU 时间差及历史长度、1/2/25 个 profile 的多尺寸布局、过滤和滚动定位、偏好文件安全、真实 PTY 输入与 resize、失焦降频、高频按键不加快采样，以及面板退出／崩溃／阻塞对 Gateway 生命周期的隔离。配置和状态文件的 FIFO 回归使用真实 launcher 验证。
+
+动画测试验证真实 PTY 中画面帧增加时采样次数不增加，静态模式和失焦停止额外绘制；渲染测试验证振翼仅改变几十个 ASCII 单元。复用画面仍保留鼠标区域，主题、尺寸、选中项、新观测和观测过期都会使缓存失效，过期信息不会继续显示连接成功或当前资源值。
 
 ```sh
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-2026-09-12 在 macOS arm64、Python 3.11.15、160×44 终端上测量完整的嵌入面板进程。各阶段测量 20 秒，预热后计数。CPU 包含渲染、采样、原生 RPC 和进程指标读取；内存是该面板进程 RSS。原有 supervisor、被监控服务和测试工具的资源未计入。对端全部使用临时目录与本地假 Gateway：一个由真实 supervisor 代码管理，其余 profile 的协议响应由测试进程提供。
+2026-09-12 在 macOS arm64、Python 3.11.15、160×44 终端上测量完整的嵌入面板进程，飞翼动画默认开启。各阶段测量 20 秒，预热后计数。CPU 包含渲染、采样、原生 RPC 和进程指标读取；内存是该面板进程 RSS。原有 supervisor、被监控服务和测试工具的资源未计入。对端全部使用临时目录与本地假 Gateway：一个由真实 supervisor 代码管理，其余 profile 的协议响应由测试进程提供。
 
 | profile 数 | 状态 | CPU，单核口径 | RSS 中位数 | 终端输出 |
 | --- | --- | --- | --- | --- |
-| 2 | 前台 | 0.482% | 35.34 MiB | 371 B/s |
-| 2 | 隐藏 | 0.053% | 35.41 MiB | 0 B/s |
-| 50 | 前台 | 0.635% | 35.20 MiB | 663 B/s |
-| 50 | 隐藏 | 0.059% | 35.23 MiB | 2 B/s |
+| 2 | 前台 | 0.609% | 35.62 MiB | 338 B/s |
+| 2 | 隐藏 | 0.041% | 35.62 MiB | 0 B/s |
+| 50 | 前台 | 0.755% | 35.61 MiB | 566 B/s |
+| 50 | 隐藏 | 0.050% | 35.64 MiB | 0 B/s |
 
-同尺寸、90 个历史样本的纯渲染测量：1/2/50/1000 条 profile 的中位数分别为 5.30/6.30/7.91/9.53 ms。1000 条的 P95 为 9.90 ms；这一项只测 hqtui framebuffer 绘制。原始数字和测量范围见 [JSON 记录](evidence/dashboard-benchmark.json)。
+同尺寸、90 个历史样本的完整画面重绘中位数：1/2/50/1000 条 profile 分别为 5.11/6.16/7.38/8.70 ms。复用监控画面后的动画帧约为 0.12 ms，四种数量下基本一致。这两项只测 hqtui framebuffer 构造与绘制，不包括终端编码和输出；上表的完整进程测量包含这些开销。原始数字和测量范围见 [JSON 记录](evidence/dashboard-benchmark.json)。
 
 ```sh
 /absolute/path/to/hermes/venv/bin/python -I -B tools/dashboard_benchmark.py \
@@ -111,8 +117,10 @@ CPU 的 `100%` 表示占满一个逻辑核；RSS 只计算 Gateway 本进程。�
 
 ```sh
 /absolute/path/to/hermes/venv/bin/python -I -B tools/dashboard_preview.py \
-  --profiles 2 --width 160 --height 44 --output /tmp/hermes-control.html
+  --profiles 2 --width 160 --height 44 --output /tmp/talaria.html
 ```
+
+添加 `--pose 1` 或 `--pose 2` 可导出飞翼不同姿态；HTML 是静态 framebuffer 预览，动画在 TTY 中运行。
 
 已有有效插件配置时，可以独立运行演示 TUI；此模式不会构造真实采样器：
 
@@ -129,6 +137,8 @@ CPU 的 `100%` 表示占满一个逻辑核；RSS 只计算 Gateway 本进程。�
 ./bin/hermes-gateway-herdr --config /absolute/config.json dashboard --json
 ```
 
-自动嵌入在**新的 supervisor 启动时**生效。现有 supervisor 已加载旧代码；只重启 Gateway child 不会加载新面板。本机插件仍链接到这个仓库，下一步可在用户确认后，通过既有 Pause/Resume 或 Herdr 生命周期重新创建 supervisor，再检查真实颜色、字体、focus 事件和 profile 状态。本轮保留当前运行实例，真实验证和停服继续遵守“先确认”的要求。
+独立 `dashboard` 已在旁边的普通 Herdr pane 中打开，读到 cherry 为 `READY`、Discord 已连接，default 也在线。更新独立面板后，从实时 pane 读取到了三种不同的飞翼姿态；Gateway PID 和运行代次保持一致。独立面板可单独退出并重新打开以加载显示更新，不触发 Gateway 生命周期操作。
+
+自动嵌入在**新的 supervisor 启动时**生效。现有 supervisor 已加载旧代码；只重启 Gateway child 不会加载新面板。本机插件仍链接到这个仓库。自动嵌入、冷启动和退出清理的真实验证仍需用户确认后再进行；停服继续遵守“先确认”的要求。
 
 返回 [文档索引](README.md) · [cherry 接入记录](13-cherry接入与验证.md)。

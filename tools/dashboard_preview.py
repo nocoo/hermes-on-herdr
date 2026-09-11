@@ -25,7 +25,7 @@ def fixed_cell_html(screen):
             style = (f"left:{x * 9}px;top:{y * 18}px;color:#{cell.fg & 0xffffff:06x};"
                      f"background:#{cell.bg & 0xffffff:06x};font-weight:{700 if cell.attrs & Attrs.BOLD else 400}")
             cells.append(f'<span style="{style}">{escape(cell.char)}</span>')
-    return ("<!doctype html><meta charset='utf-8'><title>Hermes Control / offline demo</title>"
+    return ("<!doctype html><meta charset='utf-8'><title>Talaria / Hermes on Herdr / offline demo</title>"
             "<style>body{margin:0;padding:18px;background:#080c12}"
             "main{position:relative;font:15px/18px Menlo,monospace;font-variant-ligatures:none}"
             "span{position:absolute;display:block;width:9px;height:18px;white-space:pre;overflow:hidden}</style>"
@@ -39,13 +39,15 @@ def main():
     parser.add_argument("--height", type=int, default=44)
     parser.add_argument("--layout", choices=("auto", "cards", "table"), default="auto")
     parser.add_argument("--selected", default="cherry")
+    parser.add_argument("--pose", type=int, choices=(0, 1, 2), default=0, help="Hermes wing pose for a still preview")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if not 20 <= args.width <= 300 or not 8 <= args.height <= 100:
         parser.error("Preview size must be 20..300 columns and 8..100 rows")
     data = demo_snapshot(args.profiles)
     view = DashboardView(ViewState(selected=args.selected, layout=args.layout), embedded=True, demo=True)
-    screen = render_to_screen(args.width, args.height, theme_for("herdr"), lambda ui: view.render(ui, data, now=data.updated))
+    screen = render_to_screen(args.width, args.height, theme_for("herdr"),
+                              lambda ui: view.render(ui, data, now=data.updated, pose=args.pose))
     args.output.write_text(fixed_cell_html(screen))
     print(f"Rendered {args.profiles} demo profiles at {args.width}x{args.height}: {args.output}")
 
