@@ -1,5 +1,7 @@
 import copy
 from dataclasses import replace
+import fcntl
+import json
 import os
 from pathlib import Path
 import time
@@ -8,7 +10,7 @@ import unittest
 from hermes_gateway_herdr.config import HERMES_SHA
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.identity import capture
-from hermes_gateway_herdr.rpc import GatewayProbe, Herdr, evaluate_gateway, exchange, hermes_socket
+from hermes_gateway_herdr.rpc import GatewayProbe, Herdr, evaluate_gateway, exchange, hermes_socket, profile_in_use
 from helpers import Fixture, SocketServer, private_file
 
 
@@ -115,3 +117,32 @@ class RpcTests(unittest.TestCase):
         with self.assertRaises(GatewayError) as error:
             hermes_socket(replace(self.config, profile_home=home))
         self.assertEqual("UNSAFE_PATH", error.exception.code)
+
+    def test_hermes_fences_block_launch_without_modifying_upstream_files(self):
+        self.assertFalse(profile_in_use(self.config))
+        lock = self.config.profile_home / "gateway.lock"
+        private_file(lock, "fixture lock")
+        inode = lock.stat().st_ino
+        with lock.open() as stream:
+            fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            self.assertTrue(profile_in_use(self.config))
+        self.assertFalse(profile_in_use(self.config))
+        self.assertEqual(inode, lock.stat().st_ino)
+        self.assertEqual("fixture lock", lock.read_text())
+        pid = self.config.profile_home / "gateway.pid"
+        private_file(pid, json.dumps({"pid": self.child["pid"], "start_time": self.identity["start_time"]}))
+        self.assertTrue(profile_in_use(self.config))
+        private_file(pid, json.dumps({"pid": self.child["pid"], "start_time": 1}))
+        self.assertFalse(profile_in_use(self.config))
+        private_file(pid, json.dumps({"pid": self.child["pid"]}))
+        with self.assertRaises(GatewayError):
+            profile_in_use(self.config)
+
+    def test_unresponsive_gateway_socket_is_unknown_not_absent(self):
+        def slow(_):
+            time.sleep(0.05)
+            return None
+        self.serve(self.config.profile_home / "gateway.sock", slow)
+        with self.assertRaises(GatewayError) as error:
+            profile_in_use(self.config, timeout=0.01)
+        self.assertEqual("UNKNOWN", error.exception.code)

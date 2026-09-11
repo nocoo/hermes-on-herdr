@@ -31,8 +31,16 @@ def validate_state(name: str, value: object) -> dict:
     if name == "intent.json":
         if (type(value.get("revision")) is not int or value["revision"] < 0
                 or value.get("desired") not in {"running", "paused"}
-                or not isinstance(value.get("binding_id"), str)):
+                or not isinstance(value.get("binding_id"), str)
+                or type(value.get("reset_revision", 0)) is not int
+                or not 0 <= value.get("reset_revision", 0) <= value["revision"]):
             raise GatewayError("STATE_SCHEMA", "Invalid persistent intent")
+        history = value.get("requests", [])
+        if (not isinstance(history, list) or len(history) > 64
+                or any(not isinstance(item, dict) or not isinstance(item.get("id"), str)
+                       or item.get("action") not in {"start", "resume", "stop", "pause", "restart"}
+                       for item in history)):
+            raise GatewayError("STATE_SCHEMA", "Invalid request history")
     if name in {"pending.json", "runtime.json"}:
         if not all(isinstance(value.get(key), str) and value[key]
                    for key in ("generation", "owner_key")):
@@ -40,7 +48,9 @@ def validate_state(name: str, value: object) -> dict:
     if name == "fuse.json":
         if (type(value.get("fused")) is not bool
                 or not isinstance(value.get("failures"), list)
-                or not isinstance(value.get("restarts"), list)):
+                or not isinstance(value.get("restarts"), list)
+                or type(value.get("streak", 0)) is not int or value.get("streak", 0) < 0
+                or type(value.get("reset_revision", 0)) is not int or value.get("reset_revision", 0) < 0):
             raise GatewayError("STATE_SCHEMA", "Invalid retry budget")
         for stamp in value["failures"] + value["restarts"]:
             if type(stamp) not in (int, float) or not 0 <= stamp < float("inf"):
@@ -239,19 +249,32 @@ class Store:
             raise GatewayError("OWNERSHIP_CONFLICT", "Intent belongs to another installation")
         return intent
 
-    def set_intent(self, action: str, *, request_id: str | None = None, reason: str | None = None) -> dict:
+    def set_intent(self, action: str, *, request_id: str | None = None, reason: str | None = None,
+                   expected_revision: int | None = None) -> dict:
         if action not in {"start", "resume", "stop", "pause", "restart"}:
             raise ValueError("Unknown action")
         current = self.intent()
-        if request_id and current.get("request_id") == request_id:
-            if current.get("action") != action:
-                raise GatewayError("STALE_REQUEST", "Request id was used for a different action")
-            return current
+        history = current.get("requests", [])
+        prior = history + [{"id": current.get("request_id"), "action": current.get("action")}]
+        if request_id:
+            if not isinstance(request_id, str) or not 1 <= len(request_id) <= 160:
+                raise GatewayError("STALE_REQUEST", "Invalid request id")
+            for item in prior:
+                if item["id"] == request_id:
+                    if item["action"] != action:
+                        raise GatewayError("STALE_REQUEST", "Request id was used for a different action")
+                    return current  # Never replay an old Resume over a newer Pause.
+        if expected_revision is not None and expected_revision != current["revision"]:
+            raise GatewayError("STALE_REQUEST", "Intent revision changed")
         if action == "restart" and current["desired"] != "running":
             raise GatewayError("PAUSED", "Resume explicitly before restarting")
         updated = dict(current, revision=current["revision"] + 1, action=action,
                        desired="paused" if action in {"stop", "pause"} else "running",
                        request_id=request_id or str(uuid.uuid4()), reason=reason or f"operator_{action}",
                        updated_at=time.time(), maintenance_until=None)
+        updated["requests"] = (history + [{"id": updated["request_id"], "action": action}])[-64:]
+        if action in {"start", "resume"}:
+            # One durable write both resumes and authorizes a budget reset. No cross-file transaction.
+            updated["reset_revision"] = updated["revision"]
         self.write("intent.json", updated)
         return updated

@@ -223,6 +223,7 @@ def profile_preflight(config: Config) -> None:
         forbidden = {"HERMES_HOME", "HOME", "PATH", "PYTHONPATH", "PYTHONHOME", "BASH_ENV", "ENV",
                      "GATEWAY_MULTIPLEX_PROFILES", "GATEWAY_ALLOW_ALL_USERS", "HERMES_ENABLE_PROJECT_PLUGINS",
                      "HERMES_YOLO_MODE", "HERMES_ACCEPT_HOOKS", "HERMES_IGNORE_USER_CONFIG", "INVOCATION_ID",
+                     "HERMES_GATEWAY_LOCK_DIR",
                      "XPC_SERVICE_NAME", "LAUNCHD_SOCKET", "HERMES_DESKTOP_MANAGED", "HERMES_S6_SUPERVISED_CHILD"}
         keys = re.findall(r"(?m)^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=", dotenv)
         if any(key in forbidden or key.startswith(("HERDR_", "HGH_")) or key.endswith("_ALLOW_ALL_USERS") for key in keys):

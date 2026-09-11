@@ -108,3 +108,13 @@ with Store(sys.argv[2]) as store:
             self.store.set_intent("resume")
         with self.store.mutation(), self.assertRaises(ValueError):
             self.store.remove("intent.json")
+
+    def test_old_request_and_compare_and_swap_cannot_overwrite_newer_pause(self):
+        with self.store.mutation():
+            self.store.set_intent("resume", request_id="old", expected_revision=0)
+            pause = self.store.set_intent("pause")
+            self.assertEqual(pause, self.store.set_intent("resume", request_id="old", expected_revision=0))
+            with self.assertRaises(GatewayError) as error:
+                self.store.set_intent("resume", request_id="new", expected_revision=1)
+            self.assertEqual("STALE_REQUEST", error.exception.code)
+            self.assertEqual(pause, self.store.intent())

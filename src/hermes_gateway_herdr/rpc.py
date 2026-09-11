@@ -1,6 +1,7 @@
 """One bounded JSON line per Unix socket connection; no automatic service starts."""
 
 import hashlib
+import fcntl
 import json
 import math
 import os
@@ -14,6 +15,7 @@ import uuid
 from .config import Config, HERDR_VERSION, HERMES_SHA, PLUGIN_ID, private_bytes
 from .errors import GatewayError
 from .identity import capture, hermes_start_matches, same_process
+from .state import check_private
 
 
 class RemoteError(GatewayError):
@@ -172,6 +174,54 @@ def hermes_socket(config: Config) -> Path:
     if Path(pointer) != expected:
         raise GatewayError("UNSAFE_PATH", "Gateway socket pointer is outside its expected location")
     return expected
+
+
+def profile_in_use(config: Config, *, timeout: float = 2) -> bool:
+    """Inspect Hermes' own fences without deleting, replacing or claiming its state."""
+    lock = config.profile_home / "gateway.lock"
+    try:
+        fd = os.open(lock, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+    except FileNotFoundError:
+        pass
+    except OSError as exc:
+        raise GatewayError("UNKNOWN", "Cannot inspect Hermes runtime lock") from exc
+    else:
+        try:
+            check_private(os.fstat(fd))
+            try:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                return True
+        finally:
+            os.close(fd)
+    pid_path = config.profile_home / "gateway.pid"
+    if pid_path.exists() or pid_path.is_symlink():
+        record = decode_object(private_bytes(pid_path, 64 * 1024))
+        pid = record.get("pid")
+        if type(pid) is not int or pid <= 0:
+            raise GatewayError("UNKNOWN", "Hermes PID record is not verifiable")
+        actual = capture(pid)
+        if actual is not None:
+            if "start_time" not in record:
+                raise GatewayError("UNKNOWN", "Live legacy PID record requires inspection")
+            if hermes_start_matches(actual, record["start_time"]):
+                return True
+    try:
+        path = hermes_socket(config)
+    except GatewayError as exc:
+        # A missing long-path pointer is normal before the very first Gateway launch.
+        if exc.code == "CONFIG_ERROR" and not (config.profile_home / "gateway.sock.path").exists():
+            return False
+        raise
+    if not path.exists() and not path.is_symlink():
+        return False
+    try:
+        control_query(path, "identify", timeout=timeout)
+        return True
+    except GatewayError as exc:
+        if exc.code == "RPC_UNAVAILABLE" and isinstance(exc.__cause__, (ConnectionRefusedError, FileNotFoundError)):
+            return False
+        raise GatewayError("UNKNOWN", "Existing Gateway socket cannot be identified") from exc
 
 
 def control_query(path: Path, verb: str, *, timeout: float = 2, **fields) -> dict:
