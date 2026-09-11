@@ -141,11 +141,11 @@ class Store:
             os.close(fd)
             raise
 
-    def lease(self, name: str = "supervisor.lock", timeout: float = 0) -> Lease:
+    def lease(self, name: str = "supervisor.lock", timeout: float = 0, *, create: bool = True) -> Lease:
         if name not in {"mutation.lock", "supervisor.lock"}:
             raise ValueError("Unknown lock")
         try:
-            fd = self._open(name, os.O_RDWR | os.O_CREAT)
+            fd = self._open(name, os.O_RDWR | (os.O_CREAT if create else 0))
             deadline = time.monotonic() + timeout
             while True:
                 try:
@@ -162,6 +162,8 @@ class Store:
         except BaseException as exc:
             if "fd" in locals():
                 os.close(fd)
+            if isinstance(exc, FileNotFoundError) and not create:
+                raise
             if isinstance(exc, OSError):
                 raise GatewayError("IO_ERROR", "Cannot acquire ownership lock") from exc
             raise
@@ -179,8 +181,10 @@ class Store:
 
     def lifetime_held(self) -> bool:
         try:
-            with self.lease():
+            with self.lease(create=False):
                 return False
+        except FileNotFoundError:
+            return False
         except GatewayError as exc:
             if exc.code == "BUSY":
                 return True

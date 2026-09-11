@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import stat
 import subprocess
+import time
 from urllib.parse import parse_qsl, urlsplit
 
 import yaml
@@ -232,23 +233,29 @@ def profile_preflight(config: Config) -> None:
         raise GatewayError("CONFIG_ERROR", "Profile does not meet the dedicated Gateway policy") from exc
 
 
-def installation_preflight(config: Config) -> None:
+def installation_preflight(config: Config, *, deadline: float | None = None) -> None:
     """Inspect the pinned checkout using git; never run the Hermes CLI for preflight."""
     try:
+        deadline = deadline if deadline is not None else time.monotonic() + 4
+        def remaining():
+            duration = min(2, deadline - time.monotonic())
+            if duration <= 0:
+                raise GatewayError("UNSUPPORTED_VERSION", "Installation inspection deadline exhausted")
+            return duration
         result = subprocess.run(["/usr/bin/git", "-C", str(config.hermes_root), "rev-parse", "HEAD"],
-                                stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=2,
+                                stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=remaining(),
                                 env={"PATH": "/usr/bin:/bin", "GIT_OPTIONAL_LOCKS": "0"})
         if result.returncode != 0 or result.stdout.strip() != HERMES_SHA:
             raise GatewayError("UNSUPPORTED_VERSION", "Hermes checkout is outside the pinned baseline")
         dirty = subprocess.run(["/usr/bin/git", "-C", str(config.hermes_root), "diff", "--quiet", "HEAD", "--"],
                                stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                               timeout=2, env={"PATH": "/usr/bin:/bin", "GIT_OPTIONAL_LOCKS": "0"})
+                               timeout=remaining(), env={"PATH": "/usr/bin:/bin", "GIT_OPTIONAL_LOCKS": "0"})
         if dirty.returncode != 0:
             raise GatewayError("UNSUPPORTED_VERSION", "Hermes tracked source is modified")
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise GatewayError("UNSUPPORTED_VERSION", "Cannot verify the Hermes installation") from exc
 
 
-def preflight(config: Config) -> None:
+def preflight(config: Config, *, deadline: float | None = None) -> None:
     profile_preflight(config)
-    installation_preflight(config)
+    installation_preflight(config, deadline=deadline)

@@ -14,8 +14,10 @@ import time
 sys.path[:0] = [str(Path(__file__).resolve().parents[1] / "src"), str(Path(__file__).resolve().parent)]
 
 from hermes_gateway_herdr.config import Config, profile_preflight
+from hermes_gateway_herdr.controller import Controller
 from hermes_gateway_herdr.identity import capture, same_process
 from hermes_gateway_herdr.lifecycle import Limits
+from hermes_gateway_herdr.rpc import Herdr
 from hermes_gateway_herdr.supervisor import Supervisor
 from helpers import SocketServer, private_file
 from test_rpc import gateway_payloads
@@ -111,6 +113,20 @@ def supervise(config_path):
 
 
 if __name__ == "__main__":
+    if sys.argv[1] == "controller":
+        config = Config.load(Path(sys.argv[2]))
+        point = sys.argv[3]
+        class CrashHerdr(Herdr):
+            def call(self, method, *args, **kwargs):
+                selected = "workspace" if method == "workspace.create" else "pane" if method == "plugin.pane.open" else "none"
+                if point == "before_" + selected:
+                    os._exit(91)
+                result = super().call(method, *args, **kwargs)
+                if point == "after_" + selected:
+                    os._exit(91)
+                return result
+        Controller(config, check=profile_preflight, herdr=CrashHerdr(config)).ensure(dict(os.environ))
+        raise SystemExit(0)
     if sys.argv[1] == "supervisor":
         raise SystemExit(supervise(Path(sys.argv[2])))
     if sys.argv[1] == "gateway":
