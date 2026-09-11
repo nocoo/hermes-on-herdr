@@ -134,3 +134,26 @@ with Store(sys.argv[2]) as store:
         with patch("hermes_gateway_herdr.state.os.open", side_effect=racing_open):
             self.assertEqual(old, self.store.intent())
         self.assertEqual(old["revision"] + 1, self.store.intent()["revision"])
+
+    def test_atomic_replace_during_path_stat_does_not_reject_a_private_data_snapshot(self):
+        old = self.store.intent()
+        new = dict(old, revision=old["revision"] + 1)
+        replacement = self.path / "replacement"
+        replacement.write_text(json.dumps(new))
+        replacement.chmod(0o600)
+        original_stat = os.stat
+        def racing_stat(name, *args, **kwargs):
+            if name == "intent.json":
+                # A kernel path lookup can retain the old inode while rename
+                # removes its last link, before stat returns to the caller.
+                fd = os.open(self.path / "intent.json", os.O_RDONLY)
+                try:
+                    os.replace(replacement, self.path / "intent.json")
+                    info = os.fstat(fd)
+                    self.assertEqual(0, info.st_nlink)
+                    return info
+                finally:
+                    os.close(fd)
+            return original_stat(name, *args, **kwargs)
+        with patch("hermes_gateway_herdr.state.os.stat", side_effect=racing_stat):
+            self.assertEqual(new, self.store.intent())

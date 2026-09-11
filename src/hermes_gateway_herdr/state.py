@@ -123,8 +123,11 @@ class Store:
         self.close()
 
     def _open(self, name: str, flags: int) -> int:
+        snapshot = name in DATA_FILES and flags & os.O_ACCMODE == os.O_RDONLY
         try:
-            check_private(os.stat(name, dir_fd=self.fd, follow_symlinks=False))
+            # Atomic replacement can unlink a data inode during either stat call.
+            # Locks and write targets still require exactly one live link.
+            check_private(os.stat(name, dir_fd=self.fd, follow_symlinks=False), allow_unlinked=snapshot)
         except FileNotFoundError:
             if not flags & os.O_CREAT:
                 raise
@@ -132,7 +135,7 @@ class Store:
         try:
             # A reader may open the old inode immediately before an atomic replacement.
             # Its nlink then becomes zero; the opened, private snapshot is still valid.
-            check_private(os.fstat(fd), allow_unlinked=name in DATA_FILES and flags & os.O_ACCMODE == os.O_RDONLY)
+            check_private(os.fstat(fd), allow_unlinked=snapshot)
             return fd
         except BaseException:
             os.close(fd)
