@@ -7,7 +7,7 @@
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
-**当前状态：核心已实现，86 项离线测试通过，cherry 接入准备完成，切换待停服确认。** 已有 controller、pane supervisor、开发用 manifest、隔离 launcher 和命令入口。本机插件已注册为禁用状态，候选配置通过预检，原 cherry Gateway 仍由 LaunchAgent 运行。完整生命周期和消息往返尚未验证，当前记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)，首轮实现和历史测试证据见 [12](docs/12-离线实现与验证.md)。
+**当前状态：核心已实现，86 项离线测试通过；原 cherry Gateway 已获准停服并移除 LaunchAgent，插件接入待执行。** 已有 controller、pane supervisor、开发用 manifest、隔离 launcher 和命令入口。本机插件已注册为禁用状态，候选配置通过预检但尚未应用。原生 Gateway 在停服后的 30 秒观察中没有重新启动，Herdr 保持运行。完整生命周期和消息往返尚未验证，当前记录见 [13 · cherry 接入与验证](docs/13-cherry接入与验证.md)，首轮实现和历史测试证据见 [12](docs/12-离线实现与验证.md)。
 
 离线测试使用已配置 Hermes venv 中的 Python 3.11+、psutil 和 PyYAML，不导入 Hermes main，不调用已安装的 Herdr／Hermes：
 

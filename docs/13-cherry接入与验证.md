@@ -1,10 +1,12 @@
 # 13 · cherry 接入与验证
 
-2026-09-11。目标是移除 `cherry` 的 Gateway 系统自启动，由默认 Herdr session 中的本插件负责启动与监管，并验证正常消息处理和 Herdr 双向交互。
+2026-09-11 建立，2026-09-12 更新。目标是移除 `cherry` 的 Gateway 系统自启动，由默认 Herdr session 中的本插件负责启动与监管，并验证正常消息处理和 Herdr 双向交互。
 
-**当前仅完成接入准备。插件已注册为 disabled；原 cherry Gateway 和 Herdr 仍在运行。用户要求任何停服操作先确认。** 下列待执行步骤不能当作真实集成 PASS。
+**已获用户确认并停止原 cherry Gateway、移除其 LaunchAgent；30 秒观察中未重新启动。Herdr 仍在运行，插件保持 disabled，Profile 尚未绑定。** 当前保留离线观察点，候选配置尚未应用，插件启动与真实集成验证仍待执行。后续停服仍需先确认。
 
 ## 13.1 实际观察
+
+以下为原生 Gateway 停服前的基线；停服结果见 13.4。
 
 | 项目 | 结果 |
 |---|---|
@@ -19,7 +21,7 @@
 | Hermes | `b7ac3ba1cdf89f94dfe86de27e01358b194f4053`；tracked 源码干净，保留既有 untracked 文件 |
 | 插件注册 | `nocoo.hermes-gateway` 指向本仓库，enabled=false；原有插件保留 |
 
-当前 healthy 是原 LaunchAgent 实例的基线，尚未证明它在本插件监管下能启动或完成业务往返。
+上述 healthy 是原 LaunchAgent 实例的历史基线，尚未证明它在本插件监管下能启动或完成业务往返。
 
 ## 13.2 已准备的配置和备份
 
@@ -52,21 +54,32 @@ Discord 工具集会从当前通用工具集收窄到表中三类，这是切换
 - 新回归用例在修复前失败；修复后配置测试 9 项通过。
 - 全套实际执行：`/Users/nocoo/.hermes/hermes-agent/venv/bin/python -I -B tests/run.py`，**86 项通过，14.183 秒，退出码 0**。这是离线 fixture 测试；原 84 项历史完整输出仍保存在 [12](12-离线实现与验证.md)。
 
-## 13.4 下一次切换：必须先获停服确认
+## 13.4 原生停服已完成，插件接入待执行
 
-1. 重新确认 cherry 身份、无进行中的请求，以及配置/备份 hash。只读展示实际差异和当前进程。
-2. 获准后 bootout **仅** `ai.hermes.gateway-cherry`，等待已核验的 wrapper/Gateway 退出，再从 LaunchAgents 移除该 plist；保留备份用于回滚。
-3. 原实例退出后应用候选配置、SOUL 追加段及 skill。必要时将 cherry 既有运行文件权限改为 0600，保留锁 inode，不删除 Hermes 锁或伪造 PID 状态。
-4. `bind --dry-run` → `bind --apply`，确认初始 paused；启用插件，再通过插件 Start 启动。核验真实 pane IDs、进程身份、同 SID，以及两次新鲜平台观察达到 READY。
-5. 测试 Discord 消息和 Herdr 交互。任何进一步 Stop/Restart/Pause/Herdr 停服均在获得对应确认后进行。
+2026-09-12，用户明确要求先停止 cherry，并移除原生 Gateway 的 launchd 管理。已执行：
 
-这次接入切换只停止 cherry。默认 Herdr 的停服会影响其现有 workspace 和任务，需要另一次明确确认；关闭 TUI 界面与停止后台 server 是不同动作，不能混为一个验收结果。
+- 停服前重新核对 Profile、固定 SHA、PID/start、父子进程关系，以及配置和 plist 的备份 hash；实时 `active_agents=0`。
+- 为已验证的 Gateway PID 44325 写入原生 planned-stop 标记，执行 `launchctl bootout gui/501/ai.hermes.gateway-cherry`，退出码 0。
+- 确认 wrapper 44324 和 Gateway 44325 均已退出、launchd 中找不到该服务后，移除 `~/Library/LaunchAgents/ai.hermes.gateway-cherry.plist`；原文件备份保留。
+- 退出后第 0、10、30 秒检查均无 cherry Gateway 进程、无控制 socket、无已加载的 LaunchAgent，plist 保持不存在。原生运行状态为 `stopped`。
+- `gateway.lock` 未被删除或替换，inode 仍为 41887302，已验证没有进程持锁；当前权限仍是原生的 0644。
+- Herdr ping 正常；插件仍 disabled，未创建 binding，未应用候选配置或启动替代实例。
+
+本机私有证据：`~/.local/state/hermes-gateway-herdr/cherry-20260911T123729Z/native-stop-20260911T205737Z.json`。以上证明原生服务已退出且观察期间没有复活；Discord 客户端显示及插件监管能力尚未验证。
+
+后续接入步骤：
+
+1. 重新确认 cherry 没有运行实例且原配置仍与备份一致，再应用候选配置、SOUL 追加段及 skill。必要时将既有运行文件权限改为 0600，保留锁 inode，不删除 Hermes 锁或伪造 PID 状态。
+2. `bind --dry-run` → `bind --apply`，确认初始 paused；启用插件，再通过插件 Start 启动。核验真实 pane IDs、进程身份、同 SID，以及两次新鲜平台观察达到 READY。
+3. 测试 Discord 消息和 Herdr 交互。任何进一步 Stop/Restart/Pause/Herdr 停服均在获得对应确认后进行。
+
+本次只停止了原生 cherry Gateway。默认 Herdr 的停服会影响其现有 workspace 和任务，需要另一次明确确认；关闭 TUI 界面与停止后台 server 是不同动作，不能混为一个验收结果。
 
 ## 13.5 三项目标的验收
 
 | 用户目标 | 验收方式 | 当前结果 |
 |---|---|---|
-| 随 Herdr 生命周期启停 | 默认 session 冷启动自动产生一个受监管 Gateway；停止 server 后该 Gateway 退出；再次启动重新就绪。记录 PID/start/SID、意图、pane IDs 和实例数 | NOT RUN；待停服确认 |
+| 随 Herdr 生命周期启停 | 默认 session 冷启动自动产生一个受监管 Gateway；停止 server 后该 Gateway 退出；再次启动重新就绪。记录 PID/start/SID、意图、pane IDs 和实例数 | NOT RUN；待插件接入及 Herdr 停服确认 |
 | cherry 正常工作 | 插件监管下 Discord connected；实际用户消息触发模型并得到带唯一标记的回复 | NOT RUN |
 | 读取 Herdr 并双向交互 | Discord 发指令 → cherry 读取真实 snapshot → 在明确的测试 pane 操作 → 回读新的终端结果 → Discord 回报；用独立核查比对实际输出 | NOT RUN |
 
