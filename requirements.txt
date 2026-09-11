@@ -1,0 +1,3 @@
+# Reuse the configured Hermes venv; the plugin never installs dependencies at startup.
+psutil==7.2.2
+PyYAML>=6.0.3,<7

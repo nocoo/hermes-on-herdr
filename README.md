@@ -2,7 +2,13 @@
 
 让 Herdr 启动后自动确保一个专用 Hermes Gateway 运行在真实 Herdr pane 内，继承 `HERDR_SOCKET_PATH`、`HERDR_WORKSPACE_ID`、`HERDR_TAB_ID`、`HERDR_PANE_ID`，成为面向该 Herdr session 的控制 Agent。
 
-**当前状态：设计／尚未实现。** 本仓库只包含中文可行性研究、架构和实施文档；没有可安装的 manifest、runtime 或发布包。本阶段没有创建或修改 Hermes Profile，没有安装插件，没有启动第二个 Gateway。
+**当前状态：离线核心实现中，尚未通过真实环境验证。** `src/` 与 `tests/` 开始实现设计约定；目前不提供经过验证的安装包。本阶段不创建或修改用户 Hermes Profile、不安装插件、不启动真实 Gateway。真实 Herdr／Hermes、消息平台和系统服务验证需要另行确认。
+
+离线测试使用已配置 Hermes venv 中的 Python 3.11+、psutil 和 PyYAML，不导入 Hermes main，不调用已安装的 Herdr／Hermes：
+
+```sh
+/absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
+```
 
 ## 结论
 
