@@ -1,0 +1,339 @@
+.vk-preview {
+	--vk-page: var(--page, #f0f0e9);
+	--vk-ink: var(--ink, #30372e);
+	--vk-muted: var(--muted, #68705f);
+	--vk-line: var(--line, #d4d8cb);
+	--vk-surface: var(--surface, #f8f8f2);
+	--vk-accent: var(--accent, #bf5c3c);
+	color: var(--vk-ink);
+	font-family: "Space Grotesk Variable", "Journey CJK", sans-serif;
+}
+.vk-preview *,
+.vk-preview *::before,
+.vk-preview *::after {
+	box-sizing: border-box;
+}
+.vk-preview button,
+.vk-preview select,
+.vk-preview input {
+	font: inherit;
+	color: inherit;
+}
+.vk-preview button {
+	cursor: pointer;
+}
+.vk-preview :where(fieldset) {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	min-width: 0;
+}
+.vk-preview :is(button, select, input, summary, a):focus-visible {
+	outline: 2px solid var(--vk-accent);
+	outline-offset: 4px;
+}
+.vk-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 18px;
+	flex-wrap: wrap;
+}
+.vk-mode {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+.vk-mode button {
+	min-height: 44px;
+	padding: 0 15px;
+	border: 1px solid transparent;
+	background: transparent;
+	border-radius: 7px;
+	font-size: 13px;
+	color: var(--vk-muted);
+}
+.vk-mode button[aria-pressed="true"] {
+	background: var(--vk-surface);
+	border-color: var(--vk-line);
+	color: var(--vk-ink);
+}
+.vk-format select {
+	background: var(--vk-page);
+	border: 1px solid var(--vk-line);
+	border-radius: 7px;
+	min-height: 44px;
+	padding: 0 12px;
+	font-size: 12px;
+}
+.vk-stage {
+	overflow: hidden;
+	border: 1px solid var(--vk-line);
+	border-radius: 12px;
+	background: #1e2824;
+	width: 100%;
+	margin-inline: auto;
+}
+.vk-stage.vk-portrait {
+	width: min(100%, 410px);
+}
+.vk-stage video {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+}
+.vk-stage:fullscreen {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border: 0;
+	border-radius: 0;
+	width: 100%;
+	max-height: 100%;
+}
+.vk-stage:fullscreen > div:first-child {
+	max-height: calc(100vh - 60px);
+	margin-inline: auto;
+}
+.vk-stage.vk-portrait:fullscreen > div:first-child {
+	max-width: calc((100vh - 60px) * 9 / 16);
+}
+.vk-controls {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 3px 12px;
+	background: var(--vk-surface);
+	color: var(--vk-ink);
+	min-height: 52px;
+}
+.vk-controls button {
+	flex: 0 0 44px;
+	height: 44px;
+	border: 0;
+	border-radius: 4px;
+	background: none;
+	font-size: 18px;
+}
+.vk-controls input {
+	min-width: 0;
+	flex: 1;
+	accent-color: var(--vk-accent);
+	height: 44px;
+	cursor: pointer;
+}
+.vk-controls output {
+	font:
+		11px / 1 "Geist Mono Variable",
+		monospace;
+	white-space: nowrap;
+}
+.vk-preferences {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 28px;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 15px;
+	font-size: 12px;
+	color: var(--vk-muted);
+}
+.vk-preferences label {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	min-height: 44px;
+	color: var(--vk-ink);
+	cursor: pointer;
+}
+.vk-preferences input {
+	accent-color: var(--vk-accent);
+	width: 17px;
+	height: 17px;
+}
+.vk-chapters {
+	padding-top: 30px;
+}
+.vk-chapters h2 {
+	margin: 0 0 19px;
+	font-size: 16px;
+	font-weight: 500;
+	letter-spacing: -0.4px;
+}
+.vk-chapter-grid {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 12px;
+}
+.vk-chapter-grid button {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 17px;
+	min-width: 0;
+	text-align: left;
+	border: 1px solid var(--vk-line);
+	border-radius: 8px;
+	background: var(--vk-page);
+}
+.vk-chapter-grid button:hover,
+.vk-chapter-grid button[aria-pressed="true"] {
+	background: var(--vk-surface);
+	border-color: var(--vk-accent);
+}
+.vk-chapter-index {
+	display: flex;
+	justify-content: space-between;
+	gap: 8px;
+	font:
+		11px "Geist Mono Variable",
+		monospace;
+	color: var(--vk-muted);
+}
+.vk-chapter-index > span {
+	font-size: 10px;
+}
+.vk-chapter-grid strong {
+	font-size: 14px;
+	font-weight: 500;
+}
+.vk-chapter-duration {
+	font:
+		11px "Geist Mono Variable",
+		monospace;
+	color: var(--vk-muted);
+}
+.vk-transcript {
+	border-top: 1px solid var(--vk-line);
+	margin-top: 28px;
+	padding-top: 10px;
+	font-size: 14px;
+}
+.vk-transcript summary {
+	cursor: pointer;
+	padding-block: 14px;
+}
+.vk-transcript li {
+	padding: 8px 0;
+	line-height: 1.7;
+}
+.vk-transcript strong {
+	white-space: pre-line;
+}
+.vk-transcript p {
+	color: var(--vk-muted);
+	margin: 6px 0;
+}
+.vk-transcript a {
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+.vk-error {
+	display: grid;
+	place-items: center;
+	margin: 0;
+	padding: 20px;
+	height: 100%;
+	color: #e6e9dc;
+	background: #1e2824;
+	font-size: 15px;
+	text-align: center;
+}
+.vk-sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+.vk-view-tabs {
+	display: flex;
+	gap: 24px;
+	margin-bottom: 22px;
+	border-bottom: 1px solid var(--vk-line);
+}
+.vk-view-tabs button {
+	min-height: 48px;
+	padding: 0 0 14px;
+	border: 0;
+	border-bottom: 2px solid transparent;
+	background: none;
+	font-size: 14px;
+	color: var(--vk-muted);
+}
+.vk-view-tabs button[aria-pressed="true"] {
+	border-bottom-color: var(--vk-accent);
+	color: var(--vk-ink);
+}
+.vk-deck-label {
+	font:
+		12px "Geist Mono Variable",
+		monospace;
+	color: var(--vk-muted);
+}
+.vk-deck-controls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	padding: 4px 12px;
+	background: var(--vk-surface);
+	color: var(--vk-ink);
+	font-size: 12px;
+}
+.vk-deck-controls button {
+	min-height: 44px;
+	border: 0;
+	background: none;
+	font-size: 12px;
+	padding-inline: 10px;
+}
+.vk-deck-controls button:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+@media (max-width: 1000px) {
+	.vk-chapter-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+@media (max-width: 540px) {
+	.vk-toolbar {
+		gap: 8px;
+	}
+	.vk-mode button {
+		padding-inline: 10px;
+		font-size: 12px;
+	}
+	.vk-format {
+		width: 100%;
+	}
+	.vk-format select {
+		width: 100%;
+	}
+	.vk-chapter-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+	.vk-controls {
+		gap: 3px;
+		padding-inline: 4px;
+	}
+	.vk-controls output {
+		font-size: 10px;
+	}
+	.vk-preferences {
+		gap: 0;
+		flex-direction: column;
+		align-items: start;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.vk-preview {
+		scroll-behavior: auto;
+	}
+}

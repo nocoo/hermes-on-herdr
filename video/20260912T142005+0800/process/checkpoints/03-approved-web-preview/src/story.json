@@ -1,0 +1,184 @@
+{
+  "title": "Context is control",
+  "product": "hermes on herdr",
+  "repository": "https://github.com/nocoo/hermes-on-herdr",
+  "composition": "HermesConnectionsEN",
+  "filename": "hermes-on-herdr-context-en.mp4",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "eyebrow": "HERMES ON HERDR",
+      "title": "Context is control.",
+      "minSeconds": 3.5,
+      "narration": ["Hermes on Herdr."],
+      "visual": "A minimal opening plate: the original product mark, a short title, and one coral signal line. Fixed published Hexly fonts and tokens.",
+      "source": ["assets/brand/README.md", "docs/README.en.md#why-a-plugin"]
+    },
+    {
+      "id": "context",
+      "eyebrow": "THE MISSING LINK",
+      "title": "Messages ≠ control.",
+      "minSeconds": 10,
+      "narration": [
+        "An independent Hermes can receive your messages.",
+        "But it does not automatically inherit your Herdr session's pane, socket, or caller context."
+      ],
+      "qualifications": ["An external instance needs those relationships configured separately."],
+      "visual": "Official Hermes and Herdr marks face a visible gap. Pane, socket and caller context stay inside a crisp unfilled session outline. A signal stops at the missing link.",
+      "source": ["docs/README.en.md#why-a-plugin", "src/hermes_gateway_herdr/config.py"]
+    },
+    {
+      "id": "talent",
+      "eyebrow": "YOUR ENGINEERING TEAM",
+      "title": "Brilliant agents.",
+      "minSeconds": 9,
+      "narration": [
+        "You trust brilliant coding partners: Codex, Grok, Pi, Claude Code.",
+        "As your workflow grows, coordination becomes the job."
+      ],
+      "visual": "Official Codex, Grok, Pi and Claude Code icons settle into a line. Colored task paths untangle around them, showing the coordination burden.",
+      "source": ["docs/README.en.md#why-a-plugin"]
+    },
+    {
+      "id": "bind",
+      "eyebrow": "THE PLUGIN CONNECTION",
+      "title": "Choose. Trust. Connect.",
+      "minSeconds": 9,
+      "narration": [
+        "The plugin makes the link explicit.",
+        "Choose a dedicated Hermes profile you trust, and bind it to your current Herdr session."
+      ],
+      "qualifications": ["Existing configured profile · explicit owner binding"],
+      "visual": "The chosen Hermes mark moves into the current-session outline. A coral path joins Hermes to Herdr; pane, socket and caller labels appear together.",
+      "source": [
+        "src/hermes_gateway_herdr/config.py",
+        "src/hermes_gateway_herdr/cli.py",
+        "docs/README.en.md#architecture-and-trust-boundaries"
+      ]
+    },
+    {
+      "id": "managers",
+      "eyebrow": "M2 → MANAGER → ICs",
+      "title": "Your manager’s manager.",
+      "minSeconds": 9,
+      "narration": [
+        "Hermes becomes your M2, with full Herdr control in the bound session.",
+        "It manages Herdr. Herdr coordinates your coding agents."
+      ],
+      "qualifications": ["Full control of the bound session, under Herdr and plugin checks"],
+      "visual": "An editorial diagram connects Hermes M2 to Herdr manager, then branches to four real coding-agent marks. Moving dots convey task delegation.",
+      "source": [
+        "docs/README.en.md#architecture-and-trust-boundaries",
+        "docs/09-源码证据索引.md#h11"
+      ]
+    },
+    {
+      "id": "channels",
+      "eyebrow": "YOUR CHANNELS. YOUR M2.",
+      "title": "A familiar channel.",
+      "minSeconds": 11,
+      "narration": [
+        "Hermes already supports Discord, Telegram, and Slack.",
+        "Configure a channel to reach your M2 from outside, while Herdr control stays local."
+      ],
+      "qualifications": [
+        "Discord connectivity recorded; Telegram / Slack integration unverified.",
+        "Illustrative workflow · fresh end-to-end control not verified"
+      ],
+      "visual": "Official Discord, Telegram and Slack marks sit above an illustrative request. One message signal reaches Hermes; the Hermes-to-Herdr path stays inside the session.",
+      "source": [
+        "docs/README.en.md#development-and-validation",
+        "docs/README.en.md#why-a-plugin",
+        "https://github.com/NousResearch/hermes-agent/tree/b7ac3ba1cdf89f94dfe86de27e01358b194f4053/plugins/platforms"
+      ]
+    },
+    {
+      "id": "local",
+      "eyebrow": "CONTROL STAYS LOCAL",
+      "title": "No SSH required.",
+      "minSeconds": 9,
+      "narration": [
+        "No SSH. No remote desktop. No VPN or exposed Herdr control port.",
+        "Keep the host, Herdr, and gateway online."
+      ],
+      "qualifications": [
+        "Configure channel access; messaging and model services must be reachable."
+      ],
+      "visual": "The familiar channel remains outside the local session. A message crosses to Hermes while the Herdr control path stays inside. No decorative floor or shadow.",
+      "source": [
+        "docs/README.en.md#architecture-and-trust-boundaries",
+        "src/hermes_gateway_herdr/dashboard_http.py"
+      ]
+    },
+    {
+      "id": "monitor",
+      "eyebrow": "A MANAGED LIFECYCLE",
+      "title": "Visible. Pausable. Yours.",
+      "minSeconds": 10,
+      "narration": [
+        "The plugin ties the dedicated gateway to Herdr's lifecycle.",
+        "Pause stays paused until you resume. The monitor TUI shows its state."
+      ],
+      "qualifications": [
+        "Native monitor · offline demo data",
+        "Lifecycle is implemented; full cold-start / exit integration remains unverified."
+      ],
+      "visual": "The actual native monitor SVG appears without perspective or cropping beside simple lifecycle words. The data is an offline, fictional fixture.",
+      "source": [
+        "src/hermes_gateway_herdr/dashboard_view.py",
+        "src/hermes_gateway_herdr/supervisor.py",
+        "docs/README.en.md#development-and-validation"
+      ]
+    },
+    {
+      "id": "trust",
+      "eyebrow": "AN EXPLICIT TRUST DECISION",
+      "title": "Your profile. Your session.",
+      "minSeconds": 8,
+      "narration": [
+        "Herdr and plugin boundaries still apply.",
+        "Session binding is not an operating-system sandbox. Same-user terminal permissions remain broad."
+      ],
+      "qualifications": ["No arbitrary external authorization · No public control plane"],
+      "visual": "An unselected external Hermes remains outside. Only the chosen profile connects within the current-session outline; the OS-sandbox caveat remains explicit.",
+      "source": ["docs/README.en.md#architecture-and-trust-boundaries", "docs/07-安全与运维.md"]
+    },
+    {
+      "id": "weekend",
+      "eyebrow": "THE PIECES, IN PLACE",
+      "title": "Take your weekend back.",
+      "minSeconds": 8,
+      "narration": [
+        "Let the system manage the talent.",
+        "Keep your judgment. Take your weekend back."
+      ],
+      "visual": "Agent icons circulate around their managers while a flat yellow sunrise reveals SAT and SUN. The autonomous team and returned weekend share one clean composition.",
+      "source": ["docs/README.en.md#why-a-plugin"]
+    },
+    {
+      "id": "outro",
+      "eyebrow": "HEXLY.AI",
+      "title": "hermes on herdr",
+      "minSeconds": 6,
+      "voiceLeadSeconds": 2.8,
+      "narration": ["Hermes on Herdr. By Hexly AI."],
+      "visual": "Published HexlyReveal, mark first and wordmark from 1.25 seconds. A consumer-scoped vertical clipping fix preserves the full y descender without changing official wordmark geometry or the immutable kit.",
+      "source": [
+        "assets/brand/README.md",
+        "https://github.com/nocoo/hexly.ai/blob/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/Identity.tsx"
+      ]
+    }
+  ]
+}

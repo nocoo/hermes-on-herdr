@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-09-12T07:48:34.978405+00:00",
+  "status": "passed",
+  "parentCommit": "8cb153cadb657314799f688c1d3f908eb3420ce3",
+  "fetchedOriginMain": "8cb153cadb657314799f688c1d3f908eb3420ce3",
+  "onlyScope": "video/20260912T142005+0800/",
+  "protectedOldTree": "23e9cf0dc1e3e246b77bafe4d1d9843dbd8cf323",
+  "ciCommitPreserved": "e65dde5",
+  "markdown": {
+    "documents": 10,
+    "localLinks": 89,
+    "missingLinks": [],
+    "checks": [
+      "relative links",
+      "balanced fences",
+      "no trailing whitespace",
+      "final newline"
+    ]
+  },
+  "deliverableChecksums": 9,
+  "websiteBuild": {
+    "exitCode": 0,
+    "log": "verification/final/build.log",
+    "mp4EqualsMaster": true
+  },
+  "gitStorage": "Ordinary Git; final MP4 5663298 bytes, all staged candidates below 100 MB. Dependencies and rebuildable intermediates follow existing ignores.",
+  "stagedFiles": 385,
+  "stagedBytes": 72519200,
+  "largestFile": {
+    "bytes": 18528044,
+    "file": "video/20260912T142005+0800/public/audio/music.wav"
+  },
+  "diffCheck": {
+    "authoredSources": "passed",
+    "preservedWhitespacePaths": [
+      "process/20260912T073211Z-video/mux.log",
+      "process/20260912T073211Z-video/remux.log",
+      "public/slides/speaker-notes-en.md",
+      "public/video-kit/1.0.0/hexly/journey-cjk-OFL.txt",
+      "vendor/hexly-video-kit/public/video-kit/1.0.0/hexly/journey-cjk-OFL.txt",
+      "verification/final/black-silence.log",
+      "verification/final/build.log",
+      "verification/final/loudness.log"
+    ],
+    "reason": "Original tool-log output and immutable font notices preserve their bytes; generated speaker notes include a harmless terminal blank line. No authored source whitespace errors remain."
+  }
+}

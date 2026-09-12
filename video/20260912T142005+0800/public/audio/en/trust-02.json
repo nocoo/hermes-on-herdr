@@ -1,0 +1,29 @@
+{
+  "text": "Session binding is not an operating-system sandbox. Same-user terminal permissions remain broad.",
+  "spoken": "Session binding is not an operating-system sandbox. Same-user terminal permissions remain broad.",
+  "signature": "6312147ad10e876608aa9d94ce0a038eea3cba87941daa93e12e6ad4ecbfcb7e",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:07.993192+00:00",
+  "sampleRate": 24000,
+  "samples": 148564,
+  "seconds": 6.190166666666666,
+  "sha256": "7ccbbe847e5dcd2cc9203d7bd9b144ec74feb5a9cf9badb72e09d5b4d6903f3c",
+  "gain": 1.979816475192909,
+  "sourceTrimSamples": [
+    4690,
+    153254
+  ],
+  "phonemes": [
+    "sˈɛʃən bˈIndɪŋ ɪz nˌɑt ɐn ˈɑpəɹˌATɪŋsˌɪstəm sˈændbˌɑks. sˌAmjˈuzəɹ tˈɜɹmənəl pəɹmˈɪʃənz ɹəmˈAn bɹˈɔd."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

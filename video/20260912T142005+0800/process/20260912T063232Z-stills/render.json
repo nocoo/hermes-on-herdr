@@ -1,0 +1,58 @@
+{
+  "mode": "stills",
+  "startedAt": "2026-09-12T06:32:32.228Z",
+  "storyHash": "92729771abc7de2167a48060e33939b2af238405ac71cedd1759ab6740908a7f",
+  "kitRevision": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "durationInFrames": 2895,
+  "status": "complete",
+  "frames": [
+    {
+      "frame": 60,
+      "name": "00-intro"
+    },
+    {
+      "frame": 276,
+      "name": "01-context"
+    },
+    {
+      "frame": 567,
+      "name": "02-talent"
+    },
+    {
+      "frame": 844,
+      "name": "03-bind"
+    },
+    {
+      "frame": 1122,
+      "name": "04-managers"
+    },
+    {
+      "frame": 1433,
+      "name": "05-channels"
+    },
+    {
+      "frame": 1737,
+      "name": "06-local"
+    },
+    {
+      "frame": 2031,
+      "name": "07-monitor"
+    },
+    {
+      "frame": 2340,
+      "name": "08-trust"
+    },
+    {
+      "frame": 2612,
+      "name": "09-weekend"
+    },
+    {
+      "frame": 2865,
+      "name": "10-outro"
+    }
+  ],
+  "finishedAt": "2026-09-12T06:32:42.533Z"
+}

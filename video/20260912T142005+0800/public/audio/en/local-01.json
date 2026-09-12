@@ -1,0 +1,29 @@
+{
+  "text": "No SSH. No remote desktop. No VPN or exposed Herdr control port.",
+  "spoken": "No S S H. No remote desktop. No V P N or exposed Herder control port.",
+  "signature": "5fc6f16547c46ed4493541933522f3aba9c681d5796912409c01fdd56d0c7293",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:06.199035+00:00",
+  "sampleRate": 24000,
+  "samples": 127393,
+  "seconds": 5.308041666666667,
+  "sha256": "8de5bf0f23b7a3df38b8b4546e85fa4f667b0a0c999accbe132540c1f37d52a5",
+  "gain": 1.5510637420806541,
+  "sourceTrimSamples": [
+    5461,
+    132854
+  ],
+  "phonemes": [
+    "nˈO ˈɛs ˈɛs ˈAʧ nˈO ɹəmˈOt dˈɛsktˌɑp. nˈO vˈi pˈi ˈɛn ɔɹ ɪkspˈOzd hˈɜɹdəɹ kəntɹˈOl pˈɔɹt."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

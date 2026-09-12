@@ -1,0 +1,29 @@
+{
+  "text": "You trust brilliant coding partners: Codex, Grok, Pi, Claude Code.",
+  "spoken": "You trust brilliant coding partners: Codex, Grok, Pi, Claude Code.",
+  "signature": "96bfb33d4b4e4bfc62764b0b5696d3d20ea35759c02c76b3ffb4ab7e5e682d24",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:03.236855+00:00",
+  "sampleRate": 24000,
+  "samples": 100234,
+  "seconds": 4.176416666666666,
+  "sha256": "fab2ca414c66afa0363fa4264f4afae689312c93329d8d8a351e73cbec06e1cc",
+  "gain": 1.8831560332446786,
+  "sourceTrimSamples": [
+    5223,
+    105457
+  ],
+  "phonemes": [
+    "jˌu tɹˈʌst bɹˈɪljənt kˈOdɪŋ pˈɑɹtnəɹz: kˈOdˌɛks, ɡɹˈɑk, pˈI, klˈɔd kˈOd."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

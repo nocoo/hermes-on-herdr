@@ -1,0 +1,29 @@
+{
+  "text": "Hermes becomes your M2, with full Herdr control in the bound session.",
+  "spoken": "Hermes becomes your M two, with full Herder control in the bound session.",
+  "signature": "44b067eb06a61e5f3955f822bd556d31109e2fec1555e177d29786c2bc703403",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:04.616840+00:00",
+  "sampleRate": 24000,
+  "samples": 97082,
+  "seconds": 4.045083333333333,
+  "sha256": "55f378ab2211f206f4610bf5b2d14a7d110aa1ca2958f7c3f13677ead7e06a7f",
+  "gain": 1.9794995182428379,
+  "sourceTrimSamples": [
+    4721,
+    101803
+  ],
+  "phonemes": [
+    "hˈɜɹmiz bəkˈʌmz jʊɹ ˈɛm tˈu, wɪð fˈʊl hˈɜɹdəɹ kəntɹˈOl ɪn ðə bˈWnd sˈɛʃən."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

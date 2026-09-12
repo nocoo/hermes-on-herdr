@@ -1,0 +1,29 @@
+{
+  "text": "But it does not automatically inherit your Herdr session's pane, socket, or caller context.",
+  "spoken": "But it does not automatically inherit your Herder session's pane, socket, or caller context.",
+  "signature": "d36733420ff254ff55e371270685fc6180c912425aae4520a8ef736ed0a2ec64",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:02.852612+00:00",
+  "sampleRate": 24000,
+  "samples": 128798,
+  "seconds": 5.366583333333334,
+  "sha256": "fa524c520b42cde140158a787d25aa1f5093bfdda9a1f5acbe3648c176830fc7",
+  "gain": 1.7796503404522008,
+  "sourceTrimSamples": [
+    5269,
+    134067
+  ],
+  "phonemes": [
+    "bˌʌt ɪt dˈʌz nˌɑt ˌɔTəmˈæTəkᵊli ɪnhˈɛɹət jʊɹ hˈɜɹdəɹ sˈɛʃənz pˈAn, sˈɑkət, ɔɹ kˈɔləɹ kˈɑntɛkst."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

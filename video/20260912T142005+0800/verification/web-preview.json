@@ -1,0 +1,46 @@
+{
+  "url": "http://127.0.0.1:7460/?preview=1",
+  "date": "2026-09-12T06:54:22.844Z",
+  "browser": "152.0.7977.83",
+  "errors": [],
+  "failed": [],
+  "chapters": [
+    {
+      "index": 1,
+      "title": "THE MISSING LINKMessages aren't\ncontrol context.",
+      "canvas": 1,
+      "selected": "0:03\nMessages aren't",
+      "time": "hermes on herdr\n01 / CONTEXT IS CONTROL\nTHE MISSING LINK\nMessages aren't\ncontrol context.\nAn external instance needs those relationships configured separately.\nAn independent Hermes can receive your messages.\n0:05 / 1:36"
+    },
+    {
+      "index": 5,
+      "title": "YOUR CHANNELS. YOUR M2.Out of office.\nStill in the loop.",
+      "canvas": 1,
+      "selected": "0:41\nOut of office",
+      "time": "hermes on herdr\n05 / CONTEXT IS CONTROL\nYOUR CHANNELS. YOUR M2.\nOut of office.\nStill in the loop.\nDiscord connectivity recorded; Telegram / Slack integration unverified.\nIllustrative workflow · fresh end-to-end control not verified\nHermes already supports Discord, Telegram, and Slack.\n0:43 / 1:36"
+    },
+    {
+      "index": 7,
+      "title": "A MANAGED LIFECYCLEVisible state.\nOne owner.",
+      "canvas": 1,
+      "selected": "1:02\nVisible state",
+      "time": "hermes on herdr\n07 / CONTEXT IS CONTROL\nA MANAGED LIFECYCLE\nVisible state.\nOne owner.\nNative monitor · offline demo data\nLifecycle is implemented; full cold-start / exit integration remains unverified.\nThe plugin ties the dedicated gateway to Herdr's lifecycle.\n1:04 / 1:36"
+    },
+    {
+      "index": 9,
+      "title": "THE PIECES, IN PLACEYour weekend.\nReturned.github.com/nocoo/hermes-on-herdr",
+      "canvas": 1,
+      "selected": "1:22\nYour weekend",
+      "time": "hermes on herdr\n09 / CONTEXT IS CONTROL\nTHE PIECES, IN PLACE\nYour weekend.\nReturned.\ngithub.com/nocoo/hermes-on-herdr\nLet the system manage the talent.\n1:24 / 1:36"
+    },
+    {
+      "index": 10,
+      "title": null,
+      "canvas": 0,
+      "selected": "1:30\nhermes on herdr · Your weekend, returned",
+      "time": "hexly.ai\nhermes on herdr · Your weekend, returned.\nHermes on Herdr. By Hexly AI.\n1:33 / 1:36"
+    }
+  ],
+  "mobileOverflow": false,
+  "scope": "Live Chrome web preview only; no MP4 rendering or capture"
+}

@@ -1,0 +1,326 @@
+{
+  "checkedAt": "2026-09-12T07:19:01.029Z",
+  "browser": "152.0.7977.83",
+  "base": "http://127.0.0.1:7460/",
+  "scope": "Live Chrome preview and still screenshots only. No MP4 recording or final render.",
+  "shots": [
+    {
+      "id": "intro",
+      "frame": 60,
+      "outside": [],
+      "logos": [],
+      "canvasCount": 0,
+      "captionBackground": null,
+      "captionText": null
+    },
+    {
+      "id": "context",
+      "frame": 276,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Herdr",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "But it does not automatically inherit your Herdr session's pane, socket,"
+    },
+    {
+      "id": "talent",
+      "frame": 567,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Codex",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Grok",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Pi",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Claude Code",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "As your workflow grows, coordination becomes the job."
+    },
+    {
+      "id": "bind",
+      "frame": 844,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Herdr",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "Choose a dedicated Hermes profile you trust, and bind it to your current"
+    },
+    {
+      "id": "managers",
+      "frame": 1122,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Herdr",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Codex",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Grok",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Pi",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Claude Code",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "It manages Herdr. Herdr coordinates your coding agents."
+    },
+    {
+      "id": "channels",
+      "frame": 1433,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Herdr",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Discord",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Telegram",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Slack",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "Configure a channel to reach your M2 from outside, while Herdr control"
+    },
+    {
+      "id": "local",
+      "frame": 1737,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Herdr",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Discord",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Telegram",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Slack",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "No SSH. No remote desktop. No VPN or exposed Herdr control port."
+    },
+    {
+      "id": "monitor",
+      "frame": 2031,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Herdr",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "Pause stays paused until you resume. The monitor TUI shows its state."
+    },
+    {
+      "id": "trust",
+      "frame": 2340,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Herdr",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "Session binding is not an operating-system sandbox. Same-user terminal"
+    },
+    {
+      "id": "weekend",
+      "frame": 2685,
+      "outside": [],
+      "logos": [
+        {
+          "name": "Hermes",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Herdr",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Codex",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Grok",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Pi",
+          "loaded": true,
+          "fit": "contain"
+        },
+        {
+          "name": "Claude Code",
+          "loaded": true,
+          "fit": "contain"
+        }
+      ],
+      "canvasCount": 0,
+      "captionBackground": null,
+      "captionText": null
+    },
+    {
+      "id": "outro",
+      "frame": 2865,
+      "outside": [],
+      "logos": [],
+      "canvasCount": 0,
+      "captionBackground": "rgba(0, 0, 0, 0)",
+      "captionText": "Hermes on Herdr. By Hexly AI."
+    }
+  ],
+  "unmaskedWordmarkPixelDifferences": 0,
+  "markOnlyWordmarkOpacity": 0,
+  "mobileOverflow": false,
+  "playbackFrames": [
+    {
+      "frame": 449,
+      "elapsed": 15.005
+    },
+    {
+      "frame": 899,
+      "elapsed": 30.008
+    },
+    {
+      "frame": 1349,
+      "elapsed": 45.011
+    },
+    {
+      "frame": 1799,
+      "elapsed": 60.013
+    },
+    {
+      "frame": 2249,
+      "elapsed": 75.015
+    },
+    {
+      "frame": 2699,
+      "elapsed": 90.018
+    },
+    {
+      "frame": 2894,
+      "elapsed": 105.022
+    }
+  ],
+  "errors": [],
+  "failed": []
+}

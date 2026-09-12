@@ -1,0 +1,110 @@
+{
+  "reason": "First real 3D review: overexposed candy materials, hard shadows and overlong title wraps. Preserved before refinement.",
+  "kitRevision": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+  "files": [
+    {
+      "file": "review/poster.png",
+      "sha256": "b4b2f3eed2643dd98d709580332cd6d359607ddbd7e0bc1bbd331e70e355374e"
+    },
+    {
+      "file": "review/contact-sheet.jpg",
+      "sha256": "7dfa47a88530bd75e368ba0fe98f08da3dd71065b256780298a44bd98c4bcd5b"
+    },
+    {
+      "file": "scripts/sync_kit.py",
+      "sha256": "dc3a9c6a0354b80574ff98df340e2ff7af4f57c41a3e67ed38e0a2fed81b0516"
+    },
+    {
+      "file": "scripts/render.ts",
+      "sha256": "260cef61ec053f0ad5e243431a9479fb9a49b3158b422c388f4a2aeac03accd7"
+    },
+    {
+      "file": "scripts/soundtrack.py",
+      "sha256": "ac9b316c20b3beed02b170f6000d23f3d9b2340187ba5f97a3ad61f306066bf7"
+    },
+    {
+      "file": "scripts/narrate.py",
+      "sha256": "1c349da766ce35013b9a3e780f6aebc9e8f839bde12abe78a995f1426e592e99"
+    },
+    {
+      "file": "src/timing.json",
+      "sha256": "5e39216586a6dfcc0a5ead221d018658160d2f8b195b831c30ba08877f263482"
+    },
+    {
+      "file": "src/cubies.json",
+      "sha256": "eba708f31818a5de082f1723dec05a5144d9013812e739696270f3710caa21ca"
+    },
+    {
+      "file": "src/story.json",
+      "sha256": "92729771abc7de2167a48060e33939b2af238405ac71cedd1759ab6740908a7f"
+    },
+    {
+      "file": "src/Root.tsx",
+      "sha256": "517e905c837700a21f34549fd7ffaffd26f465b9c67684eb0acc594f2fd1e8fd"
+    },
+    {
+      "file": "src/Film.tsx",
+      "sha256": "5816393ec3e21cf5df0da03bb19ac6ce4e1a686d17f2d6ddb17a6fbdf8c5cca4"
+    },
+    {
+      "file": "src/index.ts",
+      "sha256": "32185b5fe29233ed658013191cf02a1ba3181fe15dd4c43848136a344887ff0f"
+    },
+    {
+      "file": "src/timeline.ts",
+      "sha256": "e97ce90f156c1697739a494abbed41d48ca2772164ce0e5afb34a9170dd5332d"
+    },
+    {
+      "file": "src/art/World.tsx",
+      "sha256": "e96d9c56e34a3850893f7a4cdaa4602820234701003580a8490cfcd226c4b6b3"
+    },
+    {
+      "file": "src/art/cube.ts",
+      "sha256": "0cdfef6d7a30bb2ee9c5edea1299c2c2d9a3b232e49bf0949f0620bba98225e3"
+    },
+    {
+      "file": "review/stills/01-context.png",
+      "sha256": "f659406a99355a41666afee59f69161c6ffef9aedd7c5c2259140d5a7305cd2c"
+    },
+    {
+      "file": "review/stills/03-bind.png",
+      "sha256": "b5f96880f64adacc25afc49d57b661dc1cbb5a99679e77022a05301b03170b15"
+    },
+    {
+      "file": "review/stills/04-managers.png",
+      "sha256": "8a97567049b3d0c0e9a42658d1b66300a48aa7be31b20622ce4bd7aa72deb42a"
+    },
+    {
+      "file": "review/stills/08-trust.png",
+      "sha256": "c95a0da8571f4a1ed940540114e67ffb023c81be285c813bf807dc78231d6f4d"
+    },
+    {
+      "file": "review/stills/07-monitor.png",
+      "sha256": "b5e29bd8a37f48e40634acae2e740614b74ac3811944bd1e7244f99d0a96d667"
+    },
+    {
+      "file": "review/stills/00-intro.png",
+      "sha256": "9791c8d51844e6e2d3a6d58d524a432cd8e12556a351c86e724416eed417b0d2"
+    },
+    {
+      "file": "review/stills/02-talent.png",
+      "sha256": "fcee6c837a33d3c9f56213c2fa6e80da982c6d3f829947537129456b5ec71260"
+    },
+    {
+      "file": "review/stills/05-channels.png",
+      "sha256": "853c6f63b871698e9110db4145e16a5dc518a8122b29707a37ea1b9617e43a62"
+    },
+    {
+      "file": "review/stills/09-weekend.png",
+      "sha256": "b4b2f3eed2643dd98d709580332cd6d359607ddbd7e0bc1bbd331e70e355374e"
+    },
+    {
+      "file": "review/stills/06-local.png",
+      "sha256": "99f81945d0109edc5c1e231b77f2ac10c5af5b364ca0824fd3966602c2bbcef6"
+    },
+    {
+      "file": "review/stills/10-outro.png",
+      "sha256": "0b3d8561cdb292b18788376371a0bd2fc0fd35a467a65df2eb38e2628cedd768"
+    }
+  ]
+}

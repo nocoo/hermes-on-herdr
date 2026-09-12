@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "project": "hermes-on-herdr",
+  "title": "Context is control",
+  "language": "en",
+  "createdAt": "2026-09-12T14:20:05.937086+08:00",
+  "sourceCommit": "8cb153cadb657314799f688c1d3f908eb3420ce3",
+  "direction": "Hexly light / original 2D signal paths and verified product logos",
+  "status": "completed-verified",
+  "kit": {
+    "repository": "https://github.com/nocoo/hexly.ai",
+    "revision": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+    "release": "v0.6.0",
+    "package": "@hexly/video-kit",
+    "version": "1.0.0",
+    "consumption": "Complete verified remote copy in vendor/hexly-video-kit; no shared working-tree writes"
+  },
+  "assetPreparation": "video/20260912T135851+0800",
+  "protectedHistory": {
+    "path": "video/20260912T102534+0800",
+    "gitTree": "23e9cf0dc1e3e246b77bafe4d1d9843dbd8cf323"
+  },
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "reviewGate": {
+    "requestedAt": "2026-09-12T06:54:26.127462+00:00",
+    "url": "http://127.0.0.1:7460/?preview=2",
+    "requirement": "User requested Chrome review and explicit confirmation before video recording/rendering continues.",
+    "finalRenderStarted": true,
+    "approved": true,
+    "approvedAt": "2026-09-12T07:29:51.276797+00:00",
+    "approval": "非常好，只要一个comment，我们2头贴片不要字幕，除此之外没问题，生成mp4",
+    "condition": "No subtitles on the opening or closing plates. Body scenes unchanged."
+  },
+  "reviewRevision": 2,
+  "renderStartedAt": "2026-09-12T07:32:11.066916+00:00",
+  "completedAt": "2026-09-12T07:47:27.204174+00:00",
+  "acceptance": {
+    "message": "非常好，通过，给我打开finder mp4",
+    "finderRevealed": true,
+    "file": "public/review/hermes-on-herdr-context-en.mp4"
+  },
+  "artifact": {
+    "file": "public/review/hermes-on-herdr-context-en.mp4",
+    "sha256": "bfb53aae6ebdf484cd8dfb8d757f738c0a712046a1ee8b361e2bd4b41d78e31a",
+    "bytes": 5663298,
+    "seconds": 96.5,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 2895,
+    "videoCodec": "h264",
+    "audioCodec": "aac",
+    "sampleRate": 48000,
+    "channels": 2
+  },
+  "verification": {
+    "report": "verification/final/REPORT.md",
+    "media": "verification/final/media.json",
+    "nativeChromeAutomation": "Interrupted after 79.963 seconds; complete FFmpeg decode and earlier full live-animation playback passed; final film accepted by the user."
+  }
+}

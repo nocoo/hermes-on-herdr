@@ -1,0 +1,29 @@
+{
+  "text": "It manages Herdr. Herdr coordinates your coding agents.",
+  "spoken": "It manages Herder. Herder coordinates your coding agents.",
+  "signature": "351e175b82bf26d8e64cbe5af45c475da7177e01ba8b12d2a075d9e330ee3b28",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:04.961387+00:00",
+  "sampleRate": 24000,
+  "samples": 84488,
+  "seconds": 3.5203333333333333,
+  "sha256": "406dbaf350649a384690e38aef9143704b5f8b2a401c3b9e41392246c6440d7f",
+  "gain": 1.9720960001786703,
+  "sourceTrimSamples": [
+    5164,
+    89652
+  ],
+  "phonemes": [
+    "ˌɪt mˈænɪʤᵻz hˈɜɹdəɹ. hˈɜɹdəɹ kOˈɔɹdənˌAts jʊɹ kˈOdɪŋ ˈAʤᵊnts."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

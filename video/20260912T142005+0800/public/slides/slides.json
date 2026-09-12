@@ -1,0 +1,83 @@
+{
+  "pages": [
+    {
+      "scene": "intro",
+      "frame": 60,
+      "file": "review/stills/00-intro.png",
+      "imageSha256": "e48c3fdc595ed5a75891d1afa61f41f2ce62920cf63f507a0e7664cf1872ed82",
+      "notes": "Hermes on Herdr.\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "context",
+      "frame": 276,
+      "file": "review/stills/01-context.png",
+      "imageSha256": "3f9415df48dd8c4fcac8728bffd3b2de28df8f717b3b34abe6d51d727c477bf7",
+      "notes": "An independent Hermes can receive your messages. But it does not automatically inherit your Herdr session's pane, socket, or caller context.\n\nAn external instance needs those relationships configured separately.\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "talent",
+      "frame": 567,
+      "file": "review/stills/02-talent.png",
+      "imageSha256": "55f9f2a89523d78e3b4fcc91578d49638d5cb19d82d0a79deca25985968740e1",
+      "notes": "You trust brilliant coding partners: Codex, Grok, Pi, Claude Code. As your workflow grows, coordination becomes the job.\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "bind",
+      "frame": 844,
+      "file": "review/stills/03-bind.png",
+      "imageSha256": "97666cd44f3708d23ffbda53a4c30ca1f1e8eb1c272cbbe0fb594933824abf0e",
+      "notes": "The plugin makes the link explicit. Choose a dedicated Hermes profile you trust, and bind it to your current Herdr session.\n\nExisting configured profile · explicit owner binding\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "managers",
+      "frame": 1122,
+      "file": "review/stills/04-managers.png",
+      "imageSha256": "50bc2df6b43f92ae610bcb7c272e610cb40027e50bac125d35cab87dffdc76b9",
+      "notes": "Hermes becomes your M2, with full Herdr control in the bound session. It manages Herdr. Herdr coordinates your coding agents.\n\nFull control of the bound session, under Herdr and plugin checks\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "channels",
+      "frame": 1433,
+      "file": "review/stills/05-channels.png",
+      "imageSha256": "d12d8976aafc6b36319698e50c4103d3e641752032831e01ee7f699872fc4224",
+      "notes": "Hermes already supports Discord, Telegram, and Slack. Configure a channel to reach your M2 from outside, while Herdr control stays local.\n\nDiscord connectivity recorded; Telegram / Slack integration unverified. Illustrative workflow · fresh end-to-end control not verified\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "local",
+      "frame": 1737,
+      "file": "review/stills/06-local.png",
+      "imageSha256": "a80168b1e6db07b6acba676ce632b73bef1fe6825bff519c914b6728492acbc9",
+      "notes": "No SSH. No remote desktop. No VPN or exposed Herdr control port. Keep the host, Herdr, and gateway online.\n\nConfigure channel access; messaging and model services must be reachable.\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "monitor",
+      "frame": 2031,
+      "file": "review/stills/07-monitor.png",
+      "imageSha256": "5f099e2ab002c6a69255ce4572cfa4c3ed8d13674eb811b27f6226a6597671b2",
+      "notes": "The plugin ties the dedicated gateway to Herdr's lifecycle. Pause stays paused until you resume. The monitor TUI shows its state.\n\nNative monitor · offline demo data Lifecycle is implemented; full cold-start / exit integration remains unverified.\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "trust",
+      "frame": 2340,
+      "file": "review/stills/08-trust.png",
+      "imageSha256": "58a83abbff77a1ca8cb8d4c8a5c63615c9a53f9816404107d572116dc4407fa9",
+      "notes": "Herdr and plugin boundaries still apply. Session binding is not an operating-system sandbox. Same-user terminal permissions remain broad.\n\nNo arbitrary external authorization · No public control plane\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "weekend",
+      "frame": 2685,
+      "file": "review/stills/09-weekend.png",
+      "imageSha256": "84e3cae23b44b4bb7641bad672e72b801e531bff2636ae9d0059012f76d65749",
+      "notes": "Let the system manage the talent. Keep your judgment. Take your weekend back.\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    },
+    {
+      "scene": "outro",
+      "frame": 2865,
+      "file": "review/stills/10-outro.png",
+      "imageSha256": "482840ec3fe5ad1221d0affbc26743e420b32eb7039c78bf597341eca6841f13",
+      "notes": "Hermes on Herdr. By Hexly AI.\n\nSource: https://github.com/nocoo/hermes-on-herdr"
+    }
+  ],
+  "format": "Native 16:9 image pages with editable speaker notes",
+  "kitRevision": "e1b220a7643e8275134b0bff0a11d703c047abbe"
+}

@@ -1,0 +1,29 @@
+{
+  "text": "Hermes on Herdr. By Hexly AI.",
+  "spoken": "Hermes on Herder. By Hex lee ay eye.",
+  "signature": "2a40ead451e74f76990099f47f8baf25ba5f13417da80dfde550bb8383d9bd29",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:47:00.803158+00:00",
+  "sampleRate": 24000,
+  "samples": 56817,
+  "seconds": 2.367375,
+  "sha256": "33cc03e26ed628f817bd19662bd383dfa26cea857dcbb5e56fefef70b3d4043c",
+  "gain": 1.9279380797055443,
+  "sourceTrimSamples": [
+    4496,
+    61313
+  ],
+  "phonemes": [
+    "hˈɜɹmiz ˌɔn hˈɜɹdəɹ. bˌI hˈɛks lˈi ˈI ˈI."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

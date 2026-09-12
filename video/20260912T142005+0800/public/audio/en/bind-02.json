@@ -1,0 +1,29 @@
+{
+  "text": "Choose a dedicated Hermes profile you trust, and bind it to your current Herdr session.",
+  "spoken": "Choose a dedicated Hermes profile you trust, and bind it to your current Herder session.",
+  "signature": "37d76a0ce78b7825f0732eef4cec2d0508b330f3569f839829deb3b23a0fafff",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:04.231131+00:00",
+  "sampleRate": 24000,
+  "samples": 117308,
+  "seconds": 4.887833333333333,
+  "sha256": "6e9384498909c1bf319c76042408a5317af45ab6e4698ce4834fe60813df1bbc",
+  "gain": 1.6952587526326757,
+  "sourceTrimSamples": [
+    5069,
+    122377
+  ],
+  "phonemes": [
+    "ʧˈuz ɐ dˈɛdəkˌATᵻd hˈɜɹmiz pɹˈOfˌIl ju tɹˈʌst, ænd bˈInd ɪt tə jʊɹ kˈɜɹənt hˈɜɹdəɹ sˈɛʃən."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

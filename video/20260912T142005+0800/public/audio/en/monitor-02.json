@@ -1,0 +1,29 @@
+{
+  "text": "Pause stays paused until you resume. The monitor TUI shows its state.",
+  "spoken": "Pause stays paused until you resume. The monitor T U I shows its state.",
+  "signature": "d753281fa37a70521cf01da09db23b2f90439bb9d79bc5e85adfbd8f53ce3a91",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:07.199844+00:00",
+  "sampleRate": 24000,
+  "samples": 107062,
+  "seconds": 4.460916666666667,
+  "sha256": "1647a71efa849db8c71aeab83928e6f0383278db70bfc3b0c96acd5cba763d98",
+  "gain": 1.9136494780672435,
+  "sourceTrimSamples": [
+    5162,
+    112224
+  ],
+  "phonemes": [
+    "pˈɔz stˈAz pˈɔzd ˌʌntˈɪl ju ɹəzˈum. ðə mˈɑnəTəɹ tˈi jˈu ˌI ʃˈOz ɪts stˈAt."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

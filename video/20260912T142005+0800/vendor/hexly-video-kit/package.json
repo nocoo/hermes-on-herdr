@@ -1,0 +1,49 @@
+{
+	"name": "@hexly/video-kit",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"license": "MIT",
+	"exports": {
+		".": "./src/index.ts",
+		"./schema": "./src/schema.ts",
+		"./player": "./src/Preview.tsx",
+		"./site.css": "./src/site.css",
+		"./vite": "./vite.ts"
+	},
+	"scripts": {
+		"dev": "vite --host 127.0.0.1 --port 7440 --strictPort",
+		"preview": "vite preview --host 127.0.0.1 --port 7442 --strictPort",
+		"studio": "remotion studio demo/index.tsx --port 7441",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check --error-on-warnings .",
+		"test": "vitest run",
+		"build": "vite build",
+		"render": "bun scripts/render.ts",
+		"render:demo": "bun scripts/render.ts --example launch"
+	},
+	"dependencies": {
+		"@remotion/player": "4.0.520",
+		"remotion": "4.0.520",
+		"zod": "4.4.3"
+	},
+	"devDependencies": {
+		"@remotion/bundler": "4.0.520",
+		"@remotion/cli": "4.0.520",
+		"@remotion/renderer": "4.0.520",
+		"@types/bun": "1.4.1",
+		"@types/react": "19.2.18",
+		"@types/react-dom": "19.2.7",
+		"@vitejs/plugin-react": "6.1.1",
+		"vite": "8.2.2",
+		"vitest": "5.0.0",
+		"typescript": "7.0.2",
+		"pptxgenjs": "file:vendor/pptxgenjs-4.0.1-hexly.1.tgz",
+		"pdf-lib": "1.17.1",
+		"sharp": "0.35.4"
+	},
+	"peerDependencies": {
+		"react": "19.2.8",
+		"react-dom": "19.2.8"
+	}
+}

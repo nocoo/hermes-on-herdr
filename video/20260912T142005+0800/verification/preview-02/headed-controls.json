@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-09-12T07:24:40.379Z",
+  "browser": "152.0.7977.83",
+  "base": "http://127.0.0.1:7460/",
+  "headed": true,
+  "scope": "Live fullscreen controls and still screenshot; no video recording.",
+  "restartedAt": 0,
+  "pausedAt": 66,
+  "resumedAt": 87,
+  "escapeExitedFullscreen": true,
+  "systemColorScheme": "dark",
+  "filmColorScheme": "light",
+  "errors": []
+}

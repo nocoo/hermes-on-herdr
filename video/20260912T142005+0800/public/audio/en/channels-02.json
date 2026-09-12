@@ -1,0 +1,29 @@
+{
+  "text": "Configure a channel to reach your M2 from outside, while Herdr control stays local.",
+  "spoken": "Configure a channel to reach your M two from outside, while Herder control stays local.",
+  "signature": "ae6f6b7afec7112d6a271f9830caf84892f784ef150770a11d8c6ee2c7d902fd",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:05.714194+00:00",
+  "sampleRate": 24000,
+  "samples": 115150,
+  "seconds": 4.797916666666667,
+  "sha256": "d8169d46377894267336bacb1445e48b61e270921834f54d907272253e30439d",
+  "gain": 1.7902521086469039,
+  "sourceTrimSamples": [
+    5106,
+    120256
+  ],
+  "phonemes": [
+    "kənfˈɪɡjəɹ ɐ ʧˈænᵊl tə ɹˈiʧ jʊɹ ˈɛm tˈu fɹʌm ˌWtsˈId, wˌIl hˈɜɹdəɹ kəntɹˈOl stˈAz lˈOkəl."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

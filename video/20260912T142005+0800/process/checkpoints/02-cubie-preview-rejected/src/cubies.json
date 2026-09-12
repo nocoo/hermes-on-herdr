@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "coordinateSystem": "+X right, +Y up, +Z front; 27 distinct integer positions, center included",
+  "geometry": {
+    "edge": 1,
+    "gap": 0.075,
+    "bevelRadius": 0.1,
+    "bevelSegments": 5
+  },
+  "material": {
+    "kind": "MeshPhysicalMaterial",
+    "metalness": 0,
+    "roughness": 0.34,
+    "clearcoat": 0.22,
+    "clearcoatRoughness": 0.35
+  },
+  "renderIntent": "Future native 1920x1080 stage; orthogonal cube geometry under a perspective camera; soft area lighting and contact shadows. No rendered scene is delivered in this asset phase.",
+  "palette": {
+    "sky": "#B7DCF2",
+    "mint": "#BCE3CF",
+    "lilac": "#E8C9EB",
+    "peach": "#FFCBB6",
+    "lemon": "#F8D67C",
+    "oat": "#E7DCD0"
+  },
+  "paletteStatus": "Original production candy colors, not additional official Hexly brand tokens",
+  "faces": [
+    {
+      "id": "hermes",
+      "label": "Hermes",
+      "detail": "TRUSTED M2",
+      "color": "oat"
+    },
+    {
+      "id": "herdr",
+      "label": "Herdr",
+      "detail": "MANAGER",
+      "color": "mint"
+    },
+    {
+      "id": "codex",
+      "label": "Codex",
+      "detail": "CODING IC",
+      "color": "sky"
+    },
+    {
+      "id": "grok",
+      "label": "Grok",
+      "detail": "CODING IC",
+      "color": "peach"
+    },
+    {
+      "id": "pi",
+      "label": "Pi",
+      "detail": "CODING IC",
+      "color": "lemon"
+    },
+    {
+      "id": "claude-code",
+      "label": "Claude Code",
+      "detail": "CODING IC",
+      "color": "lilac"
+    },
+    {
+      "id": "terminal",
+      "label": ">_",
+      "detail": "LOCAL TERMINAL",
+      "color": "sky"
+    },
+    {
+      "id": "workflow",
+      "label": "Workflow",
+      "detail": "COORDINATION",
+      "color": "mint"
+    },
+    {
+      "id": "discord",
+      "label": "Discord",
+      "detail": "CONNECTIVITY RECORDED",
+      "color": "lilac"
+    },
+    {
+      "id": "telegram",
+      "label": "Telegram",
+      "detail": "UPSTREAM / UNVERIFIED",
+      "color": "sky"
+    },
+    {
+      "id": "slack",
+      "label": "Slack",
+      "detail": "UPSTREAM / UNVERIFIED",
+      "color": "peach"
+    },
+    {
+      "id": "pane",
+      "label": "Pane",
+      "detail": "MANAGED CONTEXT",
+      "color": "lemon"
+    },
+    {
+      "id": "socket",
+      "label": "Socket",
+      "detail": "LOCAL CONTROL",
+      "color": "mint"
+    },
+    {
+      "id": "caller",
+      "label": "Caller",
+      "detail": "REAL PANE IDENTITY",
+      "color": "sky"
+    },
+    {
+      "id": "profile",
+      "label": "Profile",
+      "detail": "CHOSEN + TRUSTED",
+      "color": "peach"
+    },
+    {
+      "id": "plugin",
+      "label": "Plugin",
+      "detail": "EXPLICIT BINDING",
+      "color": "lilac"
+    },
+    {
+      "id": "session",
+      "label": "Session",
+      "detail": "BOUND OWNER",
+      "color": "oat"
+    },
+    {
+      "id": "local",
+      "label": "Local",
+      "detail": "CONTROL STAYS HERE",
+      "color": "mint"
+    }
+  ],
+  "layout": [
+    {
+      "position": [-1, -1, -1],
+      "face": "terminal"
+    },
+    {
+      "position": [0, -1, -1],
+      "face": "workflow"
+    },
+    {
+      "position": [1, -1, -1],
+      "face": "slack"
+    },
+    {
+      "position": [-1, 0, -1],
+      "face": "pane"
+    },
+    {
+      "position": [0, 0, -1],
+      "face": "socket"
+    },
+    {
+      "position": [1, 0, -1],
+      "face": "telegram"
+    },
+    {
+      "position": [-1, 1, -1],
+      "face": "caller"
+    },
+    {
+      "position": [0, 1, -1],
+      "face": "profile"
+    },
+    {
+      "position": [1, 1, -1],
+      "face": "discord"
+    },
+    {
+      "position": [-1, -1, 0],
+      "face": "local"
+    },
+    {
+      "position": [0, -1, 0],
+      "face": "session"
+    },
+    {
+      "position": [1, -1, 0],
+      "face": "terminal"
+    },
+    {
+      "position": [-1, 0, 0],
+      "face": "plugin"
+    },
+    {
+      "position": [0, 0, 0],
+      "face": "session"
+    },
+    {
+      "position": [1, 0, 0],
+      "face": "workflow"
+    },
+    {
+      "position": [-1, 1, 0],
+      "face": "socket"
+    },
+    {
+      "position": [0, 1, 0],
+      "face": "profile"
+    },
+    {
+      "position": [1, 1, 0],
+      "face": "hermes"
+    },
+    {
+      "position": [-1, -1, 1],
+      "face": "codex"
+    },
+    {
+      "position": [0, -1, 1],
+      "face": "grok"
+    },
+    {
+      "position": [1, -1, 1],
+      "face": "pi"
+    },
+    {
+      "position": [-1, 0, 1],
+      "face": "claude-code"
+    },
+    {
+      "position": [0, 0, 1],
+      "face": "herdr"
+    },
+    {
+      "position": [1, 0, 1],
+      "face": "pane"
+    },
+    {
+      "position": [-1, 1, 1],
+      "face": "caller"
+    },
+    {
+      "position": [0, 1, 1],
+      "face": "plugin"
+    },
+    {
+      "position": [1, 1, 1],
+      "face": "hermes"
+    }
+  ],
+  "identityRules": "Only Hermes uses a verified upstream image. Agent/channel names are ordinary typeset labels, not invented logos. Do not recolor or crop the official Hermes source. Hexly end branding is reserved for the shared published components."
+}

@@ -1,0 +1,32 @@
+{
+  "analysis": {
+    "input_i": "-17.39",
+    "input_tp": "-1.28",
+    "input_lra": "4.90",
+    "input_thresh": "-28.95",
+    "output_i": "-16.06",
+    "output_tp": "-1.80",
+    "output_lra": "4.90",
+    "output_thresh": "-27.49",
+    "normalization_type": "dynamic",
+    "target_offset": "0.06"
+  },
+  "mastering": {
+    "input_i": "-17.39",
+    "input_tp": "-1.28",
+    "input_lra": "4.90",
+    "input_thresh": "-28.95",
+    "output_i": "-16.00",
+    "output_tp": "-1.80",
+    "output_lra": "4.80",
+    "output_thresh": "-27.43",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.00"
+  },
+  "seconds": 96.5,
+  "sampleRate": 48000,
+  "channels": 2,
+  "voiceClips": 20,
+  "ducking": "Music reduced 72% around speech",
+  "sha256": "113f20e3d12b5dfd0277f3d67c0df09dc8bf86048d766bc506afa9400134f457"
+}

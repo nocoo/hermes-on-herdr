@@ -1,0 +1,29 @@
+{
+  "text": "Keep the host, Herdr, and gateway online.",
+  "spoken": "Keep the host, Herder, and gateway online.",
+  "signature": "5dd8a51accc6ace96420b83e1e293d548c783ec8746cf435d203462ec375cfa4",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:06.464702+00:00",
+  "sampleRate": 24000,
+  "samples": 57761,
+  "seconds": 2.4067083333333334,
+  "sha256": "97039eab611939c713decb91d003fd73e82e730a6019d34aee5fc858964074df",
+  "gain": 1.9630338468918838,
+  "sourceTrimSamples": [
+    5055,
+    62816
+  ],
+  "phonemes": [
+    "kˈip ðə hˈOst, hˈɜɹdəɹ, ænd ɡˈAtwˌA ˌɑnlˈIn."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

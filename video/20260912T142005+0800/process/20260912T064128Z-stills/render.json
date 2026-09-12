@@ -1,0 +1,22 @@
+{
+  "mode": "stills",
+  "startedAt": "2026-09-12T06:41:28.704Z",
+  "storyHash": "facaacfb1d02e8f01d9557dd5af3d9f7a8ea42f059be5f6544ef8ec75005a5c3",
+  "kitRevision": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "durationInFrames": 2895,
+  "status": "complete",
+  "frames": [
+    {
+      "frame": 567,
+      "name": "frame-567"
+    },
+    {
+      "frame": 2612,
+      "name": "frame-2612"
+    }
+  ],
+  "finishedAt": "2026-09-12T06:41:35.642Z"
+}

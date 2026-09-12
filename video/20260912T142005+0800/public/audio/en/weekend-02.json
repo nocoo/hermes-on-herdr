@@ -1,0 +1,29 @@
+{
+  "text": "Keep your judgment. Take your weekend back.",
+  "spoken": "Keep your judgment. Take your weekend back.",
+  "signature": "ff2c6e332ed7b2421a471520425308f6827c49f52d111b2e3aeac056f3b456ef",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:08.454487+00:00",
+  "sampleRate": 24000,
+  "samples": 55746,
+  "seconds": 2.32275,
+  "sha256": "9ba65e3378d0a070ea7be8f4d0db97b2f2cd13b8aa84674e1ee5d29f4f64476a",
+  "gain": 1.9254784476037057,
+  "sourceTrimSamples": [
+    5001,
+    60747
+  ],
+  "phonemes": [
+    "kˈip jʊɹ ʤˈʌʤmənt. tˈAk jʊɹ wˈikˌɛnd bˈæk."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

@@ -1,0 +1,29 @@
+{
+  "text": "The plugin ties the dedicated gateway to Herdr's lifecycle.",
+  "spoken": "The plugin ties the dedicated gateway to Herder's lifecycle.",
+  "signature": "22c24c77d42925baefdcff7775b1c14c8db23d887c0eb782f91f934e2897c3a6",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:06.799616+00:00",
+  "sampleRate": 24000,
+  "samples": 85667,
+  "seconds": 3.5694583333333334,
+  "sha256": "5b92c92ff286118405b2dad9616cbb78abd0945fd9e37dbed5dbb0467c82f80e",
+  "gain": 1.905584055272845,
+  "sourceTrimSamples": [
+    5190,
+    90857
+  ],
+  "phonemes": [
+    "ðə plˈʌɡɪn tˈIz ðə dˈɛdəkˌATᵻd ɡˈAtwˌA tə hˈɜɹdəɹz lˈIfsIkᵊl."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

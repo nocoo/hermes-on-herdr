@@ -1,0 +1,209 @@
+{
+  "title": "Context is control",
+  "product": "hermes on herdr",
+  "repository": "https://github.com/nocoo/hermes-on-herdr",
+  "composition": "HermesCubiesEN",
+  "filename": "hermes-on-herdr-context-en.mp4",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "eyebrow": "HERMES ON HERDR",
+      "title": "Context\nis control.",
+      "minSeconds": 3.5,
+      "narration": [
+        "Hermes on Herdr."
+      ],
+      "visual": "Published Studio Intro. Official product artwork on a front-facing plane. A short, bright opening plate.",
+      "source": [
+        "assets/brand/README.md",
+        "docs/README.en.md#why-a-plugin"
+      ]
+    },
+    {
+      "id": "context",
+      "eyebrow": "THE MISSING LINK",
+      "title": "Messages aren't\ncontrol context.",
+      "minSeconds": 10,
+      "narration": [
+        "An independent Hermes can receive your messages.",
+        "But it does not automatically inherit your Herdr session's pane, socket, or caller context."
+      ],
+      "qualifications": [
+        "An external instance needs those relationships configured separately."
+      ],
+      "visual": "An isolated Hermes cubie faces three separated context cubies. A physical gap remains in the path to the target session.",
+      "source": [
+        "docs/README.en.md#why-a-plugin",
+        "src/hermes_gateway_herdr/config.py"
+      ]
+    },
+    {
+      "id": "talent",
+      "eyebrow": "YOUR ENGINEERING TEAM",
+      "title": "Brilliant partners.\nA team to manage.",
+      "minSeconds": 9,
+      "narration": [
+        "You trust brilliant coding partners: Codex, Grok, Pi, Claude Code.",
+        "As your workflow grows, coordination becomes the job."
+      ],
+      "visual": "Four candy-colored agent cubies rise in a staggered rhythm. Small terminal, pane and workflow blocks form an unsolved spatial puzzle.",
+      "source": [
+        "docs/README.en.md#why-a-plugin"
+      ]
+    },
+    {
+      "id": "bind",
+      "eyebrow": "THE PLUGIN CONNECTION",
+      "title": "Choose it.\nTrust it. Bind it.",
+      "minSeconds": 9,
+      "narration": [
+        "The plugin makes the link explicit.",
+        "Choose a dedicated Hermes profile you trust, and bind it to your current Herdr session."
+      ],
+      "qualifications": [
+        "Existing configured profile · explicit owner binding"
+      ],
+      "visual": "The selected oat Hermes cubie slides into a precisely fitting space. Pane, socket and caller tiles align beside it, inside the current-session frame.",
+      "source": [
+        "src/hermes_gateway_herdr/config.py",
+        "src/hermes_gateway_herdr/cli.py",
+        "docs/README.en.md#architecture-and-trust-boundaries"
+      ]
+    },
+    {
+      "id": "managers",
+      "eyebrow": "M2 → MANAGER → ICs",
+      "title": "A manager\nfor your manager.",
+      "minSeconds": 9,
+      "narration": [
+        "Hermes becomes your M2, with full Herdr control in the bound session.",
+        "It manages Herdr. Herdr coordinates your coding agents."
+      ],
+      "qualifications": [
+        "Full control of the bound session, under Herdr and plugin checks"
+      ],
+      "visual": "The cubes organize into a physical three-level topology: Hermes, Herdr, then four coding agents. Thin square rails carry one warm task tile down the hierarchy.",
+      "source": [
+        "docs/README.en.md#architecture-and-trust-boundaries",
+        "docs/09-源码证据索引.md#h11"
+      ]
+    },
+    {
+      "id": "channels",
+      "eyebrow": "YOUR CHANNELS. YOUR M2.",
+      "title": "Out of office.\nStill in the loop.",
+      "minSeconds": 11,
+      "narration": [
+        "Hermes already supports Discord, Telegram, and Slack.",
+        "Configure a channel to reach your M2 from outside, while Herdr control stays local."
+      ],
+      "qualifications": [
+        "Discord connectivity recorded; Telegram / Slack integration unverified.",
+        "Illustrative workflow · fresh end-to-end control not verified"
+      ],
+      "visual": "Channel cubies frame a light phone-like request slab. An invented message tile moves toward Hermes; the Herdr connection remains inside the local-session frame. This is an illustration, not a live chat recording.",
+      "source": [
+        "docs/README.en.md#development-and-validation",
+        "docs/README.en.md#why-a-plugin",
+        "https://github.com/NousResearch/hermes-agent/tree/b7ac3ba1cdf89f94dfe86de27e01358b194f4053/plugins/platforms"
+      ]
+    },
+    {
+      "id": "local",
+      "eyebrow": "CONTROL STAYS LOCAL",
+      "title": "Message your M2.\nSkip the remote setup.",
+      "minSeconds": 9,
+      "narration": [
+        "No SSH. No remote desktop. No VPN or exposed Herdr control port.",
+        "Keep the host, Herdr, and gateway online."
+      ],
+      "qualifications": [
+        "Configure channel access; messaging and model services must be reachable."
+      ],
+      "visual": "A bright connected local cube sits beside one incoming message tile. SSH, desktop and VPN labels recede; a clean local path replaces them. There is no public-facing Herdr listener.",
+      "source": [
+        "docs/README.en.md#architecture-and-trust-boundaries",
+        "src/hermes_gateway_herdr/dashboard_http.py"
+      ]
+    },
+    {
+      "id": "monitor",
+      "eyebrow": "A MANAGED LIFECYCLE",
+      "title": "Visible state.\nClear ownership.",
+      "minSeconds": 10,
+      "narration": [
+        "The plugin ties the dedicated gateway to Herdr's lifecycle.",
+        "Pause stays paused until you resume. The monitor TUI shows its state."
+      ],
+      "qualifications": [
+        "Native monitor · offline demo data",
+        "Lifecycle is implemented; full cold-start / exit integration remains unverified."
+      ],
+      "visual": "A slim physical terminal slab turns gently toward the camera. Its entire screen preserves the actual offline hqtui monitor at its native aspect ratio. Four command cubies read start, pause, resume, stop.",
+      "source": [
+        "src/hermes_gateway_herdr/dashboard_view.py",
+        "src/hermes_gateway_herdr/supervisor.py",
+        "docs/README.en.md#development-and-validation"
+      ]
+    },
+    {
+      "id": "trust",
+      "eyebrow": "AN EXPLICIT TRUST DECISION",
+      "title": "Chosen profile.\nBound session.",
+      "minSeconds": 8,
+      "narration": [
+        "Herdr and plugin boundaries still apply.",
+        "Session binding is not an operating-system sandbox. Same-user terminal permissions remain broad."
+      ],
+      "qualifications": [
+        "No arbitrary external authorization · No public control plane"
+      ],
+      "visual": "The selected Hermes cube stays within the session's softly raised square boundary. An unselected external cubie remains detached. No vault or sandbox metaphor is used.",
+      "source": [
+        "docs/README.en.md#architecture-and-trust-boundaries",
+        "docs/07-安全与运维.md"
+      ]
+    },
+    {
+      "id": "weekend",
+      "eyebrow": "THE PIECES, IN PLACE",
+      "title": "Your weekend.\nReturned.",
+      "minSeconds": 8,
+      "narration": [
+        "Let the system manage the talent.",
+        "Keep your judgment. Take your weekend back."
+      ],
+      "visual": "All 27 physical cubies draw together. A top-layer quarter turn, a side-layer correction, then a complete 3 × 3 cube. Soft camera travel reveals depth and contact shadows; the solved cube holds.",
+      "source": [
+        "docs/README.en.md#why-a-plugin"
+      ]
+    },
+    {
+      "id": "outro",
+      "eyebrow": "HEXLY.AI",
+      "title": "hermes on herdr · Your weekend, returned.",
+      "minSeconds": 6,
+      "voiceLeadSeconds": 2.8,
+      "narration": [
+        "Hermes on Herdr. By Hexly AI."
+      ],
+      "visual": "The published Studio Outro: official mark centered, then a leftward shift while the complete wordmark unfolds from 1.25 seconds. Product caption appears after 2.5 seconds. Flat front layer, no perspective logo.",
+      "source": [
+        "assets/brand/README.md",
+        "https://github.com/nocoo/hexly.ai/blob/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/Identity.tsx"
+      ]
+    }
+  ]
+}

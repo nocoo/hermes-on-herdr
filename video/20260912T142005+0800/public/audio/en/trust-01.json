@@ -1,0 +1,29 @@
+{
+  "text": "Herdr and plugin boundaries still apply.",
+  "spoken": "Herder and plugin boundaries still apply.",
+  "signature": "bbf64bf5412fc481e961dd43a55c585b9a1d380fa8186de8ae0ece2769d6bee6",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:07.439061+00:00",
+  "sampleRate": 24000,
+  "samples": 54013,
+  "seconds": 2.250541666666667,
+  "sha256": "25e2549382c09ffd9db57bf156953e113b4d4fda00d39aa79409eed557ce998b",
+  "gain": 1.9668813024485832,
+  "sourceTrimSamples": [
+    4645,
+    58658
+  ],
+  "phonemes": [
+    "hˈɜɹdəɹ ænd plˈʌɡɪn bˈWndəɹiz stˈɪl əplˈI."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

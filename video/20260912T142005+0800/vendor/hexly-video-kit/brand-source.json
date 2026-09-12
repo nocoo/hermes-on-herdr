@@ -1,0 +1,51 @@
+{
+	"sourceRepository": "https://github.com/nocoo/hexly.ai",
+	"sourceCommit": "e8dbbca8a25ca25215acbe22d241f403235096c8",
+	"sources": [
+		"src/components/Icon.tsx#BrandMark",
+		"src/components/Header.tsx",
+		"src/styles/base.css :root and .brand",
+		"public/favicon.svg"
+	],
+	"paths": [
+		"m18 2 15.6 9v18L18 38 2.4 29V11Z",
+		"m18 9 9.5 5.5v11L18 31l-9.5-5.5v-11Z",
+		"M18 9v22M8.5 14.5l19 11m0-11-19 11"
+	],
+	"assets": [
+		{
+			"file": "space-grotesk.woff2",
+			"sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d",
+			"source": "@fontsource-variable/space-grotesk@5.3.0/files/space-grotesk-latin-wght-normal.woff2"
+		},
+		{
+			"file": "space-grotesk-OFL.txt",
+			"sha256": "18a4de52385f6b988782639d5d0cc1326e5a8c2de9a7f01d7b20d9aedcc60943",
+			"source": "@fontsource-variable/space-grotesk@5.3.0/LICENSE"
+		},
+		{
+			"file": "geist-mono.woff2",
+			"sha256": "684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc",
+			"source": "@fontsource-variable/geist-mono@5.3.0/files/geist-mono-latin-wght-normal.woff2"
+		},
+		{
+			"file": "geist-mono-OFL.txt",
+			"sha256": "cc815ed4fc045f0e991abb10395b7932bd028c6a067deb13316d6002105074e6",
+			"source": "@fontsource-variable/geist-mono@5.3.0/LICENSE"
+		},
+		{
+			"file": "journey-cjk.woff2",
+			"sha256": "5e7ae05ecc835a66d6e4c96811a14c181ecd9f648457501ec420b5ec70d6d8b2",
+			"source": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+			"modified": "WOFF2 subset: GB2312, current catalogue and template text; same Noto Sans SC family as src/fonts/journey-cjk.woff2",
+			"sourceSha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+			"codePoints": 7613,
+			"regenerate": "uv run --with fonttools --with brotli python packages/video-kit/scripts/subset-font.py SOURCE.ttf src/data/projects/*.json src/data/video-copy.ts packages/video-kit/src/project.ts packages/video-kit/src/Preview.tsx"
+		},
+		{
+			"file": "journey-cjk-OFL.txt",
+			"sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+			"source": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/OFL.txt"
+		}
+	]
+}

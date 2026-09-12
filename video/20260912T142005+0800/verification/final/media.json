@@ -1,0 +1,254 @@
+{
+  "checkedAt": "2026-09-12T07:38:45.214931+00:00",
+  "status": "passed",
+  "file": "public/review/hermes-on-herdr-context-en.mp4",
+  "sha256": "bfb53aae6ebdf484cd8dfb8d757f738c0a712046a1ee8b361e2bd4b41d78e31a",
+  "bytes": 5663298,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "frames": 2895,
+  "seconds": 96.5,
+  "videoCodec": "h264",
+  "pixelFormat": "yuvj420p",
+  "audioCodec": "aac",
+  "sampleRate": 48000,
+  "channels": 2,
+  "faststart": true,
+  "fullDecode": "passed",
+  "blackIntervals": [],
+  "silenceIntervals": [],
+  "silenceThreshold": "-50 dB for 0.35 seconds",
+  "loudness": {
+    "input_i": "-16.03",
+    "input_tp": "-1.70",
+    "input_lra": "4.70",
+    "input_thresh": "-27.46",
+    "output_i": "-16.29",
+    "output_tp": "-1.80",
+    "output_lra": "4.60",
+    "output_thresh": "-27.53",
+    "normalization_type": "dynamic",
+    "target_offset": "0.29"
+  },
+  "subtitleCues": 18,
+  "embeddedSubtitles": false,
+  "bookendSubtitles": "absent in both pixels and sidecar captions",
+  "audioClips": [
+    {
+      "file": "audio/en/intro-01.wav",
+      "sha256": "d99f98ab2df5ae10bb3293063ec3ec41fe5c2db007593165e893522795b912fb",
+      "seconds": 1.2855833333333333
+    },
+    {
+      "file": "audio/en/context-01.wav",
+      "sha256": "4bf6d855f169b8078a773d3c8b9543f34febfc94c2f6d847e64ee39b2eb66ac9",
+      "seconds": 2.837875
+    },
+    {
+      "file": "audio/en/context-02.wav",
+      "sha256": "fa524c520b42cde140158a787d25aa1f5093bfdda9a1f5acbe3648c176830fc7",
+      "seconds": 5.366583333333334
+    },
+    {
+      "file": "audio/en/talent-01.wav",
+      "sha256": "fab2ca414c66afa0363fa4264f4afae689312c93329d8d8a351e73cbec06e1cc",
+      "seconds": 4.176416666666666
+    },
+    {
+      "file": "audio/en/talent-02.wav",
+      "sha256": "f1817a6e87b3e4378ced63f16d4557da29863697ea04b9bfa061f95a78e85c5a",
+      "seconds": 3.2394166666666666
+    },
+    {
+      "file": "audio/en/bind-01.wav",
+      "sha256": "ab12946868e5674875f1f674120e8260aad7243d441c977331e81e12a4288352",
+      "seconds": 1.92025
+    },
+    {
+      "file": "audio/en/bind-02.wav",
+      "sha256": "6e9384498909c1bf319c76042408a5317af45ab6e4698ce4834fe60813df1bbc",
+      "seconds": 4.887833333333333
+    },
+    {
+      "file": "audio/en/managers-01.wav",
+      "sha256": "55f378ab2211f206f4610bf5b2d14a7d110aa1ca2958f7c3f13677ead7e06a7f",
+      "seconds": 4.045083333333333
+    },
+    {
+      "file": "audio/en/managers-02.wav",
+      "sha256": "406dbaf350649a384690e38aef9143704b5f8b2a401c3b9e41392246c6440d7f",
+      "seconds": 3.5203333333333333
+    },
+    {
+      "file": "audio/en/channels-01.wav",
+      "sha256": "e1dcdc558fa78fdf7de29b13d4be2687bd0c6021752be925595608196796a16e",
+      "seconds": 3.2638333333333334
+    },
+    {
+      "file": "audio/en/channels-02.wav",
+      "sha256": "d8169d46377894267336bacb1445e48b61e270921834f54d907272253e30439d",
+      "seconds": 4.797916666666667
+    },
+    {
+      "file": "audio/en/local-01.wav",
+      "sha256": "8de5bf0f23b7a3df38b8b4546e85fa4f667b0a0c999accbe132540c1f37d52a5",
+      "seconds": 5.308041666666667
+    },
+    {
+      "file": "audio/en/local-02.wav",
+      "sha256": "97039eab611939c713decb91d003fd73e82e730a6019d34aee5fc858964074df",
+      "seconds": 2.4067083333333334
+    },
+    {
+      "file": "audio/en/monitor-01.wav",
+      "sha256": "5b92c92ff286118405b2dad9616cbb78abd0945fd9e37dbed5dbb0467c82f80e",
+      "seconds": 3.5694583333333334
+    },
+    {
+      "file": "audio/en/monitor-02.wav",
+      "sha256": "1647a71efa849db8c71aeab83928e6f0383278db70bfc3b0c96acd5cba763d98",
+      "seconds": 4.460916666666667
+    },
+    {
+      "file": "audio/en/trust-01.wav",
+      "sha256": "25e2549382c09ffd9db57bf156953e113b4d4fda00d39aa79409eed557ce998b",
+      "seconds": 2.250541666666667
+    },
+    {
+      "file": "audio/en/trust-02.wav",
+      "sha256": "7ccbbe847e5dcd2cc9203d7bd9b144ec74feb5a9cf9badb72e09d5b4d6903f3c",
+      "seconds": 6.190166666666666
+    },
+    {
+      "file": "audio/en/weekend-01.wav",
+      "sha256": "029664f35ddaa1a6d4c8359c3e17e1b94b160cc988acb435dcfbc749aabe8823",
+      "seconds": 1.8830416666666667
+    },
+    {
+      "file": "audio/en/weekend-02.wav",
+      "sha256": "9ba65e3378d0a070ea7be8f4d0db97b2f2cd13b8aa84674e1ee5d29f4f64476a",
+      "seconds": 2.32275
+    },
+    {
+      "file": "audio/en/outro-01.wav",
+      "sha256": "3a6dd2edc3c25ca52dc97b49ed4b1f1765b1dbedf03d86748650673d76457f12",
+      "seconds": 2.3234166666666667
+    }
+  ],
+  "samples": [
+    {
+      "name": "intro",
+      "frame": 60,
+      "file": "verification/final/frames/decoded-02.png",
+      "sha256": "46bb1558b9afb5f0a880b01c58f333717090fb9ad5cbe5542009171f12c24cb7"
+    },
+    {
+      "name": "context",
+      "frame": 276,
+      "file": "verification/final/frames/decoded-04.png",
+      "sha256": "897a9858469fcbc77482cae9f1ce7410132704be4434402a98382fa8a71b21aa"
+    },
+    {
+      "name": "talent",
+      "frame": 567,
+      "file": "verification/final/frames/decoded-05.png",
+      "sha256": "be4b8452971595fcb68b2d0222b78efe64e7440960645145342f1839c10a7f6c"
+    },
+    {
+      "name": "bind",
+      "frame": 844,
+      "file": "verification/final/frames/decoded-07.png",
+      "sha256": "c2ca91a91b05f0c2b2ae09397cd5444e84d0b5a8d905e313d51204f36e10c2e3"
+    },
+    {
+      "name": "managers",
+      "frame": 1122,
+      "file": "verification/final/frames/decoded-08.png",
+      "sha256": "4e80366c6979c9b077b45ad4423ead41c53ec69cd2f0aaf3a8cf0ac7f6324851"
+    },
+    {
+      "name": "channels",
+      "frame": 1433,
+      "file": "verification/final/frames/decoded-09.png",
+      "sha256": "dc4525cc2c40f39bb79cf7238fcc2f1699c0a81426cb801075c0ab483f362974"
+    },
+    {
+      "name": "local",
+      "frame": 1737,
+      "file": "verification/final/frames/decoded-10.png",
+      "sha256": "9c56de6923653ebc71dc069a7c58fd3e08f8cfa51358f16a380040cdceb202e4"
+    },
+    {
+      "name": "monitor",
+      "frame": 2031,
+      "file": "verification/final/frames/decoded-11.png",
+      "sha256": "2d124a7bf35e8a2662db11257c7ced9532a095a8196b786ce9dfe092ad735aa3"
+    },
+    {
+      "name": "trust",
+      "frame": 2340,
+      "file": "verification/final/frames/decoded-12.png",
+      "sha256": "79c4717c1861e01bd4733831ae94514fd42941f7810f2af31e8249a676550eaf"
+    },
+    {
+      "name": "weekend",
+      "frame": 2685,
+      "file": "verification/final/frames/decoded-13.png",
+      "sha256": "84e8f1f7eaf71cb0974b07e4d3b4c397a776cd70a506f2c76c70c0fd37a981bf"
+    },
+    {
+      "name": "outro",
+      "frame": 2865,
+      "file": "verification/final/frames/decoded-16.png",
+      "sha256": "98d76f0ac013893f1becf6df1ab1828f8a0bec30733adbabcbc2b812854b9376"
+    },
+    {
+      "name": "intro-during-narration",
+      "frame": 33,
+      "file": "verification/final/frames/decoded-01.png",
+      "sha256": "6889c58b0ac98d8e4be54368d9898b32afdd52935860c550ba048249609a4aac"
+    },
+    {
+      "name": "outro-during-narration",
+      "frame": 2814,
+      "file": "verification/final/frames/decoded-15.png",
+      "sha256": "9f7db677c4c5a4da09ae8bb271bd79d8187aacfe48a86d4f861ee2598e95174a"
+    },
+    {
+      "name": "context-transition",
+      "frame": 111,
+      "file": "verification/final/frames/decoded-03.png",
+      "sha256": "64a5a3ef567b6f2dcc2b143439ffa7cfd5a1dd40ac6dc62cc571af942ce70a68"
+    },
+    {
+      "name": "bind-transition",
+      "frame": 696,
+      "file": "verification/final/frames/decoded-06.png",
+      "sha256": "c3800ae08421a9a4605b2352f85198de133d1c0f2e983a0205c3b9586327076a"
+    },
+    {
+      "name": "outro-transition",
+      "frame": 2721,
+      "file": "verification/final/frames/decoded-14.png",
+      "sha256": "39cc4e6f58615eb2a1cc9a04d887a0029873fc250a5095ac13625b7b14c2a195"
+    },
+    {
+      "name": "final-frame",
+      "frame": 2894,
+      "file": "verification/final/frames/decoded-17.png",
+      "sha256": "b36913e956f368e74e2b5422ca1b0218dd6877ec3258b936ccdbb1919b7069c5"
+    }
+  ],
+  "slidePages": 11,
+  "protectedMedia": [
+    {
+      "file": "video/20260912T102534+0800/public/review/hermes-on-herdr-weekend-zh.mp4",
+      "sha256": "92145345553525497b434feea96a86cf94b0c45c2c68d8b06daa017d59908be5"
+    },
+    {
+      "file": "video/20260912T102534+0800/public/review/hermes-on-herdr-weekend-en.mp4",
+      "sha256": "2815334497113954b712074b6948f87eb4b87763e71125f412c9477ea29b1bfe"
+    }
+  ]
+}

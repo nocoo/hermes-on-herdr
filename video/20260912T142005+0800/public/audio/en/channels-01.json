@@ -1,0 +1,29 @@
+{
+  "text": "Hermes already supports Discord, Telegram, and Slack.",
+  "spoken": "Hermes already supports Discord, Telegram, and Slack.",
+  "signature": "fe3dd5d87ae2ef964664aa077e0ea88ee2d98920fe5305f98c7106ad8c1c717d",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:05.275866+00:00",
+  "sampleRate": 24000,
+  "samples": 78332,
+  "seconds": 3.2638333333333334,
+  "sha256": "e1dcdc558fa78fdf7de29b13d4be2687bd0c6021752be925595608196796a16e",
+  "gain": 1.8934264177943905,
+  "sourceTrimSamples": [
+    4722,
+    83054
+  ],
+  "phonemes": [
+    "hˈɜɹmiz ˌɔlɹˈɛdi səpˈɔɹts dˈɪskˌɔɹd, tˈɛləɡɹˌæm, ænd slˈæk."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

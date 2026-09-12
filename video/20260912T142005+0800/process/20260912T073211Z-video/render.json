@@ -1,0 +1,21 @@
+{
+  "mode": "video",
+  "startedAt": "2026-09-12T07:32:11.593Z",
+  "storyHash": "6f35f0093740153ea26c6765b5b3d714cc6c212ff3da55cce198078244162828",
+  "kitRevision": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "durationInFrames": 2895,
+  "status": "complete",
+  "output": "public/review/hermes-on-herdr-context-en.mp4",
+  "sha256": "bfb53aae6ebdf484cd8dfb8d757f738c0a712046a1ee8b361e2bd4b41d78e31a",
+  "finishedAt": "2026-09-12T07:36:12.017Z",
+  "firstMux": {
+    "file": "process/20260912T073211Z-video/subtitle-track-draft.mp4",
+    "sha256": "0e54022e1aaee2027d84904409b67a08afa2846c1172cb4d39f38d799279fc71",
+    "note": "FFmpeg 9 marked the sole soft-subtitle track default despite explicit disposition 0. Final master uses one burned-in layer and separate SRT."
+  },
+  "remuxedAt": "2026-09-12T07:38:23.053497+00:00",
+  "captions": "Burned in on body scenes only; sidecar SRT/VTT supplied separately. No embedded subtitle track."
+}

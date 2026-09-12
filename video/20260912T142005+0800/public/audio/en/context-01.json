@@ -1,0 +1,29 @@
+{
+  "text": "An independent Hermes can receive your messages.",
+  "spoken": "An independent Hermes can receive your messages.",
+  "signature": "207d4443ba9ef29e5d11475e75ff1b31f3d1e04711afa41020b41d61e9571564",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:02.364579+00:00",
+  "sampleRate": 24000,
+  "samples": 68109,
+  "seconds": 2.837875,
+  "sha256": "4bf6d855f169b8078a773d3c8b9543f34febfc94c2f6d847e64ee39b2eb66ac9",
+  "gain": 2.01594758387476,
+  "sourceTrimSamples": [
+    5309,
+    73418
+  ],
+  "phonemes": [
+    "ɐn ˌɪndəpˈɛndənt hˈɜɹmiz kæn ɹəsˈiv jʊɹ mˈɛsɪʤᵻz."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

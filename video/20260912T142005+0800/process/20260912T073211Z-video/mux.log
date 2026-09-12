@@ -1,0 +1,53 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T142005+0800/process/20260912T073211Z-video-raw.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.7.100
+    comment         : Made with Remotion 4.0.520
+  Duration: 00:01:36.50, start: 0.000000, bitrate: 271 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 268 kb/s, 30 fps, 30 tbr, 90k tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+    Side data:
+      ICC Profile: (456 bytes)
+Input #1, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T142005+0800/public/audio/mix-en.m4a':
+  Metadata:
+    major_brand     : M4A 
+    minor_version   : 512
+    compatible_brands: M4A isomiso2
+    encoder         : Lavf63.1.101
+  Duration: 00:01:36.50, start: 0.000000, bitrate: 193 kb/s
+  Stream #1:0[0x1](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+Input #2, srt, from '/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T142005+0800/public/audio/narration-en.srt':
+  Duration: N/A, bitrate: N/A
+  Stream #2:0: Subtitle: subrip (srt)
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #1:0 -> #0:1 (copy)
+  Stream #2:0 -> #0:2 (subrip (srt) -> mov_text (native))
+Press [q] to stop, [?] for help
+Output #0, mp4, to '/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T142005+0800/public/review/hermes-on-herdr-context-en.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    title           : Context is control — hermes on herdr
+    comment         : Made with Remotion 4.0.520
+    encoder         : Lavf63.1.101
+  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 268 kb/s, 30 fps, 30 tbr, 90k tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+    Side data:
+      ICC Profile: (456 bytes)
+  Stream #0:1(eng): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+  Stream #0:2(eng): Subtitle: mov_text (tx3g / 0x67337874)
+    Metadata:
+      encoder         : Lavc63.1.101 mov_text
+[mp4 @ 0xc74407700] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 0xc74c08900] video:3160KiB audio:2266KiB subtitle:1KiB other streams:0KiB global headers:0KiB muxing overhead: 1.948648%
+frame= 2895 fps=0.0 q=-1.0 Lsize=    5533KiB time=00:01:36.50 bitrate= 469.7kbits/s speed=1.56e+03x elapsed=0:00:00.06    

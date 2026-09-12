@@ -1,0 +1,51 @@
+{
+  "name": "hermes-on-herdr-context-film",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --bun vite",
+    "preview": "bun --bun vite preview",
+    "studio": "remotion studio src/index.ts --port 7461",
+    "kit:check": "python3 scripts/sync_kit.py --check",
+    "lint": "biome check src scripts/*.ts *.ts tests --error-on-warnings",
+    "format": "biome check --write src scripts/*.ts *.ts tests",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test ./tests/film.test.ts",
+    "build": "bun --bun vite build",
+    "voice": ".venv/bin/python scripts/narrate.py",
+    "sound": ".venv/bin/python scripts/soundtrack.py",
+    "stills": "bun scripts/render.ts stills",
+    "sample": "bun scripts/render.ts sample",
+    "render": "bun scripts/render.ts video",
+    "slides": "bun scripts/slides.ts",
+    "verify": ".venv/bin/python scripts/verify.py",
+    "review": "bun scripts/review.ts",
+    "review:controls": "bun scripts/review-controls.ts",
+    "review:final": "bun scripts/review-final.ts"
+  },
+  "dependencies": {
+    "@hexly/video-kit": "file:./vendor/hexly-video-kit",
+    "@remotion/player": "4.0.520",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "remotion": "4.0.520",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "@remotion/bundler": "4.0.520",
+    "@remotion/cli": "4.0.520",
+    "@remotion/renderer": "4.0.520",
+    "@types/bun": "1.4.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "@vitejs/plugin-react": "6.1.1",
+    "pdf-lib": "1.17.1",
+    "playwright-core": "1.63.0",
+    "pptxgenjs": "file:./vendor/hexly-video-kit/vendor/pptxgenjs-4.0.1-hexly.1.tgz",
+    "sharp": "0.35.4",
+    "typescript": "7.0.2",
+    "vite": "8.2.2"
+  }
+}

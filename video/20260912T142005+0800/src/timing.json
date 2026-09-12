@@ -1,0 +1,413 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "storySha256": "6f35f0093740153ea26c6765b5b3d714cc6c212ff3da55cce198078244162828",
+  "measured": true,
+  "scenes": [
+    {
+      "id": "intro",
+      "index": 0,
+      "start": 0,
+      "duration": 105,
+      "keyframe": 60,
+      "voiceStart": 18,
+      "voiceEnd": 57
+    },
+    {
+      "id": "context",
+      "index": 1,
+      "start": 105,
+      "duration": 300,
+      "keyframe": 276,
+      "voiceStart": 123,
+      "voiceEnd": 378
+    },
+    {
+      "id": "talent",
+      "index": 2,
+      "start": 405,
+      "duration": 285,
+      "keyframe": 567,
+      "voiceStart": 423,
+      "voiceEnd": 655
+    },
+    {
+      "id": "bind",
+      "index": 3,
+      "start": 690,
+      "duration": 270,
+      "keyframe": 844,
+      "voiceStart": 708,
+      "voiceEnd": 921
+    },
+    {
+      "id": "managers",
+      "index": 4,
+      "start": 960,
+      "duration": 285,
+      "keyframe": 1122,
+      "voiceStart": 978,
+      "voiceEnd": 1214
+    },
+    {
+      "id": "channels",
+      "index": 5,
+      "start": 1245,
+      "duration": 330,
+      "keyframe": 1433,
+      "voiceStart": 1263,
+      "voiceEnd": 1513
+    },
+    {
+      "id": "local",
+      "index": 6,
+      "start": 1575,
+      "duration": 285,
+      "keyframe": 1737,
+      "voiceStart": 1593,
+      "voiceEnd": 1834
+    },
+    {
+      "id": "monitor",
+      "index": 7,
+      "start": 1860,
+      "duration": 300,
+      "keyframe": 2031,
+      "voiceStart": 1878,
+      "voiceEnd": 2128
+    },
+    {
+      "id": "trust",
+      "index": 8,
+      "start": 2160,
+      "duration": 315,
+      "keyframe": 2340,
+      "voiceStart": 2178,
+      "voiceEnd": 2440
+    },
+    {
+      "id": "weekend",
+      "index": 9,
+      "start": 2475,
+      "duration": 240,
+      "keyframe": 2685,
+      "voiceStart": 2493,
+      "voiceEnd": 2628
+    },
+    {
+      "id": "outro",
+      "index": 10,
+      "start": 2715,
+      "duration": 180,
+      "keyframe": 2865,
+      "voiceStart": 2799,
+      "voiceEnd": 2869
+    }
+  ],
+  "audio": [
+    {
+      "scene": "intro",
+      "file": "audio/en/intro-01.wav",
+      "text": "Hermes on Herdr.",
+      "fromFrame": 18,
+      "durationFrames": 39,
+      "seconds": 1.2855833333333333,
+      "sha256": "d99f98ab2df5ae10bb3293063ec3ec41fe5c2db007593165e893522795b912fb"
+    },
+    {
+      "scene": "context",
+      "file": "audio/en/context-01.wav",
+      "text": "An independent Hermes can receive your messages.",
+      "fromFrame": 123,
+      "durationFrames": 86,
+      "seconds": 2.837875,
+      "sha256": "4bf6d855f169b8078a773d3c8b9543f34febfc94c2f6d847e64ee39b2eb66ac9"
+    },
+    {
+      "scene": "context",
+      "file": "audio/en/context-02.wav",
+      "text": "But it does not automatically inherit your Herdr session's pane, socket, or caller context.",
+      "fromFrame": 217,
+      "durationFrames": 161,
+      "seconds": 5.366583333333334,
+      "sha256": "fa524c520b42cde140158a787d25aa1f5093bfdda9a1f5acbe3648c176830fc7"
+    },
+    {
+      "scene": "talent",
+      "file": "audio/en/talent-01.wav",
+      "text": "You trust brilliant coding partners: Codex, Grok, Pi, Claude Code.",
+      "fromFrame": 423,
+      "durationFrames": 126,
+      "seconds": 4.176416666666666,
+      "sha256": "fab2ca414c66afa0363fa4264f4afae689312c93329d8d8a351e73cbec06e1cc"
+    },
+    {
+      "scene": "talent",
+      "file": "audio/en/talent-02.wav",
+      "text": "As your workflow grows, coordination becomes the job.",
+      "fromFrame": 557,
+      "durationFrames": 98,
+      "seconds": 3.2394166666666666,
+      "sha256": "f1817a6e87b3e4378ced63f16d4557da29863697ea04b9bfa061f95a78e85c5a"
+    },
+    {
+      "scene": "bind",
+      "file": "audio/en/bind-01.wav",
+      "text": "The plugin makes the link explicit.",
+      "fromFrame": 708,
+      "durationFrames": 58,
+      "seconds": 1.92025,
+      "sha256": "ab12946868e5674875f1f674120e8260aad7243d441c977331e81e12a4288352"
+    },
+    {
+      "scene": "bind",
+      "file": "audio/en/bind-02.wav",
+      "text": "Choose a dedicated Hermes profile you trust, and bind it to your current Herdr session.",
+      "fromFrame": 774,
+      "durationFrames": 147,
+      "seconds": 4.887833333333333,
+      "sha256": "6e9384498909c1bf319c76042408a5317af45ab6e4698ce4834fe60813df1bbc"
+    },
+    {
+      "scene": "managers",
+      "file": "audio/en/managers-01.wav",
+      "text": "Hermes becomes your M2, with full Herdr control in the bound session.",
+      "fromFrame": 978,
+      "durationFrames": 122,
+      "seconds": 4.045083333333333,
+      "sha256": "55f378ab2211f206f4610bf5b2d14a7d110aa1ca2958f7c3f13677ead7e06a7f"
+    },
+    {
+      "scene": "managers",
+      "file": "audio/en/managers-02.wav",
+      "text": "It manages Herdr. Herdr coordinates your coding agents.",
+      "fromFrame": 1108,
+      "durationFrames": 106,
+      "seconds": 3.5203333333333333,
+      "sha256": "406dbaf350649a384690e38aef9143704b5f8b2a401c3b9e41392246c6440d7f"
+    },
+    {
+      "scene": "channels",
+      "file": "audio/en/channels-01.wav",
+      "text": "Hermes already supports Discord, Telegram, and Slack.",
+      "fromFrame": 1263,
+      "durationFrames": 98,
+      "seconds": 3.2638333333333334,
+      "sha256": "e1dcdc558fa78fdf7de29b13d4be2687bd0c6021752be925595608196796a16e"
+    },
+    {
+      "scene": "channels",
+      "file": "audio/en/channels-02.wav",
+      "text": "Configure a channel to reach your M2 from outside, while Herdr control stays local.",
+      "fromFrame": 1369,
+      "durationFrames": 144,
+      "seconds": 4.797916666666667,
+      "sha256": "d8169d46377894267336bacb1445e48b61e270921834f54d907272253e30439d"
+    },
+    {
+      "scene": "local",
+      "file": "audio/en/local-01.wav",
+      "text": "No SSH. No remote desktop. No VPN or exposed Herdr control port.",
+      "fromFrame": 1593,
+      "durationFrames": 160,
+      "seconds": 5.308041666666667,
+      "sha256": "8de5bf0f23b7a3df38b8b4546e85fa4f667b0a0c999accbe132540c1f37d52a5"
+    },
+    {
+      "scene": "local",
+      "file": "audio/en/local-02.wav",
+      "text": "Keep the host, Herdr, and gateway online.",
+      "fromFrame": 1761,
+      "durationFrames": 73,
+      "seconds": 2.4067083333333334,
+      "sha256": "97039eab611939c713decb91d003fd73e82e730a6019d34aee5fc858964074df"
+    },
+    {
+      "scene": "monitor",
+      "file": "audio/en/monitor-01.wav",
+      "text": "The plugin ties the dedicated gateway to Herdr's lifecycle.",
+      "fromFrame": 1878,
+      "durationFrames": 108,
+      "seconds": 3.5694583333333334,
+      "sha256": "5b92c92ff286118405b2dad9616cbb78abd0945fd9e37dbed5dbb0467c82f80e"
+    },
+    {
+      "scene": "monitor",
+      "file": "audio/en/monitor-02.wav",
+      "text": "Pause stays paused until you resume. The monitor TUI shows its state.",
+      "fromFrame": 1994,
+      "durationFrames": 134,
+      "seconds": 4.460916666666667,
+      "sha256": "1647a71efa849db8c71aeab83928e6f0383278db70bfc3b0c96acd5cba763d98"
+    },
+    {
+      "scene": "trust",
+      "file": "audio/en/trust-01.wav",
+      "text": "Herdr and plugin boundaries still apply.",
+      "fromFrame": 2178,
+      "durationFrames": 68,
+      "seconds": 2.250541666666667,
+      "sha256": "25e2549382c09ffd9db57bf156953e113b4d4fda00d39aa79409eed557ce998b"
+    },
+    {
+      "scene": "trust",
+      "file": "audio/en/trust-02.wav",
+      "text": "Session binding is not an operating-system sandbox. Same-user terminal permissions remain broad.",
+      "fromFrame": 2254,
+      "durationFrames": 186,
+      "seconds": 6.190166666666666,
+      "sha256": "7ccbbe847e5dcd2cc9203d7bd9b144ec74feb5a9cf9badb72e09d5b4d6903f3c"
+    },
+    {
+      "scene": "weekend",
+      "file": "audio/en/weekend-01.wav",
+      "text": "Let the system manage the talent.",
+      "fromFrame": 2493,
+      "durationFrames": 57,
+      "seconds": 1.8830416666666667,
+      "sha256": "029664f35ddaa1a6d4c8359c3e17e1b94b160cc988acb435dcfbc749aabe8823"
+    },
+    {
+      "scene": "weekend",
+      "file": "audio/en/weekend-02.wav",
+      "text": "Keep your judgment. Take your weekend back.",
+      "fromFrame": 2558,
+      "durationFrames": 70,
+      "seconds": 2.32275,
+      "sha256": "9ba65e3378d0a070ea7be8f4d0db97b2f2cd13b8aa84674e1ee5d29f4f64476a"
+    },
+    {
+      "scene": "outro",
+      "file": "audio/en/outro-01.wav",
+      "text": "Hermes on Herdr. By Hexly AI.",
+      "fromFrame": 2799,
+      "durationFrames": 70,
+      "seconds": 2.3234166666666667,
+      "sha256": "3a6dd2edc3c25ca52dc97b49ed4b1f1765b1dbedf03d86748650673d76457f12"
+    }
+  ],
+  "captions": [
+    {
+      "scene": "intro",
+      "text": "Hermes on Herdr.",
+      "start": 0.6,
+      "end": 1.9
+    },
+    {
+      "scene": "context",
+      "text": "An independent Hermes can receive your messages.",
+      "start": 4.1,
+      "end": 6.966666666666667
+    },
+    {
+      "scene": "context",
+      "text": "But it does not automatically inherit your Herdr session's pane, socket, or caller context.",
+      "start": 7.233333333333333,
+      "end": 12.6
+    },
+    {
+      "scene": "talent",
+      "text": "You trust brilliant coding partners: Codex, Grok, Pi, Claude Code.",
+      "start": 14.1,
+      "end": 18.3
+    },
+    {
+      "scene": "talent",
+      "text": "As your workflow grows, coordination becomes the job.",
+      "start": 18.566666666666666,
+      "end": 21.833333333333332
+    },
+    {
+      "scene": "bind",
+      "text": "The plugin makes the link explicit.",
+      "start": 23.6,
+      "end": 25.533333333333335
+    },
+    {
+      "scene": "bind",
+      "text": "Choose a dedicated Hermes profile you trust, and bind it to your current Herdr session.",
+      "start": 25.8,
+      "end": 30.7
+    },
+    {
+      "scene": "managers",
+      "text": "Hermes becomes your M2, with full Herdr control in the bound session.",
+      "start": 32.6,
+      "end": 36.666666666666664
+    },
+    {
+      "scene": "managers",
+      "text": "It manages Herdr. Herdr coordinates your coding agents.",
+      "start": 36.93333333333333,
+      "end": 40.46666666666667
+    },
+    {
+      "scene": "channels",
+      "text": "Hermes already supports Discord, Telegram, and Slack.",
+      "start": 42.1,
+      "end": 45.36666666666667
+    },
+    {
+      "scene": "channels",
+      "text": "Configure a channel to reach your M2 from outside, while Herdr control stays local.",
+      "start": 45.63333333333333,
+      "end": 50.43333333333333
+    },
+    {
+      "scene": "local",
+      "text": "No SSH. No remote desktop. No VPN or exposed Herdr control port.",
+      "start": 53.1,
+      "end": 58.43333333333333
+    },
+    {
+      "scene": "local",
+      "text": "Keep the host, Herdr, and gateway online.",
+      "start": 58.7,
+      "end": 61.13333333333333
+    },
+    {
+      "scene": "monitor",
+      "text": "The plugin ties the dedicated gateway to Herdr's lifecycle.",
+      "start": 62.6,
+      "end": 66.2
+    },
+    {
+      "scene": "monitor",
+      "text": "Pause stays paused until you resume. The monitor TUI shows its state.",
+      "start": 66.46666666666667,
+      "end": 70.93333333333334
+    },
+    {
+      "scene": "trust",
+      "text": "Herdr and plugin boundaries still apply.",
+      "start": 72.6,
+      "end": 74.86666666666666
+    },
+    {
+      "scene": "trust",
+      "text": "Session binding is not an operating-system sandbox. Same-user terminal permissions remain broad.",
+      "start": 75.13333333333334,
+      "end": 81.33333333333333
+    },
+    {
+      "scene": "weekend",
+      "text": "Let the system manage the talent.",
+      "start": 83.1,
+      "end": 85.0
+    },
+    {
+      "scene": "weekend",
+      "text": "Keep your judgment. Take your weekend back.",
+      "start": 85.26666666666667,
+      "end": 87.6
+    },
+    {
+      "scene": "outro",
+      "text": "Hermes on Herdr. By Hexly AI.",
+      "start": 93.3,
+      "end": 95.63333333333334
+    }
+  ],
+  "durationInFrames": 2895
+}

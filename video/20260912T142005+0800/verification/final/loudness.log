@@ -1,0 +1,47 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T142005+0800/public/review/hermes-on-herdr-context-en.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    title           : Context is control — hermes on herdr
+    encoder         : Lavf63.1.101
+    comment         : Made with Remotion 4.0.520
+  Duration: 00:01:36.50, start: 0.000000, bitrate: 469 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 268 kb/s, 30 fps, 30 tbr, 90k tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+    Side data:
+      ICC Profile: (456 bytes)
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+Stream mapping:
+  Stream #0:1 -> #0:0 (aac (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    title           : Context is control — hermes on herdr
+    comment         : Made with Remotion 4.0.520
+    encoder         : Lavf63.1.101
+  Stream #0:0(eng): Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s (default)
+    Metadata:
+      encoder         : Lavc63.1.101 pcm_s16le
+      handler_name    : SoundHandler
+[Parsed_loudnorm_0 @ 0x892c64b40] 
+{
+	"input_i" : "-16.03",
+	"input_tp" : "-1.70",
+	"input_lra" : "4.70",
+	"input_thresh" : "-27.46",
+	"output_i" : "-16.29",
+	"output_tp" : "-1.80",
+	"output_lra" : "4.60",
+	"output_thresh" : "-27.53",
+	"normalization_type" : "dynamic",
+	"target_offset" : "0.29"
+}
+[out#0/null @ 0x892c64300] video:0KiB audio:72375KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:01:36.50 bitrate=N/A speed=46.9x elapsed=0:00:02.05    

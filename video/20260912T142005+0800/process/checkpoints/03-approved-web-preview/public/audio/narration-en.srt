@@ -1,0 +1,79 @@
+1
+00:00:00,600 --> 00:00:01,900
+Hermes on Herdr.
+
+2
+00:00:04,100 --> 00:00:06,967
+An independent Hermes can receive your messages.
+
+3
+00:00:07,233 --> 00:00:12,600
+But it does not automatically inherit your Herdr session's pane, socket, or caller context.
+
+4
+00:00:14,100 --> 00:00:18,300
+You trust brilliant coding partners: Codex, Grok, Pi, Claude Code.
+
+5
+00:00:18,567 --> 00:00:21,833
+As your workflow grows, coordination becomes the job.
+
+6
+00:00:23,600 --> 00:00:25,533
+The plugin makes the link explicit.
+
+7
+00:00:25,800 --> 00:00:30,700
+Choose a dedicated Hermes profile you trust, and bind it to your current Herdr session.
+
+8
+00:00:32,600 --> 00:00:36,667
+Hermes becomes your M2, with full Herdr control in the bound session.
+
+9
+00:00:36,933 --> 00:00:40,467
+It manages Herdr. Herdr coordinates your coding agents.
+
+10
+00:00:42,100 --> 00:00:45,367
+Hermes already supports Discord, Telegram, and Slack.
+
+11
+00:00:45,633 --> 00:00:50,433
+Configure a channel to reach your M2 from outside, while Herdr control stays local.
+
+12
+00:00:53,100 --> 00:00:58,433
+No SSH. No remote desktop. No VPN or exposed Herdr control port.
+
+13
+00:00:58,700 --> 00:01:01,133
+Keep the host, Herdr, and gateway online.
+
+14
+00:01:02,600 --> 00:01:06,200
+The plugin ties the dedicated gateway to Herdr's lifecycle.
+
+15
+00:01:06,467 --> 00:01:10,933
+Pause stays paused until you resume. The monitor TUI shows its state.
+
+16
+00:01:12,600 --> 00:01:14,867
+Herdr and plugin boundaries still apply.
+
+17
+00:01:15,133 --> 00:01:21,333
+Session binding is not an operating-system sandbox. Same-user terminal permissions remain broad.
+
+18
+00:01:23,100 --> 00:01:25,000
+Let the system manage the talent.
+
+19
+00:01:25,267 --> 00:01:27,600
+Keep your judgment. Take your weekend back.
+
+20
+00:01:33,300 --> 00:01:35,700
+Hermes on Herdr. By Hexly AI.

@@ -1,0 +1,192 @@
+{
+  "createdAt": "2026-09-12T07:29:51.055211+00:00",
+  "purpose": "User-approved visual preview before removing bookend subtitles and final export. Immutable assets and unchanged voice clips remain in the production root with source/hash manifests.",
+  "approval": "非常好，只要一个comment，我们2头贴片不要字幕，除此之外没问题，生成mp4",
+  "files": [
+    {
+      "file": "README.md",
+      "sha256": "2d9af25eab4ab7e3185e0406e20a41a67fc1dd981c63fc25067ce1ed83249c4d",
+      "bytes": 3354
+    },
+    {
+      "file": "biome.json",
+      "sha256": "f7d0ac5d75b2a027a5c0701fde80d3ae7349382effef73dce6b4265461be36b2",
+      "bytes": 439
+    },
+    {
+      "file": "bun.lock",
+      "sha256": "448022d3c206bfca69e96a62cce53776fcb2a27f1893c3776ced0fc5fc50ba52",
+      "bytes": 107263
+    },
+    {
+      "file": "index.html",
+      "sha256": "375adc06704e5f6e855ae44c27bcfd440f1c652885ea88b00ddc9c6b5d254f28",
+      "bytes": 562
+    },
+    {
+      "file": "package.json",
+      "sha256": "425e4381dba56c0e0d947effcf92054167f452e0732ea7262b47c0262c69c039",
+      "bytes": 1714
+    },
+    {
+      "file": "public/audio/en/outro-01.json",
+      "sha256": "6c2b5523f503015f1721a9770640147d8b1a1989cf9ed61475d56ec5c86a336b",
+      "bytes": 941
+    },
+    {
+      "file": "public/audio/en/outro-01.wav",
+      "sha256": "33cc03e26ed628f817bd19662bd383dfa26cea857dcbb5e56fefef70b3d4043c",
+      "bytes": 113678
+    },
+    {
+      "file": "public/audio/mix-en.m4a",
+      "sha256": "7c341aaf705132fe3b6a94d9fbc8e61f3d6afebac26319216f75cb00552c46dc",
+      "bytes": 2339939
+    },
+    {
+      "file": "public/audio/narration-en.md",
+      "sha256": "89c2831e35d35056d78e328f3d7522ef876a9a2b411edb5595897a84609ab639",
+      "bytes": 1312
+    },
+    {
+      "file": "public/audio/narration-en.srt",
+      "sha256": "4f81343c96c6ba7f1e11ba874e8b84215d9c61fbe96ef2efc1fa2c930a0c3207",
+      "bytes": 1820
+    },
+    {
+      "file": "public/audio/narration-en.vtt",
+      "sha256": "5b80047409511d7cc01c589fa6e7ed343a18efe7a2457d00aa276544db9f5bac",
+      "bytes": 1777
+    },
+    {
+      "file": "public/review/contact-sheet.jpg",
+      "sha256": "c9deb1cab620fb74401fb4fc196059ca7a0e21ea991bcee7265d7d6e58739ed2",
+      "bytes": 211310
+    },
+    {
+      "file": "run.json",
+      "sha256": "a22221e37cbc731fe4644197449c00d99017dd7981334bf0ae54e1a3d32d8a8e",
+      "bytes": 1223
+    },
+    {
+      "file": "scripts/asr_check.py",
+      "sha256": "b37fc5e18808721ed6c60ea61cc1a587a3cbe783e281fff4210062379ffbfd0f",
+      "bytes": 1262
+    },
+    {
+      "file": "scripts/fetch_logos.py",
+      "sha256": "0d0194e642b3b49534cfb24b2cd55d8bceac3cbf297eea2be1ed84531a24b3c8",
+      "bytes": 3984
+    },
+    {
+      "file": "scripts/narrate.py",
+      "sha256": "5709b673b854a5967b1498dc3e14d1451648669d9bcd590639273ea7304596a8",
+      "bytes": 8143
+    },
+    {
+      "file": "scripts/odp.py",
+      "sha256": "7ae9745fc2085c7ddca81c5a935b791a52446432d6bc6bca876637ba777dd627",
+      "bytes": 1590
+    },
+    {
+      "file": "scripts/render.ts",
+      "sha256": "200f3dbdfda7054036d04ce3d59b3ee17c5e66ae053f6ef0ec7a5ec81080c367",
+      "bytes": 7672
+    },
+    {
+      "file": "scripts/review-controls.ts",
+      "sha256": "247e4e7de85e830ea72f911863844e5a8096e4b94144db1da71a0271ccee2a36",
+      "bytes": 3279
+    },
+    {
+      "file": "scripts/review.ts",
+      "sha256": "f700c07159a7727dfd5e119e7fa82008e9b3ef54023974014310d9f31f40642b",
+      "bytes": 7315
+    },
+    {
+      "file": "scripts/slides.ts",
+      "sha256": "10e5c942362fa2fa062e1b47810192931f9ec62c44406649c7e67aa244d52a16",
+      "bytes": 2829
+    },
+    {
+      "file": "scripts/soundtrack.py",
+      "sha256": "ac9b316c20b3beed02b170f6000d23f3d9b2340187ba5f97a3ad61f306066bf7",
+      "bytes": 6636
+    },
+    {
+      "file": "scripts/sync_kit.py",
+      "sha256": "dc3a9c6a0354b80574ff98df340e2ff7af4f57c41a3e67ed38e0a2fed81b0516",
+      "bytes": 3529
+    },
+    {
+      "file": "src/Film.tsx",
+      "sha256": "2ebf6ae88cfeafad46eac346a93d5d1f632f219c9a6843327429dba018ac3d28",
+      "bytes": 5288
+    },
+    {
+      "file": "src/Root.tsx",
+      "sha256": "9051659c4f2479f51433eb761fb7955352a483af1e2c4b254910134a4e7c0c71",
+      "bytes": 318
+    },
+    {
+      "file": "src/art/Flow.tsx",
+      "sha256": "f411695032b461440e3b4565b2730d4e33d41255ff6b6ad9800b3b38217ed40d",
+      "bytes": 15793
+    },
+    {
+      "file": "src/captions.ts",
+      "sha256": "2dad4522749f735dfd01d0250e9b863110c84dc52a5f9ef7fd5277bae86f1f42",
+      "bytes": 1110
+    },
+    {
+      "file": "src/index.ts",
+      "sha256": "32185b5fe29233ed658013191cf02a1ba3181fe15dd4c43848136a344887ff0f",
+      "bytes": 93
+    },
+    {
+      "file": "src/story.json",
+      "sha256": "6f35f0093740153ea26c6765b5b3d714cc6c212ff3da55cce198078244162828",
+      "bytes": 7945
+    },
+    {
+      "file": "src/timeline.ts",
+      "sha256": "e97ce90f156c1697739a494abbed41d48ca2772164ce0e5afb34a9170dd5332d",
+      "bytes": 1003
+    },
+    {
+      "file": "src/timing.json",
+      "sha256": "db78e7efa080d1653ea6ad4194906f28549e0615c840d933b5c682a74d8c7330",
+      "bytes": 11838
+    },
+    {
+      "file": "src/web.css",
+      "sha256": "5e596dbd80a6438b6673a732d032b9902b1ad2d3aedaa86ebf7a721ccfcad2b9",
+      "bytes": 4966
+    },
+    {
+      "file": "src/web.tsx",
+      "sha256": "77e89a978eede24a3136dd9ce23aa44d20552cd60d58d003a983455f9d2da629",
+      "bytes": 7311
+    },
+    {
+      "file": "tsconfig.json",
+      "sha256": "d5ade93d5db6df8e284f103783ffe6b9791f273ec56da256c3c9cae936f3d45b",
+      "bytes": 539
+    },
+    {
+      "file": "verification/asr-en.json",
+      "sha256": "6c8093049aeebcf659a452c3936bda21afe196b87a40f9c7a1bd85c601977c5d",
+      "bytes": 41500
+    },
+    {
+      "file": "verification/audio-mastering.json",
+      "sha256": "c14faccf7315b03394c0a4e92d7504ddfe21a8eb26b10fdf5b269b588c422292",
+      "bytes": 812
+    },
+    {
+      "file": "vite.config.ts",
+      "sha256": "dbc5c78299c22f93a473850dd3551442c3385015244b6f59f9cdd33de17ec477",
+      "bytes": 188
+    }
+  ]
+}

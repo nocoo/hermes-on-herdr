@@ -1,0 +1,274 @@
+{
+  "repository": "https://github.com/nocoo/hexly.ai",
+  "revision": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+  "package": "@hexly/video-kit",
+  "version": "1.0.0",
+  "files": [
+    {
+      "path": ".gitignore",
+      "gitBlob": "42bdf19211b7b2ed854fc9a4b21df9d051f4b028",
+      "bytes": 37,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/.gitignore",
+      "sha256": "fbfb4e57bb56027227ea5798b2b4fc1f2506c9e6187bd7a629481165a837ff5f"
+    },
+    {
+      "path": "CREDITS.md",
+      "gitBlob": "a9bc3ed4cc067846516c352216e35e61273bd7b5",
+      "bytes": 3512,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/CREDITS.md",
+      "sha256": "5c4203e9e1aabeef7004cdd15d09ec2e7fb5b77eb5410a4d34ffdcbbd1ec3b79"
+    },
+    {
+      "path": "LICENSE",
+      "gitBlob": "c5af5ed13f84b05481270c08ccfeb5281fec90bc",
+      "bytes": 1065,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/LICENSE",
+      "sha256": "4bd1de59e976f86422fbc5e08e3377823d6445db6854e20b737b777d0b7b2cb9"
+    },
+    {
+      "path": "README.md",
+      "gitBlob": "9a8955f94b5a0661cd21c90b6c441ab515b0f15f",
+      "bytes": 10226,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/README.md",
+      "sha256": "573ce0a33236fa36c4d6a8361c66aef9046ad0058650d29ea54ececeee431c60"
+    },
+    {
+      "path": "brand-source.json",
+      "gitBlob": "b4c87493e0e889d001433490cb73a08ea69c4396",
+      "bytes": 2232,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/brand-source.json",
+      "sha256": "e897929b7ea0b996aaa285242cdf31c02638c0d33dc4f5c0c5fb3668b23c5fbc"
+    },
+    {
+      "path": "demo/index.tsx",
+      "gitBlob": "fbc9c34f248f0dc3bd09e819702a466b5ae9b8cd",
+      "bytes": 973,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/demo/index.tsx",
+      "sha256": "977cfb970f5d240bd21a29a49ac210b9365fc5b96cd50645505ddd8673e82026"
+    },
+    {
+      "path": "demo/web.css",
+      "gitBlob": "89e4ca36378262cfd43c35cc367773b427965832",
+      "bytes": 1850,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/demo/web.css",
+      "sha256": "2d0afd319fb671bbb38b5e8d4ff1e4291f2421464a613713671687e7f3dc48b4"
+    },
+    {
+      "path": "demo/web.tsx",
+      "gitBlob": "0122361a52411cbcff231ba23a012d653222fef1",
+      "bytes": 1766,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/demo/web.tsx",
+      "sha256": "dac3f8ab5e3bd23401a06371715c097154d3ea567080a150b7418f27fda340f7"
+    },
+    {
+      "path": "examples/hexly.json",
+      "gitBlob": "ddf34ba94d52187cc029dcf349babc2ecc1d1cd1",
+      "bytes": 543,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/examples/hexly.json",
+      "sha256": "08e588277a9efac2135850988c4eeb10696d44abe78f00a8ec056f659dbe23dc"
+    },
+    {
+      "path": "index.html",
+      "gitBlob": "5d8cabc40ab398ada84f406b9390d75e81138497",
+      "bytes": 260,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/index.html",
+      "sha256": "8df6cb5997f1b3b920c2220f1c2864bd97c5edadf07201966541f0215db81252"
+    },
+    {
+      "path": "package.json",
+      "gitBlob": "df1bbcbb95e4da7d3d0e5fa0c52e6522a3910723",
+      "bytes": 1288,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/package.json",
+      "sha256": "cc08013c1a376cf57d6ccdbc5e29163abee637b46d565a3a716791b22321797a"
+    },
+    {
+      "path": "public/video-kit/1.0.0/hexly/favicon.svg",
+      "gitBlob": "9acb5f122a5619ef0a30e40362bc8b2890e5c6b5",
+      "bytes": 346,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/public/video-kit/1.0.0/hexly/favicon.svg",
+      "sha256": "b5daa204c6633366bf2203db44ad301107dd14370d815c927ed029687d85aad5"
+    },
+    {
+      "path": "public/video-kit/1.0.0/hexly/geist-mono-OFL.txt",
+      "gitBlob": "2e4aef1e27121f3682a1c97326ab558ced7d3bc7",
+      "bytes": 4498,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/public/video-kit/1.0.0/hexly/geist-mono-OFL.txt",
+      "sha256": "cc815ed4fc045f0e991abb10395b7932bd028c6a067deb13316d6002105074e6"
+    },
+    {
+      "path": "public/video-kit/1.0.0/hexly/geist-mono.woff2",
+      "gitBlob": "0750682c8dd850428e3394807cf40113e94f46ca",
+      "bytes": 23128,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/public/video-kit/1.0.0/hexly/geist-mono.woff2",
+      "sha256": "684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc"
+    },
+    {
+      "path": "public/video-kit/1.0.0/hexly/journey-cjk-OFL.txt",
+      "gitBlob": "1c9f43281b8f216c5461fe9ac729afbade7724e4",
+      "bytes": 4388,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/public/video-kit/1.0.0/hexly/journey-cjk-OFL.txt",
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    },
+    {
+      "path": "public/video-kit/1.0.0/hexly/journey-cjk.woff2",
+      "gitBlob": "64912059fbb9bd37244b71a5cf35d97cc23cb5f8",
+      "bytes": 1961316,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/public/video-kit/1.0.0/hexly/journey-cjk.woff2",
+      "sha256": "5e7ae05ecc835a66d6e4c96811a14c181ecd9f648457501ec420b5ec70d6d8b2"
+    },
+    {
+      "path": "public/video-kit/1.0.0/hexly/space-grotesk-OFL.txt",
+      "gitBlob": "d5666d70873cb905b4421d2c0d2e60747aae8573",
+      "bytes": 4401,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/public/video-kit/1.0.0/hexly/space-grotesk-OFL.txt",
+      "sha256": "18a4de52385f6b988782639d5d0cc1326e5a8c2de9a7f01d7b20d9aedcc60943"
+    },
+    {
+      "path": "public/video-kit/1.0.0/hexly/space-grotesk.woff2",
+      "gitBlob": "0f3474ee8af2f8253225f3b41bf79be986a1ae13",
+      "bytes": 22288,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/public/video-kit/1.0.0/hexly/space-grotesk.woff2",
+      "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+    },
+    {
+      "path": "scripts/render.ts",
+      "gitBlob": "bac0d832a383db17887143f726d49007b41731f2",
+      "bytes": 8907,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/scripts/render.ts",
+      "sha256": "04983f02d207ef132c819ab78458205ae12df6a4d94c936d21c5d6dd4be72919"
+    },
+    {
+      "path": "scripts/subset-font.py",
+      "gitBlob": "21e8e3564fa7a59489da39edb21efb48fe02f218",
+      "bytes": 1441,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/scripts/subset-font.py",
+      "sha256": "6d463f526ff3e368daf064ed1923e2ff972e509820e2c4d6a9a4c22c7aa4bee6"
+    },
+    {
+      "path": "scripts/vendor-pptx.py",
+      "gitBlob": "832d80542247628537d9bd706b51d4d8aef87091",
+      "bytes": 2765,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/scripts/vendor-pptx.py",
+      "sha256": "bbd94031e9146de05e15b8fd8b00ccc748bf7e6a94e76b7dd486def1063626cb"
+    },
+    {
+      "path": "src/Film.tsx",
+      "gitBlob": "f444a5f531301700a7d7bd40c06adb0fd5b420c9",
+      "bytes": 880,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/Film.tsx",
+      "sha256": "9c9ccf3785fe64a090fef3cde18e2b5f2b81a590336ff80b671be79d40c8b81f"
+    },
+    {
+      "path": "src/Identity.tsx",
+      "gitBlob": "4c2fa90f2b752b9aa4f9f5f90c94e14ed00b1c6f",
+      "bytes": 4905,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/Identity.tsx",
+      "sha256": "ff5b6b435163765b8e71a90eb934f000c412222343bb112531f29002282636dd"
+    },
+    {
+      "path": "src/Preview.tsx",
+      "gitBlob": "2c6ccfd89177b1af7adce00aec964ed7fe7dde06",
+      "bytes": 11755,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/Preview.tsx",
+      "sha256": "088be4b5ed2c1057f8fa2c93ea8c2591d7cbb82e353db701895596fd33cefbc1"
+    },
+    {
+      "path": "src/Scenes.tsx",
+      "gitBlob": "cba92603af4f711bbae2737385039823c4c4de7e",
+      "bytes": 15652,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/Scenes.tsx",
+      "sha256": "fe69e74bbb8f5e8b24a7d34435a535805699383d841236a39649915e33bc735a"
+    },
+    {
+      "path": "src/brand.ts",
+      "gitBlob": "47e2aca041da9b2bd895a888d05b71ceccafd454",
+      "bytes": 1885,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/brand.ts",
+      "sha256": "d130f88068bdfdc6198ce5ce0333254466130ab530a0f89ea2f55dbfe3cf2cce"
+    },
+    {
+      "path": "src/fonts.ts",
+      "gitBlob": "d053a09828993d6cba38669e16733121e16a2d54",
+      "bytes": 1303,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/fonts.ts",
+      "sha256": "b648600d91c0cffb21233b258a350b490113b5df34b8cb28c320ce2544298d2d"
+    },
+    {
+      "path": "src/index.ts",
+      "gitBlob": "36f4dd901c5b544193fae5a6f068e3ee2ae87a21",
+      "bytes": 617,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/index.ts",
+      "sha256": "10c77ff834a96ebd3d5668145f2ba1dbdd65cc12167bdd1694210d67a8e9f69d"
+    },
+    {
+      "path": "src/motion.ts",
+      "gitBlob": "df0c8e750f41c962b6c02625531995766122bb9e",
+      "bytes": 716,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/motion.ts",
+      "sha256": "96b08946ad4f4864ddcf9fe9ee30aa3e312fceed2c3d52d03131008d54ab23d9"
+    },
+    {
+      "path": "src/project.ts",
+      "gitBlob": "4e892d52216a4f362e56d73c044f451e6c2a0c37",
+      "bytes": 2037,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/project.ts",
+      "sha256": "ff31ffeb8a91e20e9c17260cc2b7256066c6ef8e78585fea09812449c685eea7"
+    },
+    {
+      "path": "src/schema.ts",
+      "gitBlob": "88baaefd764d4a7edf5305634edaabee5a552a44",
+      "bytes": 5654,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/schema.ts",
+      "sha256": "73d3492fff58848a0b0492aeb6415f086f8698d9d5e712efb69c5004bf325c3e"
+    },
+    {
+      "path": "src/site.css",
+      "gitBlob": "da25f4de265f48699f30bf971ef1691fc938fe79",
+      "bytes": 6222,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/src/site.css",
+      "sha256": "5c518c8bead6807cb38e444c890d7433c4f534bb808b6bf2fa64edc462e73bba"
+    },
+    {
+      "path": "tests/brand.test.ts",
+      "gitBlob": "235999627085261ba1a20285e77f2580d2b4d5ea",
+      "bytes": 2354,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/tests/brand.test.ts",
+      "sha256": "2ec6d3782533b5d7000fd3f20be0ca08d1bd8778e96bc2124f84777fa8ec2d10"
+    },
+    {
+      "path": "tsconfig.json",
+      "gitBlob": "426dff3c168ff08f30bd7821b571241f93cdb233",
+      "bytes": 509,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/tsconfig.json",
+      "sha256": "78fe4372ec83f41f542cd45db916f81dcb4e85a178849a57448c7c3120605a6c"
+    },
+    {
+      "path": "vendor/pptxgenjs-4.0.1-hexly.1.tgz",
+      "gitBlob": "401c22c23488af96ac22e2bda2928c3c1118ad60",
+      "bytes": 811067,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/vendor/pptxgenjs-4.0.1-hexly.1.tgz",
+      "sha256": "18b7ebb99d231d4e825441014a0d6d4323043851da822b58842cd84a5dfb79a1"
+    },
+    {
+      "path": "vendor/pptxgenjs-source.json",
+      "gitBlob": "a6a2c092ed91f88d0880824abcf71a2ce5aab151",
+      "bytes": 1819,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/vendor/pptxgenjs-source.json",
+      "sha256": "7a11fcb39c13a10e05de1320606bb8001e7b6b4a35e38fb20f115e5e94b54deb"
+    },
+    {
+      "path": "vite.config.ts",
+      "gitBlob": "cef20b8f4ea4e0a486569f83d3b9f62032682f02",
+      "bytes": 79,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/vite.config.ts",
+      "sha256": "c6f227d1b39683c088690c6dc2d59ce773927e71d3509cd4706f65aa6cd54766"
+    },
+    {
+      "path": "vite.ts",
+      "gitBlob": "351c3a77c3e0adb80846d1974a05173974c46ef5",
+      "bytes": 361,
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit/vite.ts",
+      "sha256": "5bda65a70212fc01e235ef1241fb0cbf0c2fa9f9ec0aad82c602b87f0761fc68"
+    }
+  ]
+}

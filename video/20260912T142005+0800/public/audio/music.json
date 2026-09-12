@@ -1,0 +1,13 @@
+{
+  "title": "Pieces in Place",
+  "original": true,
+  "source": "scripts/soundtrack.py",
+  "bpm": 108,
+  "harmony": "D major 9 / G major 9 / B minor 7 / A suspended",
+  "seed": 20260912,
+  "method": "Deterministic additive synthesis, felt-like plucks, sine bass, air pads, filtered noise and cube clicks",
+  "rights": "Original score created for the repository owner; no third-party recording or sample",
+  "sampleRate": 48000,
+  "seconds": 96.5,
+  "sha256": "8d4656f617abc129f9d1e64f9cbd9a2121ab2d2ce65bc9761d9121a5a77d7aa5"
+}

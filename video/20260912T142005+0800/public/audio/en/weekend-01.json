@@ -1,0 +1,29 @@
+{
+  "text": "Let the system manage the talent.",
+  "spoken": "Let the system manage the talent.",
+  "signature": "93e9d04c528a4e57ca75c72315840b53bbf536c4af971a05a6ebca9e1e163ef9",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:08.207303+00:00",
+  "sampleRate": 24000,
+  "samples": 45193,
+  "seconds": 1.8830416666666667,
+  "sha256": "029664f35ddaa1a6d4c8359c3e17e1b94b160cc988acb435dcfbc749aabe8823",
+  "gain": 2.037416538813655,
+  "sourceTrimSamples": [
+    5382,
+    50575
+  ],
+  "phonemes": [
+    "lˈɛt ðə sˈɪstəm mˈænɪʤ ðə tˈælənt."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}

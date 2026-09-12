@@ -1,0 +1,43 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T142005+0800/public/review/hermes-on-herdr-context-en.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    title           : Context is control — hermes on herdr
+    encoder         : Lavf63.1.101
+    comment         : Made with Remotion 4.0.520
+  Duration: 00:01:36.50, start: 0.000000, bitrate: 469 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 268 kb/s, 30 fps, 30 tbr, 90k tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+    Side data:
+      ICC Profile: (456 bytes)
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+  Stream #0:2[0x3](eng): Subtitle: mov_text (tx3g / 0x67337874), 0 kb/s (default)
+    Metadata:
+      handler_name    : SubtitleHandler
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #0:1 -> #0:1 (copy)
+Output #0, mp4, to '/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T142005+0800/process/20260912T073211Z-video/mastered.tmp.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    title           : Context is control — hermes on herdr
+    comment         : Made with Remotion 4.0.520
+    encoder         : Lavf63.1.101
+  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 268 kb/s, 30 fps, 30 tbr, 90k tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+    Side data:
+      ICC Profile: (456 bytes)
+  Stream #0:1(eng): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+Press [q] to stop, [?] for help
+[mp4 @ 0xae2c1b980] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 0xae2c64480] video:3160KiB audio:2266KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 1.929999%
+frame= 2895 fps=0.0 q=-1.0 Lsize=    5531KiB time=00:01:36.50 bitrate= 469.5kbits/s speed=4.11e+03x elapsed=0:00:00.02    

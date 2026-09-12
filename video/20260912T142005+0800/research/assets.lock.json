@@ -1,0 +1,101 @@
+{
+  "assetPreparationCommit": "8cb153c",
+  "files": [
+    {
+      "file": "public/cli/pi.svg",
+      "source": "video/20260912T135851+0800/public/cli/pi.svg",
+      "sha256": "95efe3cc9fbd4061169008d4510544634dd1d6b92fbfafea333395405bb944ce",
+      "bytes": 62781
+    },
+    {
+      "file": "public/cli/hermes-channel.svg",
+      "source": "video/20260912T135851+0800/public/cli/hermes-channel.svg",
+      "sha256": "3e1f6b9d74a3bfd582982927cd288d0bd7512e7edfdafcf2e94647697670e8b8",
+      "bytes": 63202
+    },
+    {
+      "file": "public/cli/herdr-panes.svg",
+      "source": "video/20260912T135851+0800/public/cli/herdr-panes.svg",
+      "sha256": "984d9c416237ac05cb65bf385c09fd3aa443d7ab1e90fadda52e6b492dc7082c",
+      "bytes": 62908
+    },
+    {
+      "file": "public/cli/codex.svg",
+      "source": "video/20260912T135851+0800/public/cli/codex.svg",
+      "sha256": "fb2d98b09425cc10ac68b7eefe761ea485187b07c6b0afcbb12e819b30ea11e7",
+      "bytes": 62788
+    },
+    {
+      "file": "public/cli/monitor-ready.svg",
+      "source": "video/20260912T135851+0800/public/cli/monitor-ready.svg",
+      "sha256": "31ea55c4a0f13384985ca245bbc89ba6a74d86d7e278964bf5f54a722223b8c8",
+      "bytes": 140595
+    },
+    {
+      "file": "public/cli/claude-code.svg",
+      "source": "video/20260912T135851+0800/public/cli/claude-code.svg",
+      "sha256": "821987999757110905c4f57a9e49064d65b624041c441d59829544777adcb584",
+      "bytes": 62801
+    },
+    {
+      "file": "public/cli/grok.svg",
+      "source": "video/20260912T135851+0800/public/cli/grok.svg",
+      "sha256": "f41cb8e7ea484fb591ef3cdf9433e18b154dea1c2bcaf9816ed5ec28888581bd",
+      "bytes": 62786
+    },
+    {
+      "file": "public/cli/control-context.svg",
+      "source": "video/20260912T135851+0800/public/cli/control-context.svg",
+      "sha256": "e8168c60982fcb6c0919e48417df4dd41e9b2b6cb38546cf2f6c666eeb3e32fe",
+      "bytes": 62914
+    },
+    {
+      "file": "public/cli/monitor-startup.svg",
+      "source": "video/20260912T135851+0800/public/cli/monitor-startup.svg",
+      "sha256": "8037dc401cfa70b8caa7b67537eb0c07300439409242e42e01209b684ca39b31",
+      "bytes": 94503
+    },
+    {
+      "file": "public/product/logo.png",
+      "source": "logo.png",
+      "sha256": "ba0a4a0a403d4775ce917290dc528884b0ac6666068ed0148f655777f815d719",
+      "bytes": 4337945
+    },
+    {
+      "file": "public/product/hermes-favicon.svg",
+      "source": "video/20260912T135851+0800/public/brand/hermes-favicon.svg",
+      "sha256": "c4d55805bda8e16072ed77c0725176ab2218a9e628d1ba776a6048a39c28f751",
+      "bytes": 113
+    },
+    {
+      "file": "research/licenses/Hermes-MIT.txt",
+      "source": "video/20260912T135851+0800/research/hermes-LICENSE.txt",
+      "sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6",
+      "bytes": 1070
+    },
+    {
+      "file": "research/licenses/kokoro-en-model-card.md",
+      "source": "video/20260912T102534+0800/research/licenses/kokoro-en-model-card.md",
+      "sha256": "91dcabced89db6f109b8786642f50402d3ee87450e8189589b6f85520e7f4d78",
+      "bytes": 6348
+    },
+    {
+      "file": "research/licenses/kokoro-en-api.json",
+      "source": "video/20260912T102534+0800/research/licenses/kokoro-en-api.json",
+      "sha256": "b10df45917351a3fb572d245acba3416f51115c4c74dd702f13b2d7b89086db4",
+      "bytes": 6206
+    },
+    {
+      "file": "research/licenses/Kokoro-Apache-2.0.txt",
+      "source": "video/20260912T102534+0800/research/licenses/Kokoro-Apache-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "file": "research/licenses/Remotion-4.0.520.md",
+      "source": "video/20260912T102534+0800/research/licenses/Remotion-4.0.520.md",
+      "sha256": "bd65083b940f61904f6ef298aade918a7cad72a3e35bc406e36fab365844b673",
+      "bytes": 2823
+    }
+  ]
+}

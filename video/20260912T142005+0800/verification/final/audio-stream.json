@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "method": "FFmpeg SHA-256 of copied compressed AAC packets",
+  "files": [
+    {
+      "file": "public/review/hermes-on-herdr-context-en.mp4",
+      "compressedAudioHash": "SHA256=f966a8dbea2b9fc11a42d0f422b63ac5087311ce98da6f5969122ae3c10aba4a"
+    },
+    {
+      "file": "public/audio/mix-en.m4a",
+      "compressedAudioHash": "SHA256=f966a8dbea2b9fc11a42d0f422b63ac5087311ce98da6f5969122ae3c10aba4a"
+    }
+  ]
+}

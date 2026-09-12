@@ -1,0 +1,103 @@
+@font-face {
+	font-family: "Space Grotesk Variable";
+	font-weight: 100 900;
+	src: url("/video-kit/1.0.0/hexly/space-grotesk.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Geist Mono Variable";
+	font-weight: 100 900;
+	src: url("/video-kit/1.0.0/hexly/geist-mono.woff2") format("woff2");
+}
+* {
+	box-sizing: border-box;
+}
+body {
+	background: #f0f0e9;
+	color: #30372e;
+	font-family: "Space Grotesk Variable", sans-serif;
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+}
+a {
+	color: inherit;
+	text-underline-offset: 4px;
+}
+button {
+	font: inherit;
+	cursor: pointer;
+}
+.demo-shell {
+	max-width: 1420px;
+	padding: 0 48px;
+	margin: auto;
+}
+.demo-shell > header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 96px;
+	border-bottom: 1px solid #d4d8cb;
+	gap: 20px;
+}
+.demo-shell > header > a {
+	text-decoration: none;
+}
+.demo-shell > header > span,
+.demo-kicker {
+	font:
+		11px "Geist Mono Variable",
+		monospace;
+	letter-spacing: 1px;
+	color: #68705f;
+}
+.demo-kicker {
+	margin-top: 68px;
+}
+.demo-shell h1 {
+	font-size: clamp(46px, 6vw, 88px);
+	font-weight: 500;
+	letter-spacing: -0.06em;
+	line-height: 1.1;
+	margin: 18px 0;
+}
+.demo-intro {
+	font-size: 18px;
+	color: #68705f;
+	margin-bottom: 36px;
+}
+.demo-templates {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 30px;
+}
+.demo-templates button {
+	min-height: 44px;
+	padding: 0 18px;
+	background: transparent;
+	border: 1px solid #d4d8cb;
+	color: #30372e;
+	border-radius: 8px;
+}
+.demo-templates button[aria-pressed="true"] {
+	background: #30372e;
+	color: #f0f0e9;
+}
+.demo-shell > footer {
+	font-size: 12px;
+	color: #68705f;
+	padding: 40px 0;
+	margin-top: 40px;
+	border-top: 1px solid #d4d8cb;
+}
+@media (max-width: 600px) {
+	.demo-shell {
+		padding: 0 20px;
+	}
+	.demo-shell > header {
+		min-height: 76px;
+	}
+	.demo-kicker {
+		margin-top: 40px;
+	}
+}

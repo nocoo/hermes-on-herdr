@@ -1,0 +1,15 @@
+{
+	"id": "hexly-ai",
+	"name": "hexly.ai",
+	"summary": "A little universe of useful tools, playful experiments, and colorful identities.",
+	"repository": "https://github.com/nocoo/hexly.ai",
+	"website": "https://hexly.ai",
+	"colors": ["#bf5c3c", "#f0f0e9", "#30372e"],
+	"technologies": ["React", "Remotion", "Vite"],
+	"facts": [
+		{ "label": "Templates", "value": "05" },
+		{ "label": "Components", "value": "07" },
+		{ "label": "Views", "value": "Video / Deck" }
+	],
+	"sourceNote": "Hexly Video Kit 1.0.0 · shared source, shared identity."
+}

@@ -1,0 +1,29 @@
+{
+  "text": "As your workflow grows, coordination becomes the job.",
+  "spoken": "As your workflow grows, coordination becomes the job.",
+  "signature": "87f829f9706804b847ab418f894851f0445ba284111d39967221ae13d4c0ad30",
+  "voice": {
+    "engine": "kokoro",
+    "engineVersion": "0.9.4",
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "af_heart",
+    "speed": 1.06,
+    "license": "Apache-2.0"
+  },
+  "generatedAt": "2026-09-12T06:29:03.564540+00:00",
+  "sampleRate": 24000,
+  "samples": 77746,
+  "seconds": 3.2394166666666666,
+  "sha256": "f1817a6e87b3e4378ced63f16d4557da29863697ea04b9bfa061f95a78e85c5a",
+  "gain": 1.927419383443687,
+  "sourceTrimSamples": [
+    5490,
+    83236
+  ],
+  "phonemes": [
+    "ˌæz jʊɹ wˈɜɹkflˌO ɡɹˈOz, kOˌɔɹdɪnˈAʃən bəkˈʌmz ðə ʤˈɑb."
+  ],
+  "provenance": "research/voice-sources.lock.json",
+  "attribution": "Kokoro by hexgrad, Apache-2.0. Synthetic narration; no cloned or scraped human voice."
+}
