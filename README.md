@@ -20,15 +20,17 @@
 
 ## 上手
 
-当前为开发版，使用 Python 3.11+ 和已配置的 Hermes 虚拟环境。运行依赖是 [psutil 与 PyYAML](requirements.txt)，固定版本的 hqtui 源码随仓库提供。已验证的宿主基线是 Herdr v0.9.0、Hermes Agent v0.21.1；完整版本与提交见 [源码证据](docs/09-源码证据索引.md)。
+**0.1.0** 使用 Herdr 原生插件安装器，版本与附件见 [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0)。[发布与安装](docs/15-发布与安装.md)说明接入、升级及版本约定；[首次关联方案](docs/16-首次安装与Profile关联.md)中的选择向导尚未实现，当前使用手动配置和 `bind`。
+
+这是早期 0.x 版本，使用 Python 3.11+ 和已配置的 Hermes 虚拟环境。运行依赖是 [psutil 与 PyYAML](requirements.txt)，固定版本的 hqtui 源码随仓库提供。兼容基线固定为 Herdr v0.9.0、Hermes Agent v0.21.1；完整版本与提交见 [源码证据](docs/09-源码证据索引.md)。
 
 ```sh
-git clone https://github.com/nocoo/hermes-on-herdr.git
-cd hermes-on-herdr
-./bin/hermes-on-herdr --help
+herdr plugin install nocoo/hermes-on-herdr --ref v0.1.0
+herdr plugin config-dir nocoo.hermes-gateway
+herdr plugin list --plugin nocoo.hermes-gateway --json
 ```
 
-帮助命令无需配置。接入前，按 [配置示例](examples/README.md) 准备独立 Herdr session、已有的专用 Hermes Profile 和私有配置目录。安装与接入步骤见 [实现及验收计划](docs/05-实现步骤.md)，当前没有自动创建 Profile 的安装器。
+进入列表返回的 `plugin_root` 后，`./bin/hermes-on-herdr --help` 和 `--version` 无需配置。接入前，按 [配置示例](examples/README.md) 准备目标 Herdr session、已有的专用 Hermes Profile 和私有配置目录。安装与接入步骤见 [发布与安装](docs/15-发布与安装.md)；Profile 的模型、凭据和平台由用户自行配置。安装不会下载 Python 依赖或接管已有 Gateway。
 
 准备配置后，将下面的占位路径替换为实际 `config.json`：
 
@@ -58,16 +60,19 @@ cd hermes-on-herdr
 | `dashboard --startup` | 显示启动状态页，按需进入完整监控 |
 | `dashboard --snapshot` / `dashboard --json` | 输出一次文本或 JSON 监控快照 |
 | `dashboard --demo-profiles 2` | 使用合成数据预览双 Profile 面板 |
+| `dashboard --http-port 8767` | 启动独立只读网页 `http://127.0.0.1:8767/` 与 `/health`；不控制 Gateway |
 
 从 hook 外执行控制命令时，用全局 `--owner-socket /absolute/bound.sock` 指定绑定的 owner。全部参数、返回码与重试规则见 [命令契约](docs/12-离线实现与验证.md#124-当前命令契约)。
 
 ## 开发与验证
 
 ```sh
+git clone https://github.com/nocoo/hermes-on-herdr.git
+cd hermes-on-herdr
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。最近保存的 [153 项离线测试](docs/evidence/dashboard-unittest.txt) 覆盖生命周期竞态、身份核验、监控采样、启动偏好、终端输入及渲染故障隔离；资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
+测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。最近保存的 [166 项离线测试](docs/evidence/release-0.1.0-unittest.txt) 覆盖生命周期竞态、macOS 退出身份读取、Linux 信号兼容、版本一致性、监控采样、终端交互和 HTTP 健康检查。[CI](.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14；资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
 
 cherry 曾在插件监管下达到 READY，消息连通已获用户确认；独立面板也完成了真实只读预览。嵌入启用、冷启动、退出清理、指定 pane 的双向交互、Linux 和 live handoff 的验证状态见 [接入记录](docs/13-cherry接入与验证.md)。READY 表示进程及平台就绪，不等于模型调用或消息端到端验证。
 

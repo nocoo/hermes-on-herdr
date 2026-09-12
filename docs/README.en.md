@@ -20,15 +20,17 @@ See the [dashboard guide](14-hqtui监控面板.md) for previews, controls and re
 
 ## Get started
 
-This is a development release. Use Python 3.11+ from a configured Hermes virtual environment with [psutil and PyYAML](../requirements.txt). The repository includes pinned hqtui source. The inspected host baseline is Herdr v0.9.0 and Hermes Agent v0.21.1; exact versions and commits are recorded in the [source evidence](09-源码证据索引.md).
+**0.1.0** uses Herdr's native plugin installer; see the [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0) and [release guide](15-发布与安装.md) for distribution, installation and upgrades. The [first-run association wizard](16-首次安装与Profile关联.md) is planned. Manual configuration and `bind` are implemented.
+
+This is an early 0.x release. Use Python 3.11+ from a configured Hermes virtual environment with [psutil and PyYAML](../requirements.txt). The repository includes pinned hqtui source. Compatibility is pinned to Herdr v0.9.0 and Hermes Agent v0.21.1; exact versions and commits are recorded in the [source evidence](09-源码证据索引.md).
 
 ```sh
-git clone https://github.com/nocoo/hermes-on-herdr.git
-cd hermes-on-herdr
-./bin/hermes-on-herdr --help
+herdr plugin install nocoo/hermes-on-herdr --ref v0.1.0
+herdr plugin config-dir nocoo.hermes-gateway
+herdr plugin list --plugin nocoo.hermes-gateway --json
 ```
 
-Help needs no configuration. Before connecting a Gateway, follow the [configuration examples](../examples/README.md) to prepare a separate Herdr session, an existing dedicated Hermes Profile and a private configuration directory. The [implementation and acceptance plan](05-实现步骤.md) covers installation and integration. There is no automatic Profile initializer.
+Enter the returned `plugin_root`; `./bin/hermes-on-herdr --help` and `--version` need no configuration. Follow the [configuration examples](../examples/README.md) and [installation guide](15-发布与安装.md) to prepare the target Herdr session, an existing dedicated Hermes Profile and private plugin configuration. Installing the plugin does not download Python dependencies or take over an existing Gateway. The user configures the Profile's model, credentials and platforms.
 
 Once configured, replace the placeholder with your actual `config.json`:
 
@@ -58,16 +60,19 @@ Append these commands to `./bin/hermes-on-herdr --config /absolute/config.json`:
 | `dashboard --startup` | Show startup status and offer the full monitor |
 | `dashboard --snapshot` / `dashboard --json` | Print one text or JSON monitoring snapshot |
 | `dashboard --demo-profiles 2` | Preview a two-Profile dashboard with synthetic data |
+| `dashboard --http-port 8767` | Serve a separate read-only page at `http://127.0.0.1:8767/` and `/health`; no Gateway control |
 
 For control commands outside a hook, supply the bound owner with the global `--owner-socket /absolute/bound.sock` option. The [command contract](12-离线实现与验证.md#124-当前命令契约) covers all flags, exit codes and retry rules.
 
 ## Development and validation
 
 ```sh
+git clone https://github.com/nocoo/hermes-on-herdr.git
+cd hermes-on-herdr
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The latest saved [153-test run](evidence/dashboard-unittest.txt) covers lifecycle races, identity checks, monitoring, startup preferences, terminal input and renderer failures. Reproducible resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
+Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The latest saved [166-test run](evidence/release-0.1.0-unittest.txt) covers lifecycle races, macOS teardown identity reads, Linux signals, versions, monitoring, terminal input and HTTP health checks. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. Resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
 
 Cherry reached READY under plugin supervision, and the user confirmed messaging. A standalone dashboard also completed a live read-only preview. See the [integration record](13-cherry接入与验证.md) for the validation status of embedded activation, cold start, shutdown, explicit pane interaction, Linux and live handoff. READY establishes process and platform readiness; model calls and end-to-end messaging require their own checks.
 

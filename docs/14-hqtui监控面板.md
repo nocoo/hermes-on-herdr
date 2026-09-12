@@ -4,6 +4,8 @@
 
 ## 14.1 界面与布局
 
+当前版本 `v0.1.0` 显示在启动卡片底边和完整面板右下角；极窄视图也保留版本。它与 CLI `--version`、doctor 和插件 manifest 一致，不增加独立页头或额外采样。
+
 品牌为 **hermes on herdr**。插件启动时在专用 space 中显示简洁的 Gateway 状态页，完整监控默认关闭。按 Enter 或点击 Open monitor 才进入面板；“Always open on startup”默认未勾选，空格或鼠标可勾选并保存，供下次启动使用。单次打开不会自动勾选。取消勾选后，下次恢复为状态页。
 
 ![默认启动状态页，离线演示数据](evidence/dashboard-startup.png)
@@ -94,7 +96,7 @@ CPU 的 `100%` 表示占满一个逻辑核；RSS 只计算 Gateway 本进程。�
 
 ## 14.6 测试与测量
 
-完整离线回归 **153 项通过**，见 [完整输出](evidence/dashboard-unittest.txt)。
+0.1.0 的完整离线回归 **166 项通过**，见 [完整输出](evidence/release-0.1.0-unittest.txt)，包含 macOS 退出竞态及 HTTP 健康面板。原有面板阶段的 [153 项记录](evidence/dashboard-unittest.txt)及以下资源测量保留。
 
 新增测试覆盖身份伪造和 PID 复用、慢 socket、轮询公平性和上限、共享 Gateway 计数、CPU 时间差及历史长度、1/2/25 个 profile 的多尺寸布局、过滤和滚动定位、偏好文件安全、真实 PTY 输入与 resize、失焦降频、高频按键不加快采样，以及面板退出／崩溃／阻塞对 Gateway 生命周期的隔离。配置和状态文件的 FIFO 回归使用真实 launcher 验证。
 
@@ -154,6 +156,21 @@ CPU 的 `100%` 表示占满一个逻辑核；RSS 只计算 Gateway 本进程。�
 ```
 
 独立 `dashboard` 可在普通 Herdr pane 中打开；`--startup` 复用插件启动时的状态页和自动打开偏好，但保持独立监控的退出语义。独立面板可单独退出并重新打开以加载显示更新，不触发 Gateway 生命周期操作。
+
+## 14.8 本机网页与健康检查
+
+终端面板之外，可在另一个 Herdr pane 中启动独立的只读网页：
+
+```sh
+./bin/hermes-on-herdr --config /absolute/config.json dashboard --http-port 8767
+curl --fail http://127.0.0.1:8767/health
+```
+
+命令保持前台运行，输出实际 URL。页面为 `http://127.0.0.1:8767/`；端口 `0` 会选择空闲端口。此模式不显示 TUI，不能与 `--startup`、`--snapshot`、`--json`、演示或嵌入选项混用。关闭它不会暂停或终止 Gateway；它不会安装系统服务，也不随插件默认启动。
+
+网页只采样配置绑定的 Profile，复用原生身份和 supervisor 归属检查；独立采样器每两秒更新一次，HTTP 请求只读缓存，不增加 Gateway RPC。`/health` 仅在托管状态为 READY、Gateway PID 与 pane 可核验、期望平台全部 connected、采样不超过六秒时返回 **HTTP 200 / healthy=true**。未启动、断连、归属失败、采样失败或过期返回 **503**。页面本身返回 200 不代表 Gateway 健康。
+
+服务只绑定 `127.0.0.1`，拒绝外部 Host/Origin，不提供控制接口，不读取或输出凭据。它是本机观察入口；不作为公开网络服务或跨用户认证边界。TUI 的多 Profile 布局与交互不变。
 
 插件状态页在**新的 supervisor 启动时**生效，完整监控是否自动打开由 `auto_open` 决定。现有 supervisor 已加载旧代码；只重启 Gateway child 不会加载新页面。自动嵌入、冷启动和退出清理的真实验证仍需用户确认后再进行；停服继续遵守“先确认”的要求。
 
