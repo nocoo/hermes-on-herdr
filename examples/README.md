@@ -1,9 +1,18 @@
-# 配置审阅材料
+# hermes on herdr 配置示例
 
-这些模板没有被应用到任何用户 Profile。真实配置、独立 bot 凭据和插件安装仍待确认。
+这些文件用于配置已有的专用 Hermes Profile。项目入口是 `bin/hermes-on-herdr`；先运行 `--help`，再准备自己的私有配置目录。真实 cherry 接入与验证记录见 [13](../docs/13-cherry接入与验证.md)。
 
-[config.example.json](config.example.json) 是当前插件配置字段全集，路径均为占位符。`profile_home` 必须解析为一个已存在、权限为0700的 `<root>/profiles/herdr-control`；解释器要保留 venv 中的路径，不能改写成 symlink 的系统目标。配置目录为0700，`config.json` 与 `runtime-python` 均为0600，后者只含与 `python_bin` 一致的一行绝对路径。
+| 文件 | 用途 |
+| --- | --- |
+| [config.example.json](config.example.json) | 当前插件字段全集，所有路径均为占位符 |
+| [profile-policy.yaml](profile-policy.yaml) | Profile 预检要求，需结合实际 provider、model、平台与访问策略补全 |
 
-[profile-policy.yaml](profile-policy.yaml) 仅展示预检要求，不是完整可运行 Profile。provider/model、cwd、期望平台、独立凭据及平台用户访问策略需要明确配置并验证。新 Profile 的空白暂存创建/迁入流程见 [04](../docs/04-Hermes专用Profile设计.md)，本轮尚未实现该初始化器。不要将模板覆盖到现有用户配置。
+`profile_home` 指向已存在、权限为 `0700` 的专用 Profile。解释器保留 Hermes venv 中的路径，不改写成 symlink 的系统目标。配置目录为 `0700`，`config.json` 与 `runtime-python` 为 `0600`；后者只包含与 `python_bin` 一致的一行绝对路径。
 
-`bind` 默认 dry-run；只有 `bind --apply` 才创建控制目录，初始意图为 paused。绑定不会启动 Gateway、修改 `active_profile`、复制凭据或安装服务。目录已绑定时重复执行不会清除暂停和熔断。完整命令说明及离线证据见 [12](../docs/12-离线实现与验证.md)。
+专用 Profile 的独立凭据、工作目录和期望平台需先配置好；初始化设计见 [04](../docs/04-Hermes专用Profile设计.md)。当前没有自动创建 Profile 的工具，示例不是可直接覆盖已有用户配置的完整文件。
+
+```sh
+./bin/hermes-on-herdr --config /absolute/config.json bind --dry-run
+```
+
+`bind` 默认展示计划。`bind --apply` 创建控制目录，初始意图为 paused；之后用显式 `start` 允许运行。重复绑定保留既有暂停和熔断状态。绑定不会创建 Profile、复制凭据或安装系统服务。所有控制参数及返回码见 [命令契约](../docs/12-离线实现与验证.md#124-当前命令契约)。

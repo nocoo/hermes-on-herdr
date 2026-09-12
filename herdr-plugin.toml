@@ -4,7 +4,7 @@ name = "hermes on herdr"
 version = "0.1.0-alpha.0"
 min_herdr_version = "0.9.0"
 platforms = ["macos", "linux"]
-description = "A dedicated Gateway supervised inside its owning Herdr pane."
+description = "Run Hermes in Herdr with optional monitoring"
 
 [[startup]]
 command = ["./bin/hermes-on-herdr", "ensure", "--source", "startup"]
