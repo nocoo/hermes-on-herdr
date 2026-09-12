@@ -3,6 +3,7 @@
 from html import escape
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from socketserver import TCPServer
 import threading
 import time
 
@@ -17,6 +18,12 @@ class DashboardServer(HTTPServer):
         self.latest = (Snapshot(), 0.0)
         super().__init__(("127.0.0.1", port), DashboardHandler)
         self.url = f"http://127.0.0.1:{self.server_port}"
+
+    def server_bind(self):
+        # HTTPServer resolves getfqdn() here, which can stall on macOS DNS.
+        # This listener has a fixed numeric address and needs no name lookup.
+        TCPServer.server_bind(self)
+        self.server_name, self.server_port = self.server_address
 
     def get_request(self):
         connection, address = super().get_request()

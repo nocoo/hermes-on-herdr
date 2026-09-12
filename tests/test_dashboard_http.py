@@ -57,6 +57,12 @@ class HttpDashboardTests(unittest.TestCase):
             self.assertIn('href="/health"', page)
             self.assertNotIn(str(self.fixture.profile), page)
 
+    def test_loopback_startup_never_waits_for_hostname_resolution(self):
+        with patch("http.server.socket.getfqdn", side_effect=AssertionError("loopback startup must not depend on DNS")):
+            with DashboardServer(self.fixture.config, 0) as server:
+                self.assertEqual("127.0.0.1", server.server_name)
+                self.assertGreater(server.server_port, 0)
+
     def test_missing_ownership_platform_errors_and_stale_samples_never_report_healthy(self):
         for change in ({"state": "DEGRADED"}, {"pid": None}, {"pane": ""}, {"managed": False},
                        {"name": "other"}, {"error": "OWNER_UNAVAILABLE"}, {"platforms": ()},

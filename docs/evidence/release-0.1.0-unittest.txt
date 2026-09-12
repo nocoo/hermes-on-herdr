@@ -1,5 +1,5 @@
 Hermes on Herdr 0.1.0 local validation
-Recorded: 2026-09-12T01:33:48.536620+00:00
+Recorded: 2026-09-12T01:38:30.737656+00:00
 All tests use isolated fixtures, fake Gateways, local sockets and real PTYs; no installed Gateway is started.
 
 Python 3.11: 3.11.15 Darwin arm64 psutil=7.2.2 PyYAML=6.0.3
@@ -72,6 +72,7 @@ test_malformed_or_unsafe_preferences_fall_back_without_overwriting_foreign_files
 test_non_tty_cli_prints_one_frame_and_rejects_invalid_dimensions (test_dashboard.DashboardTests.test_non_tty_cli_prints_one_frame_and_rejects_invalid_dimensions) ... ok
 test_preferences_are_private_atomic_and_only_persist_presentation_settings (test_dashboard.DashboardTests.test_preferences_are_private_atomic_and_only_persist_presentation_settings) ... ok
 test_foreign_browser_origins_hosts_and_mutations_are_rejected (test_dashboard_http.HttpDashboardTests.test_foreign_browser_origins_hosts_and_mutations_are_rejected) ... ok
+test_loopback_startup_never_waits_for_hostname_resolution (test_dashboard_http.HttpDashboardTests.test_loopback_startup_never_waits_for_hostname_resolution) ... ok
 test_missing_ownership_platform_errors_and_stale_samples_never_report_healthy (test_dashboard_http.HttpDashboardTests.test_missing_ownership_platform_errors_and_stale_samples_never_report_healthy) ... ok
 test_page_and_health_read_the_same_sample_without_polling_on_requests (test_dashboard_http.HttpDashboardTests.test_page_and_health_read_the_same_sample_without_polling_on_requests) ... ok
 test_animation_changes_only_art_colors_and_preserves_every_glyph (test_dashboard_view.DashboardViewTests.test_animation_changes_only_art_colors_and_preserves_every_glyph) ... ok
@@ -174,7 +175,7 @@ test_resume_during_stop_waits_for_old_child_then_starts_once (test_supervisor.Su
 test_slow_peers_and_output_flood_do_not_block_pause (test_supervisor.SupervisorTests.test_slow_peers_and_output_flood_do_not_block_pause) ... ok
 
 ----------------------------------------------------------------------
-Ran 166 tests in 44.977s
+Ran 167 tests in 45.983s
 
 OK
 
@@ -248,6 +249,7 @@ test_malformed_or_unsafe_preferences_fall_back_without_overwriting_foreign_files
 test_non_tty_cli_prints_one_frame_and_rejects_invalid_dimensions (test_dashboard.DashboardTests.test_non_tty_cli_prints_one_frame_and_rejects_invalid_dimensions) ... ok
 test_preferences_are_private_atomic_and_only_persist_presentation_settings (test_dashboard.DashboardTests.test_preferences_are_private_atomic_and_only_persist_presentation_settings) ... ok
 test_foreign_browser_origins_hosts_and_mutations_are_rejected (test_dashboard_http.HttpDashboardTests.test_foreign_browser_origins_hosts_and_mutations_are_rejected) ... ok
+test_loopback_startup_never_waits_for_hostname_resolution (test_dashboard_http.HttpDashboardTests.test_loopback_startup_never_waits_for_hostname_resolution) ... ok
 test_missing_ownership_platform_errors_and_stale_samples_never_report_healthy (test_dashboard_http.HttpDashboardTests.test_missing_ownership_platform_errors_and_stale_samples_never_report_healthy) ... ok
 test_page_and_health_read_the_same_sample_without_polling_on_requests (test_dashboard_http.HttpDashboardTests.test_page_and_health_read_the_same_sample_without_polling_on_requests) ... ok
 test_animation_changes_only_art_colors_and_preserves_every_glyph (test_dashboard_view.DashboardViewTests.test_animation_changes_only_art_colors_and_preserves_every_glyph) ... ok
@@ -350,6 +352,6 @@ test_resume_during_stop_waits_for_old_child_then_starts_once (test_supervisor.Su
 test_slow_peers_and_output_flood_do_not_block_pause (test_supervisor.SupervisorTests.test_slow_peers_and_output_flood_do_not_block_pause) ... ok
 
 ----------------------------------------------------------------------
-Ran 166 tests in 48.937s
+Ran 167 tests in 47.731s
 
 OK

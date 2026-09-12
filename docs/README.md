@@ -17,7 +17,7 @@ hermes on herdr 在真实 Herdr pane 中监督专用 Hermes Gateway，并提供�
 
 ## 当前验证范围
 
-Controller、supervisor、CLI、manifest、启动状态页、可选终端监控和只读 HTTP 健康面板已有实现，版本为 0.1.0；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0)。最近保存的 [离线测试记录](evidence/release-0.1.0-unittest.txt) 为 166 项；[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14，面板资源测量见 [14](14-hqtui监控面板.md)。首次 Profile 选择向导仍是设计方案。
+Controller、supervisor、CLI、manifest、启动状态页、可选终端监控和只读 HTTP 健康面板已有实现，版本为 0.1.0；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0)。最近保存的 [离线测试记录](evidence/release-0.1.0-unittest.txt) 为 167 项；[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14，面板资源测量见 [14](14-hqtui监控面板.md)。首次 Profile 选择向导仍是设计方案。
 
 cherry 曾在插件监管下达到 READY，用户确认了消息连通，独立面板也完成了真实只读预览。嵌入启用、修复后的冷启动、退出清理、指定 pane 双向交互、Linux 和 live handoff 仍有待验证项，逐项状态见 [13](13-cherry接入与验证.md)。[12](12-离线实现与验证.md) 的 84 项、[13](13-cherry接入与验证.md) 的 90 项以及面板早期批次是各阶段的历史证据。
 
