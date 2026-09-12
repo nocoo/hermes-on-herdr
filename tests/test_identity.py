@@ -1,4 +1,5 @@
 import errno
+from itertools import chain, repeat
 import os
 from pathlib import Path
 import signal
@@ -120,13 +121,22 @@ class IdentityTests(unittest.TestCase):
                     patch("hermes_gateway_herdr.identity.psutil.Process", return_value=proc), \
                     patch.object(proc, "uids", side_effect=psutil.AccessDenied()), \
                     patch.object(proc, "is_running", return_value=True), \
-                    patch.object(proc, "status", side_effect=[psutil.STATUS_RUNNING, status]):
+                    patch.object(proc, "status", side_effect=chain([psutil.STATUS_RUNNING], repeat(status))):
                 if status == psutil.STATUS_ZOMBIE or isinstance(status, psutil.NoSuchProcess):
                     self.assertIsNone(capture(os.getpid()))
                 else:
                     with self.assertRaises(GatewayError) as error:
                         capture(os.getpid())
                     self.assertEqual("UNKNOWN", error.exception.code)
+
+    def test_argv_disappearing_before_zombie_status_does_not_abort_supervision(self):
+        proc = psutil.Process(os.getpid())
+        with patch("hermes_gateway_herdr.identity.psutil.Process", return_value=proc), \
+                patch.object(proc, "cmdline", side_effect=psutil.AccessDenied()), \
+                patch.object(proc, "is_running", return_value=True), \
+                patch.object(proc, "status", side_effect=[psutil.STATUS_RUNNING, psutil.STATUS_SLEEPING,
+                                                        psutil.STATUS_SLEEPING, psutil.STATUS_ZOMBIE]):
+            self.assertIsNone(capture(os.getpid()))
 
     def test_stale_descendant_snapshot_cannot_claim_a_reused_pid(self):
         def record(pid, ppid, sid=10):

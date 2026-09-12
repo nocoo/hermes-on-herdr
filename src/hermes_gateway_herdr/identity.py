@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import signal
 import sys
+import time
 
 import psutil
 
@@ -47,16 +48,22 @@ def capture(pid: int) -> dict | None:
     except (psutil.NoSuchProcess, ProcessLookupError, FileNotFoundError):
         return None
     except (psutil.AccessDenied, PermissionError) as exc:
-        # macOS can report EPERM for exe/argv during exit. A zombie still has a
-        # PID, so is_running() alone cannot establish whether it has exited.
-        if "proc" in locals():
+        # macOS can drop argv before publishing zombie status (KERN_PROCARGS2
+        # EINVAL becomes AccessDenied in psutil). A single immediate recheck
+        # still sees a live PID. Wait briefly for proof of exit, never reap it:
+        # Popen must retain the child's real exit code for restart/fuse policy.
+        deadline = time.monotonic() + 0.02
+        while "proc" in locals():
             try:
                 if not proc.is_running() or proc.status() == psutil.STATUS_ZOMBIE:
                     return None
             except psutil.NoSuchProcess:
                 return None
             except (psutil.AccessDenied, PermissionError):
-                pass
+                break
+            if time.monotonic() >= deadline:
+                break
+            time.sleep(0.001)
         raise GatewayError("UNKNOWN", "Process identity is not readable") from exc
 
 
