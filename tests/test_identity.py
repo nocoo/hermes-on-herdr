@@ -1,3 +1,4 @@
+import errno
 import os
 from pathlib import Path
 import signal
@@ -14,6 +15,44 @@ from hermes_gateway_herdr.identity import capture, descendants, hermes_start_mat
 
 
 class IdentityTests(unittest.TestCase):
+    def test_linux_identity_reads_proc_ticks_with_spaces_and_parentheses_in_process_name(self):
+        pid = os.getpid()
+        files = {f"/proc/{pid}/stat": f"{pid} (gateway worker ) (child)) S " + " ".join(map(str, range(4, 53))),
+                 "/proc/sys/kernel/random/boot_id": "fixture-boot\n"}
+        with patch("hermes_gateway_herdr.identity.sys.platform", "linux"), \
+                patch.object(Path, "read_text", autospec=True, side_effect=lambda path: files[str(path)]):
+            record = capture(pid)
+        self.assertEqual({"kind": "linux_ticks", "boot": "fixture-boot", "value": "22"}, record["start_fingerprint"])
+        self.assertTrue(hermes_start_matches(record, 22))
+
+    def test_unavailable_pidfd_falls_back_only_after_rechecking_process_identity(self):
+        record = capture(os.getpid())
+        reused = dict(record, start_fingerprint=dict(record["start_fingerprint"], value="reused"))
+        for current in (record, reused):
+            with self.subTest(reused=current is reused), \
+                    patch("hermes_gateway_herdr.identity.capture", side_effect=[record, current]), \
+                    patch.object(os, "pidfd_open", create=True, side_effect=OSError(errno.ENOSYS, "Not implemented")), \
+                    patch.object(signal, "pidfd_send_signal", create=True) as send, patch.object(os, "kill") as kill:
+                if current is record:
+                    self.assertTrue(signal_verified(record, signal.SIGTERM))
+                    kill.assert_called_once_with(record["pid"], signal.SIGTERM)
+                else:
+                    with self.assertRaises(GatewayError) as error:
+                        signal_verified(record, signal.SIGTERM)
+                    self.assertEqual("IDENTITY_CHANGED", error.exception.code)
+                    kill.assert_not_called()
+                send.assert_not_called()
+
+    def test_pidfd_permission_failure_never_falls_back_to_kill(self):
+        record = capture(os.getpid())
+        with patch.object(os, "pidfd_open", create=True, side_effect=PermissionError(errno.EPERM, "Denied")), \
+                patch.object(signal, "pidfd_send_signal", create=True) as send, patch.object(os, "kill") as kill:
+            with self.assertRaises(GatewayError) as error:
+                signal_verified(record, signal.SIGTERM)
+            self.assertEqual("STOP_FAILED", error.exception.code)
+            kill.assert_not_called()
+            send.assert_not_called()
+
     def test_aliases_share_owner_key_and_pid_is_not_part_of_binding(self):
         with tempfile.TemporaryDirectory() as root:
             profile = Path(root) / "profile"

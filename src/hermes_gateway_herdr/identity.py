@@ -1,5 +1,6 @@
 """OS identity is checked again immediately before every destructive action."""
 
+import errno
 import hashlib
 import json
 import os
@@ -86,13 +87,17 @@ def signal_verified(expected: dict, signum: int) -> bool:
     pidfd = None
     try:
         if hasattr(os, "pidfd_open") and hasattr(signal, "pidfd_send_signal"):
-            pidfd = os.pidfd_open(expected["pid"])
-            if not same_process(expected):
-                raise GatewayError("IDENTITY_CHANGED", "Process changed during signal delivery")
+            try:
+                pidfd = os.pidfd_open(expected["pid"])
+            except OSError as exc:
+                # Python may expose pidfd_open on a kernel that predates it.
+                if exc.errno != errno.ENOSYS:
+                    raise
+        if not same_process(expected):
+            raise GatewayError("IDENTITY_CHANGED", "Process changed during signal delivery")
+        if pidfd is not None:
             signal.pidfd_send_signal(pidfd, signum)
         else:
-            if not same_process(expected):
-                raise GatewayError("IDENTITY_CHANGED", "Process changed during signal delivery")
             os.kill(expected["pid"], signum)
         return True
     except ProcessLookupError:
