@@ -11,12 +11,14 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from hermes_gateway_herdr import __version__
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.paths import check_private, json_object, private_bytes, trusted_path
 
 
 def launch():
-    parser = argparse.ArgumentParser(add_help=False, allow_abbrev=False)
+    parser = argparse.ArgumentParser(prog="hermes-on-herdr", add_help=False, allow_abbrev=False)
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     parser.add_argument("--config", type=Path)
     options, arguments = parser.parse_known_args()
     config = options.config
@@ -25,6 +27,7 @@ def launch():
         if not directory:
             if "--help" in arguments or "-h" in arguments:
                 print("Usage: hermes-on-herdr --config /absolute/config.json COMMAND\n"
+                      "       hermes-on-herdr --version\n"
                       "Commands: ensure, supervise, start, resume, pause, stop, restart, status, doctor, logs, bind, dashboard\n"
                       "Configure a private config.json and runtime-python before use. bind defaults to a dry run.")
                 return 0

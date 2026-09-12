@@ -5,6 +5,7 @@ from pathlib import Path
 from unittest import TestCase
 from unittest.mock import patch
 
+from hermes_gateway_herdr import __version__
 from hermes_gateway_herdr.dashboard_demo import demo_snapshot
 from hermes_gateway_herdr.dashboard_view import CADUCEUS, DashboardView, ViewState, mascot_pose, theme_for
 from hqtui import render_to_screen
@@ -12,6 +13,19 @@ from hqtui.input import KeyEvent
 
 
 class DashboardViewTests(TestCase):
+    def test_version_remains_visible_in_startup_full_and_narrow_views(self):
+        for startup in (False, True):
+            for width, height in ((24, 10), (40, 16), (80, 24), (100, 34), (131, 64), (160, 44)):
+                with self.subTest(startup=startup, width=width, height=height):
+                    screen = self.render(width=width, height=height, state=ViewState(startup=startup))
+                    self.assertTrue(screen.contains(f"v{__version__}"))
+                    if startup:
+                        self.assertTrue(screen.contains("[ ]"))
+                        self.assertTrue(screen.contains("[Enter]"))
+                    elif width >= 40:
+                        self.assertTrue(screen.contains("Help"))
+                        self.assertTrue(screen.contains("Quit"))
+
     def render(self, count=2, width=160, height=44, *, state=None, data=None, now=None, embedded=False, pose=0):
         data = data or demo_snapshot(count)
         state = state or ViewState(selected="cherry")

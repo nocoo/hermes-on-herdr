@@ -17,6 +17,7 @@ from hqtui.theme import define_theme, resolve_theme
 from hqtui.widgets.table import resolve_offset
 import hqtui.widgets as w
 
+from . import __version__
 from .monitor import Profile, text
 
 THEMES = ("herdr", "nord", "high-contrast", "monochrome")
@@ -230,6 +231,7 @@ class DashboardView:
         if height < 10 or width < 36:
             ui.text(f"{text(owned.name)} [HERDR] {self._status(owned)}")
             ui.label(f"{count} profiles / expand pane for details")
+            ui.label(f"v{__version__}")
             return
         compact = width < 100 or height < 30
         mode = "cards" if state.layout == "cards" or (state.layout == "auto" and count <= 2) else "table"
@@ -325,6 +327,7 @@ class DashboardView:
         def centered(r):
             r.spacer()
             r.panel(Panel(title=" hermes on herdr ", subtitle=" DEMO " if self.demo else "",
+                          footer=f" v{__version__} ",
                           size=min(70, ui.width - 2), border_color=ui.theme.accent, background=ui.theme.surface), content)
             r.spacer()
         ui.row(Layout(size=min(14, max(6, ui.height - 2))), centered)
@@ -484,6 +487,7 @@ class DashboardView:
         summary = f"{'DEMO' if self.demo else 'LIVE'} {self._healthy}/{self._count} online"
         if ui.width >= 100:
             summary = f"{self.state.layout} / {self.state.interval}s  " + summary
+        summary += f"  v{__version__}"
         def footer(r):
             r.status_bar(w.StatusBarOptions(items=items))
             r.text(summary + " ", w.TextStyle(fg=r.theme.warning if self.demo else r.theme.muted, align="right"),

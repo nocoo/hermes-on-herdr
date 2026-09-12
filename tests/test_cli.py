@@ -10,7 +10,7 @@ import tomllib
 import unittest
 from unittest.mock import patch
 
-from hermes_gateway_herdr import cli
+from hermes_gateway_herdr import __version__, cli
 from hermes_gateway_herdr.config import profile_preflight
 from hermes_gateway_herdr.controller import Controller
 from hermes_gateway_herdr.identity import same_process, signal_verified
@@ -34,6 +34,28 @@ class CliTests(unittest.TestCase):
                                str(self.config.config_dir / "config.json"), *args],
                               env=env or self.fixture.context(), stdin=subprocess.DEVNULL,
                               capture_output=True, text=True, timeout=6)
+
+    def test_version_works_before_setup_for_both_launchers_and_python_entrypoint(self):
+        missing = self.fixture.root / "not-configured"
+        commands = [[str(ROOT / "bin" / name)] for name in ("hermes-on-herdr", "hermes-gateway-herdr")]
+        commands.append([sys.executable, "-I", "-B", str(ROOT / "src" / "hermes_gateway_herdr" / "__main__.py")])
+        for command in commands:
+            for args in (("--version",), ("--config", str(missing / "config.json"), "--version")):
+                with self.subTest(command=command, args=args):
+                    result = subprocess.run([*command, *args], env={"HERDR_PLUGIN_CONFIG_DIR": str(missing)},
+                                            capture_output=True, text=True, timeout=3)
+                    self.assertEqual(0, result.returncode, result.stderr)
+                    self.assertEqual(f"hermes-on-herdr {__version__}\n", result.stdout)
+        self.assertFalse(missing.exists())
+        self.assertEqual([], self.owner.processes)
+
+    def test_version_does_not_load_configuration(self):
+        output = io.StringIO()
+        with patch.object(cli.Config, "load", side_effect=AssertionError("Version read configuration")), \
+                redirect_stdout(output), self.assertRaises(SystemExit) as result:
+            cli.main(["--version"])
+        self.assertEqual(0, result.exception.code)
+        self.assertEqual(f"hermes-on-herdr {__version__}\n", output.getvalue())
 
     def inline(self, *args):
         output = io.StringIO()
@@ -242,6 +264,7 @@ class CliTests(unittest.TestCase):
 
     def test_manifest_registers_only_implemented_commands_and_one_startup(self):
         manifest = tomllib.loads((ROOT / "herdr-plugin.toml").read_text())
+        self.assertEqual(__version__, manifest["version"])
         self.assertEqual("hermes on herdr", manifest["name"])
         self.assertEqual("nocoo.hermes-gateway", manifest["id"])
         self.assertEqual(1, len(manifest["startup"]))
