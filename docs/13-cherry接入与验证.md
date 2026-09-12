@@ -6,6 +6,8 @@
 
 **正式 0.1.0 安装后的运行证据见 13.7。** 已用 Herdr 官方安装器替换开发 link，cherry 在发布版本下达到 READY，嵌入终端监控和独立网页健康面板均已运行。
 
+**0.1.1 的升级与最新运行观察见 13.8。** 本次记录包含升级前的 ORPHAN、升级后一次 UNKNOWN 退出及核验后的恢复；退出根因尚未定位，不能把恢复运行当作修复。
+
 ## 13.1 实际观察
 
 以下为原生 Gateway 停服前的基线；停服结果见 13.4。
@@ -197,3 +199,23 @@ Herdr 返回的安装根目录为 `/Users/nocoo/.config/herdr/plugins/github/noc
 本机私有证据保存在 `~/.local/state/hermes-gateway-herdr/release-0.1.0-20260912T013522Z/`，包括安装前基线、Start 回执、`live-evidence.json` 和 `terminal-monitor.txt`。配置、凭据和原始完整 Gateway 日志未提交 Git。
 
 本次独立证明了正式安装来源、运行归属、单实例、Discord 重新连接及两种面板运行。**没有发起新的消息/模型往返**，13.5 的用户反馈仍属于上一阶段；完整 Herdr 冷启动/退出清理、Herdr 在线升级 handoff、指定 pane 双向消息操作及 Linux 真实 Herdr 接入仍待验证。网页面板仅绑定本机，单独启动，不是自动安装的系统服务。发布 tag 保持固定；本节为发布后的运行记录，不修改已发布源码。
+
+## 13.8 0.1.1 升级与运行观察
+
+2026-09-12，按用户要求发布补丁版并升级本机插件。[Release 0.1.1](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1) 的 annotated tag 固定到 `1b81de6a6f9530fac8602ee98f345cebaf51b7cd`。本节与[结构化验证记录](evidence/release-0.1.1-verification.json)是发布后的观察，不移动 tag。
+
+- Python 3.11.15 / 3.14.7 本机各 **186 项通过**，[发版测试输出](evidence/release-0.1.1-unittest.txt)。[main CI](https://github.com/nocoo/hermes-on-herdr/actions/runs/34686759627) 和 [tag CI 第二轮](https://github.com/nocoo/hermes-on-herdr/actions/runs/34686872134/attempts/2) 的四个 OS/Python 组合均通过，SHA 与 tag 一致；[Release workflow](https://github.com/nocoo/hermes-on-herdr/actions/runs/34687080630) 校验来源、打包和发布成功。
+- tag CI 首轮的 macOS / Python 3.11 并发启动用例触发五秒 fixture 等待超时。[同一用例连续 20 次本机复测](evidence/release-0.1.1-recheck.txt)全部通过，随后完整 tag 矩阵通过。未修改源码、断言或 deadline；[首轮失败](https://github.com/nocoo/hermes-on-herdr/actions/runs/34686872134/attempts/1)保留，未在本机复现其原因。
+- Release 附件重新下载后，SHA-256、全部 **791 个 Git blob**、路径、launcher 执行权限、兼容 symlink、版本及 vendor 许可均通过核验；两个解压 launcher 均报告 `0.1.1`。源码包 122,799,593 bytes，SHA-256 为 `da9e0277e314dd4e73f7aae5b9c979ac5fd6a8f10539fe178ad4ff05d471cc0f`；不含生成的 MP4/音频。
+
+升级前，0.1.0 的 supervisor 已不存在，cherry Gateway PID 4888 成为 ORPHAN。独立核对其原账本指纹、argv、原生 identify/status、Profile 和固定 Hermes SHA，采样 active_agents=0、无后代。先备份并用 Stop 持久化 paused/revision=4；该命令正确报告 ORPHAN 和未完成。随后只向已核验的孤儿及旧网页监控 PID 5067 发送 SIGTERM，确认退出、无 Profile 占用、lifetime lock 释放且状态为 PAUSED，才禁用插件并安装。
+
+官方安装命令为 `herdr --session default plugin install nocoo/hermes-on-herdr --ref v0.1.1 --yes`。列表记录 enabled=true、version=0.1.1、source.kind=github、requested_ref=v0.1.1、resolved_commit=上述 SHA；实际 checkout HEAD 一致且工作树干净。`plugin_root` 未移动，配置无需重写。新版 Doctor 的 Profile、Hermes 版本和 owner 检查通过后，显式 Resume 保存 running/revision=5。
+
+首次新版 supervisor PID 39198 / Gateway PID 39222 曾达到 READY，随后 supervisor 在 **10:01:59 UTC** 记录 `supervisor_error / UNKNOWN` 并退出；之后确认二者均已不存在。Herdr server PID 94384 一直运行，独立网页监控当时尚未重开。日志没有足以定位根因的调用栈。确认无活进程和持锁实例后，使用同一已发布代码执行 `ensure --source manual` 恢复，未改变 running 意图或创建重叠实例。
+
+恢复后连续观察 **90 秒、767 个采样**，进程身份与后代检查未再报错，状态保持 READY。后续现场核验为 supervisor **39901** → Gateway **39907**，pane **w35:p3**；Gateway PPID/SID、真实 pane shell PID、Profile 和五个 Hermes/Herdr 环境字段全部匹配。两次间隔超过 1.1 秒的原生探针确认 Discord connected，第二次达到 level 2。网页监控在原 pane **w2X:p2** 重开，`/health` 返回 **200 / healthy=true / version=0.1.1**；实际终端与网页均显示 v0.1.1。精确采样时刻见结构化记录。
+
+插件配置、cherry 的 config.yaml、.env、SOUL 和 Herdr skill 字节均保留；其他插件注册及 default Gateway 的进程指纹一致。Agent 没有删除或替换原生锁。Hermes 自身会在启动前清理未占用的陈旧 PID/lock，因此不把跨运行的 inode 相等作为验收条件；已核验当前 0600 锁被持有、锁内 PID/start 与新 Gateway 一致，且观察期间 inode 未变。依据为固定上游 [status.py](https://github.com/NousResearch/hermes-agent/blob/b7ac3ba1cdf89f94dfe86de27e01358b194f4053/gateway/status.py) 的 `get_running_pid` / `_cleanup_invalid_pid_path`。
+
+本机私有备份与原始证据位于 `~/.local/state/hermes-gateway-herdr/release-0.1.1-20260912T094546Z/`，包含配置备份、Stop/Resume 回执、退出确认、90 秒观察和最终现场核验。**UNKNOWN 退出根因仍未定位。** 当前 READY 和短时观察不是长期稳定性证明；本次没有完成新消息/模型往返、整个 Herdr 冷启动/退出、Linux 真实接入或 Herdr 二进制升级 handoff。新版已通过重建 supervisor 生效，完整宿主重启仍由用户选择合适时机执行。

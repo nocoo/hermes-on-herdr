@@ -111,6 +111,8 @@ Tests use temporary directories, fake Herdr RPC, controlled Gateway processes an
 
 The [recorded v0.1.0 acceptance](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收) verified an official installation, Cherry READY, exactly one Gateway under Herdr/plugin ownership, Discord connected, the embedded terminal monitor, and HTTP health 200. These are historical runtime snapshots. Telegram and Slack are existing upstream Hermes channels; this plugin has no recorded live integration verification for them yet. A fresh message/model round trip, full host cold start and shutdown, explicit pane interaction, Linux live integration, and live Herdr update handoff remain unverified. The earlier user confirmation of messaging is preserved as historical evidence.
 
+The [local v0.1.1 upgrade record](13-cherry接入与验证.md#138-011-升级与运行观察) includes a supervisor exit with UNKNOWN and a verified recovery. Subsequent checks showed READY, Discord connected and HTTP health 200; a 90-second observation found no further errors. The exit's cause remains unidentified, so this is not a claim of long-term stability.
+
 ## Documentation
 
 Detailed guides and research records are in Chinese.

@@ -111,6 +111,8 @@ cd hermes-on-herdr
 
 `v0.1.0` 的[历史接入验收](docs/13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)记录了 cherry 通过官方安装器安装并达到 READY，以及唯一 Gateway 的 Herdr/plugin 归属、Discord 连接、嵌入终端监控和 HTTP 健康 200。这些是当时的运行快照。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动与退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证；此前用户确认的消息连通单独保留为历史记录。
 
+`v0.1.1` 的[本机升级记录](docs/13-cherry接入与验证.md#138-011-升级与运行观察)包含一次 supervisor UNKNOWN 退出及核验后的恢复。恢复后确认 READY、Discord connected、HTTP 健康 200，90 秒观察未再报错；退出根因尚未定位，这不是长期稳定性证明。
+
 ## 文档
 
 - [文档索引](docs/README.md)：按使用、开发和研究选择阅读路径，查看当前验证范围。

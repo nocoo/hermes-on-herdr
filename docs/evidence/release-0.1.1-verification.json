@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "version": "0.1.1",
+  "commit": "1b81de6a6f9530fac8602ee98f345cebaf51b7cd",
+  "release": "https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1",
+  "ci": {
+    "main": {
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/34686759627",
+      "head_sha": "1b81de6a6f9530fac8602ee98f345cebaf51b7cd",
+      "jobs_passed": 4
+    },
+    "tag": {
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/34686872134",
+      "head_sha": "1b81de6a6f9530fac8602ee98f345cebaf51b7cd",
+      "attempt": 2,
+      "jobs_passed": 4
+    },
+    "tag_attempt_1": {
+      "conclusion": "failure",
+      "job": "macOS / Python 3.11",
+      "test": "test_twenty_concurrent_hooks_create_one_gateway_without_focus_change",
+      "failure": "Five-second fixture deadline; no source/assertion/deadline change for retry"
+    }
+  },
+  "local_tests": {
+    "python311": {
+      "version": "3.11.15",
+      "passed": 186,
+      "seconds": 43.944
+    },
+    "python314": {
+      "version": "3.14.7",
+      "passed": 186,
+      "seconds": 47.109
+    },
+    "concurrent_hooks_recheck": {
+      "passed": 20,
+      "seconds": 6.369,
+      "sha256": "4889ea5b7c2a2ee16a033d121df53b2f9b8fa3a416d524b403af6fb27b2b326f"
+    }
+  },
+  "archive": {
+    "version": "0.1.1",
+    "commit": "1b81de6a6f9530fac8602ee98f345cebaf51b7cd",
+    "release": "https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1",
+    "archive": "hermes-on-herdr-0.1.1.tar.gz",
+    "bytes": 122799593,
+    "sha256": "da9e0277e314dd4e73f7aae5b9c979ac5fd6a8f10539fe178ad4ff05d471cc0f",
+    "all_tagged_blobs_verified": 791,
+    "safe_paths": true,
+    "executable_launcher": true,
+    "compatibility_symlink": true,
+    "vendor_license": true,
+    "launcher_outputs": [
+      "hermes-on-herdr 0.1.1",
+      "hermes-on-herdr 0.1.1"
+    ]
+  },
+  "installation": {
+    "source_kind": "github",
+    "requested_ref": "v0.1.1",
+    "resolved_commit": "1b81de6a6f9530fac8602ee98f345cebaf51b7cd",
+    "enabled": true,
+    "doctor_checks_passed": [
+      "profile",
+      "hermes_version",
+      "owner"
+    ],
+    "config_and_profile_files_unchanged": true,
+    "other_plugin_registrations_unchanged": true,
+    "other_gateway_identities_unchanged": true
+  },
+  "runtime": {
+    "observed_at": "2026-09-12T10:15:30.126185+00:00",
+    "state": "READY",
+    "desired": "running",
+    "intent_revision": 5,
+    "applied_revision": 5,
+    "supervisor_pid": 39901,
+    "gateway_pid": 39907,
+    "pane": "w35:p3",
+    "context_verified": true,
+    "native_probes": [
+      {
+        "level": 1,
+        "operational": true,
+        "platforms": {
+          "discord": {
+            "connected": true
+          }
+        },
+        "state": "STARTING"
+      },
+      {
+        "level": 2,
+        "operational": true,
+        "platforms": {
+          "discord": {
+            "connected": true
+          }
+        },
+        "state": "READY"
+      }
+    ],
+    "discord": "connected",
+    "http_health": 200,
+    "http_version": "0.1.1",
+    "terminal_version_visible": true,
+    "native_lock": {
+      "inode_before_upgrade": 43205824,
+      "current_inode": 48037504,
+      "held": true,
+      "matches_gateway_identity": true,
+      "manually_unlinked_or_replaced": false
+    }
+  },
+  "incidents": {
+    "pre_upgrade": "Existing 0.1.0 supervisor was absent; the verified orphan Gateway was stopped after persisting Pause.",
+    "post_upgrade": "Initial 0.1.1 supervisor logged UNKNOWN and exited. Herdr remained running. Both old supervisor and Gateway were confirmed absent before ensure recovery.",
+    "cause": "Not identified; not reproduced during the bounded observation.",
+    "recovery_observation": {
+      "seconds": 90.074,
+      "samples": 767,
+      "diagnostic_errors": 0,
+      "last_state": "READY"
+    }
+  },
+  "not_run": [
+    "Fresh message/model round trip",
+    "Whole Herdr cold-start/shutdown",
+    "Linux live installation",
+    "Live Herdr binary upgrade handoff"
+  ]
+}
