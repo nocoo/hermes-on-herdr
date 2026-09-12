@@ -20,9 +20,9 @@ hermes on herdr 通过 Herdr plugin，把用户显式选择的专用 trusted Her
 
 ## 当前验证范围
 
-Controller、supervisor、CLI、manifest、启动状态页、可选终端监控和只读 HTTP 健康面板已有实现，版本为 0.1.0；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0)。最新[质量评估](17-插件质量评估.md)记录 186 项离线测试，在 macOS 的 Python 3.11 / 3.14 均通过，行覆盖率 88.54%、分支覆盖率 81.32%；[发布时的 167 项记录](evidence/release-0.1.0-unittest.txt)保持为历史证据。[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14，面板资源测量见 [14](14-hqtui监控面板.md)。首次 Profile 选择向导仍是设计方案。
+Controller、supervisor、CLI、manifest、启动状态页、可选终端监控和只读 HTTP 健康面板已有实现，版本为 0.1.1；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1)。[发版回归](evidence/release-0.1.1-unittest.txt)记录 186 项离线测试；[质量评估](17-插件质量评估.md)记录行覆盖率 88.54%、分支覆盖率 81.32%。[0.1.0 发布时的 167 项记录](evidence/release-0.1.0-unittest.txt)保持为历史证据。[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14，面板资源测量见 [14](14-hqtui监控面板.md)。首次 Profile 选择向导仍是设计方案。
 
-cherry 已通过官方安装器安装 `v0.1.0` 并达到 READY，实际核验了唯一 Gateway 的 Herdr/plugin 归属、Discord 连接为 cherry、嵌入终端监控及 HTTP 健康 200，证据见 [13.7](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动、退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证。[12](12-离线实现与验证.md) 的 84 项、[13](13-cherry接入与验证.md) 的 90 项及用户消息反馈，以及面板早期批次是各阶段的历史证据。
+`v0.1.0` 的历史运行快照曾核验 cherry 官方安装、READY、唯一 Gateway 的 Herdr/plugin 归属、Discord 连接、嵌入终端监控及 HTTP 健康 200，证据见 [13.7](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动、退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证。[12](12-离线实现与验证.md) 的 84 项、[13](13-cherry接入与验证.md) 的 90 项及用户消息反馈，以及面板早期批次是各阶段的历史证据。
 
 设计文档中的新 Profile 初始化器、系统服务、自动孤儿回收与升级工具属于后续计划。实际可用参数以 CLI 和 [当前命令契约](12-离线实现与验证.md#124-当前命令契约) 为准。
 

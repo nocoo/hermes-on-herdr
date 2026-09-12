@@ -55,12 +55,12 @@ session 绑定限定的是插件的 owner、默认控制目标和受支持的操
 
 ## 上手
 
-**0.1.0** 使用 Herdr 原生插件安装器，版本与附件见 [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0)。[发布与安装](docs/15-发布与安装.md)说明接入、升级及版本约定；[首次关联方案](docs/16-首次安装与Profile关联.md)中的选择向导尚未实现，当前使用手动配置和 `bind`。
+**0.1.1** 使用 Herdr 原生插件安装器，版本与附件见 [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1)。[发布与安装](docs/15-发布与安装.md)说明接入、升级及版本约定；[首次关联方案](docs/16-首次安装与Profile关联.md)中的选择向导尚未实现，当前使用手动配置和 `bind`。
 
 这是早期 0.x 版本，使用 Python 3.11+ 和已配置的 Hermes 虚拟环境。运行依赖是 [psutil 与 PyYAML](requirements.txt)，固定版本的 hqtui 源码随仓库提供。兼容基线固定为 Herdr v0.9.0、Hermes Agent v0.21.1；完整版本与提交见 [源码证据](docs/09-源码证据索引.md)。
 
 ```sh
-herdr plugin install nocoo/hermes-on-herdr --ref v0.1.0
+herdr plugin install nocoo/hermes-on-herdr --ref v0.1.1
 herdr plugin config-dir nocoo.hermes-gateway
 herdr plugin list --plugin nocoo.hermes-gateway --json
 ```
@@ -107,9 +107,9 @@ cd hermes-on-herdr
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。最近保存的 [167 项离线测试](docs/evidence/release-0.1.0-unittest.txt) 覆盖生命周期竞态、macOS 退出身份读取、Linux 信号兼容、版本一致性、监控采样、终端交互和 HTTP 健康检查。[CI](.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14；资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
+测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。[186 项离线测试](docs/evidence/release-0.1.1-unittest.txt)覆盖生命周期竞态、控制协议与配置边界、损坏状态、FIFO、进程身份、版本、监控及 HTTP 健康检查；[质量评估](docs/17-插件质量评估.md)记录新增回归与覆盖率。[CI](.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14；资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
 
-cherry 已通过官方安装器安装 `v0.1.0` 并达到 READY；唯一 Gateway 的 Herdr/plugin 归属、Discord 连接为 cherry、嵌入终端监控和 HTTP 健康 200 均有[真实证据](docs/13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动与退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证；此前用户确认的消息连通单独保留为历史记录。
+`v0.1.0` 的[历史接入验收](docs/13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)记录了 cherry 通过官方安装器安装并达到 READY，以及唯一 Gateway 的 Herdr/plugin 归属、Discord 连接、嵌入终端监控和 HTTP 健康 200。这些是当时的运行快照。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动与退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证；此前用户确认的消息连通单独保留为历史记录。
 
 ## 文档
 

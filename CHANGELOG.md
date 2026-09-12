@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.1 — 2026-09-12
+
+Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.1`. Existing installations must follow the [stop, verify, install and resume sequence](docs/15-发布与安装.md#升级与回滚); replacing the checkout does not update a running supervisor.
+
+- Reject malformed local control requests without terminating the supervisor or its Gateway. Malformed replies no longer hide an already committed Pause.
+- Require explicit absolute plugin and terminal paths. Reject control-variable overrides hidden behind quoted `.env` keys, a UTF-8 BOM or CR line endings.
+- Refuse FIFO event logs and Gateway locks without blocking. Validate damaged intent/pending state and deeply nested YAML with bounded, sanitized errors.
+- Add 19 regression tests, bringing the suite to 186. The [quality assessment](docs/17-插件质量评估.md) records 88.54% statement and 81.32% branch coverage, including isolated CLI and supervisor processes.
+- Clarify trusted Profile selection, the bound session's control context, existing Hermes channels and the local security boundary in both READMEs.
+
+The plugin ID, pane ID, persistent schema and runtime dependencies are unchanged. Compatibility remains pinned to Herdr 0.9.0 and Hermes v0.21.1 at `b7ac3ba1cdf89f94dfe86de27e01358b194f4053`. Automatic orphan recovery and the first-run association wizard remain unimplemented; offline tests do not establish live host or messaging guarantees. See the [release guide](docs/15-发布与安装.md) for current validation and limitations.
+
 ## 0.1.0 — 2026-09-12
 
 Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.0`. The [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0) records the release commit and CI; the [installation guide](docs/15-发布与安装.md) covers configuration, compatibility, upgrades and handoff.

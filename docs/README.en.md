@@ -55,12 +55,12 @@ See the [dashboard guide](14-hqtui监控面板.md) for previews, controls and re
 
 ## Get started
 
-**0.1.0** uses Herdr's native plugin installer; see the [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0) and [release guide](15-发布与安装.md) for distribution, installation and upgrades. The [first-run association wizard](16-首次安装与Profile关联.md) is planned. Manual configuration and `bind` are implemented.
+**0.1.1** uses Herdr's native plugin installer; see the [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1) and [release guide](15-发布与安装.md) for distribution, installation and upgrades. The [first-run association wizard](16-首次安装与Profile关联.md) is planned. Manual configuration and `bind` are implemented.
 
 This is an early 0.x release. Use Python 3.11+ from a configured Hermes virtual environment with [psutil and PyYAML](../requirements.txt). The repository includes pinned hqtui source. Compatibility is pinned to Herdr v0.9.0 and Hermes Agent v0.21.1; exact versions and commits are recorded in the [source evidence](09-源码证据索引.md).
 
 ```sh
-herdr plugin install nocoo/hermes-on-herdr --ref v0.1.0
+herdr plugin install nocoo/hermes-on-herdr --ref v0.1.1
 herdr plugin config-dir nocoo.hermes-gateway
 herdr plugin list --plugin nocoo.hermes-gateway --json
 ```
@@ -107,9 +107,9 @@ cd hermes-on-herdr
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The latest saved [167-test run](evidence/release-0.1.0-unittest.txt) covers lifecycle races, macOS teardown identity reads, Linux signals, versions, monitoring, terminal input and HTTP health checks. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. Resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
+Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The [186-test run](evidence/release-0.1.1-unittest.txt) covers lifecycle races, control and configuration boundaries, damaged state, FIFOs, process identity, versions, monitoring and HTTP health checks. The [quality assessment](17-插件质量评估.md) records the added regressions and coverage. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. Resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
 
-Cherry is running from `v0.1.0`, installed through Herdr's official installer. [Live evidence](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收) verifies exactly one Gateway under Herdr/plugin ownership, Discord connected as cherry, the embedded terminal monitor, and HTTP health 200. Telegram and Slack are existing upstream Hermes channels; this plugin has no recorded live integration verification for them yet. A fresh message/model round trip, full host cold start and shutdown, explicit pane interaction, Linux live integration, and live Herdr update handoff remain unverified. The earlier user confirmation of messaging is preserved as historical evidence.
+The [recorded v0.1.0 acceptance](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收) verified an official installation, Cherry READY, exactly one Gateway under Herdr/plugin ownership, Discord connected, the embedded terminal monitor, and HTTP health 200. These are historical runtime snapshots. Telegram and Slack are existing upstream Hermes channels; this plugin has no recorded live integration verification for them yet. A fresh message/model round trip, full host cold start and shutdown, explicit pane interaction, Linux live integration, and live Herdr update handoff remain unverified. The earlier user confirmation of messaging is preserved as historical evidence.
 
 ## Documentation
 
