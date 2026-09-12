@@ -19,7 +19,7 @@ hermes on herdr 在真实 Herdr pane 中监督专用 Hermes Gateway，并提供�
 
 Controller、supervisor、CLI、manifest、启动状态页、可选终端监控和只读 HTTP 健康面板已有实现，版本为 0.1.0；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0)。最近保存的 [离线测试记录](evidence/release-0.1.0-unittest.txt) 为 167 项；[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14，面板资源测量见 [14](14-hqtui监控面板.md)。首次 Profile 选择向导仍是设计方案。
 
-cherry 曾在插件监管下达到 READY，用户确认了消息连通，独立面板也完成了真实只读预览。嵌入启用、修复后的冷启动、退出清理、指定 pane 双向交互、Linux 和 live handoff 仍有待验证项，逐项状态见 [13](13-cherry接入与验证.md)。[12](12-离线实现与验证.md) 的 84 项、[13](13-cherry接入与验证.md) 的 90 项以及面板早期批次是各阶段的历史证据。
+cherry 已通过官方安装器安装 `v0.1.0` 并达到 READY，实际核验了唯一 Gateway 的 Herdr/plugin 归属、Discord 连接为 cherry、嵌入终端监控及 HTTP 健康 200，证据见 [13.7](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)。新消息/模型往返、完整冷启动、退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证。[12](12-离线实现与验证.md) 的 84 项、[13](13-cherry接入与验证.md) 的 90 项及用户消息反馈，以及面板早期批次是各阶段的历史证据。
 
 设计文档中的新 Profile 初始化器、系统服务、自动孤儿回收与升级工具属于后续计划。实际可用参数以 CLI 和 [当前命令契约](12-离线实现与验证.md#124-当前命令契约) 为准。
 

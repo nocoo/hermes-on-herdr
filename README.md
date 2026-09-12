@@ -74,7 +74,7 @@ cd hermes-on-herdr
 
 测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。最近保存的 [167 项离线测试](docs/evidence/release-0.1.0-unittest.txt) 覆盖生命周期竞态、macOS 退出身份读取、Linux 信号兼容、版本一致性、监控采样、终端交互和 HTTP 健康检查。[CI](.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14；资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
 
-cherry 曾在插件监管下达到 READY，消息连通已获用户确认；独立面板也完成了真实只读预览。嵌入启用、冷启动、退出清理、指定 pane 的双向交互、Linux 和 live handoff 的验证状态见 [接入记录](docs/13-cherry接入与验证.md)。READY 表示进程及平台就绪，不等于模型调用或消息端到端验证。
+cherry 已通过官方安装器安装 `v0.1.0` 并达到 READY；唯一 Gateway 的 Herdr/plugin 归属、Discord 连接为 cherry、嵌入终端监控和 HTTP 健康 200 均有[真实证据](docs/13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)。新消息/模型往返、完整冷启动与退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证；此前用户确认的消息连通单独保留为历史记录。
 
 ## 文档
 

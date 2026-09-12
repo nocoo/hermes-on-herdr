@@ -4,6 +4,8 @@
 
 **13.1–13.6 是首次开发 link 接入的历史记录，不表示当前运行状态。** 当时 cherry 在插件监管下达到 READY，用户确认消息连通，90 项离线测试通过。用户重启 Herdr 后，首次 startup hook 因原生 PID 文件权限被拒绝；两处兼容性问题修复后，通过手动 `ensure` 恢复。真实 pane 归属、进程身份、单实例和 Discord 连接已核对，原生 LaunchAgent 保持移除。修复后的完整冷启动、退出清理及指定 pane 双向交互仍需各自的真实验收。
 
+**正式 0.1.0 安装后的运行证据见 13.7。** 已用 Herdr 官方安装器替换开发 link，cherry 在发布版本下达到 READY，嵌入终端监控和独立网页健康面板均已运行。
+
 ## 13.1 实际观察
 
 以下为原生 Gateway 停服前的基线；停服结果见 13.4。
@@ -134,3 +136,64 @@ herdr --session default
 获得需要的停服确认后，先持久 Pause，并核验插件 Gateway/已确认后代确已退出，再 disable 插件。恢复本次修改的 config/SOUL；新增 skill 只有 hash 仍匹配本次安装时才移除。恢复原 plist 并 bootstrap 原 LaunchAgent，重新检查原 cherry 的身份、Discord 连接和消息回复。
 
 如果进程归属或退出结果不明，保持暂停并核验现场，不并行拉起旧 LaunchAgent。保留 Profile 历史、会话及凭据；私有备份和运行数据不提交 Git。
+
+## 13.7 正式 0.1.0 发布、安装与运行验收
+
+2026-09-12，本次工作获准完成发布、官方安装和 cherry 接管。接手时 `ai.hermes.gateway-cherry` 及其 plist 已在前一阶段移除，开发版 supervisor 也已退出；状态为 ABSENT、desired=running。此次没有再次停用一个在线的原生 cherry 服务，而是核验现场后把开发 link 换成正式安装并恢复运行。独立的 default Profile 仍由 `ai.hermes.gateway` 管理，不属于本次停服范围。
+
+发布记录：
+
+| 项目 | 实际结果 |
+|---|---|
+| 正式 Release | [hermes on herdr 0.1.0](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0)，2026-09-12 01:46:03 UTC 发布，非 draft、非 prerelease |
+| annotated tag / commit | `v0.1.0` → `99f30d8c2eed209d827c70e5f8a6c819a157fad2` |
+| 发布前 main CI | [34665421329](https://github.com/nocoo/hermes-on-herdr/actions/runs/34665421329)，head SHA 为上述 commit；Ubuntu 24.04 / macOS × Python 3.11 / 3.14 四项均 success |
+| tag CI | [34665598551](https://github.com/nocoo/hermes-on-herdr/actions/runs/34665598551)，相同 head SHA；四项均 success，四项 tag/version 检查均通过 |
+| 本机完整回归 | Python 3.11 和 3.14 各 167 项通过，另有 400 次真实 macOS 退出检查；[完整测试输出](evidence/release-0.1.0-unittest.txt) |
+| Release 附件 | `hermes-on-herdr-0.1.0.tar.gz`，16,329,936 bytes；另附 `SHA256SUMS`。已重新下载并验证摘要、归档路径、launcher 执行权限、旧 launcher symlink、manifest 版本和 vendor MIT 声明 |
+| 归档 SHA-256 | `80217d427dfbfe44eabea65f43ffae8fccf3cb22786cbf2b2416b9286d9b0e80`；解压后的 launcher 实际报告 `hermes-on-herdr 0.1.0` |
+
+先持久化 paused/revision=2，核验没有 cherry Gateway、supervisor 或持锁实例，再禁用并 unlink 开发插件，退出旧独立监控。随后成功执行官方安装命令：
+
+```sh
+herdr --session default plugin install nocoo/hermes-on-herdr --ref v0.1.0 --yes
+```
+
+Herdr 返回的安装根目录为 `/Users/nocoo/.config/herdr/plugins/github/nocoo.hermes-gateway-83b783d49cce`。注册记录为 enabled=true、version=0.1.0、source.kind=github、requested_ref=v0.1.0、resolved_commit=上述完整 SHA；安装 checkout 的 HEAD 一致，工作树干净。安装器获取的是 Git tag，Release 附件另行核验。
+
+私有配置 `~/.config/herdr/plugins/config/nocoo.hermes-gateway/config.json` 只更新 `plugin_root`，保留原有 cherry/owner 绑定。实际执行 `bind --dry-run`、`bind --apply` 和 Doctor 均通过，paused 意图未被安装自动启用覆盖。运行环境沿用 Hermes v0.21.1 的固定 SHA 与私有 Herdr 0.9.0 二进制。再次检查 Profile 占用、锁和原生服务后才显式 Start，得到 running/revision=3；没有删除或替换原生锁来绕过占用检查。
+
+以下为 **2026-09-12 09:55（UTC+8）** 的真实运行快照。验证代码从已安装 checkout 导入；原生 identify/status 独立读取两次，间隔超过 1.1 秒，第二次达到 readiness level 2。
+
+| 检查项 | 实际证据 |
+|---|---|
+| 进程归属 | Herdr server PID **94384** → supervisor PID **4854** → Gateway PID **4888**；Gateway PPID=4854，Gateway 和 supervisor SID=4854 |
+| OS 创建时间 | supervisor `1789177943.42964`，Gateway `1789177943.652646`；与运行账本身份一致 |
+| 已安装代码 | supervisor argv 指向上述安装目录的 `src/hermes_gateway_herdr/__main__.py`；Gateway argv 为 `hermes -p cherry gateway run --external-supervisor` |
+| 真实 pane | workspace `w32`、tab `w32:t2`、pane `w32:p2`；Herdr process-info 的 shell_pid=4854 |
+| 单实例 | 同用户进程扫描只找到 cherry Gateway **4888**；lifetime lock 被持有；default Gateway **1149** 的 PID/start 与接手基线一致 |
+| 插件 / supervisor | READY、desired=running、intent_revision=applied_revision=3；直接 supervisor status 报告 profile=cherry；无 fuse、无 last_exit |
+| generation | `68991929a6dc4c4eba04a56310cdd60c` |
+| 环境与原生身份 | HERMES_HOME 与 cherry 目录一致，四个 HERDR 字段与 owner/pane 一致；identify 的 profile=cherry、supervisor=external、Hermes SHA 为固定版本 |
+| Discord 平台 | 两次新鲜 status 均 connected，writer_pid=4888、writer_start_time=178917794365 与已核验 Gateway 一致；needs_attention=false，采样 active_agents=0 |
+| 终端监控 | supervisor 的唯一嵌入 renderer PID **4885**；在 `w32:p2` 按 Enter 后实际回读到 `LIVE 2/2 online`、cherry READY、`v0.1.0` 和 `q Status` |
+| 网页监控 | Herdr pane `w2X:p2` 内运行已安装版本，HTTP listener PID **5067**；`http://127.0.0.1:8767/` 返回 HTTP 200 / text/html |
+| 健康检查 | `http://127.0.0.1:8767/health` 返回 **HTTP 200**，healthy=true、profile=cherry、state=READY、gateway_pid=4888、pane=w32:p2、discord=connected，采样年龄 0.88 秒 |
+| 原生重复实例 | `launchctl print gui/501/ai.hermes.gateway-cherry` 找不到服务，`~/Library/LaunchAgents/ai.hermes.gateway-cherry.plist` 不存在 |
+| 配置保全 | config.yaml、.env、SOUL.md 和 Herdr skill 字节与此次安装前备份一致；其他插件注册记录一致；default Profile 继续在线 |
+
+网页面板实际启动命令：
+
+```sh
+/Users/nocoo/.config/herdr/plugins/github/nocoo.hermes-gateway-83b783d49cce/bin/hermes-on-herdr --config /Users/nocoo/.config/herdr/plugins/config/nocoo.hermes-gateway/config.json dashboard --http-port 8767
+```
+
+只读取 Start 前记录的日志偏移之后的内容，捕获到本次连接：
+
+```text
+2026-09-12 09:52:30,578 INFO hermes_plugins.discord_platform.adapter: [Discord] Connected as cherry#5217
+```
+
+本机私有证据保存在 `~/.local/state/hermes-gateway-herdr/release-0.1.0-20260912T013522Z/`，包括安装前基线、Start 回执、`live-evidence.json` 和 `terminal-monitor.txt`。配置、凭据和原始完整 Gateway 日志未提交 Git。
+
+本次独立证明了正式安装来源、运行归属、单实例、Discord 重新连接及两种面板运行。**没有发起新的消息/模型往返**，13.5 的用户反馈仍属于上一阶段；完整 Herdr 冷启动/退出清理、Herdr 在线升级 handoff、指定 pane 双向消息操作及 Linux 真实 Herdr 接入仍待验证。网页面板仅绑定本机，单独启动，不是自动安装的系统服务。发布 tag 保持固定；本节为发布后的运行记录，不修改已发布源码。

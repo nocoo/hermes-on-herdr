@@ -74,7 +74,7 @@ cd hermes-on-herdr
 
 Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The latest saved [167-test run](evidence/release-0.1.0-unittest.txt) covers lifecycle races, macOS teardown identity reads, Linux signals, versions, monitoring, terminal input and HTTP health checks. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. Resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
 
-Cherry reached READY under plugin supervision, and the user confirmed messaging. A standalone dashboard also completed a live read-only preview. See the [integration record](13-cherry接入与验证.md) for the validation status of embedded activation, cold start, shutdown, explicit pane interaction, Linux and live handoff. READY establishes process and platform readiness; model calls and end-to-end messaging require their own checks.
+Cherry is running from `v0.1.0`, installed through Herdr's official installer. [Live evidence](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收) verifies exactly one Gateway under Herdr/plugin ownership, Discord connected as cherry, the embedded terminal monitor, and HTTP health 200. A fresh message/model round trip, full host cold start and shutdown, explicit pane interaction, Linux live integration, and live Herdr update handoff remain unverified. The earlier user confirmation of messaging is preserved as historical evidence.
 
 ## Documentation
 
