@@ -113,6 +113,21 @@ class IdentityTests(unittest.TestCase):
                 patch.object(proc, "is_running", return_value=False):
             self.assertIsNone(capture(os.getpid()))
 
+    def test_permission_race_requires_proof_of_zombie_before_treating_it_as_absent(self):
+        proc = psutil.Process(os.getpid())
+        for status in (psutil.STATUS_ZOMBIE, psutil.NoSuchProcess(os.getpid()), psutil.STATUS_SLEEPING):
+            with self.subTest(status=status), \
+                    patch("hermes_gateway_herdr.identity.psutil.Process", return_value=proc), \
+                    patch.object(proc, "uids", side_effect=psutil.AccessDenied()), \
+                    patch.object(proc, "is_running", return_value=True), \
+                    patch.object(proc, "status", side_effect=[psutil.STATUS_RUNNING, status]):
+                if status == psutil.STATUS_ZOMBIE or isinstance(status, psutil.NoSuchProcess):
+                    self.assertIsNone(capture(os.getpid()))
+                else:
+                    with self.assertRaises(GatewayError) as error:
+                        capture(os.getpid())
+                    self.assertEqual("UNKNOWN", error.exception.code)
+
     def test_stale_descendant_snapshot_cannot_claim_a_reused_pid(self):
         def record(pid, ppid, sid=10):
             return {"pid": pid, "ppid": ppid, "uid": os.getuid(), "sid": sid,

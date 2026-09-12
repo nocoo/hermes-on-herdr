@@ -47,12 +47,14 @@ def capture(pid: int) -> dict | None:
     except (psutil.NoSuchProcess, ProcessLookupError, FileNotFoundError):
         return None
     except (psutil.AccessDenied, PermissionError) as exc:
-        # macOS can report EPERM for exe/argv while a process is exiting. Only a
-        # subsequent confirmed disappearance makes that race equivalent to absence.
+        # macOS can report EPERM for exe/argv during exit. A zombie still has a
+        # PID, so is_running() alone cannot establish whether it has exited.
         if "proc" in locals():
             try:
-                if not proc.is_running():
+                if not proc.is_running() or proc.status() == psutil.STATUS_ZOMBIE:
                     return None
+            except psutil.NoSuchProcess:
+                return None
             except (psutil.AccessDenied, PermissionError):
                 pass
         raise GatewayError("UNKNOWN", "Process identity is not readable") from exc

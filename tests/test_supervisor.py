@@ -258,7 +258,8 @@ class SupervisorTests(unittest.TestCase):
         before = time.monotonic()
         # The child may exit before a socket ACK; the durable intent remains the acceptance record.
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=3))
+        result = self.process.wait(timeout=3)
+        self.assertEqual(0, result, json_lines(self.config.state_dir / "logs" / "events.jsonl"))
         self.assertLess(time.monotonic() - before, 2)
         self.assertFalse(same_process(child))
         events = self.config.state_dir / "logs" / "events.jsonl"
