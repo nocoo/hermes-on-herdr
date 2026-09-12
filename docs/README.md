@@ -2,12 +2,15 @@
 
 [中文首页](../README.md) · [English overview](README.en.md) · [配置示例](../examples/README.md)
 
-hermes on herdr 在真实 Herdr pane 中监督专用 Hermes Gateway，并提供启动状态页和按需打开的 hqtui 监控面板。这套文档分别记录当前使用方法、实现契约、设计提案与历史验证。
+hermes on herdr 通过 Herdr plugin，把用户显式选择的专用 trusted Hermes Profile 链接到当前 Herdr session，补齐外部独立 Hermes 不会天然拥有的受管 pane、socket 与 caller context。专用 Hermes 获得该 session 的完整 Herdr 控制权限，作为 M2 管理 Herdr；人与 M2 之间复用 Hermes 已有的 Discord、Telegram、Slack 等 channels，日常远程管理无需先 SSH、接管桌面或为 Herdr 配置 VPN、暴露控制端口。
+
+绑定仍受 Herdr 的本地访问权限和插件的归属、生命周期规则约束，不是同 UID 资源隔离。首屏定位与边界说明见 [中文首页](../README.md#架构与信任边界) / [English overview](README.en.md#architecture-and-trust-boundaries)。这套文档分别记录当前使用方法、实现契约、设计提案与历史验证；消息平台和端到端能力以本页的验证范围为准。
 
 ## 从这里开始
 
 | 目的 | 阅读路径 |
 | --- | --- |
+| 理解控制上下文缺口、M2 与消息渠道 | [为什么需要插件](../README.md#为什么需要这个插件) → [架构与信任边界](../README.md#架构与信任边界) |
 | 安装、升级、发版与版本约定 | [发布与安装](15-发布与安装.md) → [首次关联方案](16-首次安装与Profile关联.md) |
 | 准备配置、接入专用 Profile | [配置示例](../examples/README.md) → [实现及验收计划](05-实现步骤.md) → [cherry 接入记录](13-cherry接入与验证.md) |
 | 使用启动页与监控面板 | [监控面板](14-hqtui监控面板.md) |
@@ -19,7 +22,7 @@ hermes on herdr 在真实 Herdr pane 中监督专用 Hermes Gateway，并提供�
 
 Controller、supervisor、CLI、manifest、启动状态页、可选终端监控和只读 HTTP 健康面板已有实现，版本为 0.1.0；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.0)。最近保存的 [离线测试记录](evidence/release-0.1.0-unittest.txt) 为 167 项；[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14，面板资源测量见 [14](14-hqtui监控面板.md)。首次 Profile 选择向导仍是设计方案。
 
-cherry 已通过官方安装器安装 `v0.1.0` 并达到 READY，实际核验了唯一 Gateway 的 Herdr/plugin 归属、Discord 连接为 cherry、嵌入终端监控及 HTTP 健康 200，证据见 [13.7](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)。新消息/模型往返、完整冷启动、退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证。[12](12-离线实现与验证.md) 的 84 项、[13](13-cherry接入与验证.md) 的 90 项及用户消息反馈，以及面板早期批次是各阶段的历史证据。
+cherry 已通过官方安装器安装 `v0.1.0` 并达到 READY，实际核验了唯一 Gateway 的 Herdr/plugin 归属、Discord 连接为 cherry、嵌入终端监控及 HTTP 健康 200，证据见 [13.7](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动、退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证。[12](12-离线实现与验证.md) 的 84 项、[13](13-cherry接入与验证.md) 的 90 项及用户消息反馈，以及面板早期批次是各阶段的历史证据。
 
 设计文档中的新 Profile 初始化器、系统服务、自动孤儿回收与升级工具属于后续计划。实际可用参数以 CLI 和 [当前命令契约](12-离线实现与验证.md#124-当前命令契约) 为准。
 

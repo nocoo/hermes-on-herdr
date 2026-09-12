@@ -2,14 +2,47 @@
   <img src="../assets/brand/icon-rounded.png" width="128" alt="hermes on herdr logo" />
 </p>
 <h1 align="center">hermes on herdr</h1>
-<p align="center">Run Hermes in Herdr with optional monitoring.</p>
+<p align="center">Connect a trusted Hermes to your Herdr session. Manage your agent team through the chat channels you already use.</p>
 <p align="center"><a href="../README.md">简体中文</a> · <a href="README.md">Documentation</a> · <a href="../examples/README.md">Configuration</a></p>
 
-**hermes on herdr** is a Herdr plugin that runs a dedicated Hermes Gateway inside a real pane. A supervisor manages its lifecycle, and the Gateway inherits the control environment of its owning Herdr session. Run intent, process identity and ownership are recorded; a paused Gateway requires an explicit resume.
+**hermes on herdr** is a Herdr plugin that links a dedicated Hermes Profile you explicitly choose and trust to your current Herdr session. Its Gateway runs in a managed pane with that session's real pane, socket and caller context, giving it full Herdr control within the bound session. Hermes becomes your M2: it manages Herdr, and Herdr manages your engineering agents.
 
-![hermes on herdr monitoring two Profiles with offline demo data](evidence/dashboard-two.png)
+Hermes's existing Discord, Telegram, Slack and other channels connect you to that M2. Once a channel is configured, you can assign work, check progress and adjust priorities while away, without first logging in over SSH, opening a remote desktop, or setting up a VPN or exposed control port for Herdr. Messages use the existing channel; the Herdr control connection stays local.
+
+## Why a plugin
+
+You already have engineering agents such as Codex, Grok, Pi and Claude Code working in Herdr. When you want Hermes to manage Herdr, the missing piece is control context. A Hermes instance running independently outside Herdr does not automatically belong to the target session's managed pane, socket or caller context. Being able to message it does not establish a verifiable Herdr identity, control target or process owner. An external instance needs those relationships set up and maintained separately.
+
+The plugin makes that connection explicit. You select an existing trusted Profile and bind it to the current owner session. Herdr creates a real plugin pane; the plugin verifies ownership, and a supervisor runs the dedicated Gateway there with the correct control context. That Hermes can manage the session through the local Herdr CLI/API, with clear ownership of Gateway startup, shutdown, pause and recovery.
+
+Hermes's existing channels handle the connection between you and M2, removing host logins, desktop access and control tunnels from everyday remote management. The host, Herdr and the dedicated Gateway must remain online, with access to the selected messaging and model services. You configure channel credentials and authorized messaging identities. See [Development and validation](#development-and-validation) for the actual platform and end-to-end verification scope.
+
+## Architecture and trust boundaries
+
+```mermaid
+flowchart LR
+    U["Developer"] <-->|"Hermes channels<br/>Discord / Telegram / Slack"| M
+    subgraph S["Local host · current bound Herdr session"]
+        M["Plugin-managed pane<br/>Dedicated trusted Hermes Profile · M2"]
+        H["Herdr · manager"]
+        A["Engineering agents · ICs"]
+        M <-->|"Local CLI / Unix socket<br/>Real pane / caller context"| H
+        H <--> A
+    end
+```
+
+- The binding is defined by the dedicated Profile and owner socket you explicitly choose. Installing the plugin does not authorize arbitrary external Hermes instances or take over other Profiles. The plugin checks the binding, pane membership and process identity at startup and during operation, rejecting a mismatched owner context.
+- “Full control” means Herdr API control of the bound session. Herdr's local socket permissions and the plugin's ownership checks and lifecycle rules still apply. Paused intent persists until an explicit resume.
+- Remote messaging uses Hermes's existing platform authentication and access policies. Configure the channel's user allowlist or pairing mechanism for the dedicated Profile so only authorized messaging identities can reach M2. The plugin does not automatically provision bots, credentials or user authorization.
+- Herdr's Unix socket is not exposed publicly. Discord and Slack connections, and Telegram polling, can reach the existing messaging services without a direct connection from your device to the Herdr host. The optional HTTP monitor also binds only to `127.0.0.1`; it is read-only and cannot control the Gateway.
+
+The session binding defines the plugin's owner, default control target and supported operating scope; **it is not an OS sandbox**. Hermes's local terminal retains the host user's UID permissions. The Herdr socket has no fine-grained per-pane or per-Profile ACL, and a Profile, prompt or skill cannot enforce isolation from other resources accessible to that UID. This requires an explicitly trusted Profile; it is not an isolation container for an untrusted agent.
+
+See the [context and Profile checks](../src/hermes_gateway_herdr/config.py), [Herdr permission evidence](09-源码证据索引.md#h11), [Hermes platform implementations](https://github.com/NousResearch/hermes-agent/tree/b7ac3ba1cdf89f94dfe86de27e01358b194f4053/plugins/platforms) and [security and operations guide](07-安全与运维.md) for the implementation and its constraints.
 
 ## The experience
+
+![hermes on herdr monitoring two Profiles with offline demo data](evidence/dashboard-two.png)
 
 - Start on the managed Gateway's status page. Press **Enter** to open monitoring. “Always open on startup” is off by default; save your choice with Space or a mouse click.
 - Monitor multiple Hermes Profiles, including status, CPU, memory and process trends, with the Herdr-managed instance highlighted. Adjust the layout, theme, animation and sampling interval; the default is two seconds.
@@ -74,7 +107,7 @@ cd hermes-on-herdr
 
 Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The latest saved [167-test run](evidence/release-0.1.0-unittest.txt) covers lifecycle races, macOS teardown identity reads, Linux signals, versions, monitoring, terminal input and HTTP health checks. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. Resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
 
-Cherry is running from `v0.1.0`, installed through Herdr's official installer. [Live evidence](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收) verifies exactly one Gateway under Herdr/plugin ownership, Discord connected as cherry, the embedded terminal monitor, and HTTP health 200. A fresh message/model round trip, full host cold start and shutdown, explicit pane interaction, Linux live integration, and live Herdr update handoff remain unverified. The earlier user confirmation of messaging is preserved as historical evidence.
+Cherry is running from `v0.1.0`, installed through Herdr's official installer. [Live evidence](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收) verifies exactly one Gateway under Herdr/plugin ownership, Discord connected as cherry, the embedded terminal monitor, and HTTP health 200. Telegram and Slack are existing upstream Hermes channels; this plugin has no recorded live integration verification for them yet. A fresh message/model round trip, full host cold start and shutdown, explicit pane interaction, Linux live integration, and live Herdr update handoff remain unverified. The earlier user confirmation of messaging is preserved as historical evidence.
 
 ## Documentation
 
