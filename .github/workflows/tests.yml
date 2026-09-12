@@ -13,33 +13,28 @@ permissions:
 jobs:
   offline:
     name: ${{ matrix.os }} / Python ${{ matrix.python }}
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, macos-latest]
         python: ['3.11', '3.14']
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python }}
-          cache: pip
-      - name: Create an isolated test runtime
-        # Hosted toolcache paths are shared-writable; mirror the user's private venv.
-        run: |
-          python -m venv --copies .venv
-          .venv/bin/python -m pip install -r requirements.txt
-      - name: Check release tag matches runtime version
-        if: github.ref_type == 'tag'
-        run: |
+    uses: nocoo/base-ci/.github/workflows/test-job.yml@2ff6b0609183d5d5a24e98f941138fda48837b2f
+    with:
+      runner: ${{ matrix.os }}
+      runtime: none
+      python-version: ${{ matrix.python }}
+      timeout-minutes: 10
+      pre-command: |
+        python -m venv --copies .venv
+        .venv/bin/python -m pip install -r requirements.txt
+      command: |
+        if [ "$GITHUB_REF_TYPE" = tag ]; then
           python -I -B - <<'PY'
-          import os
-          import runpy
-          version = runpy.run_path('src/hermes_gateway_herdr/__init__.py')['__version__']
-          if os.environ['GITHUB_REF_NAME'] != f'v{version}':
-              raise SystemExit('Release tag does not match the runtime version')
-          PY
-      - name: Run isolated tests with fake Gateways and real PTYs
-        run: .venv/bin/python -I -B tests/run.py
+        import os
+        import runpy
+        version = runpy.run_path('src/hermes_gateway_herdr/__init__.py')['__version__']
+        if os.environ['GITHUB_REF_NAME'] != f'v{version}':
+            raise SystemExit('Release tag does not match the runtime version')
+        PY
+        fi
+        .venv/bin/python -I -B tests/run.py
