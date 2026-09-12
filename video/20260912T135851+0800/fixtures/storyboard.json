@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "status": "Asset storyboard only; untimed; no recorded narration or film timeline",
+  "language": "en",
+  "beats": [
+    {
+      "id": "context",
+      "headline": "Context is control.",
+      "copy": "An outside Hermes does not automatically inherit this Herdr session's pane, socket or caller context.",
+      "visual": "A Hermes cubie approaches three empty slots labelled pane, socket and caller. The pieces have not connected yet.",
+      "assets": [
+        "control-context",
+        "hermes",
+        "pane",
+        "socket",
+        "caller"
+      ],
+      "sources": [
+        "docs/README.en.md#why-a-plugin",
+        "src/hermes_gateway_herdr/config.py"
+      ],
+      "qualification": "An external instance can be configured separately. Do not claim that every external Hermes is inherently incapable of Herdr access."
+    },
+    {
+      "id": "binding",
+      "headline": "Choose. Trust. Bind.",
+      "copy": "Hermes on Herdr links the trusted Profile you choose directly to the current session.",
+      "visual": "A selected Profile cubie moves through the plugin boundary. The context pieces meet it and settle into a shared row.",
+      "assets": [
+        "hermes",
+        "profile",
+        "plugin",
+        "session"
+      ],
+      "sources": [
+        "src/hermes_gateway_herdr/config.py",
+        "src/hermes_gateway_herdr/controller.py"
+      ],
+      "qualification": "Use an existing dedicated trusted Profile. No automatic access grant to arbitrary Hermes instances; no implemented first-run setup wizard.",
+      "requiredVisibleCaption": "Dedicated trusted Profile, explicitly selected by you."
+    },
+    {
+      "id": "ownership",
+      "headline": "Control with an owner.",
+      "copy": "The dedicated Gateway runs in a real managed pane, with verified ownership and session control context.",
+      "visual": "A monitor texture faces the viewer while small pane, socket and caller cubies align behind it. A subtle connector stays inside the session boundary.",
+      "assets": [
+        "monitor-ready",
+        "monitor-startup",
+        "pane",
+        "socket",
+        "caller"
+      ],
+      "sources": [
+        "src/hermes_gateway_herdr/supervisor.py",
+        "src/hermes_gateway_herdr/dashboard_view.py"
+      ],
+      "qualification": "Lifecycle management is implemented with persisted pause intent. Full real cold-start/shutdown and online handoff validation remain incomplete.",
+      "requiredVisibleCaption": "Pause intent persists. Full cold-start/exit verification remains incomplete."
+    },
+    {
+      "id": "team",
+      "headline": "Herdr manages the team.",
+      "copy": "Codex. Grok. Pi. Claude Code. Your coding agents, arranged by Herdr. Hermes is the M2 above that manager.",
+      "visual": "Four candy-colored coding-agent cubies rotate into a layer. Herdr aligns that layer; the Hermes cubie connects the person outside to the manager.",
+      "assets": [
+        "herdr-panes",
+        "herdr",
+        "codex",
+        "grok",
+        "pi",
+        "claude-code",
+        "workflow"
+      ],
+      "sources": [
+        "docs/README.en.md#why-a-plugin"
+      ],
+      "qualification": "Synthetic task/status panels illustrate roles. They are not recorded work or evidence of live task completion."
+    },
+    {
+      "id": "channels",
+      "headline": "Your channels. Your M2.",
+      "copy": "Use Hermes's existing channels to reach that trusted manager while you are away.",
+      "visual": "A Discord cubie approaches Hermes along a solid illustrative route. Telegram and Slack wait beside it with UPSTREAM / UNVERIFIED labels. No channel directly controls a pane; no completed live request is claimed.",
+      "assets": [
+        "hermes-channel",
+        "discord",
+        "telegram",
+        "slack",
+        "hermes"
+      ],
+      "sources": [
+        "docs/README.en.md#architecture-and-trust-boundaries"
+      ],
+      "qualification": "Channels require credentials and authorized user policies. Discord connectivity is recorded; Telegram/Slack plugin integrations and complete fresh message-to-pane round trips are not yet independently verified.",
+      "requiredVisibleCaption": "Configure credentials and allowed users. Discord connected; Telegram/Slack integration unverified."
+    },
+    {
+      "id": "remote",
+      "headline": "Send the work. Skip the remote login.",
+      "copy": "No SSH, remote desktop, VPN or exposed Herdr control port is required for this channel-based workflow.",
+      "visual": "The person and message remain outside a pale local-session outline. The control connector and Herdr panes stay inside it.",
+      "assets": [
+        "hermes-channel",
+        "local",
+        "session",
+        "terminal"
+      ],
+      "sources": [
+        "docs/README.en.md#architecture-and-trust-boundaries",
+        "docs/07-安全与运维.md"
+      ],
+      "qualification": "The host, Herdr and Gateway must remain online and reach the selected messaging and model services. This does not promise offline operation or universal network reachability.",
+      "requiredVisibleCaption": "Host, Herdr and Gateway stay online, with messaging and model access."
+    },
+    {
+      "id": "trust",
+      "headline": "Trusted. Bound. Local.",
+      "copy": "Full Herdr control in the bound session. Local permissions and ownership checks still apply.",
+      "visual": "The nearly complete cube holds inside the session outline. The Profile choice remains visible; nothing opens a public control surface.",
+      "assets": [
+        "profile",
+        "session",
+        "local",
+        "socket"
+      ],
+      "sources": [
+        "docs/README.en.md#architecture-and-trust-boundaries",
+        "docs/09-源码证据索引.md#h11"
+      ],
+      "qualification": "Session binding is not an OS sandbox or a per-pane ACL. The local terminal retains the user's UID permissions. Do not depict a hard isolation vault.",
+      "requiredVisibleCaption": "Not an OS sandbox. The local terminal retains your UID permissions."
+    },
+    {
+      "id": "weekend",
+      "headline": "Put the team in order. Take your weekend back.",
+      "copy": "Hermes on Herdr.",
+      "visual": "All 27 cubies settle into one complete 3-by-3 cube. Hold the product name in generous light space.",
+      "assets": [
+        "herdr",
+        "hermes",
+        "workflow"
+      ],
+      "sources": [
+        "docs/README.en.md"
+      ],
+      "qualification": "An aspirational payoff, not a guarantee of unattended correctness.",
+      "requiredVisibleCaption": "Human judgment still owns the outcome."
+    },
+    {
+      "id": "brand",
+      "headline": "hexly.ai",
+      "copy": "Hermes on Herdr",
+      "visual": "Use the published shared logo reveal: official mark centered alone, then shift left as the full wordmark appears. Product caption follows.",
+      "assets": [
+        "hexly-favicon",
+        "hexly-logo-reveal-reference",
+        "hexly-red-dot-reference"
+      ],
+      "sources": [
+        "https://github.com/nocoo/hexly.ai/tree/e1b220a7643e8275134b0bff0a11d703c047abbe/packages/video-kit"
+      ],
+      "qualification": "Reference only in this preparation. No shared template code was copied or executed; the favicon must not replace the actual end-slate mark."
+    }
+  ]
+}

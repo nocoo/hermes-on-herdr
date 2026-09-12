@@ -1,0 +1,11 @@
+SYNTHETIC FIXTURE / Pi / NOT A LIVE TRANSCRIPT
+
+$ pi
+
+> Add the small queue adapter in the demo.
+
+Inspecting the existing interface...
+Keeping the change local...
+Preparing the adapter for review.
+
+Task and output are fictional.

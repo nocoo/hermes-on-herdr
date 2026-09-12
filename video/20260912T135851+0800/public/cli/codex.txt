@@ -1,0 +1,11 @@
+SYNTHETIC FIXTURE / Codex / NOT A LIVE TRANSCRIPT
+
+$ codex
+
+> Review the retry policy in the demo project.
+
+Inspecting the retry boundary...
+Checking the failure path...
+Preparing a focused change for review.
+
+Task and output are fictional.

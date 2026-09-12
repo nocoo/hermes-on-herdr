@@ -1,0 +1,11 @@
+SYNTHETIC FIXTURE / Claude Code / NOT A LIVE TRANSCRIPT
+
+$ claude
+
+> Review the edge cases in the demo change.
+
+Reading the proposed diff...
+Tracing the cancellation path...
+Preparing a verification checklist.
+
+Task and output are fictional.

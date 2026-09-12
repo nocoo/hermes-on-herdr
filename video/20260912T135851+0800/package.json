@@ -1,0 +1,13 @@
+{
+  "name": "hermes-on-herdr-asset-preparation-20260912",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:assets": ".venv/bin/python -I -B scripts/build_assets.py",
+    "preview:assets": "node scripts/preview_assets.mjs",
+    "check": "node --check scripts/preview_assets.mjs && .venv/bin/python -I -B scripts/verify_assets.py"
+  },
+  "devDependencies": {
+    "playwright-core": "1.63.0"
+  }
+}

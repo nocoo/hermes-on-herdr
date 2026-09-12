@@ -1,0 +1,478 @@
+{
+  "schemaVersion": 1,
+  "phase": "asset-preparation",
+  "templateStatus": "published-reference-only",
+  "assets": [
+    {
+      "id": "control-context",
+      "kind": "terminal-fixture",
+      "file": "public/cli/control-context.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "e8168c60982fcb6c0919e48417df4dd41e9b2b6cb38546cf2f6c666eeb3e32fe"
+    },
+    {
+      "id": "herdr-panes",
+      "kind": "terminal-fixture",
+      "file": "public/cli/herdr-panes.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "984d9c416237ac05cb65bf385c09fd3aa443d7ab1e90fadda52e6b492dc7082c"
+    },
+    {
+      "id": "hermes-channel",
+      "kind": "terminal-fixture",
+      "file": "public/cli/hermes-channel.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "3e1f6b9d74a3bfd582982927cd288d0bd7512e7edfdafcf2e94647697670e8b8"
+    },
+    {
+      "id": "codex",
+      "kind": "terminal-fixture",
+      "file": "public/cli/codex.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "fb2d98b09425cc10ac68b7eefe761ea485187b07c6b0afcbb12e819b30ea11e7"
+    },
+    {
+      "id": "grok",
+      "kind": "terminal-fixture",
+      "file": "public/cli/grok.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "f41cb8e7ea484fb591ef3cdf9433e18b154dea1c2bcaf9816ed5ec28888581bd"
+    },
+    {
+      "id": "pi",
+      "kind": "terminal-fixture",
+      "file": "public/cli/pi.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "95efe3cc9fbd4061169008d4510544634dd1d6b92fbfafea333395405bb944ce"
+    },
+    {
+      "id": "claude-code",
+      "kind": "terminal-fixture",
+      "file": "public/cli/claude-code.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "821987999757110905c4f57a9e49064d65b624041c441d59829544777adcb584"
+    },
+    {
+      "id": "monitor-ready",
+      "kind": "terminal-fixture",
+      "file": "public/cli/monitor-ready.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "31ea55c4a0f13384985ca245bbc89ba6a74d86d7e278964bf5f54a722223b8c8"
+    },
+    {
+      "id": "monitor-startup",
+      "kind": "terminal-fixture",
+      "file": "public/cli/monitor-startup.svg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "8037dc401cfa70b8caa7b67537eb0c07300439409242e42e01209b684ca39b31"
+    },
+    {
+      "id": "face-hermes",
+      "kind": "cubie-texture",
+      "file": "public/cubies/hermes.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "7d26abcec50a72a5b1794f8e46997694d82ab37485fa59eb8cd236badb7c2a7f"
+    },
+    {
+      "id": "face-herdr",
+      "kind": "cubie-texture",
+      "file": "public/cubies/herdr.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "92cd240deec3178096ac789b69198eeb6d6cb9e19d1ecdc097cf63854f7bf408"
+    },
+    {
+      "id": "face-codex",
+      "kind": "cubie-texture",
+      "file": "public/cubies/codex.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "a9fb90f5d1258c537308b9927c046b4bdd4935f82aae3769f857e8efca124153"
+    },
+    {
+      "id": "face-grok",
+      "kind": "cubie-texture",
+      "file": "public/cubies/grok.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "4b224039f5b0f04f0bfd56026684d9a3052f1669b0e35da5cad0d6455da0de88"
+    },
+    {
+      "id": "face-pi",
+      "kind": "cubie-texture",
+      "file": "public/cubies/pi.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "120d4296bf79b92d7fa372e38a49b585d7127d0987152929c60488f288cf9ddd"
+    },
+    {
+      "id": "face-claude-code",
+      "kind": "cubie-texture",
+      "file": "public/cubies/claude-code.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "07f0d6bf2e9dbe7bef7216cdda8dfe72375480c972f39162419ff6f6c6949742"
+    },
+    {
+      "id": "face-terminal",
+      "kind": "cubie-texture",
+      "file": "public/cubies/terminal.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "86898af98122e31482bb00b9cdd414955a1878df510ed3f10e04224d772fc360"
+    },
+    {
+      "id": "face-workflow",
+      "kind": "cubie-texture",
+      "file": "public/cubies/workflow.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "66f3697f9c46bbd0d11071898e3fbaa5f09a2d8b32564832b08401fad303587a"
+    },
+    {
+      "id": "face-discord",
+      "kind": "cubie-texture",
+      "file": "public/cubies/discord.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "2bad487ec89a5b4593fcfbc274ec4d8a0515c64b6283c9353942b856084257c8"
+    },
+    {
+      "id": "face-telegram",
+      "kind": "cubie-texture",
+      "file": "public/cubies/telegram.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "c7465fcdded2e5b6ad4466b16833f2fef8dfe418ebd66eddfd10e5f3ef4b5955"
+    },
+    {
+      "id": "face-slack",
+      "kind": "cubie-texture",
+      "file": "public/cubies/slack.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "417e8135fa6ddd5263ac577d27438c032faaeee47bf3d56b3c71869c431af50f"
+    },
+    {
+      "id": "face-pane",
+      "kind": "cubie-texture",
+      "file": "public/cubies/pane.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "ee04b365733e712ad87cae5863eb83079bee4327eecefc419f092fd4a003a1e5"
+    },
+    {
+      "id": "face-socket",
+      "kind": "cubie-texture",
+      "file": "public/cubies/socket.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "3f571df55b5e379aede9323d8328601424121a28cd4e58defce7679a0ae7963a"
+    },
+    {
+      "id": "face-caller",
+      "kind": "cubie-texture",
+      "file": "public/cubies/caller.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "52997f247f6477dc4276db6fb0f1cab820a2bfc561ab6063c3963df510e4c9ca"
+    },
+    {
+      "id": "face-profile",
+      "kind": "cubie-texture",
+      "file": "public/cubies/profile.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "4438c024694194fed5be00cd461ec137be0b7c15f0a9a00ed0f560c9c901e087"
+    },
+    {
+      "id": "face-plugin",
+      "kind": "cubie-texture",
+      "file": "public/cubies/plugin.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "2a9bb2f7173428cf5192488f5fe75dc68095614f63673925861a68a4b81a8bcb"
+    },
+    {
+      "id": "face-session",
+      "kind": "cubie-texture",
+      "file": "public/cubies/session.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "2456b012c1cccb09774941a348ead02ea9ddbe4b2728aa94eaeefe6dafc8758f"
+    },
+    {
+      "id": "face-local",
+      "kind": "cubie-texture",
+      "file": "public/cubies/local.svg",
+      "width": 512,
+      "height": 512,
+      "sha256": "adcee62d65b18dfe3bf5fd8a104463f3a6f04607428f5515918959af42417e04"
+    },
+    {
+      "id": "hexly-favicon",
+      "kind": "preserved-upstream",
+      "file": "public/brand/hexly-favicon.svg",
+      "sha256": "b5daa204c6633366bf2203db44ad301107dd14370d815c927ed029687d85aad5"
+    },
+    {
+      "id": "hermes-favicon",
+      "kind": "preserved-upstream",
+      "file": "public/brand/hermes-favicon.svg",
+      "sha256": "c4d55805bda8e16072ed77c0725176ab2218a9e628d1ba776a6048a39c28f751"
+    },
+    {
+      "id": "hexly-logo-reveal-reference",
+      "kind": "reference-only",
+      "export": "HexlyReveal / LogoReveal",
+      "module": "@hexly/video-kit",
+      "source": "packages/video-kit/src/Identity.tsx",
+      "rule": "Official mark alone at center, then leftward motion and full wordmark reveal; product caption later. Consume the published component after handoff."
+    },
+    {
+      "id": "hexly-red-dot-reference",
+      "kind": "reference-only",
+      "export": "RedDot",
+      "module": "@hexly/video-kit",
+      "source": "packages/video-kit/src/Identity.tsx",
+      "tokens": {
+        "color": "#bc7252",
+        "highlight": "#ffe1b4",
+        "glow": "#dd956b"
+      },
+      "rule": "Use the existing RedDot component after publication, not a replacement logo or a newly drawn dot asset. This family location dot differs from the terracotta period in the wordmark."
+    }
+  ],
+  "cubieLayout": "fixtures/cubies.json",
+  "storyboard": "fixtures/storyboard.json",
+  "semanticFaceIds": [
+    "hermes",
+    "herdr",
+    "codex",
+    "grok",
+    "pi",
+    "claude-code",
+    "terminal",
+    "workflow",
+    "discord",
+    "telegram",
+    "slack",
+    "pane",
+    "socket",
+    "caller",
+    "profile",
+    "plugin",
+    "session",
+    "local"
+  ],
+  "generatedFiles": [
+    {
+      "sha256": "784d70817b661d71bb8ae1ae3507622f382f4f7798936f10da46013353e471a5",
+      "file": "index.html"
+    },
+    {
+      "sha256": "af53da7301220716ff38da56d15764215de379f57e8cab0b36b98b434ad64a9b",
+      "file": "public/cli/claude-code.ansi"
+    },
+    {
+      "sha256": "821987999757110905c4f57a9e49064d65b624041c441d59829544777adcb584",
+      "file": "public/cli/claude-code.svg"
+    },
+    {
+      "sha256": "c0b17f14e61ee96f3e414c8145f0fd055d02b8323e677ccfc0eba4e1d4f84eb0",
+      "file": "public/cli/claude-code.txt"
+    },
+    {
+      "sha256": "7d4a7a30e27bea34eb1c3e372fe3bf8b165a3878e4919c2e19a7d710946f57ab",
+      "file": "public/cli/codex.ansi"
+    },
+    {
+      "sha256": "fb2d98b09425cc10ac68b7eefe761ea485187b07c6b0afcbb12e819b30ea11e7",
+      "file": "public/cli/codex.svg"
+    },
+    {
+      "sha256": "bea8edbd45728812e5cc298705876f7c50687d9f2960c65c7e12ff2d6560eda6",
+      "file": "public/cli/codex.txt"
+    },
+    {
+      "sha256": "43de7fd2a901acb3988a58561789d47c19b3ed3930ccd00e49672268f9669391",
+      "file": "public/cli/control-context.ansi"
+    },
+    {
+      "sha256": "e8168c60982fcb6c0919e48417df4dd41e9b2b6cb38546cf2f6c666eeb3e32fe",
+      "file": "public/cli/control-context.svg"
+    },
+    {
+      "sha256": "e219f9a4ac887ca3020dcc6745137078091d41c65c59fef731d02d4af11bd8e9",
+      "file": "public/cli/control-context.txt"
+    },
+    {
+      "sha256": "c26e92c2617f5fa0bbe6e6b443d3a8d4b012501e446c37dc5a5b70df965e5794",
+      "file": "public/cli/grok.ansi"
+    },
+    {
+      "sha256": "f41cb8e7ea484fb591ef3cdf9433e18b154dea1c2bcaf9816ed5ec28888581bd",
+      "file": "public/cli/grok.svg"
+    },
+    {
+      "sha256": "fd684aec39aacfa43c6a71243aececaa6cb822d5ffd082e24fa910215bcb1ecc",
+      "file": "public/cli/grok.txt"
+    },
+    {
+      "sha256": "5fdd800136dedf5b5c15cd4ba082b6417c456284fce7c210c6709265b3539a6c",
+      "file": "public/cli/herdr-panes.ansi"
+    },
+    {
+      "sha256": "984d9c416237ac05cb65bf385c09fd3aa443d7ab1e90fadda52e6b492dc7082c",
+      "file": "public/cli/herdr-panes.svg"
+    },
+    {
+      "sha256": "b3c1480c08e326c2f83574727d1fa36d030c950295799de5572596673598c075",
+      "file": "public/cli/herdr-panes.txt"
+    },
+    {
+      "sha256": "b704f6805d470c0a0a8f2c65158382cb9456777861c93cab1f23fc5836b304b1",
+      "file": "public/cli/hermes-channel.ansi"
+    },
+    {
+      "sha256": "3e1f6b9d74a3bfd582982927cd288d0bd7512e7edfdafcf2e94647697670e8b8",
+      "file": "public/cli/hermes-channel.svg"
+    },
+    {
+      "sha256": "96eba0d706d88a9221b82df52de286a952cb340ee45fb95c0fd3901a08111d4c",
+      "file": "public/cli/hermes-channel.txt"
+    },
+    {
+      "sha256": "9fc153b759f07250fce5b1e323267c6acfa48e70b750d7d0c10882092db24986",
+      "file": "public/cli/monitor-ready.ansi"
+    },
+    {
+      "sha256": "31ea55c4a0f13384985ca245bbc89ba6a74d86d7e278964bf5f54a722223b8c8",
+      "file": "public/cli/monitor-ready.svg"
+    },
+    {
+      "sha256": "308817a4ec0e19703a1a52d9df1ec291189a5f4196ac4a1dddaf6c793058da5f",
+      "file": "public/cli/monitor-ready.txt"
+    },
+    {
+      "sha256": "44cfd8a57de7a79106f7dc5c26899f9ca0883727437797b5ec056924ba33dbb3",
+      "file": "public/cli/monitor-startup.ansi"
+    },
+    {
+      "sha256": "8037dc401cfa70b8caa7b67537eb0c07300439409242e42e01209b684ca39b31",
+      "file": "public/cli/monitor-startup.svg"
+    },
+    {
+      "sha256": "4ba5977fe8a9dd85c31c59d748ad1982dbe60ac63cbc750e8d459f5e9ecdce38",
+      "file": "public/cli/monitor-startup.txt"
+    },
+    {
+      "sha256": "ce97f847037f28d77dc7479b8a32eaa255b6c589daa16826e154fb14d83ef3fb",
+      "file": "public/cli/pi.ansi"
+    },
+    {
+      "sha256": "95efe3cc9fbd4061169008d4510544634dd1d6b92fbfafea333395405bb944ce",
+      "file": "public/cli/pi.svg"
+    },
+    {
+      "sha256": "71f8ccd0b2458dc77830186e85dba9a18f4f089f1126e2fd582158afb14926ac",
+      "file": "public/cli/pi.txt"
+    },
+    {
+      "sha256": "52997f247f6477dc4276db6fb0f1cab820a2bfc561ab6063c3963df510e4c9ca",
+      "file": "public/cubies/caller.svg"
+    },
+    {
+      "sha256": "07f0d6bf2e9dbe7bef7216cdda8dfe72375480c972f39162419ff6f6c6949742",
+      "file": "public/cubies/claude-code.svg"
+    },
+    {
+      "sha256": "a9fb90f5d1258c537308b9927c046b4bdd4935f82aae3769f857e8efca124153",
+      "file": "public/cubies/codex.svg"
+    },
+    {
+      "sha256": "2bad487ec89a5b4593fcfbc274ec4d8a0515c64b6283c9353942b856084257c8",
+      "file": "public/cubies/discord.svg"
+    },
+    {
+      "sha256": "4b224039f5b0f04f0bfd56026684d9a3052f1669b0e35da5cad0d6455da0de88",
+      "file": "public/cubies/grok.svg"
+    },
+    {
+      "sha256": "92cd240deec3178096ac789b69198eeb6d6cb9e19d1ecdc097cf63854f7bf408",
+      "file": "public/cubies/herdr.svg"
+    },
+    {
+      "sha256": "7d26abcec50a72a5b1794f8e46997694d82ab37485fa59eb8cd236badb7c2a7f",
+      "file": "public/cubies/hermes.svg"
+    },
+    {
+      "sha256": "adcee62d65b18dfe3bf5fd8a104463f3a6f04607428f5515918959af42417e04",
+      "file": "public/cubies/local.svg"
+    },
+    {
+      "sha256": "ee04b365733e712ad87cae5863eb83079bee4327eecefc419f092fd4a003a1e5",
+      "file": "public/cubies/pane.svg"
+    },
+    {
+      "sha256": "120d4296bf79b92d7fa372e38a49b585d7127d0987152929c60488f288cf9ddd",
+      "file": "public/cubies/pi.svg"
+    },
+    {
+      "sha256": "2a9bb2f7173428cf5192488f5fe75dc68095614f63673925861a68a4b81a8bcb",
+      "file": "public/cubies/plugin.svg"
+    },
+    {
+      "sha256": "4438c024694194fed5be00cd461ec137be0b7c15f0a9a00ed0f560c9c901e087",
+      "file": "public/cubies/profile.svg"
+    },
+    {
+      "sha256": "2456b012c1cccb09774941a348ead02ea9ddbe4b2728aa94eaeefe6dafc8758f",
+      "file": "public/cubies/session.svg"
+    },
+    {
+      "sha256": "417e8135fa6ddd5263ac577d27438c032faaeee47bf3d56b3c71869c431af50f",
+      "file": "public/cubies/slack.svg"
+    },
+    {
+      "sha256": "3f571df55b5e379aede9323d8328601424121a28cd4e58defce7679a0ae7963a",
+      "file": "public/cubies/socket.svg"
+    },
+    {
+      "sha256": "c7465fcdded2e5b6ad4466b16833f2fef8dfe418ebd66eddfd10e5f3ef4b5955",
+      "file": "public/cubies/telegram.svg"
+    },
+    {
+      "sha256": "86898af98122e31482bb00b9cdd414955a1878df510ed3f10e04224d772fc360",
+      "file": "public/cubies/terminal.svg"
+    },
+    {
+      "sha256": "66f3697f9c46bbd0d11071898e3fbaa5f09a2d8b32564832b08401fad303587a",
+      "file": "public/cubies/workflow.svg"
+    },
+    {
+      "sha256": "c79118f268bb0c7cbac5d60ace4cd90c3c970f516b7bae22c6627bec4157d159",
+      "file": "public/review/cli-contact-sheet.svg"
+    },
+    {
+      "sha256": "6fad428a6c3d8655bb41103224f3e14351bb7230d619d7112ff2f5621b93028b",
+      "file": "public/review/cubie-contact-sheet.svg"
+    }
+  ],
+  "nativeMonitor": {
+    "source": "src/hermes_gateway_herdr/dashboard_view.py",
+    "mode": "offline-demo",
+    "columns": 100,
+    "rows": 30
+  }
+}

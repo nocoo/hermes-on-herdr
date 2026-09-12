@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "hexly-favicon",
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/public/favicon.svg",
+      "file": "public/brand/hexly-favicon.svg",
+      "sha256": "b5daa204c6633366bf2203db44ad301107dd14370d815c927ed029687d85aad5",
+      "bytes": 346,
+      "title": "Hexly site favicon, verbatim",
+      "license": "MIT; Hexly brand use authorized by project owner"
+    },
+    {
+      "id": "hexly-license",
+      "url": "https://raw.githubusercontent.com/nocoo/hexly.ai/e1b220a7643e8275134b0bff0a11d703c047abbe/LICENSE",
+      "file": "research/hexly-LICENSE.txt",
+      "sha256": "4bd1de59e976f86422fbc5e08e3377823d6445db6854e20b737b777d0b7b2cb9",
+      "bytes": 1065,
+      "title": "Hexly repository license",
+      "license": "MIT"
+    },
+    {
+      "id": "space-grotesk",
+      "url": "https://cdn.jsdelivr.net/npm/@fontsource-variable/space-grotesk@5.3.0/files/space-grotesk-latin-wght-normal.woff2",
+      "file": "public/fonts/space-grotesk.woff2",
+      "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d",
+      "bytes": 22288,
+      "title": "Space Grotesk Variable latin, 5.3.0",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "space-grotesk-license",
+      "url": "https://cdn.jsdelivr.net/npm/@fontsource-variable/space-grotesk@5.3.0/LICENSE",
+      "file": "public/fonts/space-grotesk-OFL.txt",
+      "sha256": "18a4de52385f6b988782639d5d0cc1326e5a8c2de9a7f01d7b20d9aedcc60943",
+      "bytes": 4401,
+      "title": "Space Grotesk license",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "geist-mono",
+      "url": "https://cdn.jsdelivr.net/npm/@fontsource-variable/geist-mono@5.3.0/files/geist-mono-latin-wght-normal.woff2",
+      "file": "public/fonts/geist-mono.woff2",
+      "sha256": "684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc",
+      "bytes": 23128,
+      "title": "Geist Mono Variable latin, 5.3.0",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "geist-mono-license",
+      "url": "https://cdn.jsdelivr.net/npm/@fontsource-variable/geist-mono@5.3.0/LICENSE",
+      "file": "public/fonts/geist-mono-OFL.txt",
+      "sha256": "cc815ed4fc045f0e991abb10395b7932bd028c6a067deb13316d6002105074e6",
+      "bytes": 4498,
+      "title": "Geist Mono license",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "hermes-favicon",
+      "url": "https://raw.githubusercontent.com/NousResearch/hermes-agent/b7ac3ba1cdf89f94dfe86de27e01358b194f4053/website/static/img/favicon.svg",
+      "revision": "b7ac3ba1cdf89f94dfe86de27e01358b194f4053",
+      "file": "public/brand/hermes-favicon.svg",
+      "sha256": "c4d55805bda8e16072ed77c0725176ab2218a9e628d1ba776a6048a39c28f751",
+      "bytes": 113,
+      "title": "Official repository SVG favicon (Unicode glyph wrapper, not a vector-drawn logo)",
+      "license": "MIT repository license; trademark rights not granted by MIT"
+    },
+    {
+      "id": "hermes-docs-navbar",
+      "url": "https://raw.githubusercontent.com/NousResearch/hermes-agent/b7ac3ba1cdf89f94dfe86de27e01358b194f4053/website/static/img/logo.png",
+      "revision": "b7ac3ba1cdf89f94dfe86de27e01358b194f4053",
+      "file": "research/hermes-docs-navbar.png",
+      "sha256": "2eaff911b9da9b1f1fcc81adb02f4992bb9ea6b781f4dd048cd79349927ddb7a",
+      "bytes": 1319989,
+      "title": "Upstream docs navbar avatar; source reference only, not used as the Hermes product mark",
+      "license": "MIT repository license; trademark rights not granted by MIT"
+    },
+    {
+      "id": "hermes-license",
+      "url": "https://raw.githubusercontent.com/NousResearch/hermes-agent/b7ac3ba1cdf89f94dfe86de27e01358b194f4053/LICENSE",
+      "revision": "b7ac3ba1cdf89f94dfe86de27e01358b194f4053",
+      "file": "research/hermes-LICENSE.txt",
+      "sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6",
+      "bytes": 1070,
+      "title": "Hermes Agent repository license",
+      "license": "MIT"
+    }
+  ]
+}

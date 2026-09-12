@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-09-12T06:19:29.505406+00:00",
+  "result": "PASS",
+  "scope": "Static asset preparation only",
+  "pinnedUpstreamFiles": 9,
+  "svgFiles": 31,
+  "terminalFixtures": 9,
+  "cubieFaces": 18,
+  "cubiePositions": 27,
+  "deterministicRebuild": "Verified 49 deterministic files; no live I/O or video render",
+  "sourceHashes": "PASS",
+  "fixturePrivacy": "PASS",
+  "svgSafetyAndDimensions": "PASS",
+  "localLinksAndPythonSyntax": "PASS",
+  "protectedTree": "23e9cf0dc1e3e246b77bafe4d1d9843dbd8cf323",
+  "protectedMedia": [
+    {
+      "file": "video/20260912T102534+0800/public/review/hermes-on-herdr-weekend-zh.mp4",
+      "sha256": "92145345553525497b434feea96a86cf94b0c45c2c68d8b06daa017d59908be5"
+    },
+    {
+      "file": "video/20260912T102534+0800/public/review/hermes-on-herdr-weekend-en.mp4",
+      "sha256": "2815334497113954b712074b6948f87eb4b87763e71125f412c9477ea29b1bfe"
+    }
+  ],
+  "browserCaptures": 4,
+  "templateStatus": "published-reference-only",
+  "finalAudioOrVideo": false
+}

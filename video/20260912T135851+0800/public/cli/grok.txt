@@ -1,0 +1,11 @@
+SYNTHETIC FIXTURE / Grok / NOT A LIVE TRANSCRIPT
+
+$ grok
+
+> Compare the documented queue behaviors.
+
+Reading the public reference...
+Separating facts from assumptions...
+Preparing findings for the manager.
+
+Task and output are fictional.

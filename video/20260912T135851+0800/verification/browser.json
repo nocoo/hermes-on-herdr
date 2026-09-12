@@ -1,0 +1,70 @@
+{
+  "mode": "static-assets-only",
+  "browser": "152.0.7977.83",
+  "capturedAt": "2026-09-12T06:18:10.975Z",
+  "captures": [
+    {
+      "source": "public/review/cli-contact-sheet.svg",
+      "width": 1836,
+      "height": 1494,
+      "file": "public/review/cli-contact-sheet.png",
+      "sha256": "388af422f27d97f131a330706ca03c05ba6e3349cc1eaed76e14adf34f00b1e9",
+      "bytes": 232198,
+      "layout": {
+        "width": 1836,
+        "contentWidth": 1836,
+        "imageCount": 0,
+        "brokenImages": 0,
+        "fontStatus": "loaded"
+      }
+    },
+    {
+      "source": "public/review/cubie-contact-sheet.svg",
+      "width": 1782,
+      "height": 1212,
+      "file": "public/review/cubie-contact-sheet.png",
+      "sha256": "771f6d6b839cfc875a42c393413daaf11e6ff9c7152e333246277d18f74cc62c",
+      "bytes": 120929,
+      "layout": {
+        "width": 1782,
+        "contentWidth": 1782,
+        "imageCount": 0,
+        "brokenImages": 0,
+        "fontStatus": "loaded"
+      }
+    },
+    {
+      "source": "index.html",
+      "width": 1920,
+      "height": 1080,
+      "file": "verification/gallery-desktop.png",
+      "sha256": "988b9192ea38bc2191cf1826436ef2eef94f5b716837ec90b9aa461eb80a32f6",
+      "bytes": 154242,
+      "layout": {
+        "width": 1920,
+        "contentWidth": 1920,
+        "imageCount": 28,
+        "brokenImages": 0,
+        "fontStatus": "loaded"
+      }
+    },
+    {
+      "source": "index.html",
+      "width": 390,
+      "height": 844,
+      "file": "verification/gallery-mobile.png",
+      "sha256": "ebf2b7cd8353ab6ad99606d0fe828e00b7e7b0c401e459f9e4962e4758a39d7f",
+      "bytes": 62838,
+      "layout": {
+        "width": 390,
+        "contentWidth": 390,
+        "imageCount": 28,
+        "brokenImages": 0,
+        "fontStatus": "loaded"
+      }
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "note": "Native SVG sizes and responsive gallery viewports; no film, speech or motion render."
+}

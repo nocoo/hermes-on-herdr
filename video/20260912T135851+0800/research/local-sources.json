@@ -1,0 +1,43 @@
+{
+  "sourceCommit": "cfd414b59c34b998b3fb489142a365970b99e0d0",
+  "files": [
+    {
+      "file": "src/hermes_gateway_herdr/dashboard_demo.py",
+      "sha256": "14bde3a9fad898ca39bcc7fd3fe5938f1ffa5946460b22e05b47b23471867d31"
+    },
+    {
+      "file": "src/hermes_gateway_herdr/dashboard_view.py",
+      "sha256": "99fbaf1cbf805ea715c9892721687d7c4db1641d0f015d8156d083733c5ea51e"
+    },
+    {
+      "file": "src/hermes_gateway_herdr/monitor.py",
+      "sha256": "feac7ef9f2b4810fea38cf845a70512b07c6861a9d4c0308538b2df3b7a60735"
+    },
+    {
+      "file": "src/hermes_gateway_herdr/config.py",
+      "sha256": "d8b90d9213bd4a810e57e224ad79185da2f7a982f9394d7db507cceebf986d26"
+    },
+    {
+      "file": "src/hermes_gateway_herdr/supervisor.py",
+      "sha256": "58530d25ed20e5ab9c1d54383ef3e7575fc12e5211b1982cb0fbc23bd4ff6f29"
+    },
+    {
+      "file": "vendor/hqtui/ORIGIN.json",
+      "sha256": "5540d720d19f349e2c6618dd75a0ebde153afd7cc43b3aa5388507cc5f4e33a0"
+    },
+    {
+      "file": "vendor/hqtui/LICENSE",
+      "sha256": "8906c971c5f97600ca8df90be6e83311c282a7720fd93e8d636dfd6e9f530098"
+    }
+  ],
+  "protectedMedia": [
+    {
+      "file": "video/20260912T102534+0800/public/review/hermes-on-herdr-weekend-zh.mp4",
+      "sha256": "92145345553525497b434feea96a86cf94b0c45c2c68d8b06daa017d59908be5"
+    },
+    {
+      "file": "video/20260912T102534+0800/public/review/hermes-on-herdr-weekend-en.mp4",
+      "sha256": "2815334497113954b712074b6948f87eb4b87763e71125f412c9477ea29b1bfe"
+    }
+  ]
+}

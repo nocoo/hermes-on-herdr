@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/nocoo/hexly.ai",
+  "readOnlyRevision": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+  "sources": [
+    "src/styles/base.css",
+    "src/components/Header.tsx",
+    "src/components/Icon.tsx",
+    "public/favicon.svg",
+    "packages/video-kit/src/brand.ts",
+    "packages/video-kit/src/Identity.tsx"
+  ],
+  "tokens": {
+    "page": "#f0f0e9",
+    "ink": "#30372e",
+    "muted": "#68705f",
+    "accent": "#bf5c3c",
+    "line": "#d4d8cb",
+    "surface": "#f8f8f2",
+    "soft": "#e8ebdf",
+    "shadow": "#35442c"
+  },
+  "wordmark": {"font": "Space Grotesk Variable", "size": 23, "weight": 600, "letterSpacing": -1, "gap": 11},
+  "references": [
+    {
+      "id": "hexly-logo-reveal-reference",
+      "kind": "reference-only",
+      "export": "HexlyReveal / LogoReveal",
+      "module": "@hexly/video-kit",
+      "source": "packages/video-kit/src/Identity.tsx",
+      "rule": "Official mark alone at center, then leftward motion and full wordmark reveal; product caption later. Consume the published component after handoff."
+    },
+    {
+      "id": "hexly-red-dot-reference",
+      "kind": "reference-only",
+      "export": "RedDot",
+      "module": "@hexly/video-kit",
+      "source": "packages/video-kit/src/Identity.tsx",
+      "tokens": {"color": "#bc7252", "highlight": "#ffe1b4", "glow": "#dd956b"},
+      "rule": "Use the existing RedDot component after publication, not a replacement logo or a newly drawn dot asset. This family location dot differs from the terracotta period in the wordmark."
+    }
+  ],
+  "integration": "Reference values only. No shared component, website or template source code is copied into this asset preparation."
+}

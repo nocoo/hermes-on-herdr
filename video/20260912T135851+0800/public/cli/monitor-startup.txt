@@ -1,0 +1,30 @@
+
+
+
+
+
+
+
+               ╭─  hermes on herdr  ───────────────────────────────────────  DEMO  ─╮
+               │ demo-m2 / HERDR MANAGED                                            │
+               │ Gateway READY                                                      │
+               │ Gateway started successfully.                                      │
+               │ PID 42001 / seen 0s ago                                            │
+               │                                                                    │
+               │ Open the monitoring dashboard?                                     │
+               │  Open monitor [Enter]                                              │
+               │ [ ] Always open on startup [Space]                                 │
+               │ Leave unchecked to keep this status page.                          │
+               │                                                                    │
+               │                                                                    │
+               │                                                                    │
+               ╰─  v0.1.0  ─────────────────────────────────────────────────────────╯
+
+
+
+
+
+
+
+
+ Enter Open  Space Auto-open  q Quit

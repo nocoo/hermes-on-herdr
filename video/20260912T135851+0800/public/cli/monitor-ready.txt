@@ -1,0 +1,30 @@
+╭─  demo-m2  / HERDR MANAGED  ───────────────────────  PINNED  ─╮ ╭─  SYSTEM  ─────  LIGHTWEIGHT  ─╮
+│ READY       1 active                              seen 0s ago │ │ HOST / CPU                     │
+│ discord connected                                             │ │ █▎─────────────────────── 5.0% │
+│ PID 42001   up 01:16:07   wDEMO:p5                            │ │                                │
+│                                                               │ │ MEMORY  8.5 GiB / 32.0 GiB     │
+│ CPU    0.8%    RSS  149.3 MiB    Agents 1                     │ │ ██████▉─────────────────── 27% │
+│                                                               │ │ sample 2s / discovery 30s      │
+│ CPU / one core                 RSS / MiB                      │ │                                │
+│  20                             160                           │ ╰────────────────────────────────╯
+│                                                               │
+│            ⡀                                    ⢀⣀⠤⠤⠤⠤⠤⠤⠤⣀⣀   │ ╭─  ACTIVITY  ───────────────────╮
+│           ⡜⠈⡆                               ⣀⠤⠒⠉⠁          ⠉⠉ │ │ OBSERVED STATE CHANGES         │
+│          ⡜██⠸⡀                         ⢀⣀⠤⠒⠉                  │ │                                │
+│         ⢰⠁███⢣                     ⠒⠒⠊⠉⠁                      │ │ 16:58:53  demo-m2          ST… │
+│    ⠤⠤⠤⠤⠔⠁█████⠣⣀⣀⡠⠤⠤⠤⠤⣀                                       │ │ 16:58:56  demo-m2          RE… │
+│   0████████████████████⠉⠒⠢⠤⠤⠤   133                           │ │                                │
+╰───────────────────────────────────────────────────────────────╯ │                                │
+                                                                  │                                │
+╭─  demo-local / GATEWAY  ──────────────────────────────────────╮ │                                │
+│ RUNNING     0 active                              seen 1s ago │ │                                │
+│ No live platform data                                         │ │                                │
+│ PID 42002   up 01:41:07   manual                              │ │                                │
+│                                                               │ │                                │
+│ CPU    3.2%    RSS  158.7 MiB    Agents 0                     │ │                                │
+│                                                               │ │                                │
+│ Lifecycle: external to this plugin                            │ │                                │
+│                                                               │ │ Metadata only / message conte… │
+╰───────────────────────────────────────────────────────────────╯ ╰────────────────────────────────╯
+
+ ? Help  q Quit  l Layout  t Theme  j/k Select  / Filter  b Star…auto / 2s  DEMO 2/2 online  v0.1.0

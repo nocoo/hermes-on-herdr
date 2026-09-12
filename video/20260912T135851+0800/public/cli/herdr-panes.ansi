@@ -1,0 +1,11 @@
+[38;2;191;92;60mSYNTHETIC FIXTURE / One manager. Four coding agents. / NOT A LIVE TRANSCRIPT
+
+[0m$ herdr agent list
+
+AGENT           PANE         FIXTURE STATE
+Codex           wDEMO:p1     working
+Grok            wDEMO:p2     working
+Pi              wDEMO:p3     idle
+Claude Code     wDEMO:p4     done
+
+Herdr manages the individual contributors.

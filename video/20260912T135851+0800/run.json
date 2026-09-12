@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "project": "hermes-on-herdr",
+  "repository": "https://github.com/nocoo/hermes-on-herdr",
+  "sourceCommit": "cfd414b59c34b998b3fb489142a365970b99e0d0",
+  "createdAt": "2026-09-12T13:58:51+08:00",
+  "phase": "asset-preparation",
+  "language": "en",
+  "direction": "Hexly light / candy-colored cubies",
+  "scope": "Synthetic CLI fixtures, authoritative icons, English copy, asset storyboard, optional public-schema fixture only",
+  "protectedHistory": {
+    "path": "video/20260912T102534+0800",
+    "gitTree": "23e9cf0dc1e3e246b77bafe4d1d9843dbd8cf323"
+  },
+  "template": {
+    "status": "published-reference-only",
+    "observedRemoteMain": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+    "publishedShaProvided": true,
+    "integration": "No runtime import in this asset archive. Confirmed remote main and peeled v0.6.0 resolve to the published commit; full package consumption belongs to the following film production.",
+    "publishedCommit": "e1b220a7643e8275134b0bff0a11d703c047abbe",
+    "tag": "v0.6.0",
+    "tagObject": "f70705b8a650d99ae2035ed3dc59871ec5b4e071",
+    "packageVersion": "1.0.0"
+  },
+  "finalNarration": false,
+  "finalRender": false,
+  "mediaPublication": false
+}

@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "provenance": "Original synthetic presentation fixtures. These are not recordings or exact replicas of the named CLIs.",
+  "privacy": "All tasks, paths, pane handles, states and messages below are invented. No live session, account, token or channel data was captured.",
+  "terminals": [
+    {
+      "id": "control-context",
+      "title": "Context is control.",
+      "eyebrow": "THE MISSING CONNECTION",
+      "color": "peach",
+      "kind": "concept-diagram",
+      "lines": [
+        "INDEPENDENT HERMES     TARGET HERDR SESSION",
+        "",
+        "Messaging access      is not session context",
+        "",
+        "pane                  not inherited automatically",
+        "socket                not inherited automatically",
+        "caller                not inherited automatically",
+        "",
+        "Explicit binding establishes the connection."
+      ],
+      "source": [
+        "docs/README.en.md#why-a-plugin",
+        "src/hermes_gateway_herdr/config.py"
+      ]
+    },
+    {
+      "id": "herdr-panes",
+      "title": "One manager. Four coding agents.",
+      "eyebrow": "HERDR / PRESENTATION SUMMARY",
+      "color": "mint",
+      "kind": "illustrative-cli",
+      "lines": [
+        "$ herdr agent list",
+        "",
+        "AGENT           PANE         FIXTURE STATE",
+        "Codex           wDEMO:p1     working",
+        "Grok            wDEMO:p2     working",
+        "Pi              wDEMO:p3     idle",
+        "Claude Code     wDEMO:p4     done",
+        "",
+        "Herdr manages the individual contributors."
+      ],
+      "source": [
+        "https://herdr.dev",
+        "docs/README.en.md#why-a-plugin"
+      ],
+      "note": "The live CLI emits structured JSON. This is an authored visual summary, not a literal capture. wDEMO handles must never be passed to Herdr."
+    },
+    {
+      "id": "hermes-channel",
+      "title": "Your channels. Your M2.",
+      "eyebrow": "HERMES / FICTIONAL MESSAGE EXCHANGE",
+      "color": "lilac",
+      "kind": "illustrative-message",
+      "lines": [
+        "FICTIONAL REQUEST / NO MESSAGE WAS SENT",
+        "Check the team. Summarize the next steps.",
+        "",
+        "ILLUSTRATIVE M2 RESPONSE",
+        "Reading the bound Herdr session.",
+        "",
+        "Channel > Hermes Gateway > local Herdr",
+        "Workflow illustration, not an E2E test.",
+        "",
+        "Discord: connectivity recorded",
+        "Telegram / Slack: upstream; integration unverified"
+      ],
+      "source": [
+        "docs/README.en.md#architecture-and-trust-boundaries"
+      ],
+      "note": "No real message was sent or copied. This illustrates an intended workflow; it does not demonstrate end-to-end verification. Only Discord connectivity has a recorded plugin integration check."
+    },
+    {
+      "id": "codex",
+      "title": "Codex",
+      "eyebrow": "CODING IC / REVIEW",
+      "color": "sky",
+      "kind": "illustrative-cli",
+      "lines": [
+        "$ codex",
+        "",
+        "> Review the retry policy in the demo project.",
+        "",
+        "Inspecting the retry boundary...",
+        "Checking the failure path...",
+        "Preparing a focused change for review.",
+        "",
+        "Task and output are fictional."
+      ],
+      "source": [
+        "https://github.com/openai/codex"
+      ]
+    },
+    {
+      "id": "grok",
+      "title": "Grok",
+      "eyebrow": "CODING IC / RESEARCH",
+      "color": "peach",
+      "kind": "illustrative-cli",
+      "lines": [
+        "$ grok",
+        "",
+        "> Compare the documented queue behaviors.",
+        "",
+        "Reading the public reference...",
+        "Separating facts from assumptions...",
+        "Preparing findings for the manager.",
+        "",
+        "Task and output are fictional."
+      ],
+      "source": [
+        "https://herdr.dev"
+      ],
+      "note": "Grok is a name reference to the installed Herdr coding-agent integration, not a claim that this is an official xAI terminal interface."
+    },
+    {
+      "id": "pi",
+      "title": "Pi",
+      "eyebrow": "CODING IC / IMPLEMENTATION",
+      "color": "lemon",
+      "kind": "illustrative-cli",
+      "lines": [
+        "$ pi",
+        "",
+        "> Add the small queue adapter in the demo.",
+        "",
+        "Inspecting the existing interface...",
+        "Keeping the change local...",
+        "Preparing the adapter for review.",
+        "",
+        "Task and output are fictional."
+      ],
+      "source": [
+        "https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent"
+      ]
+    },
+    {
+      "id": "claude-code",
+      "title": "Claude Code",
+      "eyebrow": "CODING IC / VERIFICATION",
+      "color": "lilac",
+      "kind": "illustrative-cli",
+      "lines": [
+        "$ claude",
+        "",
+        "> Review the edge cases in the demo change.",
+        "",
+        "Reading the proposed diff...",
+        "Tracing the cancellation path...",
+        "Preparing a verification checklist.",
+        "",
+        "Task and output are fictional."
+      ],
+      "source": [
+        "https://code.claude.com/docs/en/cli-reference"
+      ]
+    }
+  ]
+}
