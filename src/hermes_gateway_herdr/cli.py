@@ -21,7 +21,7 @@ ACTIONS = ("start", "resume", "pause", "stop", "restart")
 
 def parser():
     result = argparse.ArgumentParser(prog="hermes-on-herdr", allow_abbrev=False,
-                                     description="Control a dedicated, pane-owned Gateway. Real-host validation is pending.")
+                                     description="Control a dedicated, pane-owned Hermes Gateway.")
     result.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     result.add_argument("--config", type=Path, required=True)
     result.add_argument("--owner-socket", type=Path, help="Explicit owner context for commands outside a Herdr hook")
@@ -45,6 +45,7 @@ def parser():
             choice.add_argument("--apply", action="store_true", help="Initialize control state in the existing dedicated Profile")
             choice.add_argument("--dry-run", action="store_true", help="Show the binding plan (default)")
         if name == "dashboard":
+            command.add_argument("--http-port", type=int, help="Serve a read-only loopback status page and /health (0 chooses a free port)")
             command.add_argument("--startup", action="store_true", help="Show Gateway startup status and offer to open monitoring")
             command.add_argument("--snapshot", action="store_true", help="Print one read-only text frame and exit")
             command.add_argument("--demo-profiles", type=int, metavar="COUNT", help="Use offline demo profiles; no live sampling")
@@ -161,6 +162,12 @@ def main(argv=None):
         if command == "supervise":
             return Supervisor(config, env).run()
         if command == "dashboard":
+            if arguments.http_port is not None:
+                if (not 0 <= arguments.http_port <= 65535 or arguments.snapshot or arguments.json
+                        or arguments.demo_profiles is not None or arguments.parent_fd is not None or arguments.startup):
+                    raise GatewayError("INVALID_ARGUMENT")
+                from .dashboard_http import serve
+                return serve(config, arguments.http_port)
             from .dashboard import run_dashboard
             return run_dashboard(config, snapshot=arguments.snapshot, json_output=arguments.json,
                                  demo_profiles=arguments.demo_profiles, width=arguments.width,

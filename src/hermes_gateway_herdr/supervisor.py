@@ -154,6 +154,7 @@ class Supervisor:
         budget = effective_budget(intent, self.store.read("fuse.json"))
         return {
             "schema": 1, "kind": "hermes-gateway-herdr", "owner_key": self.config.key,
+            "profile": self.config.profile_id,
             "generation": self.generation, "instance_nonce": self.nonce, "pane": self.runtime["pane"],
             "supervisor": public_identity(self.identity), "gateway": public_identity(self.child_identity),
             "state": self.runtime["state"], "desired": intent["desired"], "intent_revision": intent["revision"],

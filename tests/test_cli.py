@@ -1,4 +1,5 @@
 from contextlib import redirect_stdout
+from http.client import HTTPConnection
 import io
 import json
 import os
@@ -8,6 +9,7 @@ import subprocess
 import sys
 import tomllib
 import unittest
+from urllib.parse import urlsplit
 from unittest.mock import patch
 
 from hermes_gateway_herdr import __version__, cli
@@ -46,6 +48,16 @@ class CliTests(unittest.TestCase):
                                             capture_output=True, text=True, timeout=3)
                     self.assertEqual(0, result.returncode, result.stderr)
                     self.assertEqual(f"hermes-on-herdr {__version__}\n", result.stdout)
+        self.assertFalse(missing.exists())
+        self.assertEqual([], self.owner.processes)
+
+    def test_help_is_available_in_an_unconfigured_plugin_environment(self):
+        missing = self.fixture.root / "not-configured"
+        for name in ("hermes-on-herdr", "hermes-gateway-herdr"):
+            result = subprocess.run([str(ROOT / "bin" / name), "--help"],
+                                    env={"HERDR_PLUGIN_CONFIG_DIR": str(missing)}, capture_output=True, text=True, timeout=3)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertIn("Commands:", result.stdout)
         self.assertFalse(missing.exists())
         self.assertEqual([], self.owner.processes)
 
@@ -99,6 +111,39 @@ class CliTests(unittest.TestCase):
         self.assertEqual(0, ordinary.returncode)
         self.assertEqual(10, required.returncode)
         self.assertEqual("PAUSED", json.loads(required.stdout)["state"])
+
+    def test_http_panel_observes_the_owned_gateway_and_exits_without_stopping_it(self):
+        self.assertEqual(0, self.inline("start")[0])
+        wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
+        child = self.store.read("runtime.json")["gateway"]
+        panel = subprocess.Popen([str(ROOT / "bin/hermes-on-herdr"), "--config", str(self.config.config_dir / "config.json"),
+                                  "dashboard", "--http-port", "0"], env=self.fixture.context(), stdin=subprocess.DEVNULL,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            import select
+            self.assertTrue(select.select([panel.stdout], [], [], 3)[0])
+            url = urlsplit(json.loads(panel.stdout.readline())["health_url"])
+
+            def health():
+                connection = HTTPConnection(url.hostname, url.port, timeout=1)
+                try:
+                    connection.request("GET", url.path)
+                    response = connection.getresponse()
+                    data = json.loads(response.read())
+                    return data if response.status == 200 else None
+                finally:
+                    connection.close()
+
+            data = wait_until(health)
+            self.assertEqual(self.config.profile_id, data["profile"])
+            self.assertEqual(child["pid"], data["gateway_pid"])
+            self.assertEqual("READY", data["state"])
+        finally:
+            panel.terminate()
+            _, errors = panel.communicate(timeout=3)
+            self.assertEqual("", errors)
+        self.assertTrue(same_process(child))
+        self.assertEqual("running", self.store.intent()["desired"])
 
     def test_launcher_rejects_public_hint_symlink_and_shell_text(self):
         hint = self.config.config_dir / "runtime-python"

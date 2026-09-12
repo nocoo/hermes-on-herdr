@@ -1,4 +1,4 @@
-# Development manifest. Full lifecycle and message validation remain pending.
+# Runtime manifest. Validation scope and installation: docs/15-发布与安装.md.
 id = "nocoo.hermes-gateway"
 name = "hermes on herdr"
 version = "0.1.0"
