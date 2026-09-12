@@ -1,0 +1,711 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "sourceStorySha256": "c8bf379b427bfb1a3a3d4118eb0e77d9438bf84cb54769f29726596b4a5976d2",
+  "scenes": [
+    {
+      "id": "opening",
+      "index": 0,
+      "start": 0,
+      "duration": 105,
+      "keyframe": 55,
+      "voiceStart": 24,
+      "voiceEnd": 0
+    },
+    {
+      "id": "partners",
+      "index": 1,
+      "start": 105,
+      "duration": 375,
+      "keyframe": 300,
+      "voiceStart": 24,
+      "voiceEnd": 442
+    },
+    {
+      "id": "management",
+      "index": 2,
+      "start": 480,
+      "duration": 315,
+      "keyframe": 644,
+      "voiceStart": 24,
+      "voiceEnd": 761
+    },
+    {
+      "id": "herdr",
+      "index": 3,
+      "start": 795,
+      "duration": 315,
+      "keyframe": 959,
+      "voiceStart": 24,
+      "voiceEnd": 1074
+    },
+    {
+      "id": "weekend",
+      "index": 4,
+      "start": 1110,
+      "duration": 255,
+      "keyframe": 1243,
+      "voiceStart": 24,
+      "voiceEnd": 1330
+    },
+    {
+      "id": "m2",
+      "index": 5,
+      "start": 1365,
+      "duration": 360,
+      "keyframe": 1552,
+      "voiceStart": 24,
+      "voiceEnd": 1642
+    },
+    {
+      "id": "control",
+      "index": 6,
+      "start": 1725,
+      "duration": 330,
+      "keyframe": 1897,
+      "voiceStart": 24,
+      "voiceEnd": 2016
+    },
+    {
+      "id": "lifecycle",
+      "index": 7,
+      "start": 2055,
+      "duration": 360,
+      "keyframe": 2242,
+      "voiceStart": 24,
+      "voiceEnd": 2381
+    },
+    {
+      "id": "monitor",
+      "index": 8,
+      "start": 2415,
+      "duration": 510,
+      "keyframe": 2680,
+      "voiceStart": 24,
+      "voiceEnd": 2888
+    },
+    {
+      "id": "closing",
+      "index": 9,
+      "start": 2925,
+      "duration": 345,
+      "keyframe": 3104,
+      "voiceStart": 24,
+      "voiceEnd": 3154
+    }
+  ],
+  "captions": {
+    "zh": [
+      {
+        "scene": "partners",
+        "start": 4.3,
+        "end": 8.233333333333333,
+        "text": "程序员都有自己信任的天才工程师伙伴。"
+      },
+      {
+        "scene": "partners",
+        "start": 8.5,
+        "end": 11.466666666666667,
+        "text": "比如 Codex、Grok、Pi，或者 Claude Code。"
+      },
+      {
+        "scene": "partners",
+        "start": 11.733333333333333,
+        "end": 14.733333333333333,
+        "text": "一个想法，就能和它们一起开工。"
+      },
+      {
+        "scene": "management",
+        "start": 16.8,
+        "end": 21.5,
+        "text": "当你有了自己的多 Agent 工作流，真正的问题变成了管理。"
+      },
+      {
+        "scene": "management",
+        "start": 21.766666666666666,
+        "end": 25.366666666666667,
+        "text": "谁在推进，谁被阻塞，下一步交给谁？"
+      },
+      {
+        "scene": "herdr",
+        "start": 27.3,
+        "end": 31.533333333333335,
+        "text": "Herdr 是 manager，负责管理这些天才 IC。"
+      },
+      {
+        "scene": "herdr",
+        "start": 31.8,
+        "end": 35.8,
+        "text": "它把工作区、终端和 Agent 状态，组织在一起。"
+      },
+      {
+        "scene": "weekend",
+        "start": 37.8,
+        "end": 41.96666666666667,
+        "text": "可周末到了，你不该还守在电脑前盯着进度。"
+      },
+      {
+        "scene": "weekend",
+        "start": 42.233333333333334,
+        "end": 43.86666666666667,
+        "text": "谁来管理 manager？"
+      },
+      {
+        "scene": "m2",
+        "start": 46.3,
+        "end": 52.13333333333333,
+        "text": "Hermes on Herdr，让当前机器上一个专门、受信任的 Hermes Profile，成为你的 M2。"
+      },
+      {
+        "scene": "m2",
+        "start": 52.4,
+        "end": 54.56666666666667,
+        "text": "一个管理 Herdr 的 manager。"
+      },
+      {
+        "scene": "control",
+        "start": 58.3,
+        "end": 62.06666666666667,
+        "text": "这个专用 Hermes 拥有完整 Herdr 控制权限。"
+      },
+      {
+        "scene": "control",
+        "start": 62.333333333333336,
+        "end": 67.2,
+        "text": "读取状态，协调工作，把你的意图传到正在执行的 Agent。"
+      },
+      {
+        "scene": "lifecycle",
+        "start": 69.3,
+        "end": 75.33333333333333,
+        "text": "允许运行时，它随 Herdr 启动，也随所属会话停止，运行在真实 pane 中。"
+      },
+      {
+        "scene": "lifecycle",
+        "start": 75.6,
+        "end": 79.36666666666666,
+        "text": "暂停后，只有明确恢复，才会继续运行。"
+      },
+      {
+        "scene": "monitor",
+        "start": 81.3,
+        "end": 87.16666666666667,
+        "text": "打开 monitor TUI，专属实例、多个 Profile、处理器和内存，一眼看清。"
+      },
+      {
+        "scene": "monitor",
+        "start": 87.43333333333334,
+        "end": 91.96666666666667,
+        "text": "通过 Hermes 已配置的消息平台，远程提问，异步跟进。"
+      },
+      {
+        "scene": "monitor",
+        "start": 92.23333333333333,
+        "end": 96.26666666666667,
+        "text": "机器和 Herdr 保持在线，你就可以离开桌面。"
+      },
+      {
+        "scene": "closing",
+        "start": 98.3,
+        "end": 102.26666666666667,
+        "text": "把天才交给系统管理，把周末还给自己。"
+      },
+      {
+        "scene": "closing",
+        "start": 102.53333333333333,
+        "end": 105.13333333333334,
+        "text": "Hermes on Herdr，来自 Hexly AI。"
+      }
+    ],
+    "en": [
+      {
+        "scene": "partners",
+        "start": 4.3,
+        "end": 8.2,
+        "text": "Every programmer has a brilliant engineering partner they trust."
+      },
+      {
+        "scene": "partners",
+        "start": 8.466666666666667,
+        "end": 10.7,
+        "text": "Codex, Grok, Pi, or Claude Code."
+      },
+      {
+        "scene": "partners",
+        "start": 10.966666666666667,
+        "end": 13.566666666666666,
+        "text": "An idea becomes something you can build together."
+      },
+      {
+        "scene": "management",
+        "start": 16.8,
+        "end": 21.533333333333335,
+        "text": "Once you have your own multi-agent workflow, the real problem becomes management."
+      },
+      {
+        "scene": "management",
+        "start": 21.8,
+        "end": 25.133333333333333,
+        "text": "Who is progressing, who is blocked, and who takes the next step?"
+      },
+      {
+        "scene": "herdr",
+        "start": 27.3,
+        "end": 31.166666666666668,
+        "text": "Herdr is the manager for those brilliant individual contributors."
+      },
+      {
+        "scene": "herdr",
+        "start": 31.433333333333334,
+        "end": 35.06666666666667,
+        "text": "It brings workspaces, terminals, and agent status together."
+      },
+      {
+        "scene": "weekend",
+        "start": 37.8,
+        "end": 42.333333333333336,
+        "text": "But the weekend is here. You should not have to sit at your computer watching progress."
+      },
+      {
+        "scene": "weekend",
+        "start": 42.6,
+        "end": 44.333333333333336,
+        "text": "Who manages the manager?"
+      },
+      {
+        "scene": "m2",
+        "start": 46.3,
+        "end": 51.96666666666667,
+        "text": "Hermes on Herdr gives that job to a dedicated, trusted Hermes profile on this machine."
+      },
+      {
+        "scene": "m2",
+        "start": 52.233333333333334,
+        "end": 54.733333333333334,
+        "text": "Your M2: a manager for the manager."
+      },
+      {
+        "scene": "control",
+        "start": 58.3,
+        "end": 61.166666666666664,
+        "text": "This dedicated Hermes has full Herdr control."
+      },
+      {
+        "scene": "control",
+        "start": 61.43333333333333,
+        "end": 66.7,
+        "text": "It can inspect status, coordinate work, and carry your instructions to the agents doing it."
+      },
+      {
+        "scene": "lifecycle",
+        "start": 69.3,
+        "end": 74.1,
+        "text": "When enabled, it starts with Herdr and stops with its session, inside a real pane."
+      },
+      {
+        "scene": "lifecycle",
+        "start": 74.36666666666666,
+        "end": 77.26666666666667,
+        "text": "A pause stays paused until you explicitly resume."
+      },
+      {
+        "scene": "monitor",
+        "start": 81.3,
+        "end": 88.0,
+        "text": "Open the monitor TUI: your dedicated instance, multiple profiles, CPU, and memory in view."
+      },
+      {
+        "scene": "monitor",
+        "start": 88.26666666666667,
+        "end": 93.23333333333333,
+        "text": "Check in remotely and asynchronously through your configured Hermes messaging platform."
+      },
+      {
+        "scene": "monitor",
+        "start": 93.5,
+        "end": 96.26666666666667,
+        "text": "Keep the machine and Herdr online, and step away."
+      },
+      {
+        "scene": "closing",
+        "start": 98.3,
+        "end": 101.96666666666667,
+        "text": "Let the system manage the genius. Keep the weekend for yourself."
+      },
+      {
+        "scene": "closing",
+        "start": 102.23333333333333,
+        "end": 104.5,
+        "text": "Hermes on Herdr. By Hexly AI."
+      }
+    ]
+  },
+  "audio": {
+    "zh": [
+      {
+        "scene": "partners",
+        "text": "程序员都有自己信任的天才工程师伙伴。",
+        "file": "audio/zh/partners-01.wav",
+        "fromFrame": 129,
+        "durationFrames": 118,
+        "durationSeconds": 3.9171666666666667,
+        "sha256": "c7c3fb512fb13e07229e338d99b9f3b14c39e5f40edef8b0a71a4d6621be8009"
+      },
+      {
+        "scene": "partners",
+        "text": "比如 Codex、Grok、Pi，或者 Claude Code。",
+        "file": "audio/zh/partners-02.wav",
+        "fromFrame": 255,
+        "durationFrames": 89,
+        "durationSeconds": 2.9471666666666665,
+        "sha256": "bf497b47d2f19794d9d61341564d6ce41c52597ed11bb80aa2c29023e2049b42"
+      },
+      {
+        "scene": "partners",
+        "text": "一个想法，就能和它们一起开工。",
+        "file": "audio/zh/partners-03.wav",
+        "fromFrame": 352,
+        "durationFrames": 90,
+        "durationSeconds": 2.9846666666666666,
+        "sha256": "4c83600b722f1f2ffe0e6fa1a9cd10ff8c871ce1abafc5b2611a2128614a4fac"
+      },
+      {
+        "scene": "management",
+        "text": "当你有了自己的多 Agent 工作流，真正的问题变成了管理。",
+        "file": "audio/zh/management-01.wav",
+        "fromFrame": 504,
+        "durationFrames": 141,
+        "durationSeconds": 4.669458333333333,
+        "sha256": "774885f5bd80defb4557e1df776eb10b926b8f2a1299bff83fbdfeee769389b9"
+      },
+      {
+        "scene": "management",
+        "text": "谁在推进，谁被阻塞，下一步交给谁？",
+        "file": "audio/zh/management-02.wav",
+        "fromFrame": 653,
+        "durationFrames": 108,
+        "durationSeconds": 3.578625,
+        "sha256": "6ec95d936c933b070d1e6e7c5247c11ac9071744c72860f50f5a9a11b030ec03"
+      },
+      {
+        "scene": "herdr",
+        "text": "Herdr 是 manager，负责管理这些天才 IC。",
+        "file": "audio/zh/herdr-01.wav",
+        "fromFrame": 819,
+        "durationFrames": 127,
+        "durationSeconds": 4.2320416666666665,
+        "sha256": "90b041eb5ea4013620b2c65a6029db7928fb60d10099d2f172a8cfa21dc4a51e"
+      },
+      {
+        "scene": "herdr",
+        "text": "它把工作区、终端和 Agent 状态，组织在一起。",
+        "file": "audio/zh/herdr-02.wav",
+        "fromFrame": 954,
+        "durationFrames": 120,
+        "durationSeconds": 3.9956666666666667,
+        "sha256": "8f4135e01843057d91c9929d279e4ec3cde8649c028b2c632550432dae2cca3b"
+      },
+      {
+        "scene": "weekend",
+        "text": "可周末到了，你不该还守在电脑前盯着进度。",
+        "file": "audio/zh/weekend-01.wav",
+        "fromFrame": 1134,
+        "durationFrames": 125,
+        "durationSeconds": 4.159416666666667,
+        "sha256": "fc7f9f36721f3c23bcfed9cf63bf67149f63521a4e85fd662e8905dfa2aa7bc6"
+      },
+      {
+        "scene": "weekend",
+        "text": "谁来管理 manager？",
+        "file": "audio/zh/weekend-02.wav",
+        "fromFrame": 1267,
+        "durationFrames": 49,
+        "durationSeconds": 1.6284583333333333,
+        "sha256": "116f1c7abe26b73da9990e63c6ea6217701f57db053b63532cfd9bb90c41aabd"
+      },
+      {
+        "scene": "m2",
+        "text": "Hermes on Herdr，让当前机器上一个专门、受信任的 Hermes Profile，成为你的 M2。",
+        "file": "audio/zh/m2-01.wav",
+        "fromFrame": 1389,
+        "durationFrames": 175,
+        "durationSeconds": 5.824916666666667,
+        "sha256": "769a3b87dd2815550be63a826feb087d91bd192b2e21df0ceb24e4a59422a09d"
+      },
+      {
+        "scene": "m2",
+        "text": "一个管理 Herdr 的 manager。",
+        "file": "audio/zh/m2-02.wav",
+        "fromFrame": 1572,
+        "durationFrames": 65,
+        "durationSeconds": 2.1467916666666667,
+        "sha256": "d822349e0aea26a5410ceda2eaec229b5764163d6ffb5f4b1f7f077dcc3bf8ca"
+      },
+      {
+        "scene": "control",
+        "text": "这个专用 Hermes 拥有完整 Herdr 控制权限。",
+        "file": "audio/zh/control-01.wav",
+        "fromFrame": 1749,
+        "durationFrames": 113,
+        "durationSeconds": 3.7573333333333334,
+        "sha256": "c90cda2148c15b01d3dc913c9c28bf2fdf3e571c851a213b7c5a1f47a967cbd7"
+      },
+      {
+        "scene": "control",
+        "text": "读取状态，协调工作，把你的意图传到正在执行的 Agent。",
+        "file": "audio/zh/control-02.wav",
+        "fromFrame": 1870,
+        "durationFrames": 146,
+        "durationSeconds": 4.86475,
+        "sha256": "9777d089faef9025868c75c97a104a3c0384deb8d95539b72ab73a1b89afe385"
+      },
+      {
+        "scene": "lifecycle",
+        "text": "允许运行时，它随 Herdr 启动，也随所属会话停止，运行在真实 pane 中。",
+        "file": "audio/zh/lifecycle-01.wav",
+        "fromFrame": 2079,
+        "durationFrames": 181,
+        "durationSeconds": 6.001125,
+        "sha256": "28058799a8df500514c8fe6eff20f39af0e65c27e208fedcff0d75d60a55c0b0"
+      },
+      {
+        "scene": "lifecycle",
+        "text": "暂停后，只有明确恢复，才会继续运行。",
+        "file": "audio/zh/lifecycle-02.wav",
+        "fromFrame": 2268,
+        "durationFrames": 113,
+        "durationSeconds": 3.7361666666666666,
+        "sha256": "25dcd07c35d319dc7a501584177c582cfbaaf659f029662389dabbeb114d6246"
+      },
+      {
+        "scene": "monitor",
+        "text": "打开 monitor TUI，专属实例、多个 Profile、处理器和内存，一眼看清。",
+        "file": "audio/zh/monitor-01.wav",
+        "fromFrame": 2439,
+        "durationFrames": 176,
+        "durationSeconds": 5.853666666666666,
+        "sha256": "80c3a61717cb4766e51f4e37dbe230b5707495abfe91414345c7bde70456136f"
+      },
+      {
+        "scene": "monitor",
+        "text": "通过 Hermes 已配置的消息平台，远程提问，异步跟进。",
+        "file": "audio/zh/monitor-02.wav",
+        "fromFrame": 2623,
+        "durationFrames": 136,
+        "durationSeconds": 4.519916666666667,
+        "sha256": "5e2951874590d50b8aa8cf2803cfb573e55af02682c99d811fff4bcde1ec63a6"
+      },
+      {
+        "scene": "monitor",
+        "text": "机器和 Herdr 保持在线，你就可以离开桌面。",
+        "file": "audio/zh/monitor-03.wav",
+        "fromFrame": 2767,
+        "durationFrames": 121,
+        "durationSeconds": 4.01375,
+        "sha256": "0fa535118b339e9a009a2387a48a769e34c6f60bb830853401985b6cbf3f4b6e"
+      },
+      {
+        "scene": "closing",
+        "text": "把天才交给系统管理，把周末还给自己。",
+        "file": "audio/zh/closing-01.wav",
+        "fromFrame": 2949,
+        "durationFrames": 119,
+        "durationSeconds": 3.9398333333333335,
+        "sha256": "0955ab91a8676b930acae3c515e09540fb3d9e83a2fc845b7a6e68ae9f9b54bf"
+      },
+      {
+        "scene": "closing",
+        "text": "Hermes on Herdr，来自 Hexly AI。",
+        "file": "audio/zh/closing-02.wav",
+        "fromFrame": 3076,
+        "durationFrames": 78,
+        "durationSeconds": 2.5695,
+        "sha256": "aaa21488c8b51987a53995089a3d908b9c5afa74152cce267fc1df4dee2e8dc4"
+      }
+    ],
+    "en": [
+      {
+        "scene": "partners",
+        "text": "Every programmer has a brilliant engineering partner they trust.",
+        "file": "audio/en/partners-01.wav",
+        "fromFrame": 129,
+        "durationFrames": 117,
+        "durationSeconds": 3.8717083333333333,
+        "sha256": "886e0d41b34100ec2de2d62d734fef2fa252b9932eea3615163cf5d84310d537"
+      },
+      {
+        "scene": "partners",
+        "text": "Codex, Grok, Pi, or Claude Code.",
+        "file": "audio/en/partners-02.wav",
+        "fromFrame": 254,
+        "durationFrames": 67,
+        "durationSeconds": 2.2164166666666665,
+        "sha256": "0ec166d6ec5bcdfe1ddd4b6ff71e139e6917c14eb5c3f97f35e25305d3d48297"
+      },
+      {
+        "scene": "partners",
+        "text": "An idea becomes something you can build together.",
+        "file": "audio/en/partners-03.wav",
+        "fromFrame": 329,
+        "durationFrames": 78,
+        "durationSeconds": 2.576875,
+        "sha256": "905f7d91d02eb4cf5244b9c73d2464989d93c42baf206eaea0eb6c73458075d2"
+      },
+      {
+        "scene": "management",
+        "text": "Once you have your own multi-agent workflow, the real problem becomes management.",
+        "file": "audio/en/management-01.wav",
+        "fromFrame": 504,
+        "durationFrames": 142,
+        "durationSeconds": 4.725666666666666,
+        "sha256": "6cd3cef5203a942e84a9edf729807abdcd40d9d73e4089905205531eb5153c42"
+      },
+      {
+        "scene": "management",
+        "text": "Who is progressing, who is blocked, and who takes the next step?",
+        "file": "audio/en/management-02.wav",
+        "fromFrame": 654,
+        "durationFrames": 100,
+        "durationSeconds": 3.3052083333333333,
+        "sha256": "9b1d998a5bc6ec7b2b79a48dbc5699e205d975f29abfbd95520ad79d2ac7cf88"
+      },
+      {
+        "scene": "herdr",
+        "text": "Herdr is the manager for those brilliant individual contributors.",
+        "file": "audio/en/herdr-01.wav",
+        "fromFrame": 819,
+        "durationFrames": 116,
+        "durationSeconds": 3.847625,
+        "sha256": "aaf5efd389891bda98e6c8a75b4ef6860e34cbe89de18c92e71087a5454a8ef9"
+      },
+      {
+        "scene": "herdr",
+        "text": "It brings workspaces, terminals, and agent status together.",
+        "file": "audio/en/herdr-02.wav",
+        "fromFrame": 943,
+        "durationFrames": 109,
+        "durationSeconds": 3.630375,
+        "sha256": "e26a065a4eea03a243c6176d9778e8ab7b40ad647c9a58b0df41ff1fb63aaaeb"
+      },
+      {
+        "scene": "weekend",
+        "text": "But the weekend is here. You should not have to sit at your computer watching progress.",
+        "file": "audio/en/weekend-01.wav",
+        "fromFrame": 1134,
+        "durationFrames": 136,
+        "durationSeconds": 4.520041666666667,
+        "sha256": "b5360dc1c4ef92dc1f886e1a784e8f4864e85f47a880ff3dff9e017bb8fad5e8"
+      },
+      {
+        "scene": "weekend",
+        "text": "Who manages the manager?",
+        "file": "audio/en/weekend-02.wav",
+        "fromFrame": 1278,
+        "durationFrames": 52,
+        "durationSeconds": 1.703375,
+        "sha256": "ed356c92a3fc1181102785aa04bcc32e67db5d14e95cf3dcd943c10511aeb1d2"
+      },
+      {
+        "scene": "m2",
+        "text": "Hermes on Herdr gives that job to a dedicated, trusted Hermes profile on this machine.",
+        "file": "audio/en/m2-01.wav",
+        "fromFrame": 1389,
+        "durationFrames": 170,
+        "durationSeconds": 5.658,
+        "sha256": "3664b1bdcd7d6ca29b5a779cba1cd03ee55d97bbca6a6603a27dceafe80a5c72"
+      },
+      {
+        "scene": "m2",
+        "text": "Your M two: a manager for the manager.",
+        "file": "audio/en/m2-02.wav",
+        "fromFrame": 1567,
+        "durationFrames": 75,
+        "durationSeconds": 2.468,
+        "sha256": "dba6379904fd925043fd779f570388129f65c1bff82dbf5cd18029148a401462"
+      },
+      {
+        "scene": "control",
+        "text": "This dedicated Hermes has full Herdr control.",
+        "file": "audio/en/control-01.wav",
+        "fromFrame": 1749,
+        "durationFrames": 86,
+        "durationSeconds": 2.854791666666667,
+        "sha256": "389d8986444d6895c3719400c8de3715bbfcfae5a5b892a5ca2decd89cb24acc"
+      },
+      {
+        "scene": "control",
+        "text": "It can inspect status, coordinate work, and carry your instructions to the agents doing it.",
+        "file": "audio/en/control-02.wav",
+        "fromFrame": 1843,
+        "durationFrames": 158,
+        "durationSeconds": 5.2645,
+        "sha256": "70193844de3062b7008cc9683a4b547d670a577a4cbbcc0a70567756b0d17785"
+      },
+      {
+        "scene": "lifecycle",
+        "text": "When enabled, it starts with Herdr and stops with its session, inside a real pane.",
+        "file": "audio/en/lifecycle-01.wav",
+        "fromFrame": 2079,
+        "durationFrames": 144,
+        "durationSeconds": 4.798166666666667,
+        "sha256": "2440641ca0fe399593fc86be98786084577c5db3547e66d5df276c135b8ca6f5"
+      },
+      {
+        "scene": "lifecycle",
+        "text": "A pause stays paused until you explicitly resume.",
+        "file": "audio/en/lifecycle-02.wav",
+        "fromFrame": 2231,
+        "durationFrames": 87,
+        "durationSeconds": 2.868916666666667,
+        "sha256": "00379f0a8629b850bd94844f47bc6a93b74318788526de455fc0de7964af866a"
+      },
+      {
+        "scene": "monitor",
+        "text": "Open the monitor T U I: your dedicated instance, multiple profiles, CPU, and memory in view.",
+        "file": "audio/en/monitor-01.wav",
+        "fromFrame": 2439,
+        "durationFrames": 201,
+        "durationSeconds": 6.692625,
+        "sha256": "c7a1c7823bbf52aa038d706d3cdba30700728d8e2f0b3fb5ce3477f0553852b4"
+      },
+      {
+        "scene": "monitor",
+        "text": "Check in remotely and asynchronously through your configured Hermes messaging platform.",
+        "file": "audio/en/monitor-02.wav",
+        "fromFrame": 2648,
+        "durationFrames": 149,
+        "durationSeconds": 4.943666666666667,
+        "sha256": "342395ad3adc002f2c9834c5c6c7061e0803e08abb0a8b3da4dd1a2b57d6a5b3"
+      },
+      {
+        "scene": "monitor",
+        "text": "Keep the machine and Herdr online, and step away.",
+        "file": "audio/en/monitor-03.wav",
+        "fromFrame": 2805,
+        "durationFrames": 83,
+        "durationSeconds": 2.7364166666666665,
+        "sha256": "a9dca9f9ec82b2a8202db3df2210e4a05fd50436443cdf489246e2cec1b1ede8"
+      },
+      {
+        "scene": "closing",
+        "text": "Let the system manage the genius. Keep the weekend for yourself.",
+        "file": "audio/en/closing-01.wav",
+        "fromFrame": 2949,
+        "durationFrames": 110,
+        "durationSeconds": 3.6475833333333334,
+        "sha256": "63549f48794edbdcfb228eb5775b49dd50101f11378d94b4bf4e5035b22649e0"
+      },
+      {
+        "scene": "closing",
+        "text": "Hermes on Herdr. By Hexly AI.",
+        "file": "audio/en/closing-02.wav",
+        "fromFrame": 3067,
+        "durationFrames": 68,
+        "durationSeconds": 2.2640833333333332,
+        "sha256": "682feda971cc6c00a1c6b8557952a3c4ad04bdef629fe3986988ab4f8349eca3"
+      }
+    ]
+  },
+  "durationInFrames": 3270
+}

@@ -1,0 +1,6 @@
+# PDF streams and cross-reference tables must retain their exact bytes.
+*.pdf binary
+
+# Preserve upstream license text and the verbatim Markdown review archive.
+20260912T102534+0800/public/fonts/noto-sans-sc-OFL.txt -whitespace
+20260912T102534+0800/research/grok-review.md whitespace=-blank-at-eol

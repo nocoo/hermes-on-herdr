@@ -1,0 +1,40 @@
+[
+  {
+    "frame": 1604,
+    "caption": "Your M2: a manager for the manager.",
+    "file": "verification/decoded-en/caption-m2.png",
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-ss",
+      "53.46666666666667",
+      "-i",
+      "public/review/hermes-on-herdr-weekend-en.mp4",
+      "-frames:v",
+      "1",
+      "verification/decoded-en/caption-m2.png"
+    ]
+  },
+  {
+    "frame": 2540,
+    "caption": "Open the monitor TUI: your dedicated instance, multiple profiles, CPU, and memory in view.",
+    "file": "verification/decoded-en/caption-monitor.png",
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-ss",
+      "84.66666666666667",
+      "-i",
+      "public/review/hermes-on-herdr-weekend-en.mp4",
+      "-frames:v",
+      "1",
+      "verification/decoded-en/caption-monitor.png"
+    ]
+  }
+]

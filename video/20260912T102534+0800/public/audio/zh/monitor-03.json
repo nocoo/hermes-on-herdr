@@ -1,0 +1,50 @@
+{
+  "text": "机器和 Herdr 保持在线，你就可以离开桌面。",
+  "spoken": "机器和 Herder 保持在线，你就可以离开桌面。",
+  "language": "zh",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M-v1.1-zh",
+    "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+    "voice": "zf_001",
+    "speed": 1.04
+  },
+  "sampleRate": 24000,
+  "samples": 96330,
+  "duration": 4.01375,
+  "signature": "5a4e3819fe8f7083f544a1ca2b9a222adec51b969bc9a77b8829087305ddd151",
+  "sha256": "0fa535118b339e9a009a2387a48a769e34c6f60bb830853401985b6cbf3f4b6e",
+  "phonemes": [
+    "ㄐㄧ1ㄑㄧ4/ㄏㄜ2 hˈɜɹdəɹ ㄅㄠ3ㄔ十2/ㄗㄞ4ㄒ言4, ㄋㄧ3/ㄐ又4/ㄎㄜ2ㄧ3/ㄌㄧ2ㄎㄞ1/ㄓ我1ㄇ言4."
+  ],
+  "gain": 1.6876518489575065,
+  "sourceTrimSamples": [
+    4367,
+    100697
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/config.json",
+      "sha256": "bc333efa5ce4ceff433c8c8e5d027a1eca0166001e4e4a62bea2d26ff7a46890",
+      "bytes": 3228
+    },
+    {
+      "file": "kokoro-v1_1-zh.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/kokoro-v1_1-zh.pth",
+      "sha256": "b1d8410fa44dfb5c15471fd6c4225ea6b4e9ac7fa03c98e8bea47a9928476e2b",
+      "bytes": 327247856
+    },
+    {
+      "file": "voices/zf_001.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/voices/zf_001.pt",
+      "sha256": "9bdc9a87e13e9bb1ea3e7803259c2ecbfebaeeb2ff80b5d0c76df1a464c1c962",
+      "bytes": 523331
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:47.881403+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "source": "logo.png",
+    "destination": "public/brand/product.png",
+    "sha256": "ba0a4a0a403d4775ce917290dc528884b0ac6666068ed0148f655777f815d719",
+    "bytes": 4337945
+  },
+  {
+    "source": "docs/evidence/dashboard-two.png",
+    "destination": "public/product/monitor-demo.png",
+    "sha256": "4483fd44e3b63b11e4506d499c8d525b7aa45010d984d339c4add7c57a5e7b92",
+    "bytes": 107764
+  },
+  {
+    "source": "/Users/nocoo/workspace/personal/hexly.ai/public/favicon.svg",
+    "destination": "public/brand/hexly-favicon.svg",
+    "sha256": "b5daa204c6633366bf2203db44ad301107dd14370d815c927ed029687d85aad5",
+    "bytes": 346
+  },
+  {
+    "source": "/Users/nocoo/workspace/personal/hexly.ai/node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2",
+    "destination": "public/fonts/space-grotesk.woff2",
+    "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d",
+    "bytes": 22288
+  },
+  {
+    "source": "/Users/nocoo/workspace/personal/hexly.ai/node_modules/@fontsource-variable/space-grotesk/LICENSE",
+    "destination": "public/fonts/space-grotesk-OFL.txt",
+    "sha256": "18a4de52385f6b988782639d5d0cc1326e5a8c2de9a7f01d7b20d9aedcc60943",
+    "bytes": 4401
+  },
+  {
+    "source": "/Users/nocoo/workspace/personal/hexly.ai/node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2",
+    "destination": "public/fonts/geist-mono.woff2",
+    "sha256": "684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc",
+    "bytes": 23128
+  },
+  {
+    "source": "/Users/nocoo/workspace/personal/hexly.ai/node_modules/@fontsource-variable/geist-mono/LICENSE",
+    "destination": "public/fonts/geist-mono-OFL.txt",
+    "sha256": "cc815ed4fc045f0e991abb10395b7932bd028c6a067deb13316d6002105074e6",
+    "bytes": 4498
+  }
+]

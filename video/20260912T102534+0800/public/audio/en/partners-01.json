@@ -1,0 +1,50 @@
+{
+  "text": "Every programmer has a brilliant engineering partner they trust.",
+  "spoken": "Every programmer has a brilliant engineering partner they trust.",
+  "language": "en",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M",
+    "voice": "af_heart",
+    "speed": 1.0,
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+  },
+  "sampleRate": 24000,
+  "samples": 92921,
+  "duration": 3.8717083333333333,
+  "signature": "da276094848a2d6b55784ab2114b5a2e8a81f119b7e6e976289195686b826788",
+  "sha256": "886e0d41b34100ec2de2d62d734fef2fa252b9932eea3615163cf5d84310d537",
+  "phonemes": [
+    "ˈɛvəɹi pɹˈOɡɹˌæməɹ hæz ɐ bɹˈɪljənt ˌɛnʤənˈɪɹɪŋ pˈɑɹtnəɹ ðA tɹˈʌst."
+  ],
+  "gain": 1.980176770135679,
+  "sourceTrimSamples": [
+    5622,
+    98543
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/config.json",
+      "sha256": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+      "bytes": 2351
+    },
+    {
+      "file": "kokoro-v1_0.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth",
+      "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+      "bytes": 327212226
+    },
+    {
+      "file": "voices/af_heart.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/voices/af_heart.pt",
+      "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+      "bytes": 523425
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:39:52.136563+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

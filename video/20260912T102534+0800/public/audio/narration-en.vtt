@@ -1,0 +1,61 @@
+WEBVTT
+
+00:00:04.300 --> 00:00:08.200
+Every programmer has a brilliant engineering partner they trust.
+
+00:00:08.467 --> 00:00:10.700
+Codex, Grok, Pi, or Claude Code.
+
+00:00:10.967 --> 00:00:13.567
+An idea becomes something you can build together.
+
+00:00:16.800 --> 00:00:21.533
+Once you have your own multi-agent workflow, the real problem becomes management.
+
+00:00:21.800 --> 00:00:25.133
+Who is progressing, who is blocked, and who takes the next step?
+
+00:00:27.300 --> 00:00:31.167
+Herdr is the manager for those brilliant individual contributors.
+
+00:00:31.433 --> 00:00:35.067
+It brings workspaces, terminals, and agent status together.
+
+00:00:37.800 --> 00:00:42.333
+But the weekend is here. You should not have to sit at your computer watching progress.
+
+00:00:42.600 --> 00:00:44.333
+Who manages the manager?
+
+00:00:46.300 --> 00:00:51.967
+Hermes on Herdr gives that job to a dedicated, trusted Hermes profile on this machine.
+
+00:00:52.233 --> 00:00:54.733
+Your M2: a manager for the manager.
+
+00:00:58.300 --> 00:01:01.167
+This dedicated Hermes has full Herdr control.
+
+00:01:01.433 --> 00:01:06.700
+It can inspect status, coordinate work, and carry your instructions to the agents doing it.
+
+00:01:09.300 --> 00:01:14.100
+When enabled, it starts with Herdr and stops with its session, inside a real pane.
+
+00:01:14.367 --> 00:01:17.267
+A pause stays paused until you explicitly resume.
+
+00:01:21.300 --> 00:01:28.000
+Open the monitor TUI: your dedicated instance, multiple profiles, CPU, and memory in view.
+
+00:01:28.267 --> 00:01:33.233
+Check in remotely and asynchronously through your configured Hermes messaging platform.
+
+00:01:33.500 --> 00:01:36.267
+Keep the machine and Herdr online, and step away.
+
+00:01:38.300 --> 00:01:41.967
+Let the system manage the genius. Keep the weekend for yourself.
+
+00:01:42.233 --> 00:01:44.500
+Hermes on Herdr. By Hexly AI.

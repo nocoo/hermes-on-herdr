@@ -1,0 +1,50 @@
+{
+  "text": "比如 Codex、Grok、Pi，或者 Claude Code。",
+  "spoken": "比如 Codex、Grok、Pi，或者 Claude Code。",
+  "language": "zh",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M-v1.1-zh",
+    "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+    "voice": "zf_001",
+    "speed": 1.04
+  },
+  "sampleRate": 24000,
+  "samples": 70732,
+  "duration": 2.9471666666666665,
+  "signature": "c10f022dc37794200ef0dc8013d647c1b79cfa6a261ea4e75427b6e597bb2888",
+  "sha256": "bf497b47d2f19794d9d61341564d6ce41c52597ed11bb80aa2c29023e2049b42",
+  "phonemes": [
+    "ㄅㄧ3ㄖㄨ2 kˈOdˌɛks , ɡɹˈɑk , pˈI , ㄏ我4ㄓㄜ3 klˈɔd kˈOd ."
+  ],
+  "gain": 1.5913793254723414,
+  "sourceTrimSamples": [
+    3952,
+    74684
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/config.json",
+      "sha256": "bc333efa5ce4ceff433c8c8e5d027a1eca0166001e4e4a62bea2d26ff7a46890",
+      "bytes": 3228
+    },
+    {
+      "file": "kokoro-v1_1-zh.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/kokoro-v1_1-zh.pth",
+      "sha256": "b1d8410fa44dfb5c15471fd6c4225ea6b4e9ac7fa03c98e8bea47a9928476e2b",
+      "bytes": 327247856
+    },
+    {
+      "file": "voices/zf_001.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/voices/zf_001.pt",
+      "sha256": "9bdc9a87e13e9bb1ea3e7803259c2ecbfebaeeb2ff80b5d0c76df1a464c1c962",
+      "bytes": 523331
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:39:54.763665+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

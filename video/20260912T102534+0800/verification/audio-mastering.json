@@ -1,0 +1,62 @@
+{
+  "zh": {
+    "analysis": {
+      "input_i": "-17.69",
+      "input_tp": "-1.30",
+      "input_lra": "6.50",
+      "input_thresh": "-28.93",
+      "output_i": "-16.11",
+      "output_tp": "-1.80",
+      "output_lra": "5.40",
+      "output_thresh": "-26.99",
+      "normalization_type": "dynamic",
+      "target_offset": "0.11"
+    },
+    "mastering": {
+      "input_i": "-17.69",
+      "input_tp": "-1.30",
+      "input_lra": "6.50",
+      "input_thresh": "-28.93",
+      "output_i": "-16.04",
+      "output_tp": "-1.80",
+      "output_lra": "6.40",
+      "output_thresh": "-27.06",
+      "normalization_type": "dynamic",
+      "target_offset": "0.04"
+    },
+    "samples": 5232000,
+    "seconds": 109.0,
+    "voiceClips": 20,
+    "sha256": "6f5790905d0b22543bacedcbe78f65217c5c11a0736b5e846afd3f4affb5d624"
+  },
+  "en": {
+    "analysis": {
+      "input_i": "-17.38",
+      "input_tp": "-1.26",
+      "input_lra": "10.60",
+      "input_thresh": "-29.00",
+      "output_i": "-16.36",
+      "output_tp": "-1.80",
+      "output_lra": "6.60",
+      "output_thresh": "-27.36",
+      "normalization_type": "dynamic",
+      "target_offset": "0.36"
+    },
+    "mastering": {
+      "input_i": "-17.38",
+      "input_tp": "-1.26",
+      "input_lra": "10.60",
+      "input_thresh": "-29.00",
+      "output_i": "-16.08",
+      "output_tp": "-1.80",
+      "output_lra": "7.00",
+      "output_thresh": "-27.22",
+      "normalization_type": "dynamic",
+      "target_offset": "0.08"
+    },
+    "samples": 5232000,
+    "seconds": 109.0,
+    "voiceClips": 20,
+    "sha256": "ccd06c7d57d48797a3a93e794b8d6bbc9249f0f016fbc7f928373d3037c031b9"
+  }
+}

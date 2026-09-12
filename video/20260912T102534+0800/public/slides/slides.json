@@ -1,0 +1,177 @@
+{
+  "sourceStorySha256": "c8bf379b427bfb1a3a3d4118eb0e77d9438bf84cb54769f29726596b4a5976d2",
+  "timingSha256": "3f262f1ee7a2c43a45386515961b4909fb386f3968c287d44438bf6a0a1ea124",
+  "spec": [
+    1920,
+    1080
+  ],
+  "format": "Lossless raster keyframes; editable native ODP notes",
+  "editions": {
+    "zh": {
+      "pages": [
+        {
+          "scene": "opening",
+          "frame": 55,
+          "file": "review/stills/zh/00-opening.png",
+          "imageSha256": "446d97067735a855831d2e2364522b0ab4aa7a0cfc18746a5b056b1e918a30e2",
+          "notes": "片头音乐，无旁白。"
+        },
+        {
+          "scene": "partners",
+          "frame": 300,
+          "file": "review/stills/zh/01-partners.png",
+          "imageSha256": "e13816a4e9d0c5af4d762005ec82e1a6fdcaa398159029b76f7ca79016716843",
+          "notes": "程序员都有自己信任的天才工程师伙伴。 比如 Codex、Grok、Pi，或者 Claude Code。 一个想法，就能和它们一起开工。"
+        },
+        {
+          "scene": "management",
+          "frame": 644,
+          "file": "review/stills/zh/02-management.png",
+          "imageSha256": "7be0bcb0b19ed8da25fcb092b39d1b78faebe0920454454af349c873b8ba306f",
+          "notes": "当你有了自己的多 Agent 工作流，真正的问题变成了管理。 谁在推进，谁被阻塞，下一步交给谁？"
+        },
+        {
+          "scene": "herdr",
+          "frame": 959,
+          "file": "review/stills/zh/03-herdr.png",
+          "imageSha256": "79466700e2970dbc3ebf86ea92d8a4e819274529a7742505092cc66cd9f1f2cb",
+          "notes": "Herdr 是 manager，负责管理这些天才 IC。 它把工作区、终端和 Agent 状态，组织在一起。"
+        },
+        {
+          "scene": "weekend",
+          "frame": 1243,
+          "file": "review/stills/zh/04-weekend.png",
+          "imageSha256": "223d739508e93d0138549994586648f8062e5a7d1e2194baca1de5bd3c620afb",
+          "notes": "可周末到了，你不该还守在电脑前盯着进度。 谁来管理 manager？"
+        },
+        {
+          "scene": "m2",
+          "frame": 1552,
+          "file": "review/stills/zh/05-m2.png",
+          "imageSha256": "250aaf57a4f916e58f97497be84fc5791e96246198956f5861654837c1d302c3",
+          "notes": "Hermes on Herdr，让当前机器上一个专门、受信任的 Hermes Profile，成为你的 M2。 一个管理 Herdr 的 manager。"
+        },
+        {
+          "scene": "control",
+          "frame": 1897,
+          "file": "review/stills/zh/06-control.png",
+          "imageSha256": "fcb0ff6420d6efad9659cd5355052f603a4e7273509eda2b22eec68cbe252625",
+          "notes": "这个专用 Hermes 拥有完整 Herdr 控制权限。 读取状态，协调工作，把你的意图传到正在执行的 Agent。"
+        },
+        {
+          "scene": "lifecycle",
+          "frame": 2242,
+          "file": "review/stills/zh/07-lifecycle.png",
+          "imageSha256": "8b4c0aee73138b97d1a7e13bc9f7436f92806f192761b6ba8238ced50621500f",
+          "notes": "允许运行时，它随 Herdr 启动，也随所属会话停止，运行在真实 pane 中。 暂停后，只有明确恢复，才会继续运行。"
+        },
+        {
+          "scene": "monitor",
+          "frame": 2680,
+          "file": "review/stills/zh/08-monitor.png",
+          "imageSha256": "16d1300d301c162738b9e9a1016e3ef0d5206fc59a8a70c70de0d7d58ab22ad1",
+          "notes": "打开 monitor TUI，专属实例、多个 Profile、处理器和内存，一眼看清。 通过 Hermes 已配置的消息平台，远程提问，异步跟进。 机器和 Herdr 保持在线，你就可以离开桌面。"
+        },
+        {
+          "scene": "closing",
+          "frame": 3104,
+          "file": "review/stills/zh/09-closing.png",
+          "imageSha256": "27b5ec1be1fd09d3f2502df6cbc60ba56384509e059e97dae00f64219ff172f3",
+          "notes": "把天才交给系统管理，把周末还给自己。 Hermes on Herdr，来自 Hexly AI。"
+        }
+      ],
+      "pdf": {
+        "file": "hermes-weekend-zh.pdf",
+        "sha256": "0d0f400ed8a7a4d4620716475f0832750dde5c439224e6ee0b470b960efe7c59"
+      },
+      "odp": {
+        "file": "hermes-weekend-zh.odp",
+        "sha256": "1ff81967c3caba0a94222a29d5397cff097f36d0bb4b37078578007d09eeb7c1"
+      },
+      "verified": true
+    },
+    "en": {
+      "pages": [
+        {
+          "scene": "opening",
+          "frame": 55,
+          "file": "review/stills/en/00-opening.png",
+          "imageSha256": "6bf4e12ebf777490d29c71eb0a1641983d5bfd192055eb3bd7fc19cb625f88c5",
+          "notes": "Opening music; no narration."
+        },
+        {
+          "scene": "partners",
+          "frame": 300,
+          "file": "review/stills/en/01-partners.png",
+          "imageSha256": "ea0e1c7a1f42c61a974dee44a576e1b91e35cbfc3eadb7151b27c6f08a7d8bfc",
+          "notes": "Every programmer has a brilliant engineering partner they trust. Codex, Grok, Pi, or Claude Code. An idea becomes something you can build together."
+        },
+        {
+          "scene": "management",
+          "frame": 644,
+          "file": "review/stills/en/02-management.png",
+          "imageSha256": "dfa3d3cfea832404f9cc44a1ac45655fbeae70a0f884bf20621991de5bac74bc",
+          "notes": "Once you have your own multi-agent workflow, the real problem becomes management. Who is progressing, who is blocked, and who takes the next step?"
+        },
+        {
+          "scene": "herdr",
+          "frame": 959,
+          "file": "review/stills/en/03-herdr.png",
+          "imageSha256": "eb59aea7b3d19e7e93ee26c9f867e5b139ad7853b12bebbf09d2a6642d434f75",
+          "notes": "Herdr is the manager for those brilliant individual contributors. It brings workspaces, terminals, and agent status together."
+        },
+        {
+          "scene": "weekend",
+          "frame": 1243,
+          "file": "review/stills/en/04-weekend.png",
+          "imageSha256": "69666c7b0be571a869adf4d606526297f6a793ec52b18be4a5bc16a8328b738b",
+          "notes": "But the weekend is here. You should not have to sit at your computer watching progress. Who manages the manager?"
+        },
+        {
+          "scene": "m2",
+          "frame": 1552,
+          "file": "review/stills/en/05-m2.png",
+          "imageSha256": "df9b43009d0396e980d85a6b736f2775c4a52fdc4f554d88c9396946b58c2e2f",
+          "notes": "Hermes on Herdr gives that job to a dedicated, trusted Hermes profile on this machine. Your M two: a manager for the manager."
+        },
+        {
+          "scene": "control",
+          "frame": 1897,
+          "file": "review/stills/en/06-control.png",
+          "imageSha256": "360b9b4f34d6be9b605d54a099ff13123d9e4a08f6fb039c77b5daef19f520d4",
+          "notes": "This dedicated Hermes has full Herdr control. It can inspect status, coordinate work, and carry your instructions to the agents doing it."
+        },
+        {
+          "scene": "lifecycle",
+          "frame": 2242,
+          "file": "review/stills/en/07-lifecycle.png",
+          "imageSha256": "50203f4c0f91e88ff4e593455545154a8da275f1a42985d7ff931ad5fa0cb719",
+          "notes": "When enabled, it starts with Herdr and stops with its session, inside a real pane. A pause stays paused until you explicitly resume."
+        },
+        {
+          "scene": "monitor",
+          "frame": 2680,
+          "file": "review/stills/en/08-monitor.png",
+          "imageSha256": "bd1549d8731b409aed60526b0efb9bb14fb052715bf74b0bf4b4648800b05618",
+          "notes": "Open the monitor T U I: your dedicated instance, multiple profiles, CPU, and memory in view. Check in remotely and asynchronously through your configured Hermes messaging platform. Keep the machine and Herdr online, and step away."
+        },
+        {
+          "scene": "closing",
+          "frame": 3104,
+          "file": "review/stills/en/09-closing.png",
+          "imageSha256": "b45c6075d0b9cf954bd35ffa30012a37a9295a6570e0950e13ac0ce82a258a0e",
+          "notes": "Let the system manage the genius. Keep the weekend for yourself. Hermes on Herdr. By Hexly AI."
+        }
+      ],
+      "pdf": {
+        "file": "hermes-weekend-en.pdf",
+        "sha256": "89d190417ec0e353a8f2908de742e729362719d777dbe66eb3301a5d82c27f12"
+      },
+      "odp": {
+        "file": "hermes-weekend-en.odp",
+        "sha256": "2a0232341d2ce64bac0ee303678151a99f7f977f76b5b0a383429b74ae376585"
+      },
+      "verified": true
+    }
+  }
+}

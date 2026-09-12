@@ -1,0 +1,50 @@
+{
+  "text": "Hermes on Herdr，来自 Hexly AI。",
+  "spoken": "Hermes on Herder，来自 Hex lee A I。",
+  "language": "zh",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M-v1.1-zh",
+    "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+    "voice": "zf_001",
+    "speed": 1.04
+  },
+  "sampleRate": 24000,
+  "samples": 61668,
+  "duration": 2.5695,
+  "signature": "b9152d63c7fbc84c4b0d5c167f6b195534efbe345a682e96983ff7b10c64b52e",
+  "sha256": "aaa21488c8b51987a53995089a3d908b9c5afa74152cce267fc1df4dee2e8dc4",
+  "phonemes": [
+    "hˈɜɹmiz ˌɔn hˈɜɹdəɹ , ㄌㄞ2ㄗㄭ4 hˈɛks lˈi ˈA ˌI ."
+  ],
+  "gain": 1.7031014304035526,
+  "sourceTrimSamples": [
+    4234,
+    65902
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/config.json",
+      "sha256": "bc333efa5ce4ceff433c8c8e5d027a1eca0166001e4e4a62bea2d26ff7a46890",
+      "bytes": 3228
+    },
+    {
+      "file": "kokoro-v1_1-zh.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/kokoro-v1_1-zh.pth",
+      "sha256": "b1d8410fa44dfb5c15471fd6c4225ea6b4e9ac7fa03c98e8bea47a9928476e2b",
+      "bytes": 327247856
+    },
+    {
+      "file": "voices/zf_001.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/voices/zf_001.pt",
+      "sha256": "9bdc9a87e13e9bb1ea3e7803259c2ecbfebaeeb2ff80b5d0c76df1a464c1c962",
+      "bytes": 523331
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:48.512037+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

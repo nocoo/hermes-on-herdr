@@ -1,0 +1,94 @@
+{
+  "mode": "stills",
+  "language": "both",
+  "sourceHash": "f76f72be4b974e5d8c692262bbc32de62d134d7902990a5cb095ea32871bf11b",
+  "timingHash": "8ab64392e4f5caf507b257fbaca2338057a4af6bfaf105b2ace265eccbd03abb",
+  "renderedAt": "2026-09-12T02:52:45.586Z",
+  "frames": 3270,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "status": "complete",
+  "artifacts": [
+    {
+      "file": "public/review/stills/zh/00-opening.png",
+      "frame": 55
+    },
+    {
+      "file": "public/review/stills/zh/01-partners.png",
+      "frame": 300
+    },
+    {
+      "file": "public/review/stills/zh/02-management.png",
+      "frame": 644
+    },
+    {
+      "file": "public/review/stills/zh/03-herdr.png",
+      "frame": 959
+    },
+    {
+      "file": "public/review/stills/zh/04-weekend.png",
+      "frame": 1243
+    },
+    {
+      "file": "public/review/stills/zh/05-m2.png",
+      "frame": 1552
+    },
+    {
+      "file": "public/review/stills/zh/06-control.png",
+      "frame": 1897
+    },
+    {
+      "file": "public/review/stills/zh/07-lifecycle.png",
+      "frame": 2242
+    },
+    {
+      "file": "public/review/stills/zh/08-monitor.png",
+      "frame": 2680
+    },
+    {
+      "file": "public/review/stills/zh/09-closing.png",
+      "frame": 3104
+    },
+    {
+      "file": "public/review/stills/en/00-opening.png",
+      "frame": 55
+    },
+    {
+      "file": "public/review/stills/en/01-partners.png",
+      "frame": 300
+    },
+    {
+      "file": "public/review/stills/en/02-management.png",
+      "frame": 644
+    },
+    {
+      "file": "public/review/stills/en/03-herdr.png",
+      "frame": 959
+    },
+    {
+      "file": "public/review/stills/en/04-weekend.png",
+      "frame": 1243
+    },
+    {
+      "file": "public/review/stills/en/05-m2.png",
+      "frame": 1552
+    },
+    {
+      "file": "public/review/stills/en/06-control.png",
+      "frame": 1897
+    },
+    {
+      "file": "public/review/stills/en/07-lifecycle.png",
+      "frame": 2242
+    },
+    {
+      "file": "public/review/stills/en/08-monitor.png",
+      "frame": 2680
+    },
+    {
+      "file": "public/review/stills/en/09-closing.png",
+      "frame": 3104
+    }
+  ]
+}

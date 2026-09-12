@@ -1,0 +1,277 @@
+[
+  {
+    "language": "en",
+    "file": "public/audio/en/herdr-01.wav",
+    "expected": "Herdr is the manager for those brilliant individual contributors.",
+    "recognized": " Herdr is the manager for those brilliant individual contributors.",
+    "segments": [
+      {
+        "id": 0,
+        "seek": 0,
+        "start": 0.0,
+        "end": 3.7600000000000002,
+        "text": " Herdr is the manager for those brilliant individual contributors.",
+        "tokens": [
+          50364,
+          3204,
+          16753,
+          307,
+          264,
+          6598,
+          337,
+          729,
+          10248,
+          2609,
+          45627,
+          13,
+          50552
+        ],
+        "temperature": 0,
+        "avg_logprob": -0.26275335039411274,
+        "compression_ratio": 0.9848484848484849,
+        "no_speech_prob": 0.003459541592746973
+      }
+    ]
+  },
+  {
+    "language": "en",
+    "file": "public/audio/en/control-01.wav",
+    "expected": "This dedicated Hermes has full Herdr control.",
+    "recognized": " This dedicated Hermes has full herder control.",
+    "segments": [
+      {
+        "id": 0,
+        "seek": 0,
+        "start": 0.0,
+        "end": 2.8000000000000003,
+        "text": " This dedicated Hermes has full herder control.",
+        "tokens": [
+          50364,
+          639,
+          8374,
+          21842,
+          279,
+          575,
+          1577,
+          720,
+          1068,
+          1969,
+          13,
+          50504
+        ],
+        "temperature": 0,
+        "avg_logprob": -0.27632915056668794,
+        "compression_ratio": 0.8518518518518519,
+        "no_speech_prob": 0.004304150585085154
+      }
+    ]
+  },
+  {
+    "language": "en",
+    "file": "public/audio/en/monitor-01.wav",
+    "expected": "Open the monitor T U I: your dedicated instance, multiple profiles, CPU, and memory in view.",
+    "recognized": " Open the monitor TUI, your dedicated instance, multiple profiles, CPU, and memory in view.",
+    "segments": [
+      {
+        "id": 0,
+        "seek": 0,
+        "start": 0.0,
+        "end": 6.640000000000001,
+        "text": " Open the monitor TUI, your dedicated instance, multiple profiles, CPU, and memory in view.",
+        "tokens": [
+          50364,
+          7238,
+          264,
+          6002,
+          42408,
+          40,
+          11,
+          428,
+          8374,
+          5197,
+          11,
+          3866,
+          23693,
+          11,
+          13199,
+          11,
+          293,
+          4675,
+          294,
+          1910,
+          13,
+          50696
+        ],
+        "temperature": 0,
+        "avg_logprob": -0.22618295835412067,
+        "compression_ratio": 1.0112359550561798,
+        "no_speech_prob": 0.0032025405671447515
+      }
+    ]
+  },
+  {
+    "language": "en",
+    "file": "public/audio/en/monitor-02.wav",
+    "expected": "Check in remotely and asynchronously through your configured Hermes messaging platform.",
+    "recognized": " Check in remotely and asynchronously through your configured Hermes messaging platform.",
+    "segments": [
+      {
+        "id": 0,
+        "seek": 0,
+        "start": 0.0,
+        "end": 4.8,
+        "text": " Check in remotely and asynchronously through your configured Hermes messaging platform.",
+        "tokens": [
+          50364,
+          6881,
+          294,
+          20824,
+          293,
+          42642,
+          5098,
+          807,
+          428,
+          30538,
+          21842,
+          279,
+          21812,
+          3663,
+          13,
+          50604
+        ],
+        "temperature": 0,
+        "avg_logprob": -0.2265304116641774,
+        "compression_ratio": 1.0481927710843373,
+        "no_speech_prob": 0.004660274367779493
+      }
+    ]
+  },
+  {
+    "language": "zh",
+    "file": "public/audio/zh/m2-01.wav",
+    "expected": "Hermes on Herdr，让当前机器上一个专门、受信任的 Hermes Profile，成为你的 M2。",
+    "recognized": "Hermes on Herdr. 让当前机器上一个专门受信任的Hermes Profile成为你的MR",
+    "segments": [
+      {
+        "id": 0,
+        "seek": 0,
+        "start": 0.0,
+        "end": 3.1,
+        "text": "Hermes on Herdr. 让当前机器上一个专门",
+        "tokens": [
+          50364,
+          39,
+          966,
+          279,
+          322,
+          3204,
+          16753,
+          13,
+          220,
+          33650,
+          16233,
+          8945,
+          37960,
+          34386,
+          5708,
+          20182,
+          940,
+          241,
+          8259,
+          101,
+          50519
+        ],
+        "temperature": 0,
+        "avg_logprob": -0.2357754320711703,
+        "compression_ratio": 0.9157894736842105,
+        "no_speech_prob": 0.0011454792693257332
+      },
+      {
+        "id": 1,
+        "seek": 0,
+        "start": 3.1,
+        "end": 5.8,
+        "text": "受信任的Hermes Profile成为你的MR",
+        "tokens": [
+          50519,
+          23151,
+          17665,
+          26443,
+          1546,
+          39,
+          966,
+          279,
+          6039,
+          794,
+          11336,
+          13992,
+          18961,
+          21173,
+          50654
+        ],
+        "temperature": 0,
+        "avg_logprob": -0.2357754320711703,
+        "compression_ratio": 0.9157894736842105,
+        "no_speech_prob": 0.0011454792693257332
+      }
+    ]
+  },
+  {
+    "language": "zh",
+    "file": "public/audio/zh/lifecycle-01.wav",
+    "expected": "允许运行时，它随 Herdr 启动，也随所属会话停止，运行在真实 pane 中。",
+    "recognized": "允許運行時,它隨herder啟動也隨索署繪畫停止,運行在真實噴中。",
+    "segments": [
+      {
+        "id": 0,
+        "seek": 0,
+        "start": 0.0,
+        "end": 6.0,
+        "text": "允許運行時,它隨herder啟動也隨索署繪畫停止,運行在真實噴中。",
+        "tokens": [
+          50364,
+          2347,
+          223,
+          40914,
+          32772,
+          8082,
+          6611,
+          11,
+          11284,
+          48890,
+          511,
+          1068,
+          3284,
+          253,
+          12572,
+          6404,
+          48890,
+          7732,
+          95,
+          16469,
+          110,
+          23141,
+          103,
+          43822,
+          36135,
+          30438,
+          11,
+          32772,
+          8082,
+          3581,
+          6303,
+          10376,
+          21250,
+          112,
+          5975,
+          1543,
+          50664
+        ],
+        "temperature": 0,
+        "avg_logprob": -0.29468265332673726,
+        "compression_ratio": 0.9021739130434783,
+        "no_speech_prob": 0.0015711308224126697
+      }
+    ]
+  }
+]

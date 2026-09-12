@@ -1,0 +1,50 @@
+{
+  "text": "Let the system manage the genius. Keep the weekend for yourself.",
+  "spoken": "Let the system manage the genius. Keep the weekend for yourself.",
+  "language": "en",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M",
+    "voice": "af_heart",
+    "speed": 1.0,
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+  },
+  "sampleRate": 24000,
+  "samples": 87542,
+  "duration": 3.6475833333333334,
+  "signature": "0afaffbf1cecb2095cd98e2a6801e8f81d30956df7c9534a7173657c5f4a8539",
+  "sha256": "63549f48794edbdcfb228eb5775b49dd50101f11378d94b4bf4e5035b22649e0",
+  "phonemes": [
+    "lˈɛt ðə sˈɪstəm mˈænɪʤ ðə ʤˈinjəs. kˈip ðə wˈikˌɛnd fɔɹ jəɹsˈɛlf."
+  ],
+  "gain": 1.7918438164627823,
+  "sourceTrimSamples": [
+    5296,
+    92838
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/config.json",
+      "sha256": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+      "bytes": 2351
+    },
+    {
+      "file": "kokoro-v1_0.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth",
+      "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+      "bytes": 327212226
+    },
+    {
+      "file": "voices/af_heart.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/voices/af_heart.pt",
+      "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+      "bytes": 523425
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:57.391276+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

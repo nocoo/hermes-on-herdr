@@ -1,0 +1,300 @@
+.film {
+  overflow: hidden;
+  font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+.film * {
+  box-sizing: border-box;
+}
+.film-atmosphere,
+.film-grid {
+  position: absolute;
+  inset: 0;
+}
+.film-grid {
+  background-image:
+    linear-gradient(#c7dac922 1px, transparent 1px),
+    linear-gradient(90deg, #c7dac922 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: radial-gradient(ellipse at 60% 70%, #000, transparent 72%);
+}
+.film-horizon {
+  position: absolute;
+  left: 96px;
+  right: 96px;
+  bottom: 153px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #82978b75, transparent);
+}
+.film-header {
+  position: absolute;
+  z-index: 2;
+  top: 54px;
+  left: 96px;
+  right: 96px;
+  height: 54px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.film-brand {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+}
+.film-brand img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+}
+.film-brand strong {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+}
+.film-edition {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font:
+    15px "Geist Mono",
+    monospace;
+  letter-spacing: 1.6px;
+  color: #a8b9ad;
+}
+.film-edition span {
+  width: 6px;
+  height: 6px;
+  border: 1px solid #bdb38b;
+  transform: rotate(45deg);
+}
+.film-copy {
+  position: absolute;
+  left: 110px;
+  top: 246px;
+  width: 810px;
+  z-index: 2;
+}
+.film-copy-right {
+  left: 1060px;
+  width: 772px;
+}
+.film-opening .film-copy {
+  top: 230px;
+}
+.film-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font:
+    17px "Geist Mono",
+    monospace;
+  letter-spacing: 2px;
+  color: #a2b6aa;
+}
+.film-kicker > span {
+  height: 6px;
+  width: 6px;
+  border-radius: 100%;
+  background: #a5edc1;
+  box-shadow: 0 0 15px #a5edc166;
+}
+.film h1 {
+  font-weight: 500;
+  line-height: 1.17;
+  letter-spacing: -3.1px;
+  margin: 32px 0 26px;
+}
+.film h1 > span {
+  display: block;
+  white-space: nowrap;
+}
+.film h1 .film-accent {
+  color: #d6b77a;
+}
+.film-body {
+  font-size: 27px;
+  line-height: 1.58;
+  letter-spacing: -0.35px;
+  white-space: pre-line;
+  margin: 0;
+  color: #b4c3c0;
+  max-width: 750px;
+}
+.film-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 35px;
+  max-width: 760px;
+}
+.film-badges > span {
+  padding: 11px 14px;
+  background: #b6d7c307;
+  border: 1px solid #b6d7c322;
+  border-radius: 6px;
+  color: #cbd8cc;
+  font:
+    17px "Geist Mono",
+    "Noto Sans SC",
+    monospace;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.film-badges i {
+  width: 4px;
+  height: 4px;
+  border-radius: 100%;
+  background: #a4d4b6;
+}
+.film-caption {
+  position: absolute;
+  bottom: 99px;
+  left: 150px;
+  right: 150px;
+  text-align: center;
+  z-index: 5;
+  font-size: 30px;
+  line-height: 1.52;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+}
+.film-caption > span {
+  display: inline-block;
+  max-width: 1580px;
+  padding: 9px 24px 10px;
+  color: #edf3e9;
+  background: #081318e8;
+  border: 1px solid #d3e3db16;
+  border-radius: 8px;
+  box-shadow: 0 3px 18px #05131628;
+}
+.film-demo-note {
+  position: absolute;
+  right: 132px;
+  top: 149px;
+  font:
+    15px "Geist Mono",
+    "Noto Sans SC",
+    monospace;
+  letter-spacing: 0.5px;
+  color: #a1b8b3;
+  z-index: 2;
+}
+.film-footer {
+  position: absolute;
+  bottom: 44px;
+  left: 110px;
+  right: 110px;
+  display: flex;
+  gap: 29px;
+  align-items: center;
+  font:
+    14px "Geist Mono",
+    monospace;
+  letter-spacing: 1.5px;
+  color: #bdcfbd;
+}
+.film-footer > span {
+  white-space: nowrap;
+}
+.film-footer > span:last-child {
+  font-size: 12px;
+  color: #8ca197;
+}
+.film-footer > span > i {
+  font-style: normal;
+  color: #83988d;
+}
+.film-progress {
+  display: flex;
+  flex: 1;
+  gap: 5px;
+  height: 2px;
+}
+.film-progress > span {
+  flex: 1;
+  background: #b7cdb518;
+}
+.film-progress i {
+  display: block;
+  height: 2px;
+  background: #c7b883;
+}
+.film-closing .film-copy {
+  top: 246px;
+  width: 1010px;
+}
+.film-closing .film-kicker {
+  color: #7a806c;
+}
+.film-closing .film-kicker > span {
+  background: #bf5c3c;
+  box-shadow: none;
+}
+.film-closing h1 {
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -2.4px;
+  margin-top: 31px;
+  margin-bottom: 18px;
+}
+.film-closing h1 .film-accent {
+  color: #536657;
+}
+.film-closing .film-body {
+  color: #6d7769;
+  font-size: 31px;
+}
+.film-closing .film-edition {
+  color: #7f876f;
+}
+.film-closing .film-footer,
+.film-closing .film-footer > span:last-child {
+  color: #68705f;
+}
+.film-closing .film-footer > span > i {
+  color: #87927b;
+}
+.film-closing .film-progress > span {
+  background: #64745915;
+}
+.film-closing .film-progress i {
+  background: #b98a65;
+}
+.film-hexly {
+  margin-top: 53px;
+}
+.film-hexly > div {
+  display: flex;
+  align-items: center;
+  gap: 19px;
+}
+.film-hexly strong {
+  font-size: 61px;
+  font-weight: 600;
+  letter-spacing: -3px;
+}
+.film-hexly strong > span {
+  color: #bf5c3c;
+}
+.film-hexly em {
+  font-weight: 400;
+  font-style: normal;
+  color: #68705f;
+}
+.film-hexly p {
+  font:
+    19px "Geist Mono",
+    monospace;
+  color: #737d6b;
+  margin: 24px 0 0;
+}
+.film-closing .film-caption > span {
+  background: #fafbf6ed;
+  border-color: #53665715;
+  color: #34483c;
+  box-shadow: none;
+}

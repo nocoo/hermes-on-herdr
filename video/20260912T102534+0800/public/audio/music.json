@@ -1,0 +1,15 @@
+{
+  "title": "The Weekend Protocol",
+  "original": true,
+  "source": "scripts/soundtrack.py",
+  "bpm": 96,
+  "harmony": "E minor / G major",
+  "sampleRate": 48000,
+  "channels": 2,
+  "seconds": 109.0,
+  "samples": 5232000,
+  "seed": 20260912,
+  "method": "Oscillator pads, bass, stereo bell delay, filtered seeded noise; no stock samples",
+  "rights": "Original production for the repository owner. No third-party audio recordings.",
+  "sha256": "4dcdd2f7a4deaa7e1c7a4c857c1a185e946c445a418479da78d15c92e40a61f5"
+}

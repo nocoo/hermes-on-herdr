@@ -1,0 +1,50 @@
+{
+  "text": "When enabled, it starts with Herdr and stops with its session, inside a real pane.",
+  "spoken": "When enabled, it starts with Herder and stops with its session, inside a real pane.",
+  "language": "en",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M",
+    "voice": "af_heart",
+    "speed": 1.0,
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+  },
+  "sampleRate": 24000,
+  "samples": 115156,
+  "duration": 4.798166666666667,
+  "signature": "07223114e1eef999e0eaaf47021122d141cc75955682804562283775efeaba11",
+  "sha256": "2440641ca0fe399593fc86be98786084577c5db3547e66d5df276c135b8ca6f5",
+  "phonemes": [
+    "wˌɛn ɪnˈAbᵊld, ɪt stˈɑɹts wɪð hˈɜɹdəɹ ænd stˈɑps wɪð ɪts sˈɛʃən, ɪnsˈId ɐ ɹˈiᵊl pˈAn."
+  ],
+  "gain": 1.8328337472709988,
+  "sourceTrimSamples": [
+    5422,
+    120578
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/config.json",
+      "sha256": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+      "bytes": 2351
+    },
+    {
+      "file": "kokoro-v1_0.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth",
+      "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+      "bytes": 327212226
+    },
+    {
+      "file": "voices/af_heart.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/voices/af_heart.pt",
+      "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+      "bytes": 523425
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:55.500804+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

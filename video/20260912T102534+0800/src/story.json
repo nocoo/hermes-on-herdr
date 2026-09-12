@@ -1,0 +1,337 @@
+{
+  "project": "hermes-on-herdr",
+  "title": {
+    "zh": "周末交接",
+    "en": "The Weekend Protocol"
+  },
+  "artifact": "hermes-on-herdr-weekend",
+  "repository": "https://github.com/nocoo/hermes-on-herdr",
+  "sourceCommit": "3f17a50370a77e2ed0ee57ca190da66be4addfca",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "voices": {
+    "zh": {
+      "repo": "hexgrad/Kokoro-82M-v1.1-zh",
+      "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+      "voice": "zf_001",
+      "speed": 1.04
+    },
+    "en": {
+      "repo": "hexgrad/Kokoro-82M",
+      "voice": "af_heart",
+      "speed": 1.0,
+      "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+    }
+  },
+  "pronunciation": {
+    "Herdr": "Herder",
+    "M2": "M two",
+    "IC": "individual contributors",
+    "TUI": "T U I",
+    "Hexly AI": "Hex lee A I"
+  },
+  "scenes": [
+    {
+      "id": "opening",
+      "minSeconds": 3.5,
+      "kicker": "A HEXLY AI PROJECT",
+      "narration": {
+        "zh": [],
+        "en": []
+      },
+      "source": ["assets/brand/README.md", "assets/brand/source.json"],
+      "shot": "Opening ident. Brass door on a machined circular platform. A green signal wakes; camera pushes through the orbit. Product title fills the left. Music sting, no speech.",
+      "copy": {
+        "zh": {
+          "title": "hermes\non herdr",
+          "body": "把周末，还给自己。",
+          "badges": ["THE WEEKEND PROTOCOL"]
+        },
+        "en": {
+          "title": "hermes\non herdr",
+          "body": "Your team. Your time.",
+          "badges": ["THE WEEKEND PROTOCOL"]
+        }
+      }
+    },
+    {
+      "id": "partners",
+      "minSeconds": 11,
+      "kicker": "01 / THE PEOPLE YOU TRUST",
+      "narration": {
+        "zh": [
+          "程序员都有自己信任的天才工程师伙伴。",
+          "比如 Codex、Grok、Pi，或者 Claude Code。",
+          "一个想法，就能和它们一起开工。"
+        ],
+        "en": [
+          "Every programmer has a brilliant engineering partner they trust.",
+          "Codex, Grok, Pi, or Claude Code.",
+          "An idea becomes something you can build together."
+        ]
+      },
+      "source": ["README.md#使用体验", "resources/herdr-control/SKILL.md"],
+      "shot": "Four original terminal panels orbit a central green task signal. Each carries the agent name, a prompt and simple code. No third-party logos. Sequential 12-frame wakeups, camera drifts in.",
+      "copy": {
+        "zh": {
+          "title": "你的天才\n工程师伙伴。",
+          "body": "一个想法，和信任的 Agent 一起开工。",
+          "badges": ["Codex", "Grok", "Pi", "Claude Code"]
+        },
+        "en": {
+          "title": "Your brilliant\nengineering partners.",
+          "body": "An idea. The agents you trust. A place to begin.",
+          "badges": ["Codex", "Grok", "Pi", "Claude Code"]
+        }
+      }
+    },
+    {
+      "id": "management",
+      "minSeconds": 10,
+      "kicker": "02 / WHEN ONE BECOMES MANY",
+      "narration": {
+        "zh": [
+          "当你有了自己的多 Agent 工作流，真正的问题变成了管理。",
+          "谁在推进，谁被阻塞，下一步交给谁？"
+        ],
+        "en": [
+          "Once you have your own multi-agent workflow, the real problem becomes management.",
+          "Who is progressing, who is blocked, and who takes the next step?"
+        ]
+      },
+      "source": ["resources/herdr-control/SKILL.md"],
+      "shot": "The same panels diverge in depth. Status chips multiply. Amber interruptions cross the task orbit; the green signal hesitates. Large type changes the emphasis from agents to management.",
+      "copy": {
+        "zh": {
+          "title": "Agent 越多，\n管理越重要。",
+          "body": "谁在推进？谁被阻塞？下一步交给谁？",
+          "badges": ["WORKING", "NEEDS INPUT", "DONE"]
+        },
+        "en": {
+          "title": "More agents.\nMore to manage.",
+          "body": "Who is progressing? Who is blocked? What comes next?",
+          "badges": ["WORKING", "NEEDS INPUT", "DONE"]
+        }
+      }
+    },
+    {
+      "id": "herdr",
+      "minSeconds": 9,
+      "kicker": "03 / A MANAGER FOR THE TEAM",
+      "narration": {
+        "zh": [
+          "Herdr 是 manager，负责管理这些天才 IC。",
+          "它把工作区、终端和 Agent 状态，组织在一起。"
+        ],
+        "en": [
+          "Herdr is the manager for those brilliant individual contributors.",
+          "It brings workspaces, terminals, and agent status together."
+        ]
+      },
+      "source": ["resources/herdr-control/SKILL.md", "docs/02-系统架构.md#22-所有权模型"],
+      "shot": "Panels settle onto one circular chassis. Four clear routes converge on a raised Herdr manager disc; green packets flow in order. Terminal lists workspace and pane identities with illustrative labels.",
+      "copy": {
+        "zh": {
+          "title": "Herdr，\n管理天才 IC。",
+          "body": "工作区、终端、Agent 状态，组织在一起。",
+          "badges": ["WORKSPACES", "PANES", "AGENT STATUS"]
+        },
+        "en": {
+          "title": "Herdr manages\nthe brilliant ICs.",
+          "body": "Workspaces. Terminals. Agent status. Together.",
+          "badges": ["WORKSPACES", "PANES", "AGENT STATUS"]
+        }
+      }
+    },
+    {
+      "id": "weekend",
+      "minSeconds": 8,
+      "kicker": "04 / FRIDAY, 18:00",
+      "narration": {
+        "zh": ["可周末到了，你不该还守在电脑前盯着进度。", "谁来管理 manager？"],
+        "en": [
+          "But the weekend is here. You should not have to sit at your computer watching progress.",
+          "Who manages the manager?"
+        ]
+      },
+      "source": ["README.md", "docs/04-Hermes专用Profile设计.md"],
+      "shot": "An original 3D desk terminal holds Friday 18:00. The circular chassis becomes a clock; a warm sun slips along its arc. Manager keeps running while an empty upper orbit asks for an owner.",
+      "copy": {
+        "zh": {
+          "title": "周末到了。\n谁来管理 manager？",
+          "body": "你不该守在电脑前，盯着进度。",
+          "badges": ["LESS WATCHING", "MORE LIVING"]
+        },
+        "en": {
+          "title": "It is the weekend.\nWho manages\nthe manager?",
+          "body": "You should not have to watch the terminal all weekend.",
+          "badges": ["LESS WATCHING", "MORE LIVING"]
+        }
+      }
+    },
+    {
+      "id": "m2",
+      "minSeconds": 12,
+      "kicker": "05 / MEET YOUR M2",
+      "narration": {
+        "zh": [
+          "Hermes on Herdr，让当前机器上一个专门、受信任的 Hermes Profile，成为你的 M2。",
+          "一个管理 Herdr 的 manager。"
+        ],
+        "en": [
+          "Hermes on Herdr gives that job to a dedicated, trusted Hermes profile on this machine.",
+          "Your M two: a manager for the manager."
+        ]
+      },
+      "source": [
+        "docs/04-Hermes专用Profile设计.md#42-profile身份与初始化",
+        "docs/02-系统架构.md#21-组件图",
+        "examples/README.md"
+      ],
+      "shot": "The brass door returns above Herdr, closing the missing management layer. Camera rises to reveal three levels: Hermes M2, Herdr manager, four agent IC discs. YOU appears as a direction input above the topology.",
+      "copy": {
+        "zh": {
+          "title": "Hermes，\n你的 M2。",
+          "body": "一个专门、受信任的 Profile。\n在当前机器上，管理 Herdr。",
+          "badges": ["YOU → HERMES → HERDR → ICs"]
+        },
+        "en": {
+          "title": "Hermes.\nYour M2.",
+          "body": "A dedicated, trusted profile.\nOn this machine. Managing Herdr.",
+          "badges": ["YOU → HERMES → HERDR → ICs"]
+        }
+      }
+    },
+    {
+      "id": "control",
+      "minSeconds": 10,
+      "kicker": "06 / TRUST IS A REAL PERMISSION",
+      "narration": {
+        "zh": [
+          "这个专用 Hermes 拥有完整 Herdr 控制权限。",
+          "读取状态，协调工作，把你的意图传到正在执行的 Agent。"
+        ],
+        "en": [
+          "This dedicated Hermes has full Herdr control.",
+          "It can inspect status, coordinate work, and carry your instructions to the agents doing it."
+        ]
+      },
+      "source": [
+        "docs/07-安全与运维.md#71-当前信任模型",
+        "docs/04-Hermes专用Profile设计.md#45-环境继承与credential隔离",
+        "resources/herdr-control/SKILL.md"
+      ],
+      "shot": "Brass permission ring opens around a floating terminal. Real command forms read agent list, pane read and agent prompt with clearly illustrative pane IDs. A green signal passes through the open door down to the working panel.",
+      "copy": {
+        "zh": {
+          "title": "完整 Herdr 权限。\n真正接得住工作。",
+          "body": "查看状态，协调工作，传达你的意图。",
+          "badges": ["TRUSTED PROFILE", "FULL CONTROL"]
+        },
+        "en": {
+          "title": "Full Herdr control.\nA real handoff.",
+          "body": "Inspect status. Coordinate work. Carry your intent.",
+          "badges": ["TRUSTED PROFILE", "FULL CONTROL"]
+        }
+      }
+    },
+    {
+      "id": "lifecycle",
+      "minSeconds": 11,
+      "kicker": "07 / ONE SESSION, ONE LIFECYCLE",
+      "narration": {
+        "zh": [
+          "允许运行时，它随 Herdr 启动，也随所属会话停止，运行在真实 pane 中。",
+          "暂停后，只有明确恢复，才会继续运行。"
+        ],
+        "en": [
+          "When enabled, it starts with Herdr and stops with its session, inside a real pane.",
+          "A pause stays paused until you explicitly resume."
+        ]
+      },
+      "source": [
+        "herdr-plugin.toml",
+        "src/hermes_gateway_herdr/supervisor.py",
+        "src/hermes_gateway_herdr/lifecycle.py",
+        "docs/03-生命周期设计.md"
+      ],
+      "shot": "Two linked luminous lifecycle rings activate in sync, then dim to an amber paused hold. A small CLI panel shows start, READY, pause, PAUSED, resume. Explicit pause holds across the loop; this is a diagram, not runtime capture.",
+      "copy": {
+        "zh": {
+          "title": "一起启动。\n一起停止。",
+          "body": "运行在真实 pane 中。\n暂停会保留，直到你明确恢复。",
+          "badges": ["HERDR SESSION", "HERMES PROFILE"]
+        },
+        "en": {
+          "title": "Start together.\nStop together.",
+          "body": "Inside a real pane.\nA pause stays paused until you resume.",
+          "badges": ["HERDR SESSION", "HERMES PROFILE"]
+        }
+      }
+    },
+    {
+      "id": "monitor",
+      "minSeconds": 15,
+      "kicker": "08 / STAY IN TOUCH. STEP AWAY.",
+      "narration": {
+        "zh": [
+          "打开 monitor TUI，专属实例、多个 Profile、处理器和内存，一眼看清。",
+          "通过 Hermes 已配置的消息平台，远程提问，异步跟进。",
+          "机器和 Herdr 保持在线，你就可以离开桌面。"
+        ],
+        "en": [
+          "Open the monitor T U I: your dedicated instance, multiple profiles, CPU, and memory in view.",
+          "Check in remotely and asynchronously through your configured Hermes messaging platform.",
+          "Keep the machine and Herdr online, and step away."
+        ]
+      },
+      "source": [
+        "docs/14-hqtui监控面板.md",
+        "docs/evidence/dashboard-two.png",
+        "src/hermes_gateway_herdr/dashboard.py",
+        "docs/13-cherry接入与验证.md#137-正式-010-发布安装与运行验收",
+        "docs/04-Hermes专用Profile设计.md"
+      ],
+      "shot": "Large perspective panel shows the actual repository demo TUI image, uncropped with preserved aspect. A separate original message panel illustrates a remote status exchange. Small visible labels distinguish demo data and configured messaging. Green signal travels between them.",
+      "copy": {
+        "zh": {
+          "title": "看得清，\n也能离开桌面。",
+          "body": "monitor TUI × Hermes 消息平台\n本机与 Herdr 在线，远程、异步跟进。",
+          "badges": ["PROFILES", "CPU / MEMORY", "REMOTE / ASYNC"]
+        },
+        "en": {
+          "title": "Stay informed.\nStep away.",
+          "body": "Monitor TUI × Hermes messaging\nKeep the machine and Herdr online.",
+          "badges": ["PROFILES", "CPU / MEMORY", "REMOTE / ASYNC"]
+        }
+      }
+    },
+    {
+      "id": "closing",
+      "minSeconds": 10,
+      "kicker": "THE WEEKEND PROTOCOL / COMPLETE",
+      "narration": {
+        "zh": ["把天才交给系统管理，把周末还给自己。", "Hermes on Herdr，来自 Hexly AI。"],
+        "en": [
+          "Let the system manage the genius. Keep the weekend for yourself.",
+          "Hermes on Herdr. By Hexly AI."
+        ]
+      },
+      "source": ["assets/brand/README.md", "assets/brand/source.json"],
+      "shot": "The green signal completes its circle at the brass door. Camera settles; task geometry recedes into an orderly horizon. Native Hexly hexagon and wordmark resolve over a warm cream brand plate with the product door still visible. Hold the final brand and repository URL, no fade to black.",
+      "copy": {
+        "zh": {
+          "title": "把天才交给系统管理，\n把周末还给自己。",
+          "body": "hermes on herdr",
+          "badges": ["HEXLY AI", "hexly.ai"]
+        },
+        "en": {
+          "title": "Manage the genius.\nKeep your weekend.",
+          "body": "hermes on herdr",
+          "badges": ["HEXLY AI", "hexly.ai"]
+        }
+      }
+    }
+  ]
+}

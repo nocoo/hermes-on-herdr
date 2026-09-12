@@ -1,0 +1,50 @@
+{
+  "text": "A pause stays paused until you explicitly resume.",
+  "spoken": "A pause stays paused until you explicitly resume.",
+  "language": "en",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M",
+    "voice": "af_heart",
+    "speed": 1.0,
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+  },
+  "sampleRate": 24000,
+  "samples": 68854,
+  "duration": 2.868916666666667,
+  "signature": "925f1a9c3adeb7d278f590e4f5564914d63017580f67016e9240a61dbcf84103",
+  "sha256": "00379f0a8629b850bd94844f47bc6a93b74318788526de455fc0de7964af866a",
+  "phonemes": [
+    "ɐ pˈɔz stˈAz pˈɔzd ˌʌntˈɪl ju ɪksplˈɪsətli ɹəzˈum."
+  ],
+  "gain": 1.9953144252956396,
+  "sourceTrimSamples": [
+    5025,
+    73879
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/config.json",
+      "sha256": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+      "bytes": 2351
+    },
+    {
+      "file": "kokoro-v1_0.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth",
+      "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+      "bytes": 327212226
+    },
+    {
+      "file": "voices/af_heart.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/voices/af_heart.pt",
+      "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+      "bytes": 523425
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:55.778192+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "text": "Keep the machine and Herdr online, and step away.",
+  "spoken": "Keep the machine and Herder online, and step away.",
+  "language": "en",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M",
+    "voice": "af_heart",
+    "speed": 1.0,
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+  },
+  "sampleRate": 24000,
+  "samples": 65674,
+  "duration": 2.7364166666666665,
+  "signature": "38d1815ffef5dd26b1f723e783dc0ff3846afae807c957a95dd20c090b0d6580",
+  "sha256": "a9dca9f9ec82b2a8202db3df2210e4a05fd50436443cdf489246e2cec1b1ede8",
+  "phonemes": [
+    "kˈip ðə məʃˈin ænd hˈɜɹdəɹ ˌɑnlˈIn, ænd stˈɛp əwˈA."
+  ],
+  "gain": 1.8953463319689914,
+  "sourceTrimSamples": [
+    5064,
+    70738
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/config.json",
+      "sha256": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+      "bytes": 2351
+    },
+    {
+      "file": "kokoro-v1_0.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth",
+      "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+      "bytes": 327212226
+    },
+    {
+      "file": "voices/af_heart.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/voices/af_heart.pt",
+      "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+      "bytes": 523425
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:57.059020+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "mode": "video",
+  "language": "en",
+  "sourceHash": "c8bf379b427bfb1a3a3d4118eb0e77d9438bf84cb54769f29726596b4a5976d2",
+  "timingHash": "3f262f1ee7a2c43a45386515961b4909fb386f3968c287d44438bf6a0a1ea124",
+  "renderedAt": "2026-09-12T03:05:03.862Z",
+  "frames": 3270,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "status": "complete",
+  "artifacts": [
+    {
+      "file": "public/review/hermes-on-herdr-weekend-en.mp4",
+      "bytes": 17105462,
+      "sha256": "2815334497113954b712074b6948f87eb4b87763e71125f412c9477ea29b1bfe",
+      "frameRange": [
+        0,
+        3269
+      ]
+    }
+  ]
+}

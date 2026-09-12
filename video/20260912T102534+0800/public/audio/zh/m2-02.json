@@ -1,0 +1,50 @@
+{
+  "text": "一个管理 Herdr 的 manager。",
+  "spoken": "一个管理 Herder 的 manager。",
+  "language": "zh",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M-v1.1-zh",
+    "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+    "voice": "zf_001",
+    "speed": 1.04
+  },
+  "sampleRate": 24000,
+  "samples": 51523,
+  "duration": 2.1467916666666667,
+  "signature": "f69ae4ced4edb77d67a89fc9bbb58679191b41fc153d6509e2efd5f5d6cb377b",
+  "sha256": "d822349e0aea26a5410ceda2eaec229b5764163d6ffb5f4b1f7f077dcc3bf8ca",
+  "phonemes": [
+    "ㄧ2ㄍㄜ5/ㄍ万2ㄌㄧ3 hˈɜɹdəɹ ㄉㄜ5 mˈænɪʤəɹ ."
+  ],
+  "gain": 1.6483796185991264,
+  "sourceTrimSamples": [
+    4732,
+    56255
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/config.json",
+      "sha256": "bc333efa5ce4ceff433c8c8e5d027a1eca0166001e4e4a62bea2d26ff7a46890",
+      "bytes": 3228
+    },
+    {
+      "file": "kokoro-v1_1-zh.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/kokoro-v1_1-zh.pth",
+      "sha256": "b1d8410fa44dfb5c15471fd6c4225ea6b4e9ac7fa03c98e8bea47a9928476e2b",
+      "bytes": 327247856
+    },
+    {
+      "file": "voices/zf_001.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/voices/zf_001.pt",
+      "sha256": "9bdc9a87e13e9bb1ea3e7803259c2ecbfebaeeb2ff80b5d0c76df1a464c1c962",
+      "bytes": 523331
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:44.915105+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

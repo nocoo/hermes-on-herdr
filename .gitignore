@@ -2,3 +2,13 @@
 .research/
 __pycache__/
 *.py[cod]
+# Reproducible video dependencies and transient render intermediates.
+node_modules/
+.venv/
+.cache/
+.DS_Store
+video/**/website/
+video/**/process/render-web/
+video/**/process/frames/
+video/**/process/*-raw.mp4
+video/**/process/*.tmp.*

@@ -1,0 +1,48 @@
+{
+  "name": "hermes-on-herdr-weekend-film",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 7430 --strictPort",
+    "preview": "vite preview --host 127.0.0.1 --port 7432 --strictPort",
+    "studio": "remotion studio src/index.ts --port 7431",
+    "lint": "biome check src scripts/*.mjs *.ts",
+    "format": "biome check --write src scripts/*.mjs *.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test scripts/timeline.test.mjs",
+    "build": "vite build",
+    "fonts": ".venv/bin/python scripts/fonts.py",
+    "voice": ".venv/bin/python scripts/narrate.py",
+    "sound": ".venv/bin/python scripts/soundtrack.py",
+    "stills": "node scripts/render.mjs stills",
+    "sample": "node scripts/render.mjs sample",
+    "render": "node scripts/render.mjs video",
+    "slides": ".venv/bin/python scripts/slides.py",
+    "verify": ".venv/bin/python scripts/verify.py",
+    "review": "node scripts/review.mjs"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.3.0",
+    "@remotion/bundler": "4.0.520",
+    "@remotion/cli": "4.0.520",
+    "@remotion/player": "4.0.520",
+    "@remotion/renderer": "4.0.520",
+    "@remotion/three": "4.0.520",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.520",
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "@types/node": "24.3.0",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.0",
+    "@types/three": "0.180.0",
+    "@vitejs/plugin-react": "5.0.4",
+    "playwright": "1.58.2",
+    "typescript": "5.9.3",
+    "vite": "7.3.0"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "text": "Who is progressing, who is blocked, and who takes the next step?",
+  "spoken": "Who is progressing, who is blocked, and who takes the next step?",
+  "language": "en",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M",
+    "voice": "af_heart",
+    "speed": 1.0,
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+  },
+  "sampleRate": 24000,
+  "samples": 79325,
+  "duration": 3.3052083333333333,
+  "signature": "21d4d9b156512a14cb50a86dba4bab8dc57264f7be2a0091035d35dfd362877d",
+  "sha256": "9b1d998a5bc6ec7b2b79a48dbc5699e205d975f29abfbd95520ad79d2ac7cf88",
+  "phonemes": [
+    "hˌu ɪz pɹəɡɹˈɛsɪŋ, hˌu ɪz blˈɑkt, ænd hˌu tˈAks ðə nˈɛkst stˈɛp?"
+  ],
+  "gain": 1.788451447591536,
+  "sourceTrimSamples": [
+    5047,
+    84372
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/config.json",
+      "sha256": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+      "bytes": 2351
+    },
+    {
+      "file": "kokoro-v1_0.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth",
+      "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+      "bytes": 327212226
+    },
+    {
+      "file": "voices/af_heart.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/voices/af_heart.pt",
+      "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+      "bytes": 523425
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:52.327436+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

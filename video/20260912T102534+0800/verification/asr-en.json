@@ -1,0 +1,1812 @@
+{
+  "text": " Every programmer has a brilliant engineering partner they trust. Codex, Grock, Pi, or Claude code. An idea becomes something you can build together. Once you have your own multi-agent workflow, the real problem becomes management. Who is progressing? Who is blocked and who takes the next step? Herder is the manager for those brilliant individuals It brings workspaces, terminals, and agent status together. But the weekend is here. You should not have to sit at your computer watching progress. Who manages the manager? Hermes on Herter gives that job to a dedicated, trusted Hermes profile on this machine. You're M2, a manager for the manager. This dedicated Hermes has worked for the company full Herder control. It can inspect status, coordinate work, and carry your instructions to the agents doing it. When enabled, it starts with Herder and stops with its session, inside a real pane. A pause stays paused until you explicitly resume. Open the monitor TUI, your synchronously through your configured Hermes messaging platform. Keep the machine in Herter online and step away. Let the system manage the genius. Keep the weekend for yourself. Hermes on Herter by Hex Lea I.",
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 3.919999999999999,
+      "end": 7.92,
+      "text": " Every programmer has a brilliant engineering partner they trust.",
+      "tokens": [
+        50364,
+        2048,
+        32116,
+        575,
+        257,
+        10248,
+        7043,
+        4975,
+        436,
+        3361,
+        13,
+        50614
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.3815444081099992,
+      "compression_ratio": 1.5564516129032258,
+      "no_speech_prob": 0.15593492984771729,
+      "words": [
+        {
+          "word": " Every",
+          "start": 3.919999999999999,
+          "end": 4.56,
+          "probability": 0.55322265625
+        },
+        {
+          "word": " programmer",
+          "start": 4.56,
+          "end": 5.02,
+          "probability": 0.99462890625
+        },
+        {
+          "word": " has",
+          "start": 5.02,
+          "end": 5.64,
+          "probability": 0.99365234375
+        },
+        {
+          "word": " a",
+          "start": 5.64,
+          "end": 5.76,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " brilliant",
+          "start": 5.76,
+          "end": 6.06,
+          "probability": 0.986328125
+        },
+        {
+          "word": " engineering",
+          "start": 6.06,
+          "end": 6.7,
+          "probability": 0.986328125
+        },
+        {
+          "word": " partner",
+          "start": 6.7,
+          "end": 7.22,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " they",
+          "start": 7.22,
+          "end": 7.54,
+          "probability": 0.984375
+        },
+        {
+          "word": " trust.",
+          "start": 7.54,
+          "end": 7.92,
+          "probability": 0.99951171875
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 8.46,
+      "end": 10.42,
+      "text": " Codex, Grock, Pi, or Claude code.",
+      "tokens": [
+        50614,
+        15549,
+        87,
+        11,
+        12981,
+        547,
+        11,
+        17741,
+        11,
+        420,
+        12947,
+        2303,
+        3089,
+        13,
+        50714
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.3815444081099992,
+      "compression_ratio": 1.5564516129032258,
+      "no_speech_prob": 0.15593492984771729,
+      "words": [
+        {
+          "word": " Codex,",
+          "start": 8.46,
+          "end": 8.98,
+          "probability": 0.873046875
+        },
+        {
+          "word": " Grock,",
+          "start": 9.06,
+          "end": 9.38,
+          "probability": 0.509765625
+        },
+        {
+          "word": " Pi,",
+          "start": 9.44,
+          "end": 9.62,
+          "probability": 0.57958984375
+        },
+        {
+          "word": " or",
+          "start": 9.78,
+          "end": 9.86,
+          "probability": 0.97119140625
+        },
+        {
+          "word": " Claude",
+          "start": 9.86,
+          "end": 10.14,
+          "probability": 0.736328125
+        },
+        {
+          "word": " code.",
+          "start": 10.14,
+          "end": 10.42,
+          "probability": 0.62841796875
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 10.98,
+      "end": 13.22,
+      "text": " An idea becomes something you can build together.",
+      "tokens": [
+        50714,
+        1107,
+        1558,
+        3643,
+        746,
+        291,
+        393,
+        1322,
+        1214,
+        13,
+        50864
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.3815444081099992,
+      "compression_ratio": 1.5564516129032258,
+      "no_speech_prob": 0.15593492984771729,
+      "words": [
+        {
+          "word": " An",
+          "start": 10.98,
+          "end": 11.14,
+          "probability": 0.96630859375
+        },
+        {
+          "word": " idea",
+          "start": 11.14,
+          "end": 11.44,
+          "probability": 0.994140625
+        },
+        {
+          "word": " becomes",
+          "start": 11.44,
+          "end": 11.88,
+          "probability": 0.9814453125
+        },
+        {
+          "word": " something",
+          "start": 11.88,
+          "end": 12.28,
+          "probability": 0.99951171875
+        },
+        {
+          "word": " you",
+          "start": 12.28,
+          "end": 12.46,
+          "probability": 0.99609375
+        },
+        {
+          "word": " can",
+          "start": 12.46,
+          "end": 12.62,
+          "probability": 0.99755859375
+        },
+        {
+          "word": " build",
+          "start": 12.62,
+          "end": 12.86,
+          "probability": 0.99755859375
+        },
+        {
+          "word": " together.",
+          "start": 12.86,
+          "end": 13.22,
+          "probability": 0.9990234375
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "seek": 0,
+      "start": 16.36,
+      "end": 21.16,
+      "text": " Once you have your own multi-agent workflow, the real problem becomes management.",
+      "tokens": [
+        50864,
+        3443,
+        291,
+        362,
+        428,
+        1065,
+        4825,
+        12,
+        559,
+        317,
+        20993,
+        11,
+        264,
+        957,
+        1154,
+        3643,
+        4592,
+        13,
+        51114
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.3815444081099992,
+      "compression_ratio": 1.5564516129032258,
+      "no_speech_prob": 0.15593492984771729,
+      "words": [
+        {
+          "word": " Once",
+          "start": 16.36,
+          "end": 17.0,
+          "probability": 0.98779296875
+        },
+        {
+          "word": " you",
+          "start": 17.0,
+          "end": 17.16,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " have",
+          "start": 17.16,
+          "end": 17.32,
+          "probability": 0.99951171875
+        },
+        {
+          "word": " your",
+          "start": 17.32,
+          "end": 17.44,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " own",
+          "start": 17.44,
+          "end": 17.74,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " multi",
+          "start": 17.74,
+          "end": 18.14,
+          "probability": 0.9404296875
+        },
+        {
+          "word": "-agent",
+          "start": 18.14,
+          "end": 18.46,
+          "probability": 0.9677734375
+        },
+        {
+          "word": " workflow,",
+          "start": 18.46,
+          "end": 18.86,
+          "probability": 0.994140625
+        },
+        {
+          "word": " the",
+          "start": 19.4,
+          "end": 19.5,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " real",
+          "start": 19.5,
+          "end": 19.74,
+          "probability": 0.9970703125
+        },
+        {
+          "word": " problem",
+          "start": 19.74,
+          "end": 20.18,
+          "probability": 0.998046875
+        },
+        {
+          "word": " becomes",
+          "start": 20.18,
+          "end": 20.64,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " management.",
+          "start": 20.64,
+          "end": 21.16,
+          "probability": 0.98779296875
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "seek": 0,
+      "start": 21.76,
+      "end": 24.9,
+      "text": " Who is progressing? Who is blocked and who takes the next step?",
+      "tokens": [
+        51114,
+        2102,
+        307,
+        36305,
+        30,
+        2102,
+        307,
+        15470,
+        293,
+        567,
+        2516,
+        264,
+        958,
+        1823,
+        30,
+        51364
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.3815444081099992,
+      "compression_ratio": 1.5564516129032258,
+      "no_speech_prob": 0.15593492984771729,
+      "words": [
+        {
+          "word": " Who",
+          "start": 21.76,
+          "end": 22.02,
+          "probability": 0.99560546875
+        },
+        {
+          "word": " is",
+          "start": 22.02,
+          "end": 22.16,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " progressing?",
+          "start": 22.16,
+          "end": 22.56,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " Who",
+          "start": 23.0,
+          "end": 23.12,
+          "probability": 0.99609375
+        },
+        {
+          "word": " is",
+          "start": 23.12,
+          "end": 23.26,
+          "probability": 0.99072265625
+        },
+        {
+          "word": " blocked",
+          "start": 23.26,
+          "end": 23.56,
+          "probability": 0.99560546875
+        },
+        {
+          "word": " and",
+          "start": 23.56,
+          "end": 23.88,
+          "probability": 0.3798828125
+        },
+        {
+          "word": " who",
+          "start": 23.88,
+          "end": 24.0,
+          "probability": 0.99560546875
+        },
+        {
+          "word": " takes",
+          "start": 24.0,
+          "end": 24.22,
+          "probability": 0.998046875
+        },
+        {
+          "word": " the",
+          "start": 24.22,
+          "end": 24.38,
+          "probability": 0.99951171875
+        },
+        {
+          "word": " next",
+          "start": 24.38,
+          "end": 24.54,
+          "probability": 0.99951171875
+        },
+        {
+          "word": " step?",
+          "start": 24.54,
+          "end": 24.9,
+          "probability": 0.99951171875
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "seek": 0,
+      "start": 27.02,
+      "end": 29.98,
+      "text": " Herder is the manager for those brilliant individuals",
+      "tokens": [
+        51364,
+        3204,
+        1068,
+        307,
+        264,
+        6598,
+        337,
+        729,
+        10248,
+        5346,
+        51514
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.3815444081099992,
+      "compression_ratio": 1.5564516129032258,
+      "no_speech_prob": 0.15593492984771729,
+      "words": [
+        {
+          "word": " Herder",
+          "start": 27.02,
+          "end": 27.66,
+          "probability": 0.8330078125
+        },
+        {
+          "word": " is",
+          "start": 27.66,
+          "end": 27.88,
+          "probability": 0.998046875
+        },
+        {
+          "word": " the",
+          "start": 27.88,
+          "end": 28.04,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " manager",
+          "start": 28.04,
+          "end": 28.38,
+          "probability": 0.974609375
+        },
+        {
+          "word": " for",
+          "start": 28.38,
+          "end": 28.82,
+          "probability": 0.97021484375
+        },
+        {
+          "word": " those",
+          "start": 28.82,
+          "end": 29.02,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " brilliant",
+          "start": 29.02,
+          "end": 29.54,
+          "probability": 0.99609375
+        },
+        {
+          "word": " individuals",
+          "start": 29.54,
+          "end": 29.98,
+          "probability": 0.5302734375
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "seek": 0,
+      "start": 29.98,
+      "end": 29.98,
+      "text": "",
+      "tokens": [],
+      "temperature": 0,
+      "avg_logprob": -0.3815444081099992,
+      "compression_ratio": 1.5564516129032258,
+      "no_speech_prob": 0.15593492984771729,
+      "words": []
+    },
+    {
+      "id": 7,
+      "seek": 2998,
+      "start": 29.98,
+      "end": 34.72,
+      "text": " It brings workspaces, terminals, and agent status together.",
+      "tokens": [
+        50364,
+        467,
+        5607,
+        1985,
+        79,
+        2116,
+        11,
+        38579,
+        11,
+        293,
+        9461,
+        6558,
+        1214,
+        13,
+        50564
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2620881263245928,
+      "compression_ratio": 1.6064814814814814,
+      "no_speech_prob": 0.2307855635881424,
+      "words": [
+        {
+          "word": " It",
+          "start": 29.98,
+          "end": 31.06,
+          "probability": 0.133056640625
+        },
+        {
+          "word": " brings",
+          "start": 31.06,
+          "end": 31.8,
+          "probability": 0.96337890625
+        },
+        {
+          "word": " workspaces,",
+          "start": 31.8,
+          "end": 32.5,
+          "probability": 0.82958984375
+        },
+        {
+          "word": " terminals,",
+          "start": 32.86,
+          "end": 33.18,
+          "probability": 0.9951171875
+        },
+        {
+          "word": " and",
+          "start": 33.56,
+          "end": 33.64,
+          "probability": 0.994140625
+        },
+        {
+          "word": " agent",
+          "start": 33.64,
+          "end": 34.0,
+          "probability": 0.97802734375
+        },
+        {
+          "word": " status",
+          "start": 34.0,
+          "end": 34.34,
+          "probability": 0.99755859375
+        },
+        {
+          "word": " together.",
+          "start": 34.34,
+          "end": 34.72,
+          "probability": 0.99169921875
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "seek": 2998,
+      "start": 37.24,
+      "end": 39.02,
+      "text": " But the weekend is here.",
+      "tokens": [
+        50564,
+        583,
+        264,
+        6711,
+        307,
+        510,
+        13,
+        50764
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2620881263245928,
+      "compression_ratio": 1.6064814814814814,
+      "no_speech_prob": 0.2307855635881424,
+      "words": [
+        {
+          "word": " But",
+          "start": 37.24,
+          "end": 37.96,
+          "probability": 0.98046875
+        },
+        {
+          "word": " the",
+          "start": 37.96,
+          "end": 38.06,
+          "probability": 0.98388671875
+        },
+        {
+          "word": " weekend",
+          "start": 38.06,
+          "end": 38.44,
+          "probability": 0.95947265625
+        },
+        {
+          "word": " is",
+          "start": 38.44,
+          "end": 38.8,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " here.",
+          "start": 38.8,
+          "end": 39.02,
+          "probability": 0.99951171875
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "seek": 2998,
+      "start": 39.48,
+      "end": 41.96,
+      "text": " You should not have to sit at your computer watching progress.",
+      "tokens": [
+        50764,
+        509,
+        820,
+        406,
+        362,
+        281,
+        1394,
+        412,
+        428,
+        3820,
+        1976,
+        4205,
+        13,
+        50914
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2620881263245928,
+      "compression_ratio": 1.6064814814814814,
+      "no_speech_prob": 0.2307855635881424,
+      "words": [
+        {
+          "word": " You",
+          "start": 39.48,
+          "end": 39.62,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " should",
+          "start": 39.62,
+          "end": 39.74,
+          "probability": 0.99462890625
+        },
+        {
+          "word": " not",
+          "start": 39.74,
+          "end": 39.9,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " have",
+          "start": 39.9,
+          "end": 40.1,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " to",
+          "start": 40.1,
+          "end": 40.24,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " sit",
+          "start": 40.24,
+          "end": 40.46,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " at",
+          "start": 40.46,
+          "end": 40.64,
+          "probability": 0.998046875
+        },
+        {
+          "word": " your",
+          "start": 40.64,
+          "end": 40.72,
+          "probability": 0.998046875
+        },
+        {
+          "word": " computer",
+          "start": 40.72,
+          "end": 41.1,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " watching",
+          "start": 41.1,
+          "end": 41.5,
+          "probability": 0.97900390625
+        },
+        {
+          "word": " progress.",
+          "start": 41.5,
+          "end": 41.96,
+          "probability": 0.923828125
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "seek": 2998,
+      "start": 42.7,
+      "end": 43.92,
+      "text": " Who manages the manager?",
+      "tokens": [
+        50914,
+        2102,
+        22489,
+        264,
+        6598,
+        30,
+        51064
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2620881263245928,
+      "compression_ratio": 1.6064814814814814,
+      "no_speech_prob": 0.2307855635881424,
+      "words": [
+        {
+          "word": " Who",
+          "start": 42.7,
+          "end": 42.86,
+          "probability": 0.93310546875
+        },
+        {
+          "word": " manages",
+          "start": 42.86,
+          "end": 43.34,
+          "probability": 0.96044921875
+        },
+        {
+          "word": " the",
+          "start": 43.34,
+          "end": 43.6,
+          "probability": 0.99560546875
+        },
+        {
+          "word": " manager?",
+          "start": 43.6,
+          "end": 43.92,
+          "probability": 0.95654296875
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "seek": 2998,
+      "start": 46.22,
+      "end": 49.06,
+      "text": " Hermes on Herter gives that job to a dedicated,",
+      "tokens": [
+        51064,
+        21842,
+        279,
+        322,
+        3204,
+        391,
+        2709,
+        300,
+        1691,
+        281,
+        257,
+        8374,
+        11,
+        51264
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2620881263245928,
+      "compression_ratio": 1.6064814814814814,
+      "no_speech_prob": 0.2307855635881424,
+      "words": [
+        {
+          "word": " Hermes",
+          "start": 46.22,
+          "end": 46.7,
+          "probability": 0.9228515625
+        },
+        {
+          "word": " on",
+          "start": 46.7,
+          "end": 46.9,
+          "probability": 0.7001953125
+        },
+        {
+          "word": " Herter",
+          "start": 46.9,
+          "end": 47.24,
+          "probability": 0.7470703125
+        },
+        {
+          "word": " gives",
+          "start": 47.24,
+          "end": 47.76,
+          "probability": 0.97314453125
+        },
+        {
+          "word": " that",
+          "start": 47.76,
+          "end": 48.04,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " job",
+          "start": 48.04,
+          "end": 48.4,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " to",
+          "start": 48.4,
+          "end": 48.58,
+          "probability": 0.998046875
+        },
+        {
+          "word": " a",
+          "start": 48.58,
+          "end": 48.7,
+          "probability": 0.9931640625
+        },
+        {
+          "word": " dedicated,",
+          "start": 48.7,
+          "end": 49.06,
+          "probability": 0.998046875
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "seek": 2998,
+      "start": 49.58,
+      "end": 51.66,
+      "text": " trusted Hermes profile on this machine.",
+      "tokens": [
+        51264,
+        16034,
+        21842,
+        279,
+        7964,
+        322,
+        341,
+        3479,
+        13,
+        51414
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2620881263245928,
+      "compression_ratio": 1.6064814814814814,
+      "no_speech_prob": 0.2307855635881424,
+      "words": [
+        {
+          "word": " trusted",
+          "start": 49.58,
+          "end": 49.92,
+          "probability": 0.99365234375
+        },
+        {
+          "word": " Hermes",
+          "start": 49.92,
+          "end": 50.34,
+          "probability": 0.9833984375
+        },
+        {
+          "word": " profile",
+          "start": 50.34,
+          "end": 50.78,
+          "probability": 0.9365234375
+        },
+        {
+          "word": " on",
+          "start": 50.78,
+          "end": 51.14,
+          "probability": 0.99169921875
+        },
+        {
+          "word": " this",
+          "start": 51.14,
+          "end": 51.28,
+          "probability": 0.998046875
+        },
+        {
+          "word": " machine.",
+          "start": 51.28,
+          "end": 51.66,
+          "probability": 0.998046875
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "seek": 2998,
+      "start": 52.24,
+      "end": 54.36,
+      "text": " You're M2, a manager for the manager.",
+      "tokens": [
+        51414,
+        509,
+        434,
+        376,
+        17,
+        11,
+        257,
+        6598,
+        337,
+        264,
+        6598,
+        13,
+        51564
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2620881263245928,
+      "compression_ratio": 1.6064814814814814,
+      "no_speech_prob": 0.2307855635881424,
+      "words": [
+        {
+          "word": " You're",
+          "start": 52.24,
+          "end": 52.52,
+          "probability": 0.94482421875
+        },
+        {
+          "word": " M2,",
+          "start": 52.52,
+          "end": 52.9,
+          "probability": 0.9609375
+        },
+        {
+          "word": " a",
+          "start": 53.26,
+          "end": 53.38,
+          "probability": 0.99365234375
+        },
+        {
+          "word": " manager",
+          "start": 53.38,
+          "end": 53.64,
+          "probability": 0.98876953125
+        },
+        {
+          "word": " for",
+          "start": 53.64,
+          "end": 53.92,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " the",
+          "start": 53.92,
+          "end": 54.02,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " manager.",
+          "start": 54.02,
+          "end": 54.36,
+          "probability": 0.98583984375
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "seek": 2998,
+      "start": 57.82,
+      "end": 59.96,
+      "text": " This dedicated Hermes has worked for the company",
+      "tokens": [
+        51564,
+        639,
+        8374,
+        21842,
+        279,
+        575,
+        2732,
+        337,
+        264,
+        2237,
+        51814
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2620881263245928,
+      "compression_ratio": 1.6064814814814814,
+      "no_speech_prob": 0.2307855635881424,
+      "words": [
+        {
+          "word": " This",
+          "start": 57.82,
+          "end": 58.54,
+          "probability": 0.97802734375
+        },
+        {
+          "word": " dedicated",
+          "start": 58.54,
+          "end": 58.88,
+          "probability": 0.99755859375
+        },
+        {
+          "word": " Hermes",
+          "start": 58.88,
+          "end": 59.54,
+          "probability": 0.99609375
+        },
+        {
+          "word": " has",
+          "start": 59.54,
+          "end": 59.92,
+          "probability": 0.98046875
+        },
+        {
+          "word": " worked",
+          "start": 59.92,
+          "end": 59.96,
+          "probability": 0.06256103515625
+        },
+        {
+          "word": " for",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.255126953125
+        },
+        {
+          "word": " the",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.102294921875
+        },
+        {
+          "word": " company",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.144287109375
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "seek": 5996,
+      "start": 59.96,
+      "end": 65.2,
+      "text": " full Herder control. It can inspect status, coordinate work, and carry your instructions",
+      "tokens": [
+        50364,
+        1577,
+        3204,
+        1068,
+        1969,
+        13,
+        467,
+        393,
+        15018,
+        6558,
+        11,
+        15670,
+        589,
+        11,
+        293,
+        3985,
+        428,
+        9415,
+        50636
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.17736336679169626,
+      "compression_ratio": 1.4598930481283423,
+      "no_speech_prob": 0.029306508600711823,
+      "words": [
+        {
+          "word": " full",
+          "start": 59.96,
+          "end": 60.18,
+          "probability": 0.1700439453125
+        },
+        {
+          "word": " Herder",
+          "start": 60.18,
+          "end": 60.46,
+          "probability": 0.54443359375
+        },
+        {
+          "word": " control.",
+          "start": 60.46,
+          "end": 60.82,
+          "probability": 0.73095703125
+        },
+        {
+          "word": " It",
+          "start": 61.46,
+          "end": 61.6,
+          "probability": 0.9873046875
+        },
+        {
+          "word": " can",
+          "start": 61.6,
+          "end": 61.68,
+          "probability": 0.998046875
+        },
+        {
+          "word": " inspect",
+          "start": 61.68,
+          "end": 62.02,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " status,",
+          "start": 62.02,
+          "end": 62.62,
+          "probability": 0.9111328125
+        },
+        {
+          "word": " coordinate",
+          "start": 62.98,
+          "end": 63.34,
+          "probability": 0.990234375
+        },
+        {
+          "word": " work,",
+          "start": 63.34,
+          "end": 63.7,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " and",
+          "start": 64.12,
+          "end": 64.26,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " carry",
+          "start": 64.26,
+          "end": 64.56,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " your",
+          "start": 64.56,
+          "end": 64.72,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " instructions",
+          "start": 64.72,
+          "end": 65.2,
+          "probability": 0.994140625
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "seek": 5996,
+      "start": 65.2,
+      "end": 73.04,
+      "text": " to the agents doing it. When enabled, it starts with Herder and stops with its session, inside",
+      "tokens": [
+        50636,
+        281,
+        264,
+        12554,
+        884,
+        309,
+        13,
+        1133,
+        15172,
+        11,
+        309,
+        3719,
+        365,
+        3204,
+        1068,
+        293,
+        10094,
+        365,
+        1080,
+        5481,
+        11,
+        1854,
+        51022
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.17736336679169626,
+      "compression_ratio": 1.4598930481283423,
+      "no_speech_prob": 0.029306508600711823,
+      "words": [
+        {
+          "word": " to",
+          "start": 65.2,
+          "end": 65.56,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " the",
+          "start": 65.56,
+          "end": 65.66,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " agents",
+          "start": 65.66,
+          "end": 66.0,
+          "probability": 0.947265625
+        },
+        {
+          "word": " doing",
+          "start": 66.0,
+          "end": 66.28,
+          "probability": 0.998046875
+        },
+        {
+          "word": " it.",
+          "start": 66.28,
+          "end": 66.52,
+          "probability": 0.9990234375
+        },
+        {
+          "word": " When",
+          "start": 68.86,
+          "end": 69.46,
+          "probability": 0.9833984375
+        },
+        {
+          "word": " enabled,",
+          "start": 69.46,
+          "end": 69.84,
+          "probability": 0.998046875
+        },
+        {
+          "word": " it",
+          "start": 70.24,
+          "end": 70.34,
+          "probability": 0.99755859375
+        },
+        {
+          "word": " starts",
+          "start": 70.34,
+          "end": 70.58,
+          "probability": 0.998046875
+        },
+        {
+          "word": " with",
+          "start": 70.58,
+          "end": 70.8,
+          "probability": 0.99951171875
+        },
+        {
+          "word": " Herder",
+          "start": 70.8,
+          "end": 71.08,
+          "probability": 0.9775390625
+        },
+        {
+          "word": " and",
+          "start": 71.08,
+          "end": 71.28,
+          "probability": 0.98291015625
+        },
+        {
+          "word": " stops",
+          "start": 71.28,
+          "end": 71.54,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " with",
+          "start": 71.54,
+          "end": 71.78,
+          "probability": 0.998046875
+        },
+        {
+          "word": " its",
+          "start": 71.78,
+          "end": 71.88,
+          "probability": 0.9697265625
+        },
+        {
+          "word": " session,",
+          "start": 71.88,
+          "end": 72.24,
+          "probability": 0.98876953125
+        },
+        {
+          "word": " inside",
+          "start": 72.64,
+          "end": 73.04,
+          "probability": 0.9931640625
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "seek": 5996,
+      "start": 73.04,
+      "end": 89.64,
+      "text": " a real pane. A pause stays paused until you explicitly resume. Open the monitor TUI, your",
+      "tokens": [
+        51022,
+        257,
+        957,
+        32605,
+        13,
+        316,
+        10465,
+        10834,
+        46860,
+        1826,
+        291,
+        20803,
+        15358,
+        13,
+        7238,
+        264,
+        6002,
+        42408,
+        40,
+        11,
+        428,
+        51530
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.17736336679169626,
+      "compression_ratio": 1.4598930481283423,
+      "no_speech_prob": 0.029306508600711823,
+      "words": [
+        {
+          "word": " a",
+          "start": 73.04,
+          "end": 73.24,
+          "probability": 0.994140625
+        },
+        {
+          "word": " real",
+          "start": 73.24,
+          "end": 73.46,
+          "probability": 0.990234375
+        },
+        {
+          "word": " pane.",
+          "start": 73.46,
+          "end": 73.76,
+          "probability": 0.95751953125
+        },
+        {
+          "word": " A",
+          "start": 74.42,
+          "end": 74.54,
+          "probability": 0.9794921875
+        },
+        {
+          "word": " pause",
+          "start": 74.54,
+          "end": 74.72,
+          "probability": 0.97705078125
+        },
+        {
+          "word": " stays",
+          "start": 74.72,
+          "end": 75.02,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " paused",
+          "start": 75.02,
+          "end": 75.44,
+          "probability": 0.998046875
+        },
+        {
+          "word": " until",
+          "start": 75.44,
+          "end": 75.86,
+          "probability": 0.97998046875
+        },
+        {
+          "word": " you",
+          "start": 75.86,
+          "end": 76.02,
+          "probability": 0.99951171875
+        },
+        {
+          "word": " explicitly",
+          "start": 76.02,
+          "end": 76.5,
+          "probability": 0.99951171875
+        },
+        {
+          "word": " resume.",
+          "start": 76.5,
+          "end": 76.92,
+          "probability": 0.9833984375
+        },
+        {
+          "word": " Open",
+          "start": 80.94,
+          "end": 81.54,
+          "probability": 0.9873046875
+        },
+        {
+          "word": " the",
+          "start": 81.54,
+          "end": 81.74,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " monitor",
+          "start": 81.74,
+          "end": 82.0,
+          "probability": 0.5546875
+        },
+        {
+          "word": " TUI,",
+          "start": 82.0,
+          "end": 82.74,
+          "probability": 0.7978515625
+        },
+        {
+          "word": " your",
+          "start": 89.54,
+          "end": 89.64,
+          "probability": 0.9951171875
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "seek": 8964,
+      "start": 89.64,
+      "end": 92.86,
+      "text": " synchronously through your configured Hermes messaging platform.",
+      "tokens": [
+        50364,
+        19331,
+        5098,
+        807,
+        428,
+        30538,
+        21842,
+        279,
+        21812,
+        3663,
+        13,
+        50560
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2961091493305407,
+      "compression_ratio": 1.471830985915493,
+      "no_speech_prob": 0.015179474838078022,
+      "words": [
+        {
+          "word": " synchronously",
+          "start": 89.64,
+          "end": 90.24,
+          "probability": 0.9150390625
+        },
+        {
+          "word": " through",
+          "start": 90.24,
+          "end": 90.84,
+          "probability": 0.9150390625
+        },
+        {
+          "word": " your",
+          "start": 90.84,
+          "end": 91.0,
+          "probability": 0.994140625
+        },
+        {
+          "word": " configured",
+          "start": 91.0,
+          "end": 91.44,
+          "probability": 0.96533203125
+        },
+        {
+          "word": " Hermes",
+          "start": 91.44,
+          "end": 91.92,
+          "probability": 0.91845703125
+        },
+        {
+          "word": " messaging",
+          "start": 91.92,
+          "end": 92.34,
+          "probability": 0.8330078125
+        },
+        {
+          "word": " platform.",
+          "start": 92.34,
+          "end": 92.86,
+          "probability": 0.99462890625
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "seek": 8964,
+      "start": 93.6,
+      "end": 95.96,
+      "text": " Keep the machine in Herter online and step away.",
+      "tokens": [
+        50560,
+        5527,
+        264,
+        3479,
+        294,
+        3204,
+        391,
+        2950,
+        293,
+        1823,
+        1314,
+        13,
+        50800
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2961091493305407,
+      "compression_ratio": 1.471830985915493,
+      "no_speech_prob": 0.015179474838078022,
+      "words": [
+        {
+          "word": " Keep",
+          "start": 93.6,
+          "end": 93.7,
+          "probability": 0.99072265625
+        },
+        {
+          "word": " the",
+          "start": 93.7,
+          "end": 93.88,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " machine",
+          "start": 93.88,
+          "end": 94.2,
+          "probability": 0.927734375
+        },
+        {
+          "word": " in",
+          "start": 94.2,
+          "end": 94.38,
+          "probability": 0.74365234375
+        },
+        {
+          "word": " Herter",
+          "start": 94.38,
+          "end": 94.62,
+          "probability": 0.63134765625
+        },
+        {
+          "word": " online",
+          "start": 94.62,
+          "end": 94.9,
+          "probability": 0.544921875
+        },
+        {
+          "word": " and",
+          "start": 94.9,
+          "end": 95.46,
+          "probability": 0.88916015625
+        },
+        {
+          "word": " step",
+          "start": 95.46,
+          "end": 95.66,
+          "probability": 0.9951171875
+        },
+        {
+          "word": " away.",
+          "start": 95.66,
+          "end": 95.96,
+          "probability": 0.998046875
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "seek": 8964,
+      "start": 98.36,
+      "end": 99.76,
+      "text": " Let the system manage the genius.",
+      "tokens": [
+        50800,
+        961,
+        264,
+        1185,
+        3067,
+        264,
+        14017,
+        13,
+        50900
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2961091493305407,
+      "compression_ratio": 1.471830985915493,
+      "no_speech_prob": 0.015179474838078022,
+      "words": [
+        {
+          "word": " Let",
+          "start": 98.16000000000001,
+          "end": 98.48,
+          "probability": 0.99169921875
+        },
+        {
+          "word": " the",
+          "start": 98.48,
+          "end": 98.62,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " system",
+          "start": 98.62,
+          "end": 98.82,
+          "probability": 0.99658203125
+        },
+        {
+          "word": " manage",
+          "start": 98.82,
+          "end": 99.26,
+          "probability": 0.99560546875
+        },
+        {
+          "word": " the",
+          "start": 99.26,
+          "end": 99.46,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " genius.",
+          "start": 99.46,
+          "end": 99.76,
+          "probability": 0.96630859375
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "seek": 8964,
+      "start": 100.36,
+      "end": 101.58,
+      "text": " Keep the weekend for yourself.",
+      "tokens": [
+        50900,
+        5527,
+        264,
+        6711,
+        337,
+        1803,
+        13,
+        50998
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2961091493305407,
+      "compression_ratio": 1.471830985915493,
+      "no_speech_prob": 0.015179474838078022,
+      "words": [
+        {
+          "word": " Keep",
+          "start": 100.36,
+          "end": 100.52,
+          "probability": 0.98681640625
+        },
+        {
+          "word": " the",
+          "start": 100.52,
+          "end": 100.7,
+          "probability": 0.998046875
+        },
+        {
+          "word": " weekend",
+          "start": 100.7,
+          "end": 100.96,
+          "probability": 0.98046875
+        },
+        {
+          "word": " for",
+          "start": 100.96,
+          "end": 101.24,
+          "probability": 0.99853515625
+        },
+        {
+          "word": " yourself.",
+          "start": 101.24,
+          "end": 101.58,
+          "probability": 0.9970703125
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "seek": 8964,
+      "start": 102.32,
+      "end": 104.28,
+      "text": " Hermes on Herter by Hex Lea I.",
+      "tokens": [
+        50998,
+        21842,
+        279,
+        322,
+        3204,
+        391,
+        538,
+        634,
+        87,
+        1456,
+        64,
+        286,
+        13,
+        51100
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.2961091493305407,
+      "compression_ratio": 1.471830985915493,
+      "no_speech_prob": 0.015179474838078022,
+      "words": [
+        {
+          "word": " Hermes",
+          "start": 102.32,
+          "end": 102.66,
+          "probability": 0.88037109375
+        },
+        {
+          "word": " on",
+          "start": 102.66,
+          "end": 102.78,
+          "probability": 0.88525390625
+        },
+        {
+          "word": " Herter",
+          "start": 102.78,
+          "end": 103.14,
+          "probability": 0.9580078125
+        },
+        {
+          "word": " by",
+          "start": 103.14,
+          "end": 103.52,
+          "probability": 0.89501953125
+        },
+        {
+          "word": " Hex",
+          "start": 103.52,
+          "end": 103.76,
+          "probability": 0.8935546875
+        },
+        {
+          "word": " Lea",
+          "start": 103.76,
+          "end": 104.08,
+          "probability": 0.47802734375
+        },
+        {
+          "word": " I.",
+          "start": 104.08,
+          "end": 104.28,
+          "probability": 0.41015625
+        }
+      ]
+    }
+  ],
+  "language": "en",
+  "verificationMethod": "Local independent Whisper ASR of the exact narration stem; transcript is review evidence, not source captions.",
+  "source": ".cache/audio/voice-en.wav",
+  "model": "mlx-community/whisper-small-mlx"
+}

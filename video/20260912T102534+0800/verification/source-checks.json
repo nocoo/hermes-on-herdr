@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "command": "bun run lint",
+      "exitCode": 0,
+      "output": "$ biome check src scripts/*.mjs *.ts\nChecked 15 files in 9ms. No fixes applied.\n"
+    },
+    {
+      "command": "bun run typecheck",
+      "exitCode": 0,
+      "output": "$ tsc --noEmit\n"
+    },
+    {
+      "command": "bun run test",
+      "exitCode": 0,
+      "output": "$ node --test scripts/timeline.test.mjs\n\u2714 both editions use a measured, contiguous full-HD timeline (0.856584ms)\n\u2714 zh: complete speech, unmodified voice assets and aligned non-overlapping captions (4.032792ms)\n\u2714 en: complete speech, unmodified voice assets and aligned non-overlapping captions (2.895334ms)\n\u2139 tests 3\n\u2139 suites 0\n\u2139 pass 3\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 51.402417\n"
+    },
+    {
+      "command": ".venv/bin/python -m compileall -q scripts",
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "build": {
+    "command": "bun run build",
+    "exitCode": 0,
+    "bundler": "Vite 7.3.0",
+    "modules": 93,
+    "bundleBytes": 1366123,
+    "warning": "Expected Three.js / Remotion chunk exceeds Vite's 500 kB advisory size.",
+    "gzipSizeAsReported": "391.16 kB"
+  },
+  "pluginTests": {
+    "command": "video/20260912T102534+0800/.venv/bin/python -I -B tests/run.py",
+    "workingDirectory": "repository root",
+    "passed": 167,
+    "seconds": 41.919,
+    "output": "verification/plugin-tests.txt"
+  },
+  "status": "passed"
+}

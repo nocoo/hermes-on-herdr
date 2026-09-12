@@ -1,0 +1,50 @@
+{
+  "text": "它把工作区、终端和 Agent 状态，组织在一起。",
+  "spoken": "它把工作区、终端和 Agent 状态，组织在一起。",
+  "language": "zh",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M-v1.1-zh",
+    "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+    "voice": "zf_001",
+    "speed": 1.04
+  },
+  "sampleRate": 24000,
+  "samples": 95896,
+  "duration": 3.9956666666666667,
+  "signature": "0083be2e7af367b401ff2d3a2fb88b49143a58011a58f70d3570d09bf0323c7e",
+  "sha256": "8f4135e01843057d91c9929d279e4ec3cde8649c028b2c632550432dae2cca3b",
+  "phonemes": [
+    "ㄊㄚ1/ㄅㄚ3/ㄍ中1ㄗ我4/ㄑㄩ1, ㄓ中1ㄉ万1/ㄏㄜ2 ˈAʤᵊnt ㄓ王4ㄊㄞ4, ㄗㄨ3ㄓ十1/ㄗㄞ4/ㄧ4ㄑㄧ3."
+  ],
+  "gain": 1.7158130793140416,
+  "sourceTrimSamples": [
+    4548,
+    100444
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/config.json",
+      "sha256": "bc333efa5ce4ceff433c8c8e5d027a1eca0166001e4e4a62bea2d26ff7a46890",
+      "bytes": 3228
+    },
+    {
+      "file": "kokoro-v1_1-zh.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/kokoro-v1_1-zh.pth",
+      "sha256": "b1d8410fa44dfb5c15471fd6c4225ea6b4e9ac7fa03c98e8bea47a9928476e2b",
+      "bytes": 327247856
+    },
+    {
+      "file": "voices/zf_001.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/voices/zf_001.pt",
+      "sha256": "9bdc9a87e13e9bb1ea3e7803259c2ecbfebaeeb2ff80b5d0c76df1a464c1c962",
+      "bytes": 523331
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:43.581109+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

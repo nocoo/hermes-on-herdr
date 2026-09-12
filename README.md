@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">hermes on herdr</h1>
 <p align="center">在 Herdr 中运行 Hermes，按需打开监控面板。</p>
-<p align="center"><a href="docs/README.en.md">English</a> · <a href="docs/README.md">文档</a> · <a href="examples/README.md">配置示例</a></p>
+<p align="center"><a href="docs/README.en.md">English</a> · <a href="docs/README.md">文档</a> · <a href="examples/README.md">配置示例</a> · <a href="video/README.md">双语产品短片</a></p>
 
 **hermes on herdr** 是一个 Herdr 插件：让专用 Hermes Gateway 运行在真实 pane 内，由 supervisor 管理进程生命周期，并继承所属 Herdr session 的控制环境。运行意图、进程身份和所有权都有记录，暂停后需要明确恢复。
 

@@ -1,0 +1,50 @@
+{
+  "text": "程序员都有自己信任的天才工程师伙伴。",
+  "spoken": "程序员都有自己信任的天才工程师伙伴。",
+  "language": "zh",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M-v1.1-zh",
+    "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+    "voice": "zf_001",
+    "speed": 1.04
+  },
+  "sampleRate": 24000,
+  "samples": 94012,
+  "duration": 3.9171666666666667,
+  "signature": "272a490ee2b7d24c5fbd28b3f88112644549fbff1d0f7dd426e87e75917e0961",
+  "sha256": "c7c3fb512fb13e07229e338d99b9f3b14c39e5f40edef8b0a71a4d6621be8009",
+  "phonemes": [
+    "ㄔㄥ2ㄒㄩ4元2/ㄉㄡ1/又3/ㄗㄭ4ㄐㄧ3/ㄒ阴4ㄖㄣ4/ㄉㄜ5/ㄊ言1ㄘㄞ2/ㄍ中1ㄔㄥ2ㄕ十1/ㄏ我3ㄅㄢ4."
+  ],
+  "gain": 1.7307396729140654,
+  "sourceTrimSamples": [
+    4662,
+    98674
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/config.json",
+      "sha256": "bc333efa5ce4ceff433c8c8e5d027a1eca0166001e4e4a62bea2d26ff7a46890",
+      "bytes": 3228
+    },
+    {
+      "file": "kokoro-v1_1-zh.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/kokoro-v1_1-zh.pth",
+      "sha256": "b1d8410fa44dfb5c15471fd6c4225ea6b4e9ac7fa03c98e8bea47a9928476e2b",
+      "bytes": 327247856
+    },
+    {
+      "file": "voices/zf_001.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/resolve/01e7505bd6a7a2ac4975463114c3a7650a9f7218/voices/zf_001.pt",
+      "sha256": "9bdc9a87e13e9bb1ea3e7803259c2ecbfebaeeb2ff80b5d0c76df1a464c1c962",
+      "bytes": 523331
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:39:54.427708+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

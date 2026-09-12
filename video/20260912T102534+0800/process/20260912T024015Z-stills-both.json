@@ -1,0 +1,78 @@
+{
+  "mode": "stills",
+  "language": "both",
+  "sourceHash": "b456b3c1c7cb575651067e77b4c09ca61883f3847b3f6fc977680fd9a98458c1",
+  "timingHash": "9df4766159ba8b8da122d199a159f043a0385ef78fe49a5ff26c4f811b6b0145",
+  "renderedAt": "2026-09-12T02:40:15.509Z",
+  "frames": 2985,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "status": "complete",
+  "artifacts": [
+    {
+      "file": "process/check-zh-54.png",
+      "frame": 54
+    },
+    {
+      "file": "process/check-zh-190.png",
+      "frame": 190
+    },
+    {
+      "file": "process/check-zh-390.png",
+      "frame": 390
+    },
+    {
+      "file": "process/check-zh-900.png",
+      "frame": 900
+    },
+    {
+      "file": "process/check-zh-1300.png",
+      "frame": 1300
+    },
+    {
+      "file": "process/check-zh-1800.png",
+      "frame": 1800
+    },
+    {
+      "file": "process/check-zh-2180.png",
+      "frame": 2180
+    },
+    {
+      "file": "process/check-zh-2700.png",
+      "frame": 2700
+    },
+    {
+      "file": "process/check-en-54.png",
+      "frame": 54
+    },
+    {
+      "file": "process/check-en-190.png",
+      "frame": 190
+    },
+    {
+      "file": "process/check-en-390.png",
+      "frame": 390
+    },
+    {
+      "file": "process/check-en-900.png",
+      "frame": 900
+    },
+    {
+      "file": "process/check-en-1300.png",
+      "frame": 1300
+    },
+    {
+      "file": "process/check-en-1800.png",
+      "frame": 1800
+    },
+    {
+      "file": "process/check-en-2180.png",
+      "frame": 2180
+    },
+    {
+      "file": "process/check-en-2700.png",
+      "frame": 2700
+    }
+  ]
+}

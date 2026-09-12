@@ -1,0 +1,34 @@
+[
+  {
+    "project": "wb-beacon",
+    "path": "/Users/nocoo/workspace/personal/workflow/project-videos/wb-beacon/20260905T140012+0800",
+    "movie": "/Users/nocoo/workspace/personal/workflow/project-videos/wb-beacon/20260905T140012+0800/public/review/wb-beacon-signal-glass-v1.mp4",
+    "movieSha256": "0355d85ba4cfe05b7025c40bc70e8f1988c5b4b88db4fc0bf6d21a99506c0b50",
+    "sourceFiles": [
+      "package.json",
+      "src/Film.tsx",
+      "src/art/World.tsx",
+      "src/timeline.ts",
+      "scripts/render.mjs",
+      "scripts/soundtrack.py",
+      "scripts/narrate.py"
+    ],
+    "inspection": "Source read; storyboard/contact sheet visually inspected; actual MP4 ffprobe inspected."
+  },
+  {
+    "project": "raven",
+    "path": "/Users/nocoo/workspace/personal/workflow/project-videos/raven/20260905T130354+0800",
+    "movie": "/Users/nocoo/workspace/personal/workflow/project-videos/raven/20260905T130354+0800/public/review/raven-sunlit-v1.mp4",
+    "movieSha256": "53c63a2d30976dc709edb3f2cf2d42b1b0cf08a1a257f139ab2f23c3fe8e9be2",
+    "sourceFiles": [
+      "package.json",
+      "src/Film.tsx",
+      "src/art/World.tsx",
+      "src/timeline.ts",
+      "scripts/render.mjs",
+      "scripts/soundtrack.py",
+      "scripts/narrate.py"
+    ],
+    "inspection": "Source read; storyboard/contact sheet visually inspected; actual MP4 ffprobe inspected."
+  }
+]

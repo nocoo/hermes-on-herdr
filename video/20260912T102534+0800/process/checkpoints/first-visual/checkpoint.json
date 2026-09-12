@@ -1,0 +1,11 @@
+{
+  "createdAt": "2026-09-12T02:48:08.814121+00:00",
+  "stage": "First rendered bilingual frames before topology/legibility refinements",
+  "changesNext": [
+    "Raise lower IC nodes above the platform",
+    "Remove tiny role text",
+    "Keep status labels inside panels",
+    "Uncross fan routes",
+    "Stage monitor then messaging"
+  ]
+}

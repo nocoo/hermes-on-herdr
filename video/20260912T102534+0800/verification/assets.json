@@ -1,0 +1,262 @@
+{
+  "checkedAt": "2026-09-12T02:57:34.158502+00:00",
+  "assets": {
+    "status": "passed",
+    "seconds": 109.0,
+    "languages": {
+      "zh": {
+        "sentences": 20,
+        "clips": [
+          {
+            "file": "audio/zh/partners-01.wav",
+            "duration": 3.9171666666666667,
+            "rms": 0.10000003928832427,
+            "peak": 0.714630126953125
+          },
+          {
+            "file": "audio/zh/partners-02.wav",
+            "duration": 2.9471666666666665,
+            "rms": 0.09999996153904579,
+            "peak": 0.56787109375
+          },
+          {
+            "file": "audio/zh/partners-03.wav",
+            "duration": 2.9846666666666666,
+            "rms": 0.1000000234620479,
+            "peak": 0.594573974609375
+          },
+          {
+            "file": "audio/zh/management-01.wav",
+            "duration": 4.669458333333333,
+            "rms": 0.08390462764811592,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/zh/management-02.wav",
+            "duration": 3.578625,
+            "rms": 0.10000001404114067,
+            "peak": 0.61004638671875
+          },
+          {
+            "file": "audio/zh/herdr-01.wav",
+            "duration": 4.2320416666666665,
+            "rms": 0.09999996757033204,
+            "peak": 0.798553466796875
+          },
+          {
+            "file": "audio/zh/herdr-02.wav",
+            "duration": 3.9956666666666667,
+            "rms": 0.10000003686529639,
+            "peak": 0.71527099609375
+          },
+          {
+            "file": "audio/zh/weekend-01.wav",
+            "duration": 4.159416666666667,
+            "rms": 0.10000003916365062,
+            "peak": 0.813720703125
+          },
+          {
+            "file": "audio/zh/weekend-02.wav",
+            "duration": 1.6284583333333333,
+            "rms": 0.10000005923559158,
+            "peak": 0.63983154296875
+          },
+          {
+            "file": "audio/zh/m2-01.wav",
+            "duration": 5.824916666666667,
+            "rms": 0.09999998221119896,
+            "peak": 0.650238037109375
+          },
+          {
+            "file": "audio/zh/m2-02.wav",
+            "duration": 2.1467916666666667,
+            "rms": 0.10000002390889119,
+            "peak": 0.662689208984375
+          },
+          {
+            "file": "audio/zh/control-01.wav",
+            "duration": 3.7573333333333334,
+            "rms": 0.10000001679443521,
+            "peak": 0.7794189453125
+          },
+          {
+            "file": "audio/zh/control-02.wav",
+            "duration": 4.86475,
+            "rms": 0.09999997342347511,
+            "peak": 0.682952880859375
+          },
+          {
+            "file": "audio/zh/lifecycle-01.wav",
+            "duration": 6.001125,
+            "rms": 0.09601256808097708,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/zh/lifecycle-02.wav",
+            "duration": 3.7361666666666666,
+            "rms": 0.09999999159815885,
+            "peak": 0.70892333984375
+          },
+          {
+            "file": "audio/zh/monitor-01.wav",
+            "duration": 5.853666666666666,
+            "rms": 0.09999999017516155,
+            "peak": 0.8135986328125
+          },
+          {
+            "file": "audio/zh/monitor-02.wav",
+            "duration": 4.519916666666667,
+            "rms": 0.10000001565785978,
+            "peak": 0.797119140625
+          },
+          {
+            "file": "audio/zh/monitor-03.wav",
+            "duration": 4.01375,
+            "rms": 0.09999999296842248,
+            "peak": 0.62176513671875
+          },
+          {
+            "file": "audio/zh/closing-01.wav",
+            "duration": 3.9398333333333335,
+            "rms": 0.09999998325905081,
+            "peak": 0.70697021484375
+          },
+          {
+            "file": "audio/zh/closing-02.wav",
+            "duration": 2.5695,
+            "rms": 0.09999996145016385,
+            "peak": 0.717926025390625
+          }
+        ],
+        "audioMix": "109.000000"
+      },
+      "en": {
+        "sentences": 20,
+        "clips": [
+          {
+            "file": "audio/en/partners-01.wav",
+            "duration": 3.8717083333333333,
+            "rms": 0.10000007577169683,
+            "peak": 0.759033203125
+          },
+          {
+            "file": "audio/en/partners-02.wav",
+            "duration": 2.2164166666666665,
+            "rms": 0.10000001973229575,
+            "peak": 0.680419921875
+          },
+          {
+            "file": "audio/en/partners-03.wav",
+            "duration": 2.576875,
+            "rms": 0.100000004176397,
+            "peak": 0.6029052734375
+          },
+          {
+            "file": "audio/en/management-01.wav",
+            "duration": 4.725666666666666,
+            "rms": 0.09671870297341041,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/en/management-02.wav",
+            "duration": 3.3052083333333333,
+            "rms": 0.09999994287518706,
+            "peak": 0.7613525390625
+          },
+          {
+            "file": "audio/en/herdr-01.wav",
+            "duration": 3.847625,
+            "rms": 0.10000002641075076,
+            "peak": 0.650634765625
+          },
+          {
+            "file": "audio/en/herdr-02.wav",
+            "duration": 3.630375,
+            "rms": 0.09999996353722397,
+            "peak": 0.694122314453125
+          },
+          {
+            "file": "audio/en/weekend-01.wav",
+            "duration": 4.520041666666667,
+            "rms": 0.09999999789044502,
+            "peak": 0.70452880859375
+          },
+          {
+            "file": "audio/en/weekend-02.wav",
+            "duration": 1.703375,
+            "rms": 0.09999998513389358,
+            "peak": 0.49188232421875
+          },
+          {
+            "file": "audio/en/m2-01.wav",
+            "duration": 5.658,
+            "rms": 0.10000002768230734,
+            "peak": 0.7928466796875
+          },
+          {
+            "file": "audio/en/m2-02.wav",
+            "duration": 2.468,
+            "rms": 0.08864376047211128,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/en/control-01.wav",
+            "duration": 2.854791666666667,
+            "rms": 0.10000002004374804,
+            "peak": 0.746307373046875
+          },
+          {
+            "file": "audio/en/control-02.wav",
+            "duration": 5.2645,
+            "rms": 0.09999997525032434,
+            "peak": 0.688079833984375
+          },
+          {
+            "file": "audio/en/lifecycle-01.wav",
+            "duration": 4.798166666666667,
+            "rms": 0.0999999956843781,
+            "peak": 0.6949462890625
+          },
+          {
+            "file": "audio/en/lifecycle-02.wav",
+            "duration": 2.868916666666667,
+            "rms": 0.1000000136637459,
+            "peak": 0.5753173828125
+          },
+          {
+            "file": "audio/en/monitor-01.wav",
+            "duration": 6.692625,
+            "rms": 0.09999999706650693,
+            "peak": 0.734466552734375
+          },
+          {
+            "file": "audio/en/monitor-02.wav",
+            "duration": 4.943666666666667,
+            "rms": 0.089335599753931,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/en/monitor-03.wav",
+            "duration": 2.7364166666666665,
+            "rms": 0.10000001108260473,
+            "peak": 0.6220703125
+          },
+          {
+            "file": "audio/en/closing-01.wav",
+            "duration": 3.6475833333333334,
+            "rms": 0.09303241127682949,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/en/closing-02.wav",
+            "duration": 2.2640833333333332,
+            "rms": 0.10000005288721349,
+            "peak": 0.5367431640625
+          }
+        ],
+        "audioMix": "109.000000"
+      }
+    }
+  },
+  "status": "passed"
+}

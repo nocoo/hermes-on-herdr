@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "editions": [
+    "zh",
+    "en"
+  ],
+  "pagesPerEdition": 10,
+  "pdfPixels": "exact match",
+  "odpNotes": "exact match",
+  "officeApplicationReview": "Not used; exported packages and raster PDF images independently parsed."
+}

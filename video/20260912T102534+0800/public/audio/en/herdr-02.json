@@ -1,0 +1,50 @@
+{
+  "text": "It brings workspaces, terminals, and agent status together.",
+  "spoken": "It brings workspaces, terminals, and agent status together.",
+  "language": "en",
+  "voice": {
+    "repo": "hexgrad/Kokoro-82M",
+    "voice": "af_heart",
+    "speed": 1.0,
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+  },
+  "sampleRate": 24000,
+  "samples": 87129,
+  "duration": 3.630375,
+  "signature": "9168ffe91d3025639ac56cde7aff9642c5e7605c14462c06362800be7f2da19f",
+  "sha256": "e26a065a4eea03a243c6176d9778e8ab7b40ad647c9a58b0df41ff1fb63aaaeb",
+  "phonemes": [
+    "ˌɪt bɹˈɪŋz wˈɜɹkspˌAsᵻz, tˈɜɹmənəlz, ænd ˈAʤᵊnt stˈATəs təɡˈɛðəɹ."
+  ],
+  "gain": 1.9055763685221625,
+  "sourceTrimSamples": [
+    5443,
+    92572
+  ],
+  "sources": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/config.json",
+      "sha256": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+      "bytes": 2351
+    },
+    {
+      "file": "kokoro-v1_0.pth",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth",
+      "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+      "bytes": 327212226
+    },
+    {
+      "file": "voices/af_heart.pt",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/voices/af_heart.pt",
+      "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+      "bytes": 523425
+    }
+  ],
+  "attribution": "Kokoro by hexgrad; Apache-2.0 licensed model. Synthetic narration.",
+  "generatedAt": "2026-09-12T02:40:53.012081+00:00",
+  "engine": {
+    "name": "kokoro",
+    "version": "0.9.4"
+  }
+}

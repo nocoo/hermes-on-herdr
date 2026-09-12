@@ -1,0 +1,21 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.12.14",
+  "packages": {
+    "kokoro": "0.9.4",
+    "torch": "2.8.0",
+    "misaki": "0.9.4",
+    "soundfile": "0.13.1",
+    "numpy": "2.2.6",
+    "Pillow": "11.3.0",
+    "reportlab": "4.4.3",
+    "odfpy": "1.4.1",
+    "pypdf": "6.0.0"
+  },
+  "node": "v26.8.1",
+  "bun": "1.4.0",
+  "ffmpeg": "ffmpeg version 9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "ffprobe": "ffprobe version 9.0.1 Copyright (c) 2007-2026 the FFmpeg developers",
+  "uv": "uv 0.12.11 (Homebrew 2026-09-08 aarch64-apple-darwin)",
+  "chrome": "Google Chrome 152.0.7977.83 "
+}

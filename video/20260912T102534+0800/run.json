@@ -1,0 +1,151 @@
+{
+  "project": "hermes-on-herdr",
+  "runId": "20260912T102534+0800",
+  "createdAt": "2026-09-12T10:25:34+08:00",
+  "timestampBasis": "creation",
+  "sourceRepository": "https://github.com/nocoo/hermes-on-herdr",
+  "sourceCommit": "3f17a50370a77e2ed0ee57ca190da66be4addfca",
+  "status": "verified",
+  "direction": "The Weekend Protocol / 周末交接",
+  "languages": [
+    "zh",
+    "en"
+  ],
+  "spec": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "aspectRatio": "16:9",
+    "seconds": 109.0,
+    "frames": 3270,
+    "video": "H.264 / yuv420p / bt709",
+    "audio": "AAC / 48000 Hz / stereo"
+  },
+  "storageDecision": "Production is inside the target repository, as explicitly requested; other repositories are read-only references. Rebuildable bundles, dependency/model caches and duplicate raw renders stay local and untracked. Authored source, voice masters, final deliverables and verification are retained.",
+  "coordination": {
+    "integrator": "Codex in current repository",
+    "researcher": "Herdr Grok promo-research in w2X:p3; read-only licensing and claim review",
+    "writing": "Only integrator may write production files, commit or push"
+  },
+  "verifiedAt": "2026-09-12T03:20:20.497865+00:00",
+  "sourceStorySha256": "c8bf379b427bfb1a3a3d4118eb0e77d9438bf84cb54769f29726596b4a5976d2",
+  "timingSha256": "3f262f1ee7a2c43a45386515961b4909fb386f3968c287d44438bf6a0a1ea124",
+  "voices": {
+    "zh": {
+      "repo": "hexgrad/Kokoro-82M-v1.1-zh",
+      "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+      "voice": "zf_001",
+      "speed": 1.04
+    },
+    "en": {
+      "repo": "hexgrad/Kokoro-82M",
+      "voice": "af_heart",
+      "speed": 1.0,
+      "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987"
+    }
+  },
+  "artifacts": {
+    "zh": {
+      "file": "public/review/hermes-on-herdr-weekend-zh.mp4",
+      "bytes": 17061184,
+      "sha256": "92145345553525497b434feea96a86cf94b0c45c2c68d8b06daa017d59908be5",
+      "storage": "ordinary Git"
+    },
+    "en": {
+      "file": "public/review/hermes-on-herdr-weekend-en.mp4",
+      "bytes": 17105462,
+      "sha256": "2815334497113954b712074b6948f87eb4b87763e71125f412c9477ea29b1bfe",
+      "storage": "ordinary Git"
+    }
+  },
+  "publication": {
+    "repository": "https://github.com/nocoo/hermes-on-herdr",
+    "branch": "main",
+    "method": "ordinary Git",
+    "identity": "The atomic Git commit containing this manifest identifies the delivered production. The remote commit is confirmed after push and supplied in the delivery reply."
+  },
+  "website": {
+    "source": "src/web.tsx",
+    "build": "website/ (rebuildable, ignored)",
+    "development": "http://127.0.0.1:7430/",
+    "builtPreview": "http://127.0.0.1:7432/",
+    "verifiedBaseUrl": "http://127.0.0.1:7432"
+  },
+  "verification": {
+    "report": "verification/REPORT.md",
+    "media": "verification/media.json",
+    "browser": "verification/browser.json",
+    "slides": "verification/slides.json",
+    "sourceChecks": "verification/source-checks.json",
+    "toolchain": "verification/toolchain.json",
+    "finalVisualReview": "research/grok-final-visual-review.md",
+    "status": "passed"
+  },
+  "sceneTimeline": [
+    {
+      "id": "opening",
+      "startSeconds": 0.0,
+      "durationSeconds": 3.5,
+      "keyframe": 55
+    },
+    {
+      "id": "partners",
+      "startSeconds": 3.5,
+      "durationSeconds": 12.5,
+      "keyframe": 300
+    },
+    {
+      "id": "management",
+      "startSeconds": 16.0,
+      "durationSeconds": 10.5,
+      "keyframe": 644
+    },
+    {
+      "id": "herdr",
+      "startSeconds": 26.5,
+      "durationSeconds": 10.5,
+      "keyframe": 959
+    },
+    {
+      "id": "weekend",
+      "startSeconds": 37.0,
+      "durationSeconds": 8.5,
+      "keyframe": 1243
+    },
+    {
+      "id": "m2",
+      "startSeconds": 45.5,
+      "durationSeconds": 12.0,
+      "keyframe": 1552
+    },
+    {
+      "id": "control",
+      "startSeconds": 57.5,
+      "durationSeconds": 11.0,
+      "keyframe": 1897
+    },
+    {
+      "id": "lifecycle",
+      "startSeconds": 68.5,
+      "durationSeconds": 12.0,
+      "keyframe": 2242
+    },
+    {
+      "id": "monitor",
+      "startSeconds": 80.5,
+      "durationSeconds": 17.0,
+      "keyframe": 2680
+    },
+    {
+      "id": "closing",
+      "startSeconds": 97.5,
+      "durationSeconds": 11.5,
+      "keyframe": 3104
+    }
+  ],
+  "renderRecords": [
+    "process/20260912T025401Z-video-both.json",
+    "process/20260912T030503Z-video-en.json"
+  ],
+  "renderNotes": "The initial bilingual render completed, then English was rerendered for written M2/TUI captions. Moving the unchanged English closing headline into story.json did not change Chinese pixels or timing. Original render hashes remain in the process records; final hashes are above."
+}

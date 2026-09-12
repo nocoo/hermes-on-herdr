@@ -1,0 +1,192 @@
+{
+  "startedAt": "2026-09-12T03:16:49.842Z",
+  "baseURL": "http://127.0.0.1:7432",
+  "browser": "152.0.7977.83",
+  "status": "passed",
+  "editions": {
+    "zh": {
+      "metadata": {
+        "width": 1920,
+        "height": 1080,
+        "duration": 109,
+        "source": "http://127.0.0.1:7432/review/hermes-on-herdr-weekend-zh.mp4"
+      },
+      "range": "bytes 0-1023/17061184",
+      "playback": {
+        "secondsAdvanced": 1.1733329999999995,
+        "audioRmsMean": 0.1348977642663339,
+        "audioRmsMax": 0.3128696272627913,
+        "decodedFrameMeanLuma": 29.65918447569036,
+        "decodedFrames": 185
+      },
+      "captions": 20,
+      "chapters": [
+        {
+          "scene": "opening",
+          "seconds": 0
+        },
+        {
+          "scene": "partners",
+          "seconds": 3.5
+        },
+        {
+          "scene": "management",
+          "seconds": 16
+        },
+        {
+          "scene": "herdr",
+          "seconds": 26.5
+        },
+        {
+          "scene": "weekend",
+          "seconds": 37
+        },
+        {
+          "scene": "m2",
+          "seconds": 45.5
+        },
+        {
+          "scene": "control",
+          "seconds": 57.5
+        },
+        {
+          "scene": "lifecycle",
+          "seconds": 68.5
+        },
+        {
+          "scene": "monitor",
+          "seconds": 80.5
+        },
+        {
+          "scene": "closing",
+          "seconds": 97.5
+        }
+      ],
+      "downloads": [
+        {
+          "file": "hermes-on-herdr-weekend-zh.mp4",
+          "bytes": 17061184,
+          "sha256": "92145345553525497b434feea96a86cf94b0c45c2c68d8b06daa017d59908be5"
+        },
+        {
+          "file": "narration-zh.srt",
+          "bytes": 1875,
+          "sha256": "75256c322e7eb75ab3feadd8eb5aadd64274e305e84a147acf42491de99dfeef"
+        },
+        {
+          "file": "hermes-weekend-zh.pdf",
+          "bytes": 4008110,
+          "sha256": "0d0f400ed8a7a4d4620716475f0832750dde5c439224e6ee0b470b960efe7c59"
+        },
+        {
+          "file": "hermes-weekend-zh.odp",
+          "bytes": 7019265,
+          "sha256": "1ff81967c3caba0a94222a29d5397cff097f36d0bb4b37078578007d09eeb7c1"
+        }
+      ],
+      "liveCanvas": {
+        "width": 1920,
+        "height": 1080
+      },
+      "mobile": {
+        "viewport": 390,
+        "content": 390,
+        "playedSeconds": 0.516453999999996
+      }
+    },
+    "en": {
+      "metadata": {
+        "width": 1920,
+        "height": 1080,
+        "duration": 109,
+        "source": "http://127.0.0.1:7432/review/hermes-on-herdr-weekend-en.mp4"
+      },
+      "range": "bytes 0-1023/17105462",
+      "playback": {
+        "secondsAdvanced": 1.1822869999999996,
+        "audioRmsMean": 0.08850957036558109,
+        "audioRmsMax": 0.27717185102814035,
+        "decodedFrameMeanLuma": 29.602468295135004,
+        "decodedFrames": 216
+      },
+      "captions": 20,
+      "chapters": [
+        {
+          "scene": "opening",
+          "seconds": 0
+        },
+        {
+          "scene": "partners",
+          "seconds": 3.5
+        },
+        {
+          "scene": "management",
+          "seconds": 16
+        },
+        {
+          "scene": "herdr",
+          "seconds": 26.5
+        },
+        {
+          "scene": "weekend",
+          "seconds": 37
+        },
+        {
+          "scene": "m2",
+          "seconds": 45.5
+        },
+        {
+          "scene": "control",
+          "seconds": 57.5
+        },
+        {
+          "scene": "lifecycle",
+          "seconds": 68.5
+        },
+        {
+          "scene": "monitor",
+          "seconds": 80.5
+        },
+        {
+          "scene": "closing",
+          "seconds": 97.5
+        }
+      ],
+      "downloads": [
+        {
+          "file": "hermes-on-herdr-weekend-en.mp4",
+          "bytes": 17105462,
+          "sha256": "2815334497113954b712074b6948f87eb4b87763e71125f412c9477ea29b1bfe"
+        },
+        {
+          "file": "narration-en.srt",
+          "bytes": 1922,
+          "sha256": "546c53c10081e409f367c5a7d907d162c2367663545a8a9c40209affd77b9b0f"
+        },
+        {
+          "file": "hermes-weekend-en.pdf",
+          "bytes": 4022781,
+          "sha256": "89d190417ec0e353a8f2908de742e729362719d777dbe66eb3301a5d82c27f12"
+        },
+        {
+          "file": "hermes-weekend-en.odp",
+          "bytes": 7034800,
+          "sha256": "2a0232341d2ce64bac0ee303678151a99f7f977f76b5b0a383429b74ae376585"
+        }
+      ],
+      "liveCanvas": {
+        "width": 1920,
+        "height": 1080
+      },
+      "mobile": {
+        "viewport": 390,
+        "content": 390,
+        "playedSeconds": 0.5162399999999963
+      }
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "languageSwitch": "preserved 83-second position in both directions",
+  "completedAt": "2026-09-12T03:16:58.275Z"
+}

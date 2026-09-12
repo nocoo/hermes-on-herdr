@@ -1,0 +1,2790 @@
+{
+  "text": "程序員都有自己信任的天才工程師夥伴比如 Codex Graph牌或者 Clock Code一個想法就能和他們一起開工當你有了自己的多A人工作流真正的問題變成了管理誰在推進誰被阻塞 下一步交給誰Herder是 Manager負責管理這些天才天才獨立貢獻者他把工作區中端和A人狀態組織在一起客週末到了你不該還守在電腦前盯著進度誰來管理manager?Hermes & Herter讓當前機器上一個專門受信任的Hermes Profile成為你的MR一個管理Herter的manager這個專用Hermie擁有完整Herter控制權限讀取狀態協調工作 把你的意圖傳到正在執行的A人允許運行時 他隨Herter啟動也隨索署繪畫停止運行在真實陪種 暫停後只有明確恢復才會繼續運行打開中端監控面板專屬實力多個Profile處理器和內存一眼看清通過Hermis以配置的消息平台遠程提問易不跟進機器和Herter保持在線你就可以離開桌面把天才交給系統管理把週末還給自己Hermis on Herter來自Hexley AI",
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 4.04,
+      "end": 8.02,
+      "text": "程序員都有自己信任的天才工程師夥伴",
+      "tokens": [
+        50364,
+        29649,
+        6346,
+        237,
+        20992,
+        48121,
+        17645,
+        17665,
+        26443,
+        1546,
+        6135,
+        18888,
+        23323,
+        29649,
+        16276,
+        1787,
+        98,
+        7384,
+        112,
+        50614
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22482070182133645,
+      "compression_ratio": 1.1027667984189724,
+      "no_speech_prob": 0.005301603116095066,
+      "words": [
+        {
+          "word": "程",
+          "start": 4.04,
+          "end": 4.54,
+          "probability": 0.94775390625
+        },
+        {
+          "word": "序",
+          "start": 4.54,
+          "end": 4.76,
+          "probability": 0.9892578125
+        },
+        {
+          "word": "員",
+          "start": 4.76,
+          "end": 5.02,
+          "probability": 0.94140625
+        },
+        {
+          "word": "都有",
+          "start": 5.02,
+          "end": 5.28,
+          "probability": 0.947265625
+        },
+        {
+          "word": "自己",
+          "start": 5.28,
+          "end": 5.62,
+          "probability": 0.99267578125
+        },
+        {
+          "word": "信",
+          "start": 5.62,
+          "end": 5.98,
+          "probability": 0.9814453125
+        },
+        {
+          "word": "任",
+          "start": 5.98,
+          "end": 6.12,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "的",
+          "start": 6.12,
+          "end": 6.28,
+          "probability": 0.9931640625
+        },
+        {
+          "word": "天",
+          "start": 6.28,
+          "end": 6.58,
+          "probability": 0.91552734375
+        },
+        {
+          "word": "才",
+          "start": 6.58,
+          "end": 6.82,
+          "probability": 0.9921875
+        },
+        {
+          "word": "工",
+          "start": 6.82,
+          "end": 7.16,
+          "probability": 0.453369140625
+        },
+        {
+          "word": "程",
+          "start": 7.16,
+          "end": 7.38,
+          "probability": 1.0
+        },
+        {
+          "word": "師",
+          "start": 7.38,
+          "end": 7.58,
+          "probability": 0.99755859375
+        },
+        {
+          "word": "夥",
+          "start": 7.58,
+          "end": 7.84,
+          "probability": 0.93310546875
+        },
+        {
+          "word": "伴",
+          "start": 7.84,
+          "end": 8.02,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 8.02,
+      "end": 11.26,
+      "text": "比如 Codex Graph牌或者 Clock Code",
+      "tokens": [
+        50614,
+        36757,
+        15549,
+        87,
+        21884,
+        6935,
+        234,
+        31148,
+        46986,
+        15549,
+        50764
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22482070182133645,
+      "compression_ratio": 1.1027667984189724,
+      "no_speech_prob": 0.005301603116095066,
+      "words": [
+        {
+          "word": "比如",
+          "start": 8.02,
+          "end": 8.78,
+          "probability": 0.91650390625
+        },
+        {
+          "word": " Code",
+          "start": 8.78,
+          "end": 9.1,
+          "probability": 0.58154296875
+        },
+        {
+          "word": "x",
+          "start": 9.1,
+          "end": 9.4,
+          "probability": 0.9541015625
+        },
+        {
+          "word": " Graph",
+          "start": 9.4,
+          "end": 9.68,
+          "probability": 0.52880859375
+        },
+        {
+          "word": "牌",
+          "start": 9.68,
+          "end": 10.12,
+          "probability": 0.75439453125
+        },
+        {
+          "word": "或者",
+          "start": 10.12,
+          "end": 10.44,
+          "probability": 0.8837890625
+        },
+        {
+          "word": " Clock",
+          "start": 10.44,
+          "end": 10.82,
+          "probability": 0.22021484375
+        },
+        {
+          "word": " Code",
+          "start": 10.82,
+          "end": 11.26,
+          "probability": 0.8896484375
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 11.26,
+      "end": 14.54,
+      "text": "一個想法就能和他們一起開工",
+      "tokens": [
+        50764,
+        8990,
+        7093,
+        11148,
+        3111,
+        8225,
+        12565,
+        20486,
+        29567,
+        8949,
+        23323,
+        50964
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22482070182133645,
+      "compression_ratio": 1.1027667984189724,
+      "no_speech_prob": 0.005301603116095066,
+      "words": [
+        {
+          "word": "一個",
+          "start": 11.26,
+          "end": 12.02,
+          "probability": 0.775390625
+        },
+        {
+          "word": "想",
+          "start": 12.02,
+          "end": 12.32,
+          "probability": 0.9951171875
+        },
+        {
+          "word": "法",
+          "start": 12.32,
+          "end": 12.68,
+          "probability": 1.0
+        },
+        {
+          "word": "就",
+          "start": 12.68,
+          "end": 12.92,
+          "probability": 0.88330078125
+        },
+        {
+          "word": "能",
+          "start": 12.92,
+          "end": 13.1,
+          "probability": 0.99755859375
+        },
+        {
+          "word": "和",
+          "start": 13.1,
+          "end": 13.3,
+          "probability": 0.93603515625
+        },
+        {
+          "word": "他們",
+          "start": 13.3,
+          "end": 13.6,
+          "probability": 0.646484375
+        },
+        {
+          "word": "一起",
+          "start": 13.6,
+          "end": 14.0,
+          "probability": 0.986328125
+        },
+        {
+          "word": "開",
+          "start": 14.0,
+          "end": 14.3,
+          "probability": 0.990234375
+        },
+        {
+          "word": "工",
+          "start": 14.3,
+          "end": 14.54,
+          "probability": 0.99560546875
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "seek": 0,
+      "start": 16.48,
+      "end": 19.1,
+      "text": "當你有了自己的多A人工作流",
+      "tokens": [
+        51014,
+        13118,
+        43320,
+        2289,
+        17645,
+        1546,
+        6392,
+        32,
+        4035,
+        41315,
+        27854,
+        51164
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22482070182133645,
+      "compression_ratio": 1.1027667984189724,
+      "no_speech_prob": 0.005301603116095066,
+      "words": [
+        {
+          "word": "當",
+          "start": 16.48,
+          "end": 16.98,
+          "probability": 0.93896484375
+        },
+        {
+          "word": "你有",
+          "start": 16.98,
+          "end": 17.24,
+          "probability": 0.904296875
+        },
+        {
+          "word": "了",
+          "start": 17.24,
+          "end": 17.46,
+          "probability": 0.98828125
+        },
+        {
+          "word": "自己",
+          "start": 17.46,
+          "end": 17.68,
+          "probability": 0.99609375
+        },
+        {
+          "word": "的",
+          "start": 17.68,
+          "end": 17.92,
+          "probability": 0.9677734375
+        },
+        {
+          "word": "多",
+          "start": 17.92,
+          "end": 18.08,
+          "probability": 0.98291015625
+        },
+        {
+          "word": "A",
+          "start": 18.08,
+          "end": 18.26,
+          "probability": 0.6728515625
+        },
+        {
+          "word": "人",
+          "start": 18.26,
+          "end": 18.46,
+          "probability": 0.93798828125
+        },
+        {
+          "word": "工作",
+          "start": 18.46,
+          "end": 18.76,
+          "probability": 0.9951171875
+        },
+        {
+          "word": "流",
+          "start": 18.76,
+          "end": 19.1,
+          "probability": 0.818359375
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "seek": 0,
+      "start": 19.1,
+      "end": 21.32,
+      "text": "真正的問題變成了管理",
+      "tokens": [
+        51164,
+        6303,
+        15789,
+        1546,
+        17197,
+        26327,
+        11336,
+        2289,
+        23131,
+        13876,
+        51264
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22482070182133645,
+      "compression_ratio": 1.1027667984189724,
+      "no_speech_prob": 0.005301603116095066,
+      "words": [
+        {
+          "word": "真",
+          "start": 19.1,
+          "end": 19.56,
+          "probability": 0.93798828125
+        },
+        {
+          "word": "正",
+          "start": 19.56,
+          "end": 19.76,
+          "probability": 0.99853515625
+        },
+        {
+          "word": "的",
+          "start": 19.76,
+          "end": 19.88,
+          "probability": 0.9736328125
+        },
+        {
+          "word": "問題",
+          "start": 19.88,
+          "end": 20.22,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "變",
+          "start": 20.22,
+          "end": 20.58,
+          "probability": 0.94287109375
+        },
+        {
+          "word": "成",
+          "start": 20.58,
+          "end": 20.8,
+          "probability": 0.9921875
+        },
+        {
+          "word": "了",
+          "start": 20.8,
+          "end": 20.92,
+          "probability": 0.90869140625
+        },
+        {
+          "word": "管",
+          "start": 20.92,
+          "end": 21.1,
+          "probability": 0.99755859375
+        },
+        {
+          "word": "理",
+          "start": 21.1,
+          "end": 21.32,
+          "probability": 0.9990234375
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "seek": 0,
+      "start": 21.32,
+      "end": 25.28,
+      "text": "誰在推進誰被阻塞 下一步交給誰",
+      "tokens": [
+        51264,
+        20757,
+        3581,
+        33597,
+        18214,
+        20757,
+        23238,
+        10034,
+        119,
+        13331,
+        252,
+        220,
+        45271,
+        31429,
+        28455,
+        17798,
+        20757,
+        51464
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22482070182133645,
+      "compression_ratio": 1.1027667984189724,
+      "no_speech_prob": 0.005301603116095066,
+      "words": [
+        {
+          "word": "誰",
+          "start": 21.32,
+          "end": 22.02,
+          "probability": 0.9384765625
+        },
+        {
+          "word": "在",
+          "start": 22.02,
+          "end": 22.2,
+          "probability": 0.58984375
+        },
+        {
+          "word": "推",
+          "start": 22.2,
+          "end": 22.44,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "進",
+          "start": 22.44,
+          "end": 22.68,
+          "probability": 0.966796875
+        },
+        {
+          "word": "誰",
+          "start": 22.68,
+          "end": 22.96,
+          "probability": 0.83056640625
+        },
+        {
+          "word": "被",
+          "start": 22.96,
+          "end": 23.16,
+          "probability": 0.99462890625
+        },
+        {
+          "word": "阻",
+          "start": 23.16,
+          "end": 23.38,
+          "probability": 0.9345703125
+        },
+        {
+          "word": "塞",
+          "start": 23.38,
+          "end": 23.58,
+          "probability": 0.9912109375
+        },
+        {
+          "word": " 下一",
+          "start": 23.96,
+          "end": 24.2,
+          "probability": 0.9921875
+        },
+        {
+          "word": "步",
+          "start": 24.2,
+          "end": 24.46,
+          "probability": 0.9931640625
+        },
+        {
+          "word": "交",
+          "start": 24.46,
+          "end": 24.68,
+          "probability": 0.9697265625
+        },
+        {
+          "word": "給",
+          "start": 24.68,
+          "end": 24.88,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "誰",
+          "start": 24.88,
+          "end": 25.28,
+          "probability": 0.9990234375
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "seek": 0,
+      "start": 27.06,
+      "end": 28.32,
+      "text": "Herder是 Manager",
+      "tokens": [
+        51564,
+        27934,
+        1068,
+        1541,
+        13821,
+        51614
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22482070182133645,
+      "compression_ratio": 1.1027667984189724,
+      "no_speech_prob": 0.005301603116095066,
+      "words": [
+        {
+          "word": "Her",
+          "start": 27.06,
+          "end": 27.56,
+          "probability": 0.275390625
+        },
+        {
+          "word": "der",
+          "start": 27.56,
+          "end": 27.72,
+          "probability": 0.67236328125
+        },
+        {
+          "word": "是",
+          "start": 27.72,
+          "end": 27.94,
+          "probability": 0.71240234375
+        },
+        {
+          "word": " Manager",
+          "start": 27.94,
+          "end": 28.32,
+          "probability": 0.65380859375
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "seek": 0,
+      "start": 28.32,
+      "end": 29.98,
+      "text": "負責管理這些天才",
+      "tokens": [
+        51614,
+        11561,
+        254,
+        11561,
+        105,
+        23131,
+        13876,
+        29869,
+        6135,
+        18888,
+        51714
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22482070182133645,
+      "compression_ratio": 1.1027667984189724,
+      "no_speech_prob": 0.005301603116095066,
+      "words": [
+        {
+          "word": "負",
+          "start": 28.32,
+          "end": 28.86,
+          "probability": 0.86083984375
+        },
+        {
+          "word": "責",
+          "start": 28.86,
+          "end": 29.04,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "管",
+          "start": 29.04,
+          "end": 29.28,
+          "probability": 0.99658203125
+        },
+        {
+          "word": "理",
+          "start": 29.28,
+          "end": 29.5,
+          "probability": 0.998046875
+        },
+        {
+          "word": "這些",
+          "start": 29.5,
+          "end": 29.76,
+          "probability": 0.99072265625
+        },
+        {
+          "word": "天",
+          "start": 29.76,
+          "end": 29.98,
+          "probability": 0.88720703125
+        },
+        {
+          "word": "才",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.1397705078125
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "seek": 2998,
+      "start": 29.98,
+      "end": 31.36,
+      "text": "天才獨立貢獻者",
+      "tokens": [
+        50364,
+        6135,
+        18888,
+        163,
+        18304,
+        24409,
+        11561,
+        95,
+        29057,
+        119,
+        12444,
+        50454
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.30150499256379015,
+      "compression_ratio": 1.0889830508474576,
+      "no_speech_prob": 0.11120089143514633,
+      "words": [
+        {
+          "word": "天",
+          "start": 29.98,
+          "end": 30.06,
+          "probability": 0.128662109375
+        },
+        {
+          "word": "才",
+          "start": 30.06,
+          "end": 30.3,
+          "probability": 0.99462890625
+        },
+        {
+          "word": "獨",
+          "start": 30.3,
+          "end": 30.56,
+          "probability": 0.953125
+        },
+        {
+          "word": "立",
+          "start": 30.56,
+          "end": 30.72,
+          "probability": 0.9951171875
+        },
+        {
+          "word": "貢",
+          "start": 30.72,
+          "end": 30.9,
+          "probability": 0.99365234375
+        },
+        {
+          "word": "獻",
+          "start": 30.9,
+          "end": 31.08,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "者",
+          "start": 31.08,
+          "end": 31.36,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "seek": 2998,
+      "start": 31.36,
+      "end": 35.54,
+      "text": "他把工作區中端和A人狀態組織在一起",
+      "tokens": [
+        50454,
+        5000,
+        16075,
+        41315,
+        44526,
+        5975,
+        11957,
+        107,
+        12565,
+        32,
+        4035,
+        18637,
+        222,
+        45248,
+        30052,
+        23141,
+        242,
+        3581,
+        29567,
+        50664
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.30150499256379015,
+      "compression_ratio": 1.0889830508474576,
+      "no_speech_prob": 0.11120089143514633,
+      "words": [
+        {
+          "word": "他",
+          "start": 31.36,
+          "end": 31.98,
+          "probability": 0.62646484375
+        },
+        {
+          "word": "把",
+          "start": 31.98,
+          "end": 32.14,
+          "probability": 0.99365234375
+        },
+        {
+          "word": "工作",
+          "start": 32.14,
+          "end": 32.42,
+          "probability": 0.98486328125
+        },
+        {
+          "word": "區",
+          "start": 32.42,
+          "end": 32.76,
+          "probability": 0.9912109375
+        },
+        {
+          "word": "中",
+          "start": 32.76,
+          "end": 33.24,
+          "probability": 0.42431640625
+        },
+        {
+          "word": "端",
+          "start": 33.24,
+          "end": 33.46,
+          "probability": 0.984375
+        },
+        {
+          "word": "和",
+          "start": 33.46,
+          "end": 33.66,
+          "probability": 0.9599609375
+        },
+        {
+          "word": "A",
+          "start": 33.66,
+          "end": 33.84,
+          "probability": 0.798828125
+        },
+        {
+          "word": "人",
+          "start": 33.84,
+          "end": 34.04,
+          "probability": 0.82080078125
+        },
+        {
+          "word": "狀",
+          "start": 34.04,
+          "end": 34.26,
+          "probability": 0.9677734375
+        },
+        {
+          "word": "態",
+          "start": 34.26,
+          "end": 34.58,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "組",
+          "start": 34.58,
+          "end": 34.84,
+          "probability": 0.96435546875
+        },
+        {
+          "word": "織",
+          "start": 34.84,
+          "end": 35.04,
+          "probability": 1.0
+        },
+        {
+          "word": "在",
+          "start": 35.04,
+          "end": 35.18,
+          "probability": 0.99462890625
+        },
+        {
+          "word": "一起",
+          "start": 35.18,
+          "end": 35.54,
+          "probability": 0.994140625
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "seek": 2998,
+      "start": 37.58,
+      "end": 38.78,
+      "text": "客週末到了",
+      "tokens": [
+        50754,
+        32316,
+        38003,
+        1474,
+        104,
+        21381,
+        50819
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.30150499256379015,
+      "compression_ratio": 1.0889830508474576,
+      "no_speech_prob": 0.11120089143514633,
+      "words": [
+        {
+          "word": "客",
+          "start": 37.58,
+          "end": 38.02,
+          "probability": 0.1297607421875
+        },
+        {
+          "word": "週",
+          "start": 38.02,
+          "end": 38.24,
+          "probability": 0.58837890625
+        },
+        {
+          "word": "末",
+          "start": 38.24,
+          "end": 38.38,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "到了",
+          "start": 38.38,
+          "end": 38.78,
+          "probability": 0.9775390625
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "seek": 2998,
+      "start": 38.78,
+      "end": 41.84,
+      "text": "你不該還守在電腦前盯著進度",
+      "tokens": [
+        50819,
+        2166,
+        1960,
+        22033,
+        7824,
+        48480,
+        3581,
+        20545,
+        21184,
+        99,
+        8945,
+        5419,
+        107,
+        19382,
+        18214,
+        13127,
+        50974
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.30150499256379015,
+      "compression_ratio": 1.0889830508474576,
+      "no_speech_prob": 0.11120089143514633,
+      "words": [
+        {
+          "word": "你",
+          "start": 38.78,
+          "end": 39.28,
+          "probability": 0.61865234375
+        },
+        {
+          "word": "不",
+          "start": 39.28,
+          "end": 39.44,
+          "probability": 0.98583984375
+        },
+        {
+          "word": "該",
+          "start": 39.44,
+          "end": 39.64,
+          "probability": 0.9921875
+        },
+        {
+          "word": "還",
+          "start": 39.64,
+          "end": 39.88,
+          "probability": 0.720703125
+        },
+        {
+          "word": "守",
+          "start": 39.88,
+          "end": 40.1,
+          "probability": 0.56201171875
+        },
+        {
+          "word": "在",
+          "start": 40.1,
+          "end": 40.3,
+          "probability": 0.99658203125
+        },
+        {
+          "word": "電",
+          "start": 40.3,
+          "end": 40.5,
+          "probability": 0.99267578125
+        },
+        {
+          "word": "腦",
+          "start": 40.5,
+          "end": 40.74,
+          "probability": 1.0
+        },
+        {
+          "word": "前",
+          "start": 40.74,
+          "end": 41.0,
+          "probability": 0.9755859375
+        },
+        {
+          "word": "盯",
+          "start": 41.0,
+          "end": 41.22,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "著",
+          "start": 41.22,
+          "end": 41.42,
+          "probability": 0.94482421875
+        },
+        {
+          "word": "進",
+          "start": 41.42,
+          "end": 41.58,
+          "probability": 0.8486328125
+        },
+        {
+          "word": "度",
+          "start": 41.58,
+          "end": 41.84,
+          "probability": 0.99609375
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "seek": 2998,
+      "start": 41.84,
+      "end": 43.58,
+      "text": "誰來管理manager?",
+      "tokens": [
+        50974,
+        20757,
+        3763,
+        23131,
+        13876,
+        1601,
+        3557,
+        30,
+        51069
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.30150499256379015,
+      "compression_ratio": 1.0889830508474576,
+      "no_speech_prob": 0.11120089143514633,
+      "words": [
+        {
+          "word": "誰",
+          "start": 41.84,
+          "end": 42.48,
+          "probability": 0.765625
+        },
+        {
+          "word": "來",
+          "start": 42.48,
+          "end": 42.66,
+          "probability": 0.98876953125
+        },
+        {
+          "word": "管",
+          "start": 42.66,
+          "end": 42.86,
+          "probability": 0.99365234375
+        },
+        {
+          "word": "理",
+          "start": 42.86,
+          "end": 43.1,
+          "probability": 0.99609375
+        },
+        {
+          "word": "man",
+          "start": 43.1,
+          "end": 43.32,
+          "probability": 0.390625
+        },
+        {
+          "word": "ager?",
+          "start": 43.32,
+          "end": 43.58,
+          "probability": 0.99072265625
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "seek": 2998,
+      "start": 46.06,
+      "end": 49.24,
+      "text": "Hermes & Herter讓當前機器上一個專門",
+      "tokens": [
+        51179,
+        39,
+        966,
+        279,
+        3693,
+        3204,
+        391,
+        21195,
+        13118,
+        8945,
+        17543,
+        34386,
+        5708,
+        8990,
+        46072,
+        37232,
+        51334
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.30150499256379015,
+      "compression_ratio": 1.0889830508474576,
+      "no_speech_prob": 0.11120089143514633,
+      "words": [
+        {
+          "word": "H",
+          "start": 46.06,
+          "end": 46.5,
+          "probability": 0.499755859375
+        },
+        {
+          "word": "erm",
+          "start": 46.5,
+          "end": 46.52,
+          "probability": 0.86376953125
+        },
+        {
+          "word": "es",
+          "start": 46.52,
+          "end": 46.64,
+          "probability": 0.1939697265625
+        },
+        {
+          "word": " &",
+          "start": 46.64,
+          "end": 46.8,
+          "probability": 0.1942138671875
+        },
+        {
+          "word": " Her",
+          "start": 46.8,
+          "end": 47.0,
+          "probability": 0.284423828125
+        },
+        {
+          "word": "ter",
+          "start": 47.0,
+          "end": 47.14,
+          "probability": 0.38623046875
+        },
+        {
+          "word": "讓",
+          "start": 47.14,
+          "end": 47.44,
+          "probability": 0.88671875
+        },
+        {
+          "word": "當",
+          "start": 47.44,
+          "end": 47.62,
+          "probability": 0.98388671875
+        },
+        {
+          "word": "前",
+          "start": 47.62,
+          "end": 47.88,
+          "probability": 0.9892578125
+        },
+        {
+          "word": "機",
+          "start": 47.88,
+          "end": 48.12,
+          "probability": 0.990234375
+        },
+        {
+          "word": "器",
+          "start": 48.12,
+          "end": 48.26,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "上",
+          "start": 48.26,
+          "end": 48.46,
+          "probability": 0.98974609375
+        },
+        {
+          "word": "一個",
+          "start": 48.46,
+          "end": 48.7,
+          "probability": 0.94873046875
+        },
+        {
+          "word": "專",
+          "start": 48.7,
+          "end": 48.9,
+          "probability": 0.99462890625
+        },
+        {
+          "word": "門",
+          "start": 48.9,
+          "end": 49.24,
+          "probability": 0.99853515625
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "seek": 2998,
+      "start": 49.24,
+      "end": 51.88,
+      "text": "受信任的Hermes Profile成為你的MR",
+      "tokens": [
+        51334,
+        23151,
+        17665,
+        26443,
+        1546,
+        39,
+        966,
+        279,
+        6039,
+        794,
+        11336,
+        6344,
+        18961,
+        21173,
+        51484
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.30150499256379015,
+      "compression_ratio": 1.0889830508474576,
+      "no_speech_prob": 0.11120089143514633,
+      "words": [
+        {
+          "word": "受",
+          "start": 49.24,
+          "end": 49.64,
+          "probability": 0.9375
+        },
+        {
+          "word": "信",
+          "start": 49.64,
+          "end": 49.86,
+          "probability": 0.98828125
+        },
+        {
+          "word": "任",
+          "start": 49.86,
+          "end": 49.98,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "的",
+          "start": 49.98,
+          "end": 50.08,
+          "probability": 0.98583984375
+        },
+        {
+          "word": "H",
+          "start": 50.08,
+          "end": 50.22,
+          "probability": 0.81982421875
+        },
+        {
+          "word": "erm",
+          "start": 50.22,
+          "end": 50.22,
+          "probability": 0.99658203125
+        },
+        {
+          "word": "es",
+          "start": 50.22,
+          "end": 50.36,
+          "probability": 0.98095703125
+        },
+        {
+          "word": " Prof",
+          "start": 50.36,
+          "end": 50.62,
+          "probability": 0.794921875
+        },
+        {
+          "word": "ile",
+          "start": 50.62,
+          "end": 50.88,
+          "probability": 0.9931640625
+        },
+        {
+          "word": "成",
+          "start": 50.88,
+          "end": 51.14,
+          "probability": 0.91162109375
+        },
+        {
+          "word": "為",
+          "start": 51.14,
+          "end": 51.34,
+          "probability": 0.98779296875
+        },
+        {
+          "word": "你的",
+          "start": 51.34,
+          "end": 51.56,
+          "probability": 0.986328125
+        },
+        {
+          "word": "MR",
+          "start": 51.56,
+          "end": 51.88,
+          "probability": 0.92724609375
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "seek": 2998,
+      "start": 51.88,
+      "end": 54.38,
+      "text": "一個管理Herter的manager",
+      "tokens": [
+        51484,
+        8990,
+        23131,
+        13876,
+        27934,
+        391,
+        1546,
+        1601,
+        3557,
+        51604
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.30150499256379015,
+      "compression_ratio": 1.0889830508474576,
+      "no_speech_prob": 0.11120089143514633,
+      "words": [
+        {
+          "word": "一個",
+          "start": 51.88,
+          "end": 52.68,
+          "probability": 0.95947265625
+        },
+        {
+          "word": "管",
+          "start": 52.68,
+          "end": 52.96,
+          "probability": 0.9892578125
+        },
+        {
+          "word": "理",
+          "start": 52.96,
+          "end": 53.2,
+          "probability": 0.99609375
+        },
+        {
+          "word": "Her",
+          "start": 53.2,
+          "end": 53.52,
+          "probability": 0.6181640625
+        },
+        {
+          "word": "ter",
+          "start": 53.52,
+          "end": 53.68,
+          "probability": 0.9951171875
+        },
+        {
+          "word": "的",
+          "start": 53.68,
+          "end": 53.86,
+          "probability": 0.93359375
+        },
+        {
+          "word": "man",
+          "start": 53.86,
+          "end": 54.1,
+          "probability": 0.64892578125
+        },
+        {
+          "word": "ager",
+          "start": 54.1,
+          "end": 54.38,
+          "probability": 0.990234375
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "seek": 5438,
+      "start": 58.120000000000005,
+      "end": 61.88,
+      "text": "這個專用Hermie擁有完整Herter控制權限",
+      "tokens": [
+        50364,
+        6287,
+        46072,
+        9254,
+        39,
+        966,
+        414,
+        13167,
+        223,
+        2412,
+        14128,
+        27662,
+        27934,
+        391,
+        48707,
+        25491,
+        40212,
+        43446,
+        50744
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22108046213785806,
+      "compression_ratio": 1.1121495327102804,
+      "no_speech_prob": 0.004468163941055536,
+      "words": [
+        {
+          "word": "這個",
+          "start": 58.120000000000005,
+          "end": 58.56,
+          "probability": 0.46240234375
+        },
+        {
+          "word": "專",
+          "start": 58.56,
+          "end": 58.86,
+          "probability": 0.95849609375
+        },
+        {
+          "word": "用",
+          "start": 58.86,
+          "end": 59.06,
+          "probability": 0.99658203125
+        },
+        {
+          "word": "H",
+          "start": 59.06,
+          "end": 59.26,
+          "probability": 0.2666015625
+        },
+        {
+          "word": "erm",
+          "start": 59.26,
+          "end": 59.3,
+          "probability": 0.87109375
+        },
+        {
+          "word": "ie",
+          "start": 59.3,
+          "end": 59.52,
+          "probability": 0.50244140625
+        },
+        {
+          "word": "擁",
+          "start": 59.52,
+          "end": 59.96,
+          "probability": 0.8798828125
+        },
+        {
+          "word": "有",
+          "start": 59.96,
+          "end": 60.14,
+          "probability": 0.99755859375
+        },
+        {
+          "word": "完",
+          "start": 60.14,
+          "end": 60.34,
+          "probability": 0.95263671875
+        },
+        {
+          "word": "整",
+          "start": 60.34,
+          "end": 60.54,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "Her",
+          "start": 60.54,
+          "end": 60.78,
+          "probability": 0.443603515625
+        },
+        {
+          "word": "ter",
+          "start": 60.78,
+          "end": 60.92,
+          "probability": 0.5615234375
+        },
+        {
+          "word": "控",
+          "start": 60.92,
+          "end": 61.2,
+          "probability": 0.96923828125
+        },
+        {
+          "word": "制",
+          "start": 61.2,
+          "end": 61.38,
+          "probability": 0.9931640625
+        },
+        {
+          "word": "權",
+          "start": 61.38,
+          "end": 61.6,
+          "probability": 0.806640625
+        },
+        {
+          "word": "限",
+          "start": 61.6,
+          "end": 61.88,
+          "probability": 0.892578125
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "seek": 5438,
+      "start": 61.88,
+      "end": 67.02,
+      "text": "讀取狀態協調工作 把你的意圖傳到正在執行的A人",
+      "tokens": [
+        50744,
+        7422,
+        222,
+        29436,
+        18637,
+        222,
+        45248,
+        5322,
+        242,
+        32943,
+        41315,
+        220,
+        16075,
+        18961,
+        9042,
+        2523,
+        244,
+        40852,
+        4511,
+        15789,
+        3581,
+        16262,
+        115,
+        8082,
+        1546,
+        32,
+        4035,
+        51004
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22108046213785806,
+      "compression_ratio": 1.1121495327102804,
+      "no_speech_prob": 0.004468163941055536,
+      "words": [
+        {
+          "word": "讀",
+          "start": 61.88,
+          "end": 62.52,
+          "probability": 0.755859375
+        },
+        {
+          "word": "取",
+          "start": 62.52,
+          "end": 62.7,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "狀",
+          "start": 62.7,
+          "end": 62.92,
+          "probability": 0.98095703125
+        },
+        {
+          "word": "態",
+          "start": 62.92,
+          "end": 63.2,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "協",
+          "start": 63.2,
+          "end": 63.46,
+          "probability": 0.90234375
+        },
+        {
+          "word": "調",
+          "start": 63.46,
+          "end": 63.64,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "工作",
+          "start": 63.64,
+          "end": 64.02,
+          "probability": 0.99755859375
+        },
+        {
+          "word": " 把",
+          "start": 64.34,
+          "end": 64.6,
+          "probability": 0.99169921875
+        },
+        {
+          "word": "你的",
+          "start": 64.6,
+          "end": 64.82,
+          "probability": 0.97900390625
+        },
+        {
+          "word": "意",
+          "start": 64.82,
+          "end": 65.04,
+          "probability": 0.97802734375
+        },
+        {
+          "word": "圖",
+          "start": 65.04,
+          "end": 65.22,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "傳",
+          "start": 65.22,
+          "end": 65.48,
+          "probability": 0.99755859375
+        },
+        {
+          "word": "到",
+          "start": 65.48,
+          "end": 65.72,
+          "probability": 0.88134765625
+        },
+        {
+          "word": "正",
+          "start": 65.72,
+          "end": 65.98,
+          "probability": 0.9931640625
+        },
+        {
+          "word": "在",
+          "start": 65.98,
+          "end": 66.18,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "執",
+          "start": 66.18,
+          "end": 66.36,
+          "probability": 0.9892578125
+        },
+        {
+          "word": "行",
+          "start": 66.36,
+          "end": 66.58,
+          "probability": 0.998046875
+        },
+        {
+          "word": "的",
+          "start": 66.58,
+          "end": 66.7,
+          "probability": 0.83544921875
+        },
+        {
+          "word": "A",
+          "start": 66.7,
+          "end": 66.8,
+          "probability": 0.5947265625
+        },
+        {
+          "word": "人",
+          "start": 66.8,
+          "end": 67.02,
+          "probability": 0.95947265625
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "seek": 5438,
+      "start": 69.10000000000001,
+      "end": 73.4,
+      "text": "允許運行時 他隨Herter啟動也隨索署繪畫停止",
+      "tokens": [
+        51004,
+        2347,
+        223,
+        40914,
+        32772,
+        8082,
+        6611,
+        35414,
+        48890,
+        27934,
+        391,
+        3284,
+        253,
+        12572,
+        6404,
+        48890,
+        7732,
+        95,
+        16469,
+        110,
+        23141,
+        103,
+        43822,
+        36135,
+        30438,
+        51324
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22108046213785806,
+      "compression_ratio": 1.1121495327102804,
+      "no_speech_prob": 0.004468163941055536,
+      "words": [
+        {
+          "word": "允",
+          "start": 69.10000000000001,
+          "end": 69.54,
+          "probability": 0.98779296875
+        },
+        {
+          "word": "許",
+          "start": 69.54,
+          "end": 69.74,
+          "probability": 0.998046875
+        },
+        {
+          "word": "運",
+          "start": 69.74,
+          "end": 69.94,
+          "probability": 0.98193359375
+        },
+        {
+          "word": "行",
+          "start": 69.94,
+          "end": 70.2,
+          "probability": 0.99853515625
+        },
+        {
+          "word": "時",
+          "start": 70.2,
+          "end": 70.42,
+          "probability": 0.99609375
+        },
+        {
+          "word": " 他",
+          "start": 70.42,
+          "end": 70.8,
+          "probability": 0.439697265625
+        },
+        {
+          "word": "隨",
+          "start": 70.8,
+          "end": 70.98,
+          "probability": 0.99560546875
+        },
+        {
+          "word": "Her",
+          "start": 70.98,
+          "end": 71.16,
+          "probability": 0.853515625
+        },
+        {
+          "word": "ter",
+          "start": 71.16,
+          "end": 71.32,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "啟",
+          "start": 71.32,
+          "end": 71.56,
+          "probability": 0.93994140625
+        },
+        {
+          "word": "動",
+          "start": 71.56,
+          "end": 71.76,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "也",
+          "start": 71.76,
+          "end": 72.0,
+          "probability": 0.88134765625
+        },
+        {
+          "word": "隨",
+          "start": 72.0,
+          "end": 72.2,
+          "probability": 0.96337890625
+        },
+        {
+          "word": "索",
+          "start": 72.2,
+          "end": 72.4,
+          "probability": 0.701171875
+        },
+        {
+          "word": "署",
+          "start": 72.4,
+          "end": 72.6,
+          "probability": 0.74365234375
+        },
+        {
+          "word": "繪",
+          "start": 72.6,
+          "end": 72.76,
+          "probability": 0.90966796875
+        },
+        {
+          "word": "畫",
+          "start": 72.76,
+          "end": 72.94,
+          "probability": 0.9404296875
+        },
+        {
+          "word": "停",
+          "start": 72.94,
+          "end": 73.14,
+          "probability": 0.994140625
+        },
+        {
+          "word": "止",
+          "start": 73.14,
+          "end": 73.4,
+          "probability": 0.97900390625
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "seek": 5438,
+      "start": 73.4,
+      "end": 79.38,
+      "text": "運行在真實陪種 暫停後只有明確恢復才會繼續運行",
+      "tokens": [
+        51324,
+        32772,
+        8082,
+        3581,
+        6303,
+        10376,
+        8842,
+        103,
+        16516,
+        220,
+        23826,
+        104,
+        36135,
+        5661,
+        35244,
+        11100,
+        24293,
+        11845,
+        95,
+        2172,
+        102,
+        18888,
+        6236,
+        38459,
+        32772,
+        8082,
+        51614
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22108046213785806,
+      "compression_ratio": 1.1121495327102804,
+      "no_speech_prob": 0.004468163941055536,
+      "words": [
+        {
+          "word": "運",
+          "start": 73.4,
+          "end": 73.88,
+          "probability": 0.274658203125
+        },
+        {
+          "word": "行",
+          "start": 73.88,
+          "end": 74.14,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "在",
+          "start": 74.14,
+          "end": 74.34,
+          "probability": 0.98583984375
+        },
+        {
+          "word": "真",
+          "start": 74.34,
+          "end": 74.56,
+          "probability": 0.9814453125
+        },
+        {
+          "word": "實",
+          "start": 74.56,
+          "end": 74.72,
+          "probability": 0.9814453125
+        },
+        {
+          "word": "陪",
+          "start": 74.72,
+          "end": 74.9,
+          "probability": 0.69482421875
+        },
+        {
+          "word": "種",
+          "start": 74.9,
+          "end": 75.4,
+          "probability": 0.241455078125
+        },
+        {
+          "word": " 暫",
+          "start": 75.4,
+          "end": 75.84,
+          "probability": 0.994140625
+        },
+        {
+          "word": "停",
+          "start": 75.84,
+          "end": 76.02,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "後",
+          "start": 76.02,
+          "end": 76.36,
+          "probability": 0.984375
+        },
+        {
+          "word": "只有",
+          "start": 76.36,
+          "end": 76.66,
+          "probability": 0.85791015625
+        },
+        {
+          "word": "明",
+          "start": 76.66,
+          "end": 76.92,
+          "probability": 0.98193359375
+        },
+        {
+          "word": "確",
+          "start": 76.92,
+          "end": 77.14,
+          "probability": 0.99755859375
+        },
+        {
+          "word": "恢",
+          "start": 77.14,
+          "end": 77.38,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "復",
+          "start": 77.38,
+          "end": 77.62,
+          "probability": 0.99609375
+        },
+        {
+          "word": "才",
+          "start": 77.62,
+          "end": 78.08,
+          "probability": 0.5146484375
+        },
+        {
+          "word": "會",
+          "start": 78.08,
+          "end": 78.28,
+          "probability": 0.99658203125
+        },
+        {
+          "word": "繼續",
+          "start": 78.28,
+          "end": 78.62,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "運",
+          "start": 78.62,
+          "end": 78.84,
+          "probability": 0.99609375
+        },
+        {
+          "word": "行",
+          "start": 78.84,
+          "end": 79.38,
+          "probability": 0.9990234375
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "seek": 7938,
+      "start": 81.04,
+      "end": 82.88,
+      "text": "打開中端監控面板",
+      "tokens": [
+        50364,
+        12467,
+        8949,
+        5975,
+        11957,
+        107,
+        5419,
+        96,
+        48707,
+        8833,
+        43664,
+        50544
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "打",
+          "start": 81.04,
+          "end": 81.48,
+          "probability": 0.853515625
+        },
+        {
+          "word": "開",
+          "start": 81.48,
+          "end": 81.7,
+          "probability": 0.99853515625
+        },
+        {
+          "word": "中",
+          "start": 81.7,
+          "end": 81.88,
+          "probability": 0.96630859375
+        },
+        {
+          "word": "端",
+          "start": 81.88,
+          "end": 82.1,
+          "probability": 0.9970703125
+        },
+        {
+          "word": "監",
+          "start": 82.1,
+          "end": 82.32,
+          "probability": 0.99560546875
+        },
+        {
+          "word": "控",
+          "start": 82.32,
+          "end": 82.48,
+          "probability": 0.99853515625
+        },
+        {
+          "word": "面",
+          "start": 82.48,
+          "end": 82.66,
+          "probability": 0.986328125
+        },
+        {
+          "word": "板",
+          "start": 82.66,
+          "end": 82.88,
+          "probability": 0.984375
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "seek": 7938,
+      "start": 82.88,
+      "end": 87.02,
+      "text": "專屬實力多個Profile處理器和內存一眼看清",
+      "tokens": [
+        50544,
+        46072,
+        9636,
+        105,
+        10376,
+        13486,
+        6392,
+        3338,
+        43227,
+        794,
+        39289,
+        13876,
+        34386,
+        12565,
+        28472,
+        39781,
+        2257,
+        25281,
+        4200,
+        21784,
+        50754
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "專",
+          "start": 82.88,
+          "end": 83.3,
+          "probability": 0.734375
+        },
+        {
+          "word": "屬",
+          "start": 83.3,
+          "end": 83.52,
+          "probability": 1.0
+        },
+        {
+          "word": "實",
+          "start": 83.52,
+          "end": 83.76,
+          "probability": 0.9912109375
+        },
+        {
+          "word": "力",
+          "start": 83.76,
+          "end": 83.92,
+          "probability": 0.68994140625
+        },
+        {
+          "word": "多",
+          "start": 83.92,
+          "end": 84.16,
+          "probability": 0.966796875
+        },
+        {
+          "word": "個",
+          "start": 84.16,
+          "end": 84.32,
+          "probability": 0.98974609375
+        },
+        {
+          "word": "Prof",
+          "start": 84.32,
+          "end": 84.52,
+          "probability": 0.362060546875
+        },
+        {
+          "word": "ile",
+          "start": 84.52,
+          "end": 84.82,
+          "probability": 0.97802734375
+        },
+        {
+          "word": "處",
+          "start": 84.82,
+          "end": 85.08,
+          "probability": 0.83447265625
+        },
+        {
+          "word": "理",
+          "start": 85.08,
+          "end": 85.24,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "器",
+          "start": 85.24,
+          "end": 85.42,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "和",
+          "start": 85.42,
+          "end": 85.64,
+          "probability": 0.96044921875
+        },
+        {
+          "word": "內",
+          "start": 85.64,
+          "end": 85.84,
+          "probability": 0.98095703125
+        },
+        {
+          "word": "存",
+          "start": 85.84,
+          "end": 86.06,
+          "probability": 0.99853515625
+        },
+        {
+          "word": "一",
+          "start": 86.06,
+          "end": 86.3,
+          "probability": 0.923828125
+        },
+        {
+          "word": "眼",
+          "start": 86.3,
+          "end": 86.48,
+          "probability": 0.9833984375
+        },
+        {
+          "word": "看",
+          "start": 86.48,
+          "end": 86.68,
+          "probability": 0.99609375
+        },
+        {
+          "word": "清",
+          "start": 86.68,
+          "end": 87.02,
+          "probability": 0.97314453125
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "seek": 7938,
+      "start": 87.02,
+      "end": 89.74,
+      "text": "通過Hermis以配置的消息平台",
+      "tokens": [
+        50754,
+        19550,
+        8816,
+        39,
+        966,
+        271,
+        3588,
+        38846,
+        34719,
+        1546,
+        28837,
+        26460,
+        16716,
+        15433,
+        50894
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "通",
+          "start": 87.02,
+          "end": 87.62,
+          "probability": 0.91455078125
+        },
+        {
+          "word": "過",
+          "start": 87.62,
+          "end": 87.82,
+          "probability": 0.99609375
+        },
+        {
+          "word": "H",
+          "start": 87.82,
+          "end": 88.04,
+          "probability": 0.50634765625
+        },
+        {
+          "word": "erm",
+          "start": 88.04,
+          "end": 88.04,
+          "probability": 0.9609375
+        },
+        {
+          "word": "is",
+          "start": 88.04,
+          "end": 88.26,
+          "probability": 0.45849609375
+        },
+        {
+          "word": "以",
+          "start": 88.26,
+          "end": 88.44,
+          "probability": 0.8046875
+        },
+        {
+          "word": "配",
+          "start": 88.44,
+          "end": 88.64,
+          "probability": 0.9765625
+        },
+        {
+          "word": "置",
+          "start": 88.64,
+          "end": 88.82,
+          "probability": 0.99658203125
+        },
+        {
+          "word": "的",
+          "start": 88.82,
+          "end": 88.92,
+          "probability": 0.98583984375
+        },
+        {
+          "word": "消",
+          "start": 88.92,
+          "end": 89.1,
+          "probability": 0.9853515625
+        },
+        {
+          "word": "息",
+          "start": 89.1,
+          "end": 89.26,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "平",
+          "start": 89.26,
+          "end": 89.46,
+          "probability": 0.99609375
+        },
+        {
+          "word": "台",
+          "start": 89.46,
+          "end": 89.74,
+          "probability": 0.6806640625
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "seek": 7938,
+      "start": 89.74,
+      "end": 91.78,
+      "text": "遠程提問易不跟進",
+      "tokens": [
+        50894,
+        34489,
+        29649,
+        20949,
+        11361,
+        31962,
+        1960,
+        9678,
+        18214,
+        50994
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "遠",
+          "start": 89.74,
+          "end": 90.28,
+          "probability": 0.814453125
+        },
+        {
+          "word": "程",
+          "start": 90.28,
+          "end": 90.5,
+          "probability": 0.9951171875
+        },
+        {
+          "word": "提",
+          "start": 90.5,
+          "end": 90.74,
+          "probability": 0.96875
+        },
+        {
+          "word": "問",
+          "start": 90.74,
+          "end": 90.94,
+          "probability": 0.99267578125
+        },
+        {
+          "word": "易",
+          "start": 90.94,
+          "end": 91.2,
+          "probability": 0.2454833984375
+        },
+        {
+          "word": "不",
+          "start": 91.2,
+          "end": 91.38,
+          "probability": 0.998046875
+        },
+        {
+          "word": "跟",
+          "start": 91.38,
+          "end": 91.54,
+          "probability": 0.9189453125
+        },
+        {
+          "word": "進",
+          "start": 91.54,
+          "end": 91.78,
+          "probability": 0.98779296875
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "seek": 7938,
+      "start": 91.78,
+      "end": 94.28,
+      "text": "機器和Herter保持在線",
+      "tokens": [
+        50994,
+        17543,
+        34386,
+        12565,
+        27934,
+        391,
+        24302,
+        17694,
+        3581,
+        31699,
+        51119
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "機",
+          "start": 91.78,
+          "end": 92.48,
+          "probability": 0.92236328125
+        },
+        {
+          "word": "器",
+          "start": 92.48,
+          "end": 92.72,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "和",
+          "start": 92.72,
+          "end": 92.94,
+          "probability": 0.9873046875
+        },
+        {
+          "word": "Her",
+          "start": 92.94,
+          "end": 93.18,
+          "probability": 0.412841796875
+        },
+        {
+          "word": "ter",
+          "start": 93.18,
+          "end": 93.3,
+          "probability": 0.7216796875
+        },
+        {
+          "word": "保",
+          "start": 93.3,
+          "end": 93.6,
+          "probability": 0.97119140625
+        },
+        {
+          "word": "持",
+          "start": 93.6,
+          "end": 93.82,
+          "probability": 0.99755859375
+        },
+        {
+          "word": "在",
+          "start": 93.82,
+          "end": 94.02,
+          "probability": 0.97265625
+        },
+        {
+          "word": "線",
+          "start": 94.02,
+          "end": 94.28,
+          "probability": 0.98779296875
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "seek": 7938,
+      "start": 94.28,
+      "end": 96.04,
+      "text": "你就可以離開桌面",
+      "tokens": [
+        51119,
+        2166,
+        36781,
+        32662,
+        8949,
+        162,
+        5475,
+        8833,
+        51219
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "你",
+          "start": 94.28,
+          "end": 94.76,
+          "probability": 0.6181640625
+        },
+        {
+          "word": "就可以",
+          "start": 94.76,
+          "end": 95.14,
+          "probability": 0.99755859375
+        },
+        {
+          "word": "離",
+          "start": 95.14,
+          "end": 95.4,
+          "probability": 0.99365234375
+        },
+        {
+          "word": "開",
+          "start": 95.4,
+          "end": 95.62,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "桌",
+          "start": 95.62,
+          "end": 95.84,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "面",
+          "start": 95.84,
+          "end": 96.04,
+          "probability": 0.99853515625
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "seek": 7938,
+      "start": 98.04,
+      "end": 100.32,
+      "text": "把天才交給系統管理",
+      "tokens": [
+        51219,
+        16075,
+        6135,
+        18888,
+        28455,
+        17798,
+        25368,
+        33725,
+        23131,
+        13876,
+        51419
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "把",
+          "start": 98.04,
+          "end": 98.48,
+          "probability": 0.8779296875
+        },
+        {
+          "word": "天",
+          "start": 98.48,
+          "end": 98.72,
+          "probability": 0.94384765625
+        },
+        {
+          "word": "才",
+          "start": 98.72,
+          "end": 98.92,
+          "probability": 0.78173828125
+        },
+        {
+          "word": "交",
+          "start": 98.92,
+          "end": 99.22,
+          "probability": 0.98095703125
+        },
+        {
+          "word": "給",
+          "start": 99.22,
+          "end": 99.42,
+          "probability": 0.99169921875
+        },
+        {
+          "word": "系",
+          "start": 99.42,
+          "end": 99.66,
+          "probability": 0.99560546875
+        },
+        {
+          "word": "統",
+          "start": 99.66,
+          "end": 99.84,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "管",
+          "start": 99.84,
+          "end": 100.08,
+          "probability": 0.99560546875
+        },
+        {
+          "word": "理",
+          "start": 100.08,
+          "end": 100.32,
+          "probability": 0.998046875
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "seek": 7938,
+      "start": 100.32,
+      "end": 101.98,
+      "text": "把週末還給自己",
+      "tokens": [
+        51419,
+        16075,
+        38003,
+        1474,
+        104,
+        7824,
+        17798,
+        17645,
+        51509
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "把",
+          "start": 100.32,
+          "end": 100.74,
+          "probability": 0.48583984375
+        },
+        {
+          "word": "週",
+          "start": 100.74,
+          "end": 100.98,
+          "probability": 0.5458984375
+        },
+        {
+          "word": "末",
+          "start": 100.98,
+          "end": 101.16,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "還",
+          "start": 101.16,
+          "end": 101.4,
+          "probability": 0.99609375
+        },
+        {
+          "word": "給",
+          "start": 101.4,
+          "end": 101.6,
+          "probability": 0.9990234375
+        },
+        {
+          "word": "自己",
+          "start": 101.6,
+          "end": 101.98,
+          "probability": 0.9990234375
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "seek": 7938,
+      "start": 101.98,
+      "end": 104.72,
+      "text": "Hermis on Herter來自Hexley AI",
+      "tokens": [
+        51509,
+        39,
+        966,
+        271,
+        322,
+        3204,
+        391,
+        3763,
+        9722,
+        39,
+        3121,
+        3420,
+        7318,
+        51654
+      ],
+      "temperature": 0,
+      "avg_logprob": -0.22690145104332307,
+      "compression_ratio": 1.0846774193548387,
+      "no_speech_prob": 0.006588928401470184,
+      "words": [
+        {
+          "word": "H",
+          "start": 101.98,
+          "end": 102.76,
+          "probability": 0.437744140625
+        },
+        {
+          "word": "erm",
+          "start": 102.76,
+          "end": 102.8,
+          "probability": 0.99560546875
+        },
+        {
+          "word": "is",
+          "start": 102.8,
+          "end": 102.94,
+          "probability": 0.6923828125
+        },
+        {
+          "word": " on",
+          "start": 102.94,
+          "end": 103.1,
+          "probability": 0.16845703125
+        },
+        {
+          "word": " Her",
+          "start": 103.1,
+          "end": 103.32,
+          "probability": 0.58837890625
+        },
+        {
+          "word": "ter",
+          "start": 103.32,
+          "end": 103.52,
+          "probability": 0.9921875
+        },
+        {
+          "word": "來",
+          "start": 103.52,
+          "end": 103.8,
+          "probability": 0.91259765625
+        },
+        {
+          "word": "自",
+          "start": 103.8,
+          "end": 104.0,
+          "probability": 0.99951171875
+        },
+        {
+          "word": "H",
+          "start": 104.0,
+          "end": 104.24,
+          "probability": 0.7109375
+        },
+        {
+          "word": "ex",
+          "start": 104.24,
+          "end": 104.26,
+          "probability": 0.87841796875
+        },
+        {
+          "word": "ley",
+          "start": 104.26,
+          "end": 104.46,
+          "probability": 0.57373046875
+        },
+        {
+          "word": " AI",
+          "start": 104.46,
+          "end": 104.72,
+          "probability": 0.8056640625
+        }
+      ]
+    }
+  ],
+  "language": "zh",
+  "verificationMethod": "Local independent Whisper ASR of the exact narration stem; transcript is review evidence, not source captions.",
+  "source": ".cache/audio/voice-zh.wav",
+  "model": "mlx-community/whisper-small-mlx"
+}

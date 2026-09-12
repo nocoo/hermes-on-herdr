@@ -1,0 +1,23 @@
+{
+  "mode": "sample",
+  "language": "zh",
+  "sourceHash": "f76f72be4b974e5d8c692262bbc32de62d134d7902990a5cb095ea32871bf11b",
+  "timingHash": "8ab64392e4f5caf507b257fbaca2338057a4af6bfaf105b2ace265eccbd03abb",
+  "renderedAt": "2026-09-12T02:49:10.759Z",
+  "frames": 3270,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "status": "complete",
+  "artifacts": [
+    {
+      "file": "process/transition-zh.mp4",
+      "bytes": 869739,
+      "sha256": "4642fd080c1d09d2803c415b4e0a8b0589c2a76341147bf569cd8cfaac0625fa",
+      "frameRange": [
+        1329,
+        1448
+      ]
+    }
+  ]
+}

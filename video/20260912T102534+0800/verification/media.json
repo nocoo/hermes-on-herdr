@@ -1,0 +1,709 @@
+{
+  "checkedAt": "2026-09-12T03:11:15.418841+00:00",
+  "assets": {
+    "status": "passed",
+    "seconds": 109.0,
+    "languages": {
+      "zh": {
+        "sentences": 20,
+        "clips": [
+          {
+            "file": "audio/zh/partners-01.wav",
+            "duration": 3.9171666666666667,
+            "rms": 0.10000003928832427,
+            "peak": 0.714630126953125
+          },
+          {
+            "file": "audio/zh/partners-02.wav",
+            "duration": 2.9471666666666665,
+            "rms": 0.09999996153904579,
+            "peak": 0.56787109375
+          },
+          {
+            "file": "audio/zh/partners-03.wav",
+            "duration": 2.9846666666666666,
+            "rms": 0.1000000234620479,
+            "peak": 0.594573974609375
+          },
+          {
+            "file": "audio/zh/management-01.wav",
+            "duration": 4.669458333333333,
+            "rms": 0.08390462764811592,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/zh/management-02.wav",
+            "duration": 3.578625,
+            "rms": 0.10000001404114067,
+            "peak": 0.61004638671875
+          },
+          {
+            "file": "audio/zh/herdr-01.wav",
+            "duration": 4.2320416666666665,
+            "rms": 0.09999996757033204,
+            "peak": 0.798553466796875
+          },
+          {
+            "file": "audio/zh/herdr-02.wav",
+            "duration": 3.9956666666666667,
+            "rms": 0.10000003686529639,
+            "peak": 0.71527099609375
+          },
+          {
+            "file": "audio/zh/weekend-01.wav",
+            "duration": 4.159416666666667,
+            "rms": 0.10000003916365062,
+            "peak": 0.813720703125
+          },
+          {
+            "file": "audio/zh/weekend-02.wav",
+            "duration": 1.6284583333333333,
+            "rms": 0.10000005923559158,
+            "peak": 0.63983154296875
+          },
+          {
+            "file": "audio/zh/m2-01.wav",
+            "duration": 5.824916666666667,
+            "rms": 0.09999998221119896,
+            "peak": 0.650238037109375
+          },
+          {
+            "file": "audio/zh/m2-02.wav",
+            "duration": 2.1467916666666667,
+            "rms": 0.10000002390889119,
+            "peak": 0.662689208984375
+          },
+          {
+            "file": "audio/zh/control-01.wav",
+            "duration": 3.7573333333333334,
+            "rms": 0.10000001679443521,
+            "peak": 0.7794189453125
+          },
+          {
+            "file": "audio/zh/control-02.wav",
+            "duration": 4.86475,
+            "rms": 0.09999997342347511,
+            "peak": 0.682952880859375
+          },
+          {
+            "file": "audio/zh/lifecycle-01.wav",
+            "duration": 6.001125,
+            "rms": 0.09601256808097708,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/zh/lifecycle-02.wav",
+            "duration": 3.7361666666666666,
+            "rms": 0.09999999159815885,
+            "peak": 0.70892333984375
+          },
+          {
+            "file": "audio/zh/monitor-01.wav",
+            "duration": 5.853666666666666,
+            "rms": 0.09999999017516155,
+            "peak": 0.8135986328125
+          },
+          {
+            "file": "audio/zh/monitor-02.wav",
+            "duration": 4.519916666666667,
+            "rms": 0.10000001565785978,
+            "peak": 0.797119140625
+          },
+          {
+            "file": "audio/zh/monitor-03.wav",
+            "duration": 4.01375,
+            "rms": 0.09999999296842248,
+            "peak": 0.62176513671875
+          },
+          {
+            "file": "audio/zh/closing-01.wav",
+            "duration": 3.9398333333333335,
+            "rms": 0.09999998325905081,
+            "peak": 0.70697021484375
+          },
+          {
+            "file": "audio/zh/closing-02.wav",
+            "duration": 2.5695,
+            "rms": 0.09999996145016385,
+            "peak": 0.717926025390625
+          }
+        ],
+        "audioMix": "109.000000"
+      },
+      "en": {
+        "sentences": 20,
+        "clips": [
+          {
+            "file": "audio/en/partners-01.wav",
+            "duration": 3.8717083333333333,
+            "rms": 0.10000007577169683,
+            "peak": 0.759033203125
+          },
+          {
+            "file": "audio/en/partners-02.wav",
+            "duration": 2.2164166666666665,
+            "rms": 0.10000001973229575,
+            "peak": 0.680419921875
+          },
+          {
+            "file": "audio/en/partners-03.wav",
+            "duration": 2.576875,
+            "rms": 0.100000004176397,
+            "peak": 0.6029052734375
+          },
+          {
+            "file": "audio/en/management-01.wav",
+            "duration": 4.725666666666666,
+            "rms": 0.09671870297341041,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/en/management-02.wav",
+            "duration": 3.3052083333333333,
+            "rms": 0.09999994287518706,
+            "peak": 0.7613525390625
+          },
+          {
+            "file": "audio/en/herdr-01.wav",
+            "duration": 3.847625,
+            "rms": 0.10000002641075076,
+            "peak": 0.650634765625
+          },
+          {
+            "file": "audio/en/herdr-02.wav",
+            "duration": 3.630375,
+            "rms": 0.09999996353722397,
+            "peak": 0.694122314453125
+          },
+          {
+            "file": "audio/en/weekend-01.wav",
+            "duration": 4.520041666666667,
+            "rms": 0.09999999789044502,
+            "peak": 0.70452880859375
+          },
+          {
+            "file": "audio/en/weekend-02.wav",
+            "duration": 1.703375,
+            "rms": 0.09999998513389358,
+            "peak": 0.49188232421875
+          },
+          {
+            "file": "audio/en/m2-01.wav",
+            "duration": 5.658,
+            "rms": 0.10000002768230734,
+            "peak": 0.7928466796875
+          },
+          {
+            "file": "audio/en/m2-02.wav",
+            "duration": 2.468,
+            "rms": 0.08864376047211128,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/en/control-01.wav",
+            "duration": 2.854791666666667,
+            "rms": 0.10000002004374804,
+            "peak": 0.746307373046875
+          },
+          {
+            "file": "audio/en/control-02.wav",
+            "duration": 5.2645,
+            "rms": 0.09999997525032434,
+            "peak": 0.688079833984375
+          },
+          {
+            "file": "audio/en/lifecycle-01.wav",
+            "duration": 4.798166666666667,
+            "rms": 0.0999999956843781,
+            "peak": 0.6949462890625
+          },
+          {
+            "file": "audio/en/lifecycle-02.wav",
+            "duration": 2.868916666666667,
+            "rms": 0.1000000136637459,
+            "peak": 0.5753173828125
+          },
+          {
+            "file": "audio/en/monitor-01.wav",
+            "duration": 6.692625,
+            "rms": 0.09999999706650693,
+            "peak": 0.734466552734375
+          },
+          {
+            "file": "audio/en/monitor-02.wav",
+            "duration": 4.943666666666667,
+            "rms": 0.089335599753931,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/en/monitor-03.wav",
+            "duration": 2.7364166666666665,
+            "rms": 0.10000001108260473,
+            "peak": 0.6220703125
+          },
+          {
+            "file": "audio/en/closing-01.wav",
+            "duration": 3.6475833333333334,
+            "rms": 0.09303241127682949,
+            "peak": 0.8499755859375
+          },
+          {
+            "file": "audio/en/closing-02.wav",
+            "duration": 2.2640833333333332,
+            "rms": 0.10000005288721349,
+            "peak": 0.5367431640625
+          }
+        ],
+        "audioMix": "109.000000"
+      }
+    }
+  },
+  "media": {
+    "zh": {
+      "file": "public/review/hermes-on-herdr-weekend-zh.mp4",
+      "bytes": 17061184,
+      "sha256": "92145345553525497b434feea96a86cf94b0c45c2c68d8b06daa017d59908be5",
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "mime_codec_string": "avc1.640028",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 2,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": 40,
+            "color_range": "tv",
+            "color_space": "bt709",
+            "chroma_location": "center",
+            "field_order": "progressive",
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/90000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 9810000,
+            "duration": "109.000000",
+            "bit_rate": "1050624",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "3270",
+            "extradata_size": 51,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "mime_codec_string": "mp4a.40.2",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "id": "0x2",
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 5232000,
+            "duration": "109.000000",
+            "bit_rate": "192668",
+            "nb_frames": "5110",
+            "extradata_size": 5,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T102534+0800/public/review/hermes-on-herdr-weekend-zh.mp4",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "109.000000",
+          "size": "17061184",
+          "bit_rate": "1252196",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "isom",
+            "minor_version": "512",
+            "compatible_brands": "isomiso2avc1mp41",
+            "title": "Hermes on Herdr - The Weekend Protocol (zh)",
+            "artist": "Hexly AI",
+            "encoder": "Lavf63.1.101",
+            "comment": "Made with Remotion 4.0.520"
+          }
+        }
+      },
+      "fullDecode": "passed",
+      "blackFrames": [],
+      "blackDetection": {
+        "pixelThreshold": 0.02,
+        "pictureThreshold": 0.98,
+        "minimumDuration": 0
+      },
+      "unexpectedSilence": [],
+      "silenceDetection": {
+        "noise": "-55dB",
+        "duration": 0.25
+      },
+      "loudness": {
+        "input_i": "-16.13",
+        "input_tp": "-1.78",
+        "input_lra": "6.50",
+        "input_thresh": "-27.16",
+        "output_i": "-16.23",
+        "output_tp": "-1.80",
+        "output_lra": "5.30",
+        "output_thresh": "-27.04",
+        "normalization_type": "dynamic",
+        "target_offset": "0.23"
+      },
+      "frameComparisons": [
+        {
+          "scene": "opening",
+          "frame": 55,
+          "rmseAboveCaptions": 2.3217122554779053
+        },
+        {
+          "scene": "partners",
+          "frame": 300,
+          "rmseAboveCaptions": 2.206921339035034
+        },
+        {
+          "scene": "management",
+          "frame": 644,
+          "rmseAboveCaptions": 2.3761329650878906
+        },
+        {
+          "scene": "herdr",
+          "frame": 959,
+          "rmseAboveCaptions": 2.2701687812805176
+        },
+        {
+          "scene": "weekend",
+          "frame": 1243,
+          "rmseAboveCaptions": 2.3021769523620605
+        },
+        {
+          "scene": "m2",
+          "frame": 1552,
+          "rmseAboveCaptions": 2.227796792984009
+        },
+        {
+          "scene": "control",
+          "frame": 1897,
+          "rmseAboveCaptions": 2.3540070056915283
+        },
+        {
+          "scene": "lifecycle",
+          "frame": 2242,
+          "rmseAboveCaptions": 2.3518381118774414
+        },
+        {
+          "scene": "monitor",
+          "frame": 2680,
+          "rmseAboveCaptions": 2.491027593612671
+        },
+        {
+          "scene": "closing",
+          "frame": 3104,
+          "rmseAboveCaptions": 2.612710475921631
+        }
+      ],
+      "storage": "ordinary Git"
+    },
+    "en": {
+      "file": "public/review/hermes-on-herdr-weekend-en.mp4",
+      "bytes": 17105462,
+      "sha256": "2815334497113954b712074b6948f87eb4b87763e71125f412c9477ea29b1bfe",
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "mime_codec_string": "avc1.640028",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 2,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": 40,
+            "color_range": "tv",
+            "color_space": "bt709",
+            "chroma_location": "center",
+            "field_order": "progressive",
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/90000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 9810000,
+            "duration": "109.000000",
+            "bit_rate": "1053733",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "3270",
+            "extradata_size": 51,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "mime_codec_string": "mp4a.40.2",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "id": "0x2",
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 5232000,
+            "duration": "109.000000",
+            "bit_rate": "192806",
+            "nb_frames": "5110",
+            "extradata_size": 5,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/Users/nocoo/workspace/personal/hermes-on-herdr/video/20260912T102534+0800/public/review/hermes-on-herdr-weekend-en.mp4",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "109.000000",
+          "size": "17105462",
+          "bit_rate": "1255446",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "isom",
+            "minor_version": "512",
+            "compatible_brands": "isomiso2avc1mp41",
+            "title": "Hermes on Herdr - The Weekend Protocol (en)",
+            "artist": "Hexly AI",
+            "encoder": "Lavf63.1.101",
+            "comment": "Made with Remotion 4.0.520"
+          }
+        }
+      },
+      "fullDecode": "passed",
+      "blackFrames": [],
+      "blackDetection": {
+        "pixelThreshold": 0.02,
+        "pictureThreshold": 0.98,
+        "minimumDuration": 0
+      },
+      "unexpectedSilence": [],
+      "silenceDetection": {
+        "noise": "-55dB",
+        "duration": 0.25
+      },
+      "loudness": {
+        "input_i": "-16.18",
+        "input_tp": "-1.71",
+        "input_lra": "6.90",
+        "input_thresh": "-27.30",
+        "output_i": "-16.28",
+        "output_tp": "-1.80",
+        "output_lra": "5.60",
+        "output_thresh": "-27.13",
+        "normalization_type": "dynamic",
+        "target_offset": "0.28"
+      },
+      "frameComparisons": [
+        {
+          "scene": "opening",
+          "frame": 55,
+          "rmseAboveCaptions": 2.3256003856658936
+        },
+        {
+          "scene": "partners",
+          "frame": 300,
+          "rmseAboveCaptions": 2.267920970916748
+        },
+        {
+          "scene": "management",
+          "frame": 644,
+          "rmseAboveCaptions": 2.349813222885132
+        },
+        {
+          "scene": "herdr",
+          "frame": 959,
+          "rmseAboveCaptions": 2.2657079696655273
+        },
+        {
+          "scene": "weekend",
+          "frame": 1243,
+          "rmseAboveCaptions": 2.3119232654571533
+        },
+        {
+          "scene": "m2",
+          "frame": 1552,
+          "rmseAboveCaptions": 2.1791462898254395
+        },
+        {
+          "scene": "control",
+          "frame": 1897,
+          "rmseAboveCaptions": 2.1966025829315186
+        },
+        {
+          "scene": "lifecycle",
+          "frame": 2242,
+          "rmseAboveCaptions": 2.3692104816436768
+        },
+        {
+          "scene": "monitor",
+          "frame": 2680,
+          "rmseAboveCaptions": 2.3728084564208984
+        },
+        {
+          "scene": "closing",
+          "frame": 3104,
+          "rmseAboveCaptions": 2.6163077354431152
+        }
+      ],
+      "storage": "ordinary Git"
+    }
+  },
+  "slides": "PDF pixels, ODP package and notes verified by slides.py; current story/timing hashes match",
+  "status": "passed"
+}
