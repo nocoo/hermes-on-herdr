@@ -129,14 +129,32 @@ class IdentityTests(unittest.TestCase):
                         capture(os.getpid())
                     self.assertEqual("UNKNOWN", error.exception.code)
 
-    def test_argv_disappearing_before_zombie_status_does_not_abort_supervision(self):
+    def test_argv_teardown_waits_only_for_a_bounded_confirmed_exit(self):
         proc = psutil.Process(os.getpid())
-        with patch("hermes_gateway_herdr.identity.psutil.Process", return_value=proc), \
-                patch.object(proc, "cmdline", side_effect=psutil.AccessDenied()), \
-                patch.object(proc, "is_running", return_value=True), \
-                patch.object(proc, "status", side_effect=[psutil.STATUS_RUNNING, psutil.STATUS_SLEEPING,
-                                                        psutil.STATUS_SLEEPING, psutil.STATUS_ZOMBIE]):
-            self.assertIsNone(capture(os.getpid()))
+        for exited in (True, False):
+            elapsed = [0.0]
+            def advance(seconds):
+                elapsed[0] += seconds
+            # The synthetic process advances on observations, not wall time.
+            # Keep its clock synthetic too, independently of runner scheduling.
+            statuses = chain([psutil.STATUS_RUNNING, psutil.STATUS_SLEEPING, psutil.STATUS_SLEEPING],
+                             repeat(psutil.STATUS_ZOMBIE if exited else psutil.STATUS_SLEEPING))
+            with self.subTest(exited=exited), \
+                    patch("hermes_gateway_herdr.identity.psutil.Process", return_value=proc), \
+                    patch("hermes_gateway_herdr.identity.time.monotonic", side_effect=lambda: elapsed[0]), \
+                    patch("hermes_gateway_herdr.identity.time.sleep", side_effect=advance), \
+                    patch.object(proc, "cmdline", side_effect=psutil.AccessDenied()), \
+                    patch.object(proc, "is_running", return_value=True), \
+                    patch.object(proc, "wait") as reap, patch.object(proc, "status", side_effect=statuses):
+                if exited:
+                    self.assertIsNone(capture(os.getpid()))
+                else:
+                    with self.assertRaises(GatewayError) as error:
+                        capture(os.getpid())
+                    self.assertEqual("UNKNOWN", error.exception.code)
+                self.assertGreater(elapsed[0], 0)
+                self.assertLessEqual(elapsed[0], 0.021)
+                reap.assert_not_called()
 
     def test_stale_descendant_snapshot_cannot_claim_a_reused_pid(self):
         def record(pid, ppid, sid=10):
