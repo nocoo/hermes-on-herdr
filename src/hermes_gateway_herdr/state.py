@@ -22,7 +22,7 @@ def validate_state(name: str, value: object) -> dict:
         raise GatewayError("STATE_SCHEMA", "Unsupported or damaged state schema")
     if name == "intent.json":
         if (type(value.get("revision")) is not int or value["revision"] < 0
-                or value.get("desired") not in {"running", "paused"}
+                or value.get("desired") not in ("running", "paused")
                 or not isinstance(value.get("binding_id"), str)
                 or type(value.get("reset_revision", 0)) is not int
                 or not 0 <= value.get("reset_revision", 0) <= value["revision"]):
@@ -30,13 +30,17 @@ def validate_state(name: str, value: object) -> dict:
         history = value.get("requests", [])
         if (not isinstance(history, list) or len(history) > 64
                 or any(not isinstance(item, dict) or not isinstance(item.get("id"), str)
-                       or item.get("action") not in {"start", "resume", "stop", "pause", "restart"}
+                       or item.get("action") not in ("start", "resume", "stop", "pause", "restart")
                        for item in history)):
             raise GatewayError("STATE_SCHEMA", "Invalid request history")
     if name in {"pending.json", "runtime.json"}:
         if not all(isinstance(value.get(key), str) and value[key]
                    for key in ("generation", "owner_key")):
             raise GatewayError("STATE_SCHEMA", "Missing ownership identity")
+    if name == "pending.json":
+        if (value.get("phase") not in ("reserved", "workspace_requested", "workspace_known", "pane_requested", "pane_known")
+                or type(value.get("intent_revision")) is not int or value["intent_revision"] < 0):
+            raise GatewayError("STATE_SCHEMA", "Invalid creation ticket")
     if name == "fuse.json":
         if (type(value.get("fused")) is not bool
                 or not isinstance(value.get("failures"), list)

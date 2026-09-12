@@ -296,6 +296,32 @@ class CliTests(unittest.TestCase):
         self.assertNotIn("FAKE_SECRET", result.stdout)
         self.assertNotIn("FAKE_RAW_SECRET", result.stdout)
 
+    def test_fifo_event_log_is_rejected_without_waiting_for_a_writer(self):
+        directory = self.config.state_dir / "logs"
+        directory.mkdir(mode=0o700)
+        path = directory / "events.jsonl"
+        os.mkfifo(path, 0o600)
+        inode = path.stat().st_ino
+        result = self.invoke("logs")
+        self.assertEqual(20, result.returncode, result.stderr)
+        self.assertEqual("UNSAFE_PATH", json.loads(result.stdout)["code"])
+        self.assertEqual(inode, path.stat().st_ino)
+        self.assertEqual([], self.owner.processes)
+
+    def test_fifo_gateway_lock_returns_unknown_and_does_not_block_pause(self):
+        path = self.config.profile_home / "gateway.lock"
+        os.mkfifo(path, 0o600)
+        inode = path.stat().st_ino
+        result = self.invoke("status")
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual("UNKNOWN", json.loads(result.stdout)["state"])
+        pause = self.invoke("pause")
+        self.assertEqual(0, pause.returncode, pause.stderr)
+        self.assertTrue(json.loads(pause.stdout)["accepted"])
+        self.assertEqual("paused", self.store.intent()["desired"])
+        self.assertEqual(inode, path.stat().st_ino)
+        self.assertEqual([], self.owner.processes)
+
     def test_stop_wait_reports_orphan_as_incomplete(self):
         self.inline("resume")
         wait_until(lambda: (self.fixture.root / "gateway-up").exists())

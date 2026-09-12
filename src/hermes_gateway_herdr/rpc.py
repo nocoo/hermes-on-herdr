@@ -119,7 +119,10 @@ class Herdr:
             return False
         if len(matching) != 1 or type(matching[0].get("enabled")) is not bool:
             raise GatewayError("PROTOCOL_ERROR")
-        if Path(matching[0].get("plugin_root", "")).resolve() != self.config.plugin_root.resolve():
+        root = matching[0].get("plugin_root")
+        if not isinstance(root, str) or not Path(root).is_absolute() or any(ord(char) < 32 for char in root):
+            raise GatewayError("PROTOCOL_ERROR", "Registered plugin must provide an absolute code path")
+        if Path(root).resolve() != self.config.plugin_root.resolve():
             raise GatewayError("OWNERSHIP_CONFLICT", "Registered plugin points to different code")
         return matching[0]["enabled"]
 
@@ -162,7 +165,7 @@ def profile_in_use(config: Config, *, timeout: float = 2, probe_socket: bool = T
     """Inspect Hermes' own fences without deleting, replacing or claiming its state."""
     lock = config.profile_home / "gateway.lock"
     try:
-        fd = os.open(lock, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+        fd = os.open(lock, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC)
     except FileNotFoundError:
         pass
     except OSError as exc:
@@ -216,7 +219,7 @@ def control_query(path: Path, verb: str, *, timeout: float = 2, request_id: str 
     if response.get("ok") is not True:
         code = response.get("code")
         # Only expose locally defined rejection codes, never arbitrary peer text.
-        if code not in {"STALE_REQUEST", "UNSUPPORTED_VERB", "PROTOCOL_ERROR", "BUSY", "IO_ERROR", "STATE_SCHEMA"}:
+        if code not in ("STALE_REQUEST", "UNSUPPORTED_VERB", "PROTOCOL_ERROR", "BUSY", "IO_ERROR", "STATE_SCHEMA"):
             code = "PROTOCOL_ERROR"
         raise GatewayError(code, "Control request was rejected")
     result = response.get("result")

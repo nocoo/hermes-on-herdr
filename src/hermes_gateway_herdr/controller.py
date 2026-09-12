@@ -66,9 +66,6 @@ class Controller:
         if pending is not None:
             if pending["owner_key"] != self.config.key:
                 raise GatewayError("OWNERSHIP_CONFLICT")
-            if (pending.get("phase") not in {"reserved", "workspace_requested", "workspace_known", "pane_requested", "pane_known"}
-                    or type(pending.get("intent_revision")) is not int):
-                raise GatewayError("STATE_SCHEMA")
         return pending
 
     @staticmethod

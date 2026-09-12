@@ -11,7 +11,7 @@ from hermes_gateway_herdr.config import HERMES_SHA, PLUGIN_ID
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.identity import capture
 from hermes_gateway_herdr.paths import private_bytes
-from hermes_gateway_herdr.rpc import GatewayProbe, Herdr, evaluate_gateway, exchange, hermes_socket, profile_in_use
+from hermes_gateway_herdr.rpc import GatewayProbe, Herdr, control_query, evaluate_gateway, exchange, hermes_socket, profile_in_use
 from helpers import Fixture, SocketServer, private_file
 
 
@@ -58,6 +58,59 @@ class RpcTests(unittest.TestCase):
         server = SocketServer(path, handler)
         self.addCleanup(server.close)
         return server
+
+    def test_plugin_registration_requires_an_explicit_absolute_root(self):
+        registered = {"plugin_id": PLUGIN_ID, "enabled": True}
+        self.serve(self.config.owner_socket, lambda req: {"id": req["id"], "result": {"plugins": [registered]}})
+        for fields in ({}, {"plugin_root": None}, {"plugin_root": []}, {"plugin_root": {}},
+                       {"plugin_root": ""}, {"plugin_root": "."}, {"plugin_root": "relative/checkout"},
+                       {"plugin_root": "/bad\x00root"}, {"plugin_root": "/bad\nroot"}):
+            with self.subTest(fields=fields):
+                registered.clear()
+                registered.update(plugin_id=PLUGIN_ID, enabled=True, **fields)
+                with self.assertRaises(GatewayError) as error:
+                    Herdr(self.config).enabled()
+                self.assertEqual("PROTOCOL_ERROR", error.exception.code)
+
+    def test_plugin_registration_rejects_ambiguous_or_malformed_enablement(self):
+        registered = {"plugin_id": PLUGIN_ID, "enabled": True, "plugin_root": str(self.config.plugin_root)}
+        result = {}
+        self.serve(self.config.owner_socket, lambda req: {"id": req["id"], "result": result})
+        for plugins in (None, {}, [registered, registered], [dict(registered, enabled=1)],
+                        [{"plugin_id": PLUGIN_ID, "plugin_root": str(self.config.plugin_root)}]):
+            with self.subTest(plugins=plugins):
+                result["plugins"] = plugins
+                with self.assertRaises(GatewayError) as error:
+                    Herdr(self.config).enabled()
+                self.assertEqual("PROTOCOL_ERROR", error.exception.code)
+        for plugins in ([], [{"plugin_id": "unrelated"}], [dict(registered, enabled=False)]):
+            result["plugins"] = plugins
+            self.assertFalse(Herdr(self.config).enabled())
+
+    def test_control_rejections_sanitize_peer_codes_of_any_json_type(self):
+        rejection = {"protocol": 1, "ok": False, "message": "fixture-private-sentinel"}
+        self.serve(self.config.owner_socket, lambda req: dict(rejection, id=req["id"]))
+        for code in ([], {}, None, True, 42, "fixture-private-sentinel", "BUSY", "STATE_SCHEMA"):
+            with self.subTest(code=code):
+                rejection["code"] = code
+                with self.assertRaises(GatewayError) as error:
+                    control_query(self.config.owner_socket, "status")
+                self.assertEqual(code if code in ("BUSY", "STATE_SCHEMA") else "PROTOCOL_ERROR", error.exception.code)
+                self.assertNotIn("fixture-private-sentinel", str(error.exception))
+
+    def test_control_response_requires_exact_protocol_and_result_object(self):
+        response = {}
+        self.serve(self.config.owner_socket, lambda req: dict(response, id=req["id"]))
+        for fields in ({}, {"protocol": True}, {"protocol": 2}, {"ok": 1}, {"result": []}, {"result": None}):
+            with self.subTest(fields=fields):
+                response.clear()
+                response.update(protocol=1, ok=True, result={})
+                if not fields:
+                    response.pop("protocol")
+                response.update(fields)
+                with self.assertRaises(GatewayError) as error:
+                    control_query(self.config.owner_socket, "status")
+                self.assertEqual("PROTOCOL_ERROR", error.exception.code)
 
     def test_readiness_needs_two_spaced_observations_and_resets_after_failure(self):
         probe = GatewayProbe(self.config)

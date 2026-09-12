@@ -112,7 +112,7 @@ def events(config, lines):
         return {"schema": 1, "events": []}
     check_private(directory.lstat(), directory=True)
     try:
-        fd = os.open(directory / "events.jsonl", os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+        fd = os.open(directory / "events.jsonl", os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC)
     except FileNotFoundError:
         return {"schema": 1, "events": []}
     with os.fdopen(fd, "rb") as stream:

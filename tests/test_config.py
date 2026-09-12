@@ -1,3 +1,5 @@
+import copy
+from contextlib import chdir
 from dataclasses import replace
 import json
 from pathlib import Path
@@ -80,6 +82,95 @@ class ConfigTests(unittest.TestCase):
         private_file(self.fixture.profile / "config.yaml", "model: {}\nmodel: {}\n")
         with self.assertRaises(GatewayError):
             profile_preflight(self.config)
+
+    def test_dotenv_key_syntax_cannot_override_control_context(self):
+        # Hermes' pinned python-dotenv accepts quoted keys; its loader strips a UTF-8 BOM.
+        for line in ("'HERMES_HOME'=/wrong", "export 'HERDR_SOCKET_PATH'=/wrong", "\t'HGH_GENERATION' = wrong",
+                     "'TELEGRAM_ALLOW_ALL_USERS'=1", "\ufeffHERDR_SOCKET_PATH=/wrong",
+                     "TOKEN=fixture-private-sentinel\rHERDR_SOCKET_PATH=/wrong"):
+            with self.subTest(line=line):
+                path = self.fixture.profile / ".env"
+                raw = line + "\nTOKEN=fixture-private-sentinel\n"
+                private_file(path, raw)
+                with self.assertRaises(GatewayError) as error:
+                    profile_preflight(self.config)
+                self.assertEqual("CONFIG_ERROR", error.exception.code)
+                self.assertNotIn("fixture-private-sentinel", str(error.exception))
+                self.assertEqual(raw.encode(), path.read_bytes())
+
+    def test_quoted_secret_reference_remains_supported_without_loading_it(self):
+        self.fixture.profile_data["model"]["api_key"] = "${HERMES_CUSTOM_TEST_API_KEY}"
+        self.fixture.write_profile()
+        path = self.fixture.profile / ".env"
+        raw = "\ufeffexport 'HERMES_CUSTOM_TEST_API_KEY'='fixture-private-sentinel'\r\n"
+        private_file(path, raw)
+        profile_preflight(self.config)
+        self.assertEqual(raw.encode(), path.read_bytes())
+
+    def test_deep_yaml_is_a_sanitized_configuration_error(self):
+        path = self.fixture.profile / "config.yaml"
+        raw = "nested: " + "[" * 1500 + "fixture-private-sentinel" + "]" * 1500
+        private_file(path, raw)
+        with self.assertRaises(GatewayError) as error:
+            profile_preflight(self.config)
+        self.assertEqual("CONFIG_ERROR", error.exception.code)
+        self.assertNotIn("fixture-private-sentinel", str(error.exception))
+        self.assertEqual(raw, path.read_text())
+
+    def test_malformed_policy_sections_fail_closed(self):
+        original = copy.deepcopy(self.fixture.profile_data)
+        for key in ("model", "terminal", "plugins", "gateway", "nous", "platform_toolsets", "agent"):
+            for value in (None, [], "fixture-private-sentinel"):
+                with self.subTest(key=key, value=value):
+                    self.fixture.profile_data = dict(original, **{key: value})
+                    self.fixture.write_profile()
+                    with self.assertRaises(GatewayError) as error:
+                        profile_preflight(self.config)
+                    self.assertEqual("CONFIG_ERROR", error.exception.code)
+                    self.assertNotIn("fixture-private-sentinel", str(error.exception))
+
+    def test_terminal_cwd_cannot_borrow_the_callers_working_directory(self):
+        terminal = dict(self.fixture.profile_data["terminal"])
+        terminal.pop("cwd")
+        with chdir(self.config.agent_cwd):
+            for fields in ({}, {"cwd": None}, {"cwd": ""}, {"cwd": "."}):
+                with self.subTest(fields=fields):
+                    self.fixture.profile_data["terminal"] = dict(terminal, **fields)
+                    self.fixture.write_profile()
+                    with self.assertRaises(GatewayError) as error:
+                        profile_preflight(self.config)
+                    self.assertEqual("CONFIG_ERROR", error.exception.code)
+
+    def test_model_urls_reject_credentials_without_printing_them(self):
+        for field in ("base_url", "api_base"):
+            for url in ("https://user:fixture-private-sentinel@example.invalid/v1",
+                        "https://example.invalid/v1?API_KEY=fixture-private-sentinel"):
+                with self.subTest(field=field, url=url):
+                    self.fixture.profile_data["model"] = {"provider": "fixture", "default": "model", field: url}
+                    self.fixture.write_profile()
+                    with self.assertRaises(GatewayError) as error:
+                        profile_preflight(self.config)
+                    self.assertNotIn("fixture-private-sentinel", str(error.exception))
+        self.fixture.profile_data["model"]["api_base"] = "https://example.invalid/v1?region=test"
+        self.fixture.write_profile()
+        profile_preflight(self.config)
+
+    def test_invalid_config_fields_cannot_change_the_binding(self):
+        path = self.fixture.config_dir / "config.json"
+        original = json.loads(path.read_text())
+        for fields in ({"schema": True}, {"unrecognized": "fixture-private-sentinel"},
+                       {"profile_id": "default"}, {"owner_session": "bad\nidentity"},
+                       {"expected_platforms": ["telegram", "telegram"]}, {"expected_platforms": [[]]},
+                       {"owner_socket": "relative.sock"}, {"profile_home": []}):
+            with self.subTest(fields=fields):
+                raw = json.dumps(dict(original, **fields))
+                private_file(path, raw)
+                with self.assertRaises(GatewayError) as error:
+                    Config.load(path)
+                self.assertEqual("CONFIG_ERROR", error.exception.code)
+                self.assertEqual(raw, path.read_text())
+                self.assertNotIn("fixture-private-sentinel", str(error.exception))
+        self.assertFalse(self.config.state_dir.exists())
 
     def test_ambient_focus_cannot_change_owner_binding(self):
         other = dict(self.fixture.context(), HERDR_SOCKET_PATH=str(self.fixture.root / "other.sock"))

@@ -307,6 +307,31 @@ class SupervisorTests(unittest.TestCase):
         self.assertEqual(0, self.process.wait(timeout=5))
         self.assertEqual("supervisor_interrupt", self.store.intent()["reason"])
 
+    def test_malformed_control_fields_cannot_terminate_the_owned_gateway(self):
+        self.start()
+        child = self.wait_child()
+        wait_until(lambda: (self.fixture.root / "gateway-up").exists())
+        intent = self.store.intent()
+        cases = [({"verb": value}, "UNSUPPORTED_VERB") for value in ([], {}, None, True, 42)]
+        cases += [({"protocol": True}, "PROTOCOL_ERROR"),
+                  ({"unexpected": "fixture-private-sentinel"}, "PROTOCOL_ERROR"),
+                  ({"verb": "stop", "owner_key": []}, "STALE_REQUEST")]
+        for fields, code in cases:
+            with self.subTest(fields=fields):
+                request = {"id": "malformed", "protocol": 1, "verb": "status", **fields}
+                response = exchange(supervisor_socket(self.config), request)
+                self.assertFalse(response["ok"])
+                self.assertEqual(code, response["code"])
+                self.assertNotIn("fixture-private-sentinel", json.dumps(response))
+                self.assertIsNone(self.process.poll())
+                self.assertTrue(same_process(child))
+        self.assertEqual(intent, self.store.intent())
+        self.assertEqual(child["pid"], self.status()["gateway"]["pid"])
+        self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
+        self.action("pause", send=False)
+        self.assertEqual(0, self.process.wait(timeout=5))
+        self.assertFalse(same_process(child))
+
     def test_pause_works_with_corrupted_profile_yaml(self):
         self.start()
         child = self.wait_child()

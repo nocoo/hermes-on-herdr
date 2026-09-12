@@ -14,9 +14,10 @@ from hermes_gateway_herdr.config import profile_preflight
 from hermes_gateway_herdr.controller import Controller
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.identity import capture, same_process, signal_verified
+from hermes_gateway_herdr.rpc import supervisor_socket
 from hermes_gateway_herdr.state import Store
 from fake_owner import FakeOwner
-from helpers import Fixture, json_lines, private_file, wait_until
+from helpers import Fixture, SocketServer, json_lines, private_file, wait_until
 
 
 class ControllerTests(unittest.TestCase):
@@ -169,6 +170,33 @@ class ControllerTests(unittest.TestCase):
             self.assertTrue(self.action("pause")["accepted"])
         self.assertEqual("paused", self.store.intent()["desired"])
         wait_until(lambda: not same_process(child))
+
+    def test_malformed_optional_ack_does_not_hide_a_committed_pause(self):
+        with self.store.mutation():
+            self.store.write("runtime.json", {"schema": 1, "owner_key": self.config.key, "generation": "fixture",
+                                             "instance_nonce": "fixture-nonce", "supervisor": capture(os.getpid()),
+                                             "pane": self.owner.panes["pane-user"]})
+        server = SocketServer(supervisor_socket(self.config), lambda req: {
+            "id": req["id"], "protocol": 1, "ok": False, "code": [], "message": "fixture-private-sentinel"})
+        self.addCleanup(server.close)
+        result = self.action("pause")
+        self.assertTrue(result["accepted"])
+        self.assertFalse(result["notified"])
+        self.assertEqual("paused", self.store.intent()["desired"])
+        self.assertEqual(self.store.intent()["revision"], server.requests[0]["intent_revision"])
+        self.assertEqual([], self.owner.processes)
+        self.assertNotIn("fixture-private-sentinel", json.dumps(result))
+
+    def test_damaged_pending_ticket_cannot_create_resources_or_be_overwritten(self):
+        path = self.config.state_dir / "pending.json"
+        raw = json.dumps({"schema": 1, "owner_key": self.config.key, "generation": "damaged",
+                          "intent_revision": self.store.intent()["revision"], "phase": []})
+        private_file(path, raw)
+        with self.assertRaises(GatewayError) as error:
+            self.ensure()
+        self.assertEqual("STATE_SCHEMA", error.exception.code)
+        self.assertEqual(raw, path.read_text())
+        self.assertEqual([], self.owner.server.requests)
 
     def test_nonowner_and_unrelated_exit_event_do_not_create_or_clear_pause(self):
         with self.assertRaises(GatewayError) as error:

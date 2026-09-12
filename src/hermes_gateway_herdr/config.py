@@ -169,7 +169,8 @@ def profile_preflight(config: Config) -> None:
                     raise ValueError("URL credential")
         terminal = data.get("terminal", {})
         if (terminal.get("backend") != "local" or terminal.get("home_mode") != "profile"
-                or Path(terminal.get("cwd", "")).resolve() != config.agent_cwd.resolve()
+                or not isinstance(terminal.get("cwd"), str) or not Path(terminal["cwd"]).is_absolute()
+                or Path(terminal["cwd"]).resolve() != config.agent_cwd.resolve()
                 or terminal.get("auto_source_bashrc") is not False or terminal.get("shell_init_files") != []):
             raise ValueError("terminal")
         if (data.get("plugins", {}).get("enabled") != []
@@ -189,16 +190,17 @@ def profile_preflight(config: Config) -> None:
         if not isinstance(disabled, list) or not {"cronjob", "browser", "file"} <= set(disabled):
             raise ValueError("disabled tools")
         # .env is for secrets. Never let it rewrite identity or turn policy switches back on.
-        dotenv = private_bytes(config.profile_home / ".env").decode()
+        dotenv = private_bytes(config.profile_home / ".env").decode("utf-8-sig").replace("\r", "\n")
         forbidden = {"HERMES_HOME", "HOME", "PATH", "PYTHONPATH", "PYTHONHOME", "BASH_ENV", "ENV",
                      "GATEWAY_MULTIPLEX_PROFILES", "GATEWAY_ALLOW_ALL_USERS", "HERMES_ENABLE_PROJECT_PLUGINS",
                      "HERMES_YOLO_MODE", "HERMES_ACCEPT_HOOKS", "HERMES_IGNORE_USER_CONFIG", "INVOCATION_ID",
                      "HERMES_GATEWAY_LOCK_DIR",
                      "XPC_SERVICE_NAME", "LAUNCHD_SOCKET", "HERMES_DESKTOP_MANAGED", "HERMES_S6_SUPERVISED_CHILD"}
-        keys = re.findall(r"(?m)^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=", dotenv)
-        if any(key in forbidden or key.startswith(("HERDR_", "HGH_")) or key.endswith("_ALLOW_ALL_USERS") for key in keys):
-            raise ValueError("environment override")
-    except (ValueError, TypeError, AttributeError, yaml.YAMLError, UnicodeError) as exc:
+        for match in re.finditer(r"(?m)^\s*(?:export\s+)?('?)([A-Za-z_][A-Za-z0-9_]*)\1\s*=", dotenv):
+            key = match[2]
+            if key in forbidden or key.startswith(("HERDR_", "HGH_")) or key.endswith("_ALLOW_ALL_USERS"):
+                raise ValueError("environment override")
+    except (ValueError, TypeError, AttributeError, RecursionError, yaml.YAMLError, UnicodeError) as exc:
         raise GatewayError("CONFIG_ERROR", "Profile does not meet the dedicated Gateway policy") from exc
 
 

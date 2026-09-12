@@ -1,0 +1,393 @@
+{
+  "schema": 1,
+  "date": "2026-09-12",
+  "baseline_commit": "bba170702b47e7d5b7d9d3a5351e3306cf48e7d9",
+  "host": {
+    "os": "macOS",
+    "version": "26.6.2",
+    "architecture": "arm64"
+  },
+  "tests": [
+    {
+      "python": "3.11.15",
+      "tests": 186,
+      "seconds": 42.851,
+      "exit_code": 0,
+      "coverage_instrumentation": false
+    },
+    {
+      "python": "3.14.7",
+      "tests": 186,
+      "seconds": 49.607,
+      "exit_code": 0,
+      "coverage_instrumentation": true
+    }
+  ],
+  "new_test_methods": 19,
+  "runtime_dependencies": {
+    "psutil": "7.2.2",
+    "PyYAML": "6.0.3"
+  },
+  "coverage": {
+    "tool": "coverage.py 7.16.0",
+    "python": "3.14.7",
+    "scope": "src/hermes_gateway_herdr; all 19 modules; tests and vendor excluded",
+    "method": "Temporary .pth in a dedicated copied-interpreter venv; branch=True; patches=_exit,execv; combine child data.",
+    "limits": [
+      "SIGKILL cannot flush coverage data.",
+      "Only macOS was executed locally; Linux-specific branches need Linux execution.",
+      "Metrics describe isolated fixtures, not real Herdr/Hermes/channel/model integration."
+    ],
+    "baseline": {
+      "tests": 167,
+      "totals": {
+        "covered_lines": 2563,
+        "num_statements": 2927,
+        "percent_covered": 85.23892919689767,
+        "percent_covered_display": "85",
+        "missing_lines": 364,
+        "excluded_lines": 0,
+        "percent_statements_covered": 87.5640587632388,
+        "percent_statements_covered_display": "88",
+        "num_branches": 1070,
+        "num_partial_branches": 180,
+        "covered_branches": 844,
+        "missing_branches": 226,
+        "percent_branches_covered": 78.8785046728972,
+        "percent_branches_covered_display": "79"
+      }
+    },
+    "after": {
+      "tests": 186,
+      "totals": {
+        "covered_lines": 2596,
+        "num_statements": 2932,
+        "percent_covered": 86.60179640718563,
+        "percent_covered_display": "87",
+        "missing_lines": 336,
+        "excluded_lines": 0,
+        "percent_statements_covered": 88.54024556616643,
+        "percent_statements_covered_display": "89",
+        "num_branches": 1076,
+        "num_partial_branches": 159,
+        "covered_branches": 875,
+        "missing_branches": 201,
+        "percent_branches_covered": 81.31970260223048,
+        "percent_branches_covered_display": "81"
+      }
+    },
+    "modules": {
+      "src/hermes_gateway_herdr/__init__.py": {
+        "before": {
+          "covered_lines": 1,
+          "num_statements": 1,
+          "covered_branches": 0,
+          "num_branches": 0
+        },
+        "after": {
+          "covered_lines": 1,
+          "num_statements": 1,
+          "covered_branches": 0,
+          "num_branches": 0
+        }
+      },
+      "src/hermes_gateway_herdr/__main__.py": {
+        "before": {
+          "covered_lines": 8,
+          "num_statements": 13,
+          "covered_branches": 1,
+          "num_branches": 2
+        },
+        "after": {
+          "covered_lines": 8,
+          "num_statements": 13,
+          "covered_branches": 1,
+          "num_branches": 2
+        }
+      },
+      "src/hermes_gateway_herdr/cli.py": {
+        "before": {
+          "covered_lines": 161,
+          "num_statements": 184,
+          "covered_branches": 61,
+          "num_branches": 72
+        },
+        "after": {
+          "covered_lines": 161,
+          "num_statements": 184,
+          "covered_branches": 61,
+          "num_branches": 72
+        }
+      },
+      "src/hermes_gateway_herdr/config.py": {
+        "before": {
+          "covered_lines": 128,
+          "num_statements": 154,
+          "covered_branches": 39,
+          "num_branches": 62
+        },
+        "after": {
+          "covered_lines": 140,
+          "num_statements": 155,
+          "covered_branches": 52,
+          "num_branches": 64
+        }
+      },
+      "src/hermes_gateway_herdr/controller.py": {
+        "before": {
+          "covered_lines": 228,
+          "num_statements": 271,
+          "covered_branches": 84,
+          "num_branches": 118
+        },
+        "after": {
+          "covered_lines": 230,
+          "num_statements": 269,
+          "covered_branches": 84,
+          "num_branches": 116
+        }
+      },
+      "src/hermes_gateway_herdr/dashboard.py": {
+        "before": {
+          "covered_lines": 166,
+          "num_statements": 179,
+          "covered_branches": 46,
+          "num_branches": 52
+        },
+        "after": {
+          "covered_lines": 166,
+          "num_statements": 179,
+          "covered_branches": 46,
+          "num_branches": 52
+        }
+      },
+      "src/hermes_gateway_herdr/dashboard_demo.py": {
+        "before": {
+          "covered_lines": 20,
+          "num_statements": 21,
+          "covered_branches": 7,
+          "num_branches": 8
+        },
+        "after": {
+          "covered_lines": 20,
+          "num_statements": 21,
+          "covered_branches": 7,
+          "num_branches": 8
+        }
+      },
+      "src/hermes_gateway_herdr/dashboard_http.py": {
+        "before": {
+          "covered_lines": 70,
+          "num_statements": 86,
+          "covered_branches": 8,
+          "num_branches": 10
+        },
+        "after": {
+          "covered_lines": 70,
+          "num_statements": 86,
+          "covered_branches": 8,
+          "num_branches": 10
+        }
+      },
+      "src/hermes_gateway_herdr/dashboard_view.py": {
+        "before": {
+          "covered_lines": 383,
+          "num_statements": 390,
+          "covered_branches": 146,
+          "num_branches": 158
+        },
+        "after": {
+          "covered_lines": 383,
+          "num_statements": 390,
+          "covered_branches": 146,
+          "num_branches": 158
+        }
+      },
+      "src/hermes_gateway_herdr/display.py": {
+        "before": {
+          "covered_lines": 63,
+          "num_statements": 74,
+          "covered_branches": 12,
+          "num_branches": 16
+        },
+        "after": {
+          "covered_lines": 63,
+          "num_statements": 74,
+          "covered_branches": 12,
+          "num_branches": 16
+        }
+      },
+      "src/hermes_gateway_herdr/errors.py": {
+        "before": {
+          "covered_lines": 10,
+          "num_statements": 11,
+          "covered_branches": 3,
+          "num_branches": 4
+        },
+        "after": {
+          "covered_lines": 10,
+          "num_statements": 11,
+          "covered_branches": 3,
+          "num_branches": 4
+        }
+      },
+      "src/hermes_gateway_herdr/event_log.py": {
+        "before": {
+          "covered_lines": 59,
+          "num_statements": 63,
+          "covered_branches": 12,
+          "num_branches": 12
+        },
+        "after": {
+          "covered_lines": 59,
+          "num_statements": 63,
+          "covered_branches": 12,
+          "num_branches": 12
+        }
+      },
+      "src/hermes_gateway_herdr/identity.py": {
+        "before": {
+          "covered_lines": 105,
+          "num_statements": 116,
+          "covered_branches": 45,
+          "num_branches": 48
+        },
+        "after": {
+          "covered_lines": 105,
+          "num_statements": 116,
+          "covered_branches": 45,
+          "num_branches": 48
+        }
+      },
+      "src/hermes_gateway_herdr/lifecycle.py": {
+        "before": {
+          "covered_lines": 57,
+          "num_statements": 57,
+          "covered_branches": 18,
+          "num_branches": 18
+        },
+        "after": {
+          "covered_lines": 57,
+          "num_statements": 57,
+          "covered_branches": 18,
+          "num_branches": 18
+        }
+      },
+      "src/hermes_gateway_herdr/monitor.py": {
+        "before": {
+          "covered_lines": 221,
+          "num_statements": 238,
+          "covered_branches": 57,
+          "num_branches": 66
+        },
+        "after": {
+          "covered_lines": 221,
+          "num_statements": 238,
+          "covered_branches": 57,
+          "num_branches": 66
+        }
+      },
+      "src/hermes_gateway_herdr/paths.py": {
+        "before": {
+          "covered_lines": 63,
+          "num_statements": 66,
+          "covered_branches": 19,
+          "num_branches": 22
+        },
+        "after": {
+          "covered_lines": 64,
+          "num_statements": 66,
+          "covered_branches": 20,
+          "num_branches": 22
+        }
+      },
+      "src/hermes_gateway_herdr/rpc.py": {
+        "before": {
+          "covered_lines": 200,
+          "num_statements": 247,
+          "covered_branches": 69,
+          "num_branches": 104
+        },
+        "after": {
+          "covered_lines": 212,
+          "num_statements": 250,
+          "covered_branches": 79,
+          "num_branches": 106
+        }
+      },
+      "src/hermes_gateway_herdr/state.py": {
+        "before": {
+          "covered_lines": 195,
+          "num_statements": 231,
+          "covered_branches": 63,
+          "num_branches": 90
+        },
+        "after": {
+          "covered_lines": 199,
+          "num_statements": 234,
+          "covered_branches": 68,
+          "num_branches": 94
+        }
+      },
+      "src/hermes_gateway_herdr/supervisor.py": {
+        "before": {
+          "covered_lines": 425,
+          "num_statements": 525,
+          "covered_branches": 154,
+          "num_branches": 208
+        },
+        "after": {
+          "covered_lines": 427,
+          "num_statements": 525,
+          "covered_branches": 156,
+          "num_branches": 208
+        }
+      }
+    }
+  },
+  "static_analysis": {
+    "tool": "ruff 0.16.7",
+    "rules": [
+      "E9",
+      "F63",
+      "F7",
+      "F82"
+    ],
+    "result": "passed"
+  },
+  "regression_proof": {
+    "initial_new_methods": 18,
+    "initial_failures": 16,
+    "initial_errors": 24,
+    "additional_cwd_method": 1,
+    "cwd_failures": 3,
+    "note": "Failure/error counts include subtests and cascading failures after supervisor termination; not defect counts."
+  },
+  "source_sha256": {
+    "src/hermes_gateway_herdr/__init__.py": "4edf4b305870254171b592bcbfa650beae00a422352b332134f2d9621e51e0ee",
+    "src/hermes_gateway_herdr/__main__.py": "005cad823ad99930cc15dddcdbd3e91e296d854999486c13e3efccea45919287",
+    "src/hermes_gateway_herdr/cli.py": "d4a0f7ac1a7e811c11f19feb1c47497c3adc791f46b6ce623f27ff422e0d89fa",
+    "src/hermes_gateway_herdr/config.py": "ae5f81a69c0f61e315cbb208b7fb4d9a4305a1177ec2f07f5fff42c354e2e43e",
+    "src/hermes_gateway_herdr/controller.py": "f411c9a355fe0a243a3fd0301021de7f095dacfe374e7d373e9647ed10d40608",
+    "src/hermes_gateway_herdr/dashboard.py": "a6624f92a44d2383f591138dde9e60603175de57a8b67da27af719765e37f566",
+    "src/hermes_gateway_herdr/dashboard_demo.py": "14bde3a9fad898ca39bcc7fd3fe5938f1ffa5946460b22e05b47b23471867d31",
+    "src/hermes_gateway_herdr/dashboard_http.py": "d9a7f7aae59d5c1e7ee2a42790f06fb0bbc463b62e0fa504f19afb95c6995296",
+    "src/hermes_gateway_herdr/dashboard_view.py": "99fbaf1cbf805ea715c9892721687d7c4db1641d0f015d8156d083733c5ea51e",
+    "src/hermes_gateway_herdr/display.py": "653e3dbd909953d21876069c412775cfb232a1701e9923fcff47d761e1de1a34",
+    "src/hermes_gateway_herdr/errors.py": "6b1cf81b75d833a6976b63fdaaf21c88c98d568ca6e20cdfbda9860f3fb016ab",
+    "src/hermes_gateway_herdr/event_log.py": "7bc5780b19a56dd620b2387a4fae7322aa7c2e44a936274771d75bb528acb351",
+    "src/hermes_gateway_herdr/identity.py": "2aa86a26fa6d5e0aaac4cf7aaf1fd90eb427114686561a52ce402fe63a2e6c33",
+    "src/hermes_gateway_herdr/lifecycle.py": "90e3605c393c30d805e52a9a7c11be9c0a4f121c7fdbd8ca65f257539c1e8ff3",
+    "src/hermes_gateway_herdr/monitor.py": "feac7ef9f2b4810fea38cf845a70512b07c6861a9d4c0308538b2df3b7a60735",
+    "src/hermes_gateway_herdr/paths.py": "602c2ce90bbb49ece8946ff2b2ab60a083ad9387f591b7592f90b00bec2b51f2",
+    "src/hermes_gateway_herdr/rpc.py": "d49190f70d2b637204a5851fd831b5504103e066b60e4a07324d36b6ad9c35f1",
+    "src/hermes_gateway_herdr/state.py": "280090c8f861ea5861959017ede10f41cbe0ce158f13c92834e73df350cc9a50",
+    "src/hermes_gateway_herdr/supervisor.py": "a163182ee93f37362d4950a31043e4ebb8b84378fcbabb6447f19ba2a9b47657"
+  },
+  "markdown_validation": {
+    "parser": "markdown-it-py 4.0.0",
+    "documents": 2,
+    "local_links_and_anchors": 65,
+    "result": "passed"
+  }
+}

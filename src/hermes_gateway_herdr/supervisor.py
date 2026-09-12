@@ -169,7 +169,7 @@ class Supervisor:
                 or not isinstance(request.get("id"), str) or not 1 <= len(request["id"]) <= 160):
             raise GatewayError("PROTOCOL_ERROR")
         verb = request.get("verb")
-        if verb not in {"identify", "status", "stop", "restart"}:
+        if verb not in ("identify", "status", "stop", "restart"):
             raise GatewayError("UNSUPPORTED_VERB")
         allowed = {"protocol", "id", "verb"}
         if verb in {"stop", "restart"}:

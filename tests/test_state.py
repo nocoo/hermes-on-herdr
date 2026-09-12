@@ -89,6 +89,50 @@ with Store(sys.argv[2]) as store:
                 self.store.set_intent("pause")
             self.assertEqual(raw, path.read_text())
 
+    def test_malformed_intent_enums_cannot_be_acknowledged_or_replaced(self):
+        path = self.path / "intent.json"
+        original = self.store.intent()
+        for fields in ({"desired": []}, {"desired": {}},
+                       {"requests": [{"id": "fixture", "action": []}]},
+                       {"requests": [{"id": "fixture", "action": {}}]}):
+            with self.subTest(fields=fields):
+                raw = json.dumps(dict(original, **fields))
+                path.write_text(raw)
+                inode = path.stat().st_ino
+                with self.store.mutation(), self.assertRaises(GatewayError) as error:
+                    self.store.set_intent("pause")
+                self.assertEqual("STATE_SCHEMA", error.exception.code)
+                self.assertEqual(raw, path.read_text())
+                self.assertEqual(inode, path.stat().st_ino)
+
+    def test_malformed_pending_ticket_is_preserved_for_inspection(self):
+        path = self.path / "pending.json"
+        original = {"schema": 1, "generation": "fixture", "owner_key": "owner",
+                    "intent_revision": 1, "phase": "pane_requested"}
+        for fields in ({"phase": []}, {"phase": {}}, {"phase": "future"},
+                       {"intent_revision": True}, {"intent_revision": -1}):
+            with self.subTest(fields=fields):
+                raw = json.dumps(dict(original, **fields))
+                path.write_text(raw)
+                path.chmod(0o600)
+                with self.assertRaises(GatewayError) as error:
+                    self.store.read("pending.json")
+                self.assertEqual("STATE_SCHEMA", error.exception.code)
+                with self.store.mutation(), self.assertRaises(GatewayError):
+                    self.store.remove("pending.json")
+                self.assertEqual(raw, path.read_text())
+
+    def test_replace_failure_preserves_old_intent_and_removes_the_temporary_file(self):
+        before = self.store.intent()
+        inode = (self.path / "intent.json").stat().st_ino
+        with self.store.mutation(), patch("hermes_gateway_herdr.state.os.replace", side_effect=OSError("fixture failure")):
+            with self.assertRaises(GatewayError) as error:
+                self.store.set_intent("resume")
+            self.assertEqual("IO_ERROR", error.exception.code)
+        self.assertEqual(before, self.store.intent())
+        self.assertEqual(inode, (self.path / "intent.json").stat().st_ino)
+        self.assertEqual([], list(self.path.glob(".intent.json.*")))
+
     def test_symlink_and_hardlink_are_rejected_without_touching_target(self):
         target = Path(self.temp.name) / "target"
         target.write_text(json.dumps(self.store.intent()))
