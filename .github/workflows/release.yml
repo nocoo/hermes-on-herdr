@@ -1,0 +1,150 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: [Tests]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing annotated version tag with successful tag CI
+        required: true
+        type: string
+      source-run-id:
+        description: Successful Tests run ID for that tag
+        required: true
+        type: string
+      publish:
+        description: Publish a new GitHub Release after archive verification
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.event.workflow_run.head_branch || inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_repository.full_name == github.repository &&
+       startsWith(github.event.workflow_run.head_branch, 'v'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    env:
+      RELEASE_TAG: ${{ github.event.workflow_run.head_branch || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Prove the tag and successful Tests run
+        id: source
+        uses: nocoo/base-ci/.github/actions/release-source@ad43150de3a2be2fa464b5cd2f921dc4fa9f8f0f
+        with:
+          github-token: ${{ github.token }}
+          expected-workflow-path: .github/workflows/tests.yml
+          expected-workflow-name: Tests
+          expected-branch: ${{ env.RELEASE_TAG }}
+          source-run-id: ${{ github.event_name == 'workflow_run' && format('{0}', github.event.workflow_run.id) || inputs.source-run-id }}
+          tag: ${{ env.RELEASE_TAG }}
+          require-fresh-main: 'false'
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ steps.source.outputs.target-sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify all four offline matrix jobs
+        env:
+          SOURCE_RUN_ID: ${{ steps.source.outputs.source-run-id }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN_ID/jobs" --paginate --slurp > "$RUNNER_TEMP/release-ci-jobs.json"
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          pages = json.loads((Path(os.environ['RUNNER_TEMP']) / 'release-ci-jobs.json').read_text())
+          jobs = [job for page in pages for job in page['jobs']]
+          for system in ('ubuntu-24.04', 'macos-latest'):
+              for version in ('3.11', '3.14'):
+                  name = f'{system} / Python {version}'
+                  matches = [job for job in jobs if job['name'] == name or job['name'].startswith(name + ' / ')]
+                  if len(matches) != 1 or matches[0]['conclusion'] != 'success':
+                      raise SystemExit(f'Missing successful offline matrix job: {name}')
+          PY
+
+      - name: Verify immutable version and package the source
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.target-sha }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test "$(git cat-file -t "refs/tags/$RELEASE_TAG")" = tag
+          test "$(git rev-parse "refs/tags/$RELEASE_TAG^{commit}")" = "$SOURCE_SHA"
+          mkdir -p dist
+          git archive --format=tar --prefix="hermes-on-herdr-${RELEASE_TAG#v}/" "$SOURCE_SHA" | gzip -n > "dist/hermes-on-herdr-${RELEASE_TAG#v}.tar.gz"
+          python3 - <<'PY'
+          import hashlib
+          import os
+          import runpy
+          import tarfile
+          import tomllib
+          from pathlib import Path
+          version = runpy.run_path('src/hermes_gateway_herdr/__init__.py')['__version__']
+          manifest = tomllib.loads(Path('herdr-plugin.toml').read_text())
+          if os.environ['RELEASE_TAG'] != f'v{version}' or manifest['version'] != version:
+              raise SystemExit('Tag, runtime and manifest versions must match')
+          prefix = f'hermes-on-herdr-{version}/'
+          archive = Path('dist') / f'hermes-on-herdr-{version}.tar.gz'
+          with tarfile.open(archive, 'r:gz') as contents:
+              launcher = contents.getmember(prefix + 'bin/hermes-on-herdr')
+              alias = contents.getmember(prefix + 'bin/hermes-gateway-herdr')
+              if not launcher.isfile() or launcher.mode & 0o111 != 0o111:
+                  raise SystemExit('Archive lost the executable launcher')
+              if not alias.issym() or alias.linkname != 'hermes-on-herdr':
+                  raise SystemExit('Archive lost the compatibility symlink')
+              for name in ('herdr-plugin.toml', 'src/hermes_gateway_herdr/__init__.py', 'vendor/hqtui/LICENSE'):
+                  if contents.extractfile(prefix + name).read() != Path(name).read_bytes():
+                      raise SystemExit(f'Archive content mismatch: {name}')
+              if any((member.name != prefix.rstrip('/') and not member.name.startswith(prefix)) or '..' in member.name.split('/') for member in contents):
+                  raise SystemExit('Unexpected archive path')
+          digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+          Path('dist/SHA256SUMS').write_text(f'{digest}  {archive.name}\n')
+          PY
+          (cd dist && sha256sum --check SHA256SUMS)
+
+      - name: Retain verified release assets
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: source-${{ env.RELEASE_TAG }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Publish a new immutable release
+        if: github.event_name == 'workflow_run' || inputs.publish
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.target-sha }}
+          SOURCE_RUN_ID: ${{ steps.source.outputs.source-run-id }}
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/release-notes.md" <<EOF
+          Install with \`herdr plugin install nocoo/hermes-on-herdr --ref $RELEASE_TAG\`.
+
+          Source: $SOURCE_SHA. All four offline OS/Python checks passed in [Tests](https://github.com/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN_ID).
+
+          See the versioned [installation and compatibility guide](https://github.com/$GITHUB_REPOSITORY/blob/$RELEASE_TAG/docs/15-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%AE%89%E8%A3%85.md) and [changelog](https://github.com/$GITHUB_REPOSITORY/blob/$RELEASE_TAG/CHANGELOG.md) for supported runtimes, installation steps and known limitations. Offline CI does not replace real Herdr and messaging acceptance.
+
+          Verify downloaded assets with \`sha256sum --check SHA256SUMS\` or \`shasum -a 256 --check SHA256SUMS\`. This source archive includes the executable launcher, compatibility symlink, manifest and vendored hqtui license. It does not include a Python environment. The project has no project-level license; the vendored MIT license applies only to hqtui.
+          EOF
+          options=()
+          if [[ "$RELEASE_TAG" == *-* ]]; then options+=(--prerelease); fi
+          gh release create "$RELEASE_TAG" "dist/hermes-on-herdr-${RELEASE_TAG#v}.tar.gz" dist/SHA256SUMS --verify-tag --title "hermes on herdr ${RELEASE_TAG#v}" --notes-file "$RUNNER_TEMP/release-notes.md" "${options[@]}"

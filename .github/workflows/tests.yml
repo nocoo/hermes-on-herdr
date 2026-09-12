@@ -18,7 +18,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, macos-latest]
         python: ['3.11', '3.14']
-    uses: nocoo/base-ci/.github/workflows/test-job.yml@2ff6b0609183d5d5a24e98f941138fda48837b2f
+    uses: nocoo/base-ci/.github/workflows/test-job.yml@ad43150de3a2be2fa464b5cd2f921dc4fa9f8f0f
     with:
       runner: ${{ matrix.os }}
       runtime: none
