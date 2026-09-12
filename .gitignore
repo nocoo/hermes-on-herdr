@@ -12,3 +12,14 @@ video/**/process/render-web/
 video/**/process/frames/
 video/**/process/*-raw.mp4
 video/**/process/*.tmp.*
+# Keep generated video/audio locally; publish films through GitHub attachments.
+/video/**/*.mp4
+/video/**/*.wav
+/video/**/*.m4a
+/video/**/*.mp3
+/video/**/*.aac
+/video/**/*.flac
+/video/**/*.ogg
+/video/**/*.opus
+/video/**/*.aif
+/video/**/*.aiff

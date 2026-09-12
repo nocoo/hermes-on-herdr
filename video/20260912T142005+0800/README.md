@@ -1,14 +1,14 @@
 # Context is control — English film
 
-[Watch or download the final MP4](public/review/hermes-on-herdr-context-en.mp4): **96.5 seconds · 1920 × 1080 · 30 fps · English narration · 5,663,298 bytes**. The user approved the live Chrome preview, requested subtitle-free opening and closing plates, and accepted the finished film. Body subtitles have no background; the bookends retain their narration without subtitles.
+[Watch the uploaded film](https://github.com/user-attachments/assets/c19ff537-9637-44bf-a9ba-3b4f4a6ce065): **96.5 seconds · 1920 × 1080 · 30 fps · English narration · 5,663,298 bytes**. The user approved the live Chrome preview, requested subtitle-free opening and closing plates, and accepted the finished film. Body subtitles have no background; the bookends retain their narration without subtitles. The local master remains at `public/review/hermes-on-herdr-context-en.mp4`.
 
 The approved direction uses original 2D signal paths, authentic product icons, short titles and bright Hexly typography. It explains the missing session context of an independent Hermes, the trusted profile explicitly bound by the plugin, and familiar messaging channels leading to a local Herdr control path. The narration retains the same-user permission and integration-testing qualifications.
 
-The previous cubie draft is preserved in [its checkpoint](process/checkpoints/02-cubie-preview-rejected/checkpoint.json), and the approved web preview in [its checkpoint](process/checkpoints/03-approved-web-preview/checkpoint.json). The historical production at `../20260912T102534+0800/` is unchanged. All work in this run stays inside this directory.
+The previous cubie draft is preserved in [its checkpoint](process/checkpoints/02-cubie-preview-rejected/checkpoint.json), and the approved web preview in [its checkpoint](process/checkpoints/03-approved-web-preview/checkpoint.json). Production source and records remain in their dated directories. The owner's later [media storage policy](../README.md#media-storage) stops tracking video/audio binaries across the archive while preserving local files.
 
 ## Preview and rebuild
 
-Use Bun 1.4.0, Node, Python 3.12 (tested with 3.12.14), uv, FFmpeg/ffprobe and Google Chrome. The checked-in soundtrack, fonts and images allow website builds and video rendering without fetching a voice model. All Remotion packages are pinned to 4.0.520; Zod is pinned to 4.4.3.
+Use Bun 1.4.0, Node, Python 3.12 (tested with 3.12.14), uv, FFmpeg/ffprobe and Google Chrome. Fonts, images and source are checked in; MP4 and audio are local ignored outputs. Before a fresh checkout's preview, tests or media verification, [restore the original media](../README.md#media-storage) or generate speech and music using the commands below. Restoring the original media avoids a voice-model download and preserves the verified hashes. All Remotion packages are pinned to 4.0.520; Zod is pinned to 4.4.3.
 
 ```sh
 bun install --frozen-lockfile
@@ -59,4 +59,4 @@ To regenerate speech, run `bun run voice`, then `bun run sound`, followed by ren
 
 The entire `@hexly/video-kit@1.0.0` copy is pinned to published Hexly commit `e1b220a7643e8275134b0bff0a11d703c047abbe`. Its [README](vendor/hexly-video-kit/README.md), [CREDITS](vendor/hexly-video-kit/CREDITS.md), vendor package and licensed fonts remain intact. No current Hexly working-tree files are read or written. The official reveal is used through its published public API; one locally scoped CSS fix expands only the vertical clipping bounds so the wordmark's `y` is not cut off.
 
-The MP4 is small enough for ordinary Git; no LFS or separate Release asset is required. Meaningful checkpoints, the initial subtitle-mux attempt, final media, WAV sources, scripts and evidence are retained. Existing repository ignores keep dependencies, the model cache, rebuildable website/render bundles and raw render intermediates out of the commit; those local files are not deleted. No product code, workflow, release configuration or other repository is changed by this production.
+The owner published the film as a GitHub attachment and requested that MP4 and audio stay out of subsequent Git commits. These media, including the initial subtitle-mux attempt and WAV masters, remain on the production machine; exact originals can also be restored from the prior published commit using the archive instructions above. Meaningful source checkpoints, scripts, narration/subtitles, provenance and verification evidence remain tracked. Dependencies, the model cache and rebuildable website/render bundles also remain ignored. No product code, workflow, release configuration or other repository is changed by this storage update.

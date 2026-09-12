@@ -9,6 +9,8 @@
 
 Hermes's existing Discord, Telegram, Slack and other channels connect you to that M2. Once a channel is configured, you can assign work, check progress and adjust priorities while away, without first logging in over SSH, opening a remote desktop, or setting up a VPN or exposed control port for Herdr. Messages use the existing channel; the Herdr control connection stays local.
 
+https://github.com/user-attachments/assets/c19ff537-9637-44bf-a9ba-3b4f4a6ce065
+
 ## Why a plugin
 
 You already have engineering agents such as Codex, Grok, Pi and Claude Code working in Herdr. When you want Hermes to manage Herdr, the missing piece is control context. A Hermes instance running independently outside Herdr does not automatically belong to the target session's managed pane, socket or caller context. Being able to message it does not establish a verifiable Herdr identity, control target or process owner. An external instance needs those relationships set up and maintained separately.

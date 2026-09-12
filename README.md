@@ -9,6 +9,8 @@
 
 Hermes 已有的 Discord、Telegram、Slack 等 channels 把你连接到这个 M2。配置好消息渠道后，你在外面也能向它交代任务、查询进度、调整工作，无需先 SSH 回机器、打开远程桌面，或为 Herdr 配置 VPN、暴露控制端口。消息走已有渠道，Herdr 控制连接留在本机。
 
+https://github.com/user-attachments/assets/c19ff537-9637-44bf-a9ba-3b4f4a6ce065
+
 ## 为什么需要这个插件
 
 你已经让 Codex、Grok、Pi、Claude Code 等工程师 Agent 在 Herdr 中协作。想再让 Hermes 管理 Herdr 时，缺口出现在控制上下文：一般在 Herdr 外独立运行的 Hermes，并不会天然处于目标 session 的受管 pane、socket 和 caller context 中。能给它发消息，并不代表它已经拥有可核对的 Herdr 身份、控制目标和进程归属。外部实例若要接入，这些关系需要另外建立和维护。
