@@ -1,0 +1,58 @@
+2026-09-14 / isolated Herdr 0.9.0 recovery acceptance
+The user session and cherry were not restarted. No real Profile was configured in this test.
+
+{
+  "result": "PASS",
+  "herdr": "0.9.0",
+  "checks": [
+    "native manifest parsed",
+    "failed supervisor displays recovery",
+    "native recovery popup",
+    "tab and pane hints survive isolated server cold restart"
+  ],
+  "evidence": "/private/tmp/hgh-native-recovery-lilfu5ct"
+}
+
+Restored pane label:
+{"workspace_id": "w1", "tab_id": "w1:t2", "pane_id": "w1:p2", "label": "Dashboard 未就绪？运行 hermes-on-herdr 查看原因并恢复。"}
+
+Failed supervisor, native pane view:
+  hermes on herdr · 恢复中心
+  Profile: 未关联    状态: ERROR
+
+  尚未找到完整的插件关联配置。
+  恢复已有 config.json / 关联状态后重新检查；配置位置见下方。
+
+
+  配置: /private/tmp/hgh-native-recovery-lilfu5ct/config/herdr/plugins/config/nocoo.hermes-gateway/config.json
+
+  [ 重新检查 ]
+  [ 返回 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  状态每 5 秒更新；打开面板会保留原来的暂停设置。
+  ↑↓ / Tab 选择 · Enter / 鼠标点击 · R 重新检查 · Q 返回

@@ -13,18 +13,18 @@ from hqtui.input import KeyEvent
 
 
 class DashboardViewTests(TestCase):
-    def test_version_remains_visible_in_startup_full_and_narrow_views(self):
-        for startup in (False, True):
+    def test_version_and_controls_remain_visible_in_full_and_narrow_views(self):
+        for embedded in (False, True):
             for width, height in ((24, 10), (40, 16), (80, 24), (100, 34), (131, 64), (160, 44)):
-                with self.subTest(startup=startup, width=width, height=height):
-                    screen = self.render(width=width, height=height, state=ViewState(startup=startup))
+                with self.subTest(embedded=embedded, width=width, height=height):
+                    screen = self.render(width=width, height=height, embedded=embedded)
                     self.assertTrue(screen.contains(f"v{__version__}"))
-                    if startup:
-                        self.assertTrue(screen.contains("[ ]"))
-                        self.assertTrue(screen.contains("[Enter]"))
-                    elif width >= 40:
+                    self.assertFalse(screen.contains("Open the monitoring dashboard?"))
+                    if embedded:
+                        self.assertTrue(screen.contains("Start [Enter]"))
+                    if width >= 40:
                         self.assertTrue(screen.contains("Help"))
-                        self.assertTrue(screen.contains("Quit"))
+                        self.assertTrue(screen.contains("Start" if embedded else "Quit"))
 
     def render(self, count=2, width=160, height=44, *, state=None, data=None, now=None, embedded=False, pose=0):
         data = data or demo_snapshot(count)
@@ -130,9 +130,9 @@ class DashboardViewTests(TestCase):
         self.assertTrue(screen.contains("HERDR MANAGED"))
         self.assertFalse(screen.contains("agent-02"))
 
-    def test_empty_filter_startup_help_and_unavailable_states_have_clear_output(self):
+    def test_empty_filter_help_notices_and_unavailable_states_have_clear_output(self):
         for state, expected in ((ViewState(filter="no-match"), "No matching profiles"),
-                                (ViewState(startup=True), "Open the monitoring dashboard?"),
+                                (ViewState(notice="Could not save preferences."), "Could not save preferences."),
                                 (ViewState(help=True), "hermes on herdr / KEYBOARD")):
             self.assertTrue(self.render(20, state=state).contains(expected))
         data = demo_snapshot(1)
@@ -145,63 +145,43 @@ class DashboardViewTests(TestCase):
     def test_demo_marker_and_stop_semantics_are_visible(self):
         self.assertTrue(self.render().contains("DEMO"))
         narrow = self.render(width=80, height=24, embedded=True)
-        self.assertTrue(narrow.contains("Status"))
+        self.assertTrue(narrow.contains("Start"))
         self.assertEqual(narrow.find("DEMO")[1], narrow.height - 1)
         standalone = self.render(state=ViewState(help=True))
         embedded = self.render(state=ViewState(help=True), embedded=True)
         self.assertTrue(standalone.contains("Close the monitor"))
         self.assertTrue(embedded.contains("Pause the managed Gateway"))
 
-    def test_startup_is_unchecked_and_status_does_not_misreport_starting_or_stale_as_ready(self):
+    def test_gateway_states_and_start_button_are_visible_without_a_startup_question(self):
         data = demo_snapshot(1)
-        for status, message in (("READY", "Gateway started successfully."), ("STARTING", "Gateway is starting..."),
-                                ("DEGRADED", "needs attention"), ("FUSED", "repeated failures"),
-                                ("UNKNOWN", "not confirmed"), ("PAUSED", "Gateway is paused.")):
+        for status in ("READY", "STARTING", "DEGRADED", "FUSED", "BLOCKED", "UNKNOWN", "PAUSED"):
             snapshot = replace(data, profiles=(replace(data.profiles[0], state=status),))
-            screen = self.render(data=snapshot, state=ViewState(startup=True))
-            self.assertTrue(screen.contains(message), status)
-            self.assertTrue(screen.contains("[ ] Always open on startup"))
-            self.assertFalse(screen.contains("SYSTEM"))
-            self.assertFalse(screen.contains(CADUCEUS[2]))
-        stale = self.render(data=data, state=ViewState(startup=True), now=data.updated + 120)
-        self.assertTrue(stale.contains("Gateway STALE"))
-        self.assertFalse(stale.contains("started successfully"))
+            screen = self.render(data=snapshot, embedded=True)
+            self.assertTrue(screen.contains(status), status)
+            self.assertTrue(screen.contains("Start [Enter]"))
+            self.assertTrue(screen.contains("SYSTEM"))
+            self.assertFalse(screen.contains("Always open on startup"))
+        blocked = replace(data, profiles=(replace(data.profiles[0], state="BLOCKED", error="Check Profile configuration: terminal"),))
+        self.assertTrue(self.render(data=blocked, embedded=True).contains("Auto retry every 30s"))
+        self.assertTrue(self.render(data=blocked, embedded=True).contains("Check Profile configuration: terminal"))
 
-    def test_startup_controls_keep_opt_in_separate_from_opening_the_monitor(self):
-        state = ViewState(startup=True)
-        data = demo_snapshot(2)
-        screen = self.render(state=state, data=data)
-        button, checkbox = [hit for hit in screen.regions if hit.on_click]
-        checkbox.on_click(0, 0, "left")
-        self.assertTrue(state.auto_open)
-        self.assertTrue(state.startup)
-        state.key(KeyEvent("space", "space"), data)
-        self.assertFalse(state.auto_open)
-        button.on_click(0, 0, "left")
-        self.assertFalse(state.startup)
-        self.assertFalse(state.auto_open)
-        state.key(KeyEvent("b", "b"), data)
-        self.assertTrue(state.startup)
-        state.key(KeyEvent("enter", "enter"), data)
-        self.assertFalse(state.startup)
-
-    def test_startup_resize_and_cached_view_transitions_keep_controls_and_clear_the_art(self):
-        data = demo_snapshot(2)
-        state = ViewState(startup=True)
-        for width, height in ((24, 10), (40, 16), (80, 24), (131, 64)):
-            screen = self.render(width=width, height=height, state=state, data=data)
-            self.assertTrue(screen.contains("[ ]"))
-            self.assertTrue(screen.contains("[Enter]"))
-        view = DashboardView(state, demo=True)
-        def draw():
-            return render_to_screen(160, 44, theme_for("herdr"), lambda ui: view.render(ui, data, now=data.updated, pose=1))
-        draw()
-        cached = draw()
-        self.assertEqual(2, len([hit for hit in cached.regions if hit.on_click]))
-        state.startup = False
-        self.assertTrue(draw().contains(CADUCEUS[2]))
-        state.startup = True
-        self.assertFalse(draw().contains(CADUCEUS[2]))
+    def test_cached_gateway_buttons_remain_clickable_after_resize_and_only_control_the_managed_profile(self):
+        data = demo_snapshot(20)
+        state = ViewState(selected="agent-12")
+        actions = []
+        view = DashboardView(state, embedded=True, demo=True, control=actions.append)
+        for width, height in ((40, 16), (80, 24), (131, 64)):
+            def draw():
+                return render_to_screen(width, height, theme_for("herdr"), lambda ui: view.render(ui, data, now=data.updated))
+            draw()
+            with patch.object(view, "_content", side_effect=AssertionError("Cache was not reused")):
+                cached = draw()
+            start, pause = [hit for hit in cached.regions if hit.on_click][:2]
+            start.on_click(0, 0, "left")
+            pause.on_click(0, 0, "left")
+        self.assertEqual(["start", "pause"] * 3, actions)
+        self.assertEqual("agent-12", state.selected)
+        self.assertFalse(self.render(data=data).contains("Start [Enter]"))
 
     def test_caduceus_is_intact_above_system_without_a_separate_header(self):
         for count in (1, 2, 25):

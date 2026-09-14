@@ -114,14 +114,15 @@ class Config:
 
     def child_env(self, source: dict) -> dict:
         self.check_context(source, pane=True)
-        allowed = ("HOME", "USER", "LOGNAME", "LANG", "LC_ALL", "LC_CTYPE", "TZ", "TERM", "COLORTERM")
+        allowed = ("HOME", "USER", "LOGNAME", "LANG", "LC_ALL", "LC_CTYPE", "TZ", "TERM", "COLORTERM",
+                   "HERMES_ENABLE_PROJECT_PLUGINS")
         env = {key: source[key] for key in allowed if source.get(key)}
         env.update({key: source[key] for key in PANE_KEYS})
         env.update({
             "HERMES_HOME": str(self.profile_home), "HERDR_ENV": "1", "HERDR_BIN_PATH": str(self.herdr_bin),
             "PATH": os.pathsep.join(dict.fromkeys((str(self.herdr_bin.parent), str(self.python_bin.parent),
                                                     "/usr/bin", "/bin", "/usr/sbin", "/sbin"))),
-            "TMPDIR": "/tmp", "HERMES_ENABLE_PROJECT_PLUGINS": "0", "GATEWAY_MULTIPLEX_PROFILES": "0",
+            "TMPDIR": "/tmp", "GATEWAY_MULTIPLEX_PROFILES": "0",
             "PYTHONNOUSERSITE": "1", "PYTHONDONTWRITEBYTECODE": "1",
         })
         return env
@@ -173,8 +174,8 @@ def profile_preflight(config: Config) -> None:
                 or Path(terminal["cwd"]).resolve() != config.agent_cwd.resolve()
                 or terminal.get("auto_source_bashrc") is not False or terminal.get("shell_init_files") != []):
             raise ValueError("terminal")
-        if (data.get("plugins", {}).get("enabled") != []
-                or data.get("gateway", {}).get("multiplex_profiles") is not False
+        # Hermes owns its plugin configuration and loading policy.
+        if (data.get("gateway", {}).get("multiplex_profiles") is not False
                 or data.get("multiplex_profiles", False) is not False
                 or type(data.get("nous", {}).get("keepalive_interval_seconds")) is not int
                 or data["nous"]["keepalive_interval_seconds"] != 0
@@ -192,7 +193,7 @@ def profile_preflight(config: Config) -> None:
         # .env is for secrets. Never let it rewrite identity or turn policy switches back on.
         dotenv = private_bytes(config.profile_home / ".env").decode("utf-8-sig").replace("\r", "\n")
         forbidden = {"HERMES_HOME", "HOME", "PATH", "PYTHONPATH", "PYTHONHOME", "BASH_ENV", "ENV",
-                     "GATEWAY_MULTIPLEX_PROFILES", "GATEWAY_ALLOW_ALL_USERS", "HERMES_ENABLE_PROJECT_PLUGINS",
+                     "GATEWAY_MULTIPLEX_PROFILES", "GATEWAY_ALLOW_ALL_USERS",
                      "HERMES_YOLO_MODE", "HERMES_ACCEPT_HOOKS", "HERMES_IGNORE_USER_CONFIG", "INVOCATION_ID",
                      "HERMES_GATEWAY_LOCK_DIR",
                      "XPC_SERVICE_NAME", "LAUNCHD_SOCKET", "HERMES_DESKTOP_MANAGED", "HERMES_S6_SUPERVISED_CHILD"}
@@ -201,7 +202,11 @@ def profile_preflight(config: Config) -> None:
             if key in forbidden or key.startswith(("HERDR_", "HGH_")) or key.endswith("_ALLOW_ALL_USERS"):
                 raise ValueError("environment override")
     except (ValueError, TypeError, AttributeError, RecursionError, yaml.YAMLError, UnicodeError) as exc:
-        raise GatewayError("CONFIG_ERROR", "Profile does not meet the dedicated Gateway policy") from exc
+        # Only our fixed check names are public; parser exceptions can contain secrets.
+        checks = {"mapping", "model", "model secret", "URL credential", "terminal", "shared state",
+                  "toolsets", "disabled tools", "environment override", "Duplicate YAML key"}
+        check = str(exc) if type(exc) is ValueError and str(exc) in checks else "YAML structure"
+        raise GatewayError("CONFIG_ERROR", f"Check Profile configuration: {check}") from exc
 
 
 def installation_preflight(config: Config, *, deadline: float | None = None) -> None:

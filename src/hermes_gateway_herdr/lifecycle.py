@@ -9,6 +9,8 @@ class Limits:
     poll: float = 0.05
     rpc: float = 2
     probe: float = 5
+    recheck: float = 30
+    display_retry: float = 5
     ready_spacing: float = 1
     ready: float = 90
     r0: float = 5

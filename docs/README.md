@@ -13,14 +13,16 @@ hermes on herdr 通过 Herdr plugin，把用户显式选择的专用 trusted Her
 | 理解控制上下文缺口、M2 与消息渠道 | [为什么需要插件](../README.md#为什么需要这个插件) → [架构与信任边界](../README.md#架构与信任边界) |
 | 安装、升级、发版与版本约定 | [发布与安装](15-发布与安装.md) → [首次关联方案](16-首次安装与Profile关联.md) |
 | 准备配置、接入专用 Profile | [配置示例](../examples/README.md) → [实现及验收计划](05-实现步骤.md) → [cherry 接入记录](13-cherry接入与验证.md) |
-| 使用启动页与监控面板 | [监控面板](14-hqtui监控面板.md) |
+| 使用常驻 dashboard 和 Gateway 启停按钮 | [监控面板](14-hqtui监控面板.md) |
 | 查看状态、排查问题 | [命令契约](12-离线实现与验证.md#124-当前命令契约) → [安全与运维](07-安全与运维.md) |
 | 修改核心实现 | [系统架构](02-系统架构.md) → [生命周期](03-生命周期设计.md) → [测试与验证](06-测试与验证.md) → [质量评估](17-插件质量评估.md) |
 | 理解设计依据与剩余工作 | [决策记录](08-决策记录.md) → [源码证据](09-源码证据索引.md) → [任务清单](10-实施任务清单.md) |
 
 ## 当前验证范围
 
-Controller、supervisor、CLI、manifest、启动状态页、可选终端监控和只读 HTTP 健康面板已有实现，版本为 0.1.1；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1)。[发版回归](evidence/release-0.1.1-unittest.txt)记录 186 项离线测试；[质量评估](17-插件质量评估.md)记录行覆盖率 88.54%、分支覆盖率 81.32%。[0.1.0 发布时的 167 项记录](evidence/release-0.1.0-unittest.txt)保持为历史证据。[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14，面板资源测量见 [14](14-hqtui监控面板.md)。首次 Profile 选择向导仍是设计方案。
+0.1.2 提供 Controller、supervisor、CLI、常驻 Dashboard、独立恢复中心与只读 HTTP 健康面板；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.2)。[发版回归](evidence/release-0.1.2-unittest.txt)记录两个 Python 版本各 206 项离线测试。[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14。[质量评估](17-插件质量评估.md)的行覆盖率 88.54%、分支覆盖率 81.32% 属于 0.1.1 基线，未在本版重新测量。首次 Profile 选择向导仍是设计方案。
+
+常驻 Dashboard 提供 Gateway 启停按钮、配置受阻重试和 renderer 自动恢复；独立恢复中心提供无参数命令、原生 popup 和持久标签提示。行为及恢复矩阵见 [监控面板](14-hqtui监控面板.md)；[恢复验证](evidence/recovery-validation.txt)记录隔离原生检查、本机运行观察和此前未定位根因的偶发 FIFO CLI 超时。
 
 `v0.1.0` 的历史运行快照曾核验 cherry 官方安装、READY、唯一 Gateway 的 Herdr/plugin 归属、Discord 连接、嵌入终端监控及 HTTP 健康 200，证据见 [13.7](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动、退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证。[12](12-离线实现与验证.md) 的 84 项、[13](13-cherry接入与验证.md) 的 90 项及用户消息反馈，以及面板早期批次是各阶段的历史证据。
 
@@ -45,7 +47,7 @@ Controller、supervisor、CLI、manifest、启动状态页、可选终端监控�
 | 11 | [研究与验证记录](11-研究与验证记录.md) | 研究阶段执行过的检查及其边界 |
 | 12 | [离线实现与验证](12-离线实现与验证.md) | 当前命令契约与首轮核心测试记录 |
 | 13 | [cherry 接入与验证](13-cherry接入与验证.md) | 真实接入、READY、消息验证与待办 |
-| 14 | [hqtui 监控面板](14-hqtui监控面板.md) | 启动页、布局、快捷键、采样、PTY 测试与测量 |
+| 14 | [hqtui 监控面板](14-hqtui监控面板.md) | 常驻恢复、启停按钮、布局、采样、PTY 测试与测量 |
 | 15 | [发布与安装](15-发布与安装.md) | GitHub 分发、原生安装、SemVer、升级回滚和 Linux 兼容 |
 | 16 | [首次安装与 Profile 关联](16-首次安装与Profile关联.md) | 已有 Profile 的关联向导设计、配置差异和接管流程 |
 | 17 | [插件质量评估](17-插件质量评估.md) | ponytail 评估、异常输入回归、覆盖率与复现命令 |
@@ -86,6 +88,6 @@ Hxx/Mxx 指向源码证据，Pxx 指向类似实现，Oxx 指向官方文档。�
 | supervisor | pane 内持有 lifetime lock、监督一个 Gateway child 的前台进程 |
 | adopt / replace | 接受已核验的存活实例并修复账本 / 安全回收后创建替代实例 |
 | READY | 活身份、运行状态和期望平台满足有限就绪条件 |
-| pause / fuse | 持久禁止自动启动 / 重试或配置冲突后熔断 |
+| pause / fuse | 持久禁止 Gateway 自动启动 / child 致命退出或重试超限后熔断；dashboard 保留 |
 
 启动要求已有且配置完成的专用 Profile；终止和清理限定到已验证的进程身份。真实环境启停的授权与验收要求记录在 [cherry 接入](13-cherry接入与验证.md)。

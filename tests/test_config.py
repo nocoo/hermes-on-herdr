@@ -33,6 +33,10 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(str(self.config.profile_home), env["HERMES_HOME"])
         self.assertNotIn("/untrusted", env["PATH"])
         self.assertEqual("0", env["GATEWAY_MULTIPLEX_PROFILES"])
+        self.assertNotIn("HERMES_ENABLE_PROJECT_PLUGINS", env)
+        for value in ("0", "1"):
+            self.assertEqual(value, self.config.child_env(dict(source, HERMES_ENABLE_PROJECT_PLUGINS=value))[
+                "HERMES_ENABLE_PROJECT_PLUGINS"])
 
     def test_missing_profile_or_mismatched_runtime_does_not_create_it(self):
         raw = json.loads((self.fixture.config_dir / "config.json").read_text())
@@ -54,6 +58,21 @@ class ConfigTests(unittest.TestCase):
                 self.fixture.write_profile()
                 with self.assertRaises(GatewayError):
                     profile_preflight(self.config)
+
+    def test_plugin_configuration_and_opt_in_are_left_to_hermes(self):
+        private_file(self.fixture.profile / ".env", "HERMES_ENABLE_PROJECT_PLUGINS=1\n")
+        for plugins in (None, [], "hermes-owned-setting", {},
+                        {"enabled": ["vibe-island", "memory/custom"], "disabled": ["unused"]},
+                        {"enabled": None}, {"enabled": "future-hermes-format"}):
+            with self.subTest(plugins=plugins):
+                self.fixture.profile_data["plugins"] = plugins
+                self.fixture.write_profile()
+                before = {name: (self.fixture.profile / name).read_bytes() for name in ("config.yaml", ".env")}
+                profile_preflight(self.config)
+                self.assertEqual(before, {name: (self.fixture.profile / name).read_bytes() for name in before})
+        self.fixture.profile_data.pop("plugins")
+        self.fixture.write_profile()
+        profile_preflight(self.config)
 
     def test_model_key_can_reference_a_profile_environment_secret_without_resolving_it(self):
         self.fixture.profile_data["model"]["api_key"] = "${HERMES_CUSTOM_TEST_API_KEY}"
@@ -119,7 +138,7 @@ class ConfigTests(unittest.TestCase):
 
     def test_malformed_policy_sections_fail_closed(self):
         original = copy.deepcopy(self.fixture.profile_data)
-        for key in ("model", "terminal", "plugins", "gateway", "nous", "platform_toolsets", "agent"):
+        for key in ("model", "terminal", "gateway", "nous", "platform_toolsets", "agent"):
             for value in (None, [], "fixture-private-sentinel"):
                 with self.subTest(key=key, value=value):
                     self.fixture.profile_data = dict(original, **{key: value})

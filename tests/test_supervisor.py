@@ -101,6 +101,17 @@ class SupervisorTests(unittest.TestCase):
     def wait_child(self):
         return wait_until(lambda: self.store.read("runtime.json") and self.store.read("runtime.json").get("gateway"))
 
+    def wait_idle(self, state="PAUSED"):
+        runtime = wait_until(lambda: (r := self.store.read("runtime.json")) and r["state"] == state and not r["gateway"] and r)
+        self.assertIsNone(self.process.poll())
+        self.assertTrue(self.store.lifetime_held())
+        return runtime
+
+    def shutdown(self):
+        signal_verified(self.record, signal.SIGTERM)
+        self.assertEqual(0, self.process.wait(timeout=3))
+        self.assertFalse(self.store.lifetime_held())
+
     def action(self, action, *, send=True):
         with self.store.mutation():
             intent = self.store.set_intent(action)
@@ -119,9 +130,9 @@ class SupervisorTests(unittest.TestCase):
         wait_until(lambda: (self.fixture.root / "gateway-up").exists())
         self.assertTrue(same_process(child))
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=3))
+        self.wait_idle()
         self.assertFalse(same_process(child))
-        self.assertFalse(self.store.lifetime_held())
+        self.shutdown()
         events = json_lines(self.config.state_dir / "logs" / "events.jsonl")
         self.assertTrue(any(e["event"] == "dashboard_unavailable" and e["stage"] == stage for e in events))
         self.assertFalse(any(e["event"] == "supervisor_error" for e in events))
@@ -135,36 +146,43 @@ class SupervisorTests(unittest.TestCase):
     def test_display_cleanup_failure_does_not_leak_gateway_or_lifetime_lock(self):
         self.display_failure("close")
 
-    def test_embedded_q_keeps_gateway_running_and_ctrl_c_durably_pauses(self):
+    def test_embedded_dashboard_stays_open_after_q_and_pause_and_enter_restarts_in_place(self):
         terminal = Terminal()
         self.addCleanup(terminal.close)
         self.start(terminal=terminal)
         child = self.wait_child()
         wait_until(lambda: terminal.contains("HERDR MANAGED"))
         wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
-        wait_until(lambda: terminal.contains("Open the monitoring dashboard?"))
-        self.assertFalse(terminal.contains("SYSTEM"))
-        terminal.send(b"\r")
         wait_until(lambda: terminal.contains("SYSTEM"))
-        with terminal.lock:
-            terminal.output = b""
-        terminal.send(b"q")
-        wait_until(lambda: terminal.contains("Open the monitoring dashboard?"))
+        self.assertFalse(terminal.contains("Open the monitoring dashboard?"))
+        revision = self.store.intent()["revision"]
+        terminal.send(b"q\r")
+        time.sleep(0.2)
         self.assertTrue(same_process(child))
         self.assertEqual("READY", self.status()["state"])
-        self.assertEqual("running", self.store.intent()["desired"])
+        self.assertEqual(revision, self.store.intent()["revision"])
         terminal.send(b"\x03")
-        wait_until(lambda: terminal.read() is not None and self.process.poll() is not None)
-        self.assertEqual(0, self.process.returncode)
+        paused = self.wait_idle()
         self.assertEqual("paused", self.store.intent()["desired"])
         self.assertEqual("supervisor_interrupt", self.store.intent()["reason"])
         self.assertFalse(same_process(child))
+        self.assertFalse(terminal.restored())
+        wait_until(lambda: terminal.contains("PAUSED"))
+        terminal.send(b"\r")
+        replacement = self.wait_child()
+        self.assertNotEqual(child["pid"], replacement["pid"])
+        self.assertEqual(paused["pane"], self.store.read("runtime.json")["pane"])
+        self.assertEqual(paused["supervisor"], self.store.read("runtime.json")["supervisor"])
+        wait_until(lambda: self.status()["state"] == "READY")
+        self.assertEqual("dashboard_start", self.store.intent()["reason"])
+        self.assert_single()
+        self.shutdown()
         self.assertTrue(terminal.restored())
 
-    def test_renderer_crash_leaves_supervision_healthy_and_does_not_get_tracked_as_a_gateway_task(self):
+    def test_renderer_crash_recovers_in_the_same_pane_without_restarting_gateway(self):
         terminal = Terminal()
         self.addCleanup(terminal.close)
-        self.start(terminal=terminal)
+        self.start({"limits": {"display_retry": 0.2}}, terminal=terminal)
         child = self.wait_child()
         wait_until(lambda: terminal.contains("HERDR MANAGED"))
         wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "READY")
@@ -174,12 +192,18 @@ class SupervisorTests(unittest.TestCase):
         renderer = capture(renderers[0].pid)
         self.assertNotIn(renderer["pid"], [p["pid"] for p in self.store.read("runtime.json")["descendants"]])
         signal_verified(renderer, signal.SIGKILL)
-        wait_until(lambda: terminal.contains("Dashboard unavailable"))
+        wait_until(lambda: terminal.contains("Dashboard 未就绪"))
+        with terminal.lock:
+            terminal.output = b""
+        wait_until(lambda: terminal.contains("HERDR MANAGED"))
         self.assertTrue(same_process(child))
+        self.assertFalse(same_process(renderer))
+        self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
         self.assertEqual("READY", self.status()["state"])
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=3))
+        self.wait_idle()
         self.assertFalse(same_process(child))
+        self.shutdown()
         self.assertTrue(terminal.restored())
 
     def test_blocked_renderer_output_cannot_delay_pause_or_terminal_cleanup(self):
@@ -194,28 +218,38 @@ class SupervisorTests(unittest.TestCase):
         # The PTY master is deliberately not drained during the stop.
         before = time.monotonic()
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=3))
+        self.wait_idle()
         self.assertLess(time.monotonic() - before, 2)
         self.assertFalse(same_process(child))
-        self.assertFalse(self.store.lifetime_held())
+        self.shutdown()
         self.assertTrue(terminal.restored())
 
     def test_75_restarts_child_and_clean_zero_latches_pause(self):
         self.start({"exits": [75, 75, 0]})
-        self.assertEqual(0, self.process.wait(timeout=5))
+        self.wait_idle()
         self.assertEqual(3, len(json_lines(self.fixture.root / "launches.jsonl")))
         self.assertEqual("paused", self.store.intent()["desired"])
         self.assertEqual("observed_clean_exit", self.store.intent()["reason"])
         self.assertEqual(self.record["pid"], self.store.read("runtime.json")["supervisor"]["pid"])
-        self.assertFalse(self.store.lifetime_held())
         self.assert_single()
 
-    def test_fatal_exit_fuses_without_retry(self):
-        self.start({"exits": [78]})
-        self.assertEqual(0, self.process.wait(timeout=5))
+    def test_fatal_exit_keeps_dashboard_available_and_enter_resets_fuse(self):
+        terminal = Terminal()
+        self.addCleanup(terminal.close)
+        self.start({"exits": [78, None]}, terminal=terminal)
+        fused = self.wait_idle("FUSED")
         self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
         self.assertTrue(self.store.read("fuse.json")["fused"])
         self.assertEqual("EXIT_78", self.store.read("fuse.json")["reason"])
+        wait_until(lambda: terminal.contains("Start [Enter]") and terminal.contains("FUSED"))
+        terminal.send(b"\r")
+        self.wait_child()
+        wait_until(lambda: self.status()["state"] == "READY")
+        self.assertFalse(self.status()["fused"])
+        self.assertEqual(fused["supervisor"], self.store.read("runtime.json")["supervisor"])
+        self.assertEqual(fused["pane"], self.store.read("runtime.json")["pane"])
+        self.assertEqual(2, len(json_lines(self.fixture.root / "launches.jsonl")))
+        self.assert_single()
 
     def test_restart_ack_replay_sends_one_usr1_and_keeps_supervisor(self):
         self.start()
@@ -232,7 +266,7 @@ class SupervisorTests(unittest.TestCase):
         self.assertIsNone(self.process.poll())
         self.assert_single()
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=5))
+        self.wait_idle()
 
     def test_pause_without_socket_delivery_stops_gateway_and_detached_task(self):
         self.start({"task": True, "ignore_term": True, "task_ignore_term": True})
@@ -241,10 +275,9 @@ class SupervisorTests(unittest.TestCase):
                           if (self.fixture.root / "task.json").exists() else None)
         self.assertNotEqual(child["sid"], task["sid"])
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=5))
+        self.wait_idle()
         self.assertFalse(same_process(child))
         self.assertFalse(same_process(task))
-        self.assertFalse(self.store.lifetime_held())
         self.assertEqual("paused", self.store.intent()["desired"])
 
     def test_slow_peers_and_output_flood_do_not_block_pause(self):
@@ -258,8 +291,7 @@ class SupervisorTests(unittest.TestCase):
         before = time.monotonic()
         # The child may exit before a socket ACK; the durable intent remains the acceptance record.
         self.action("pause", send=False)
-        result = self.process.wait(timeout=3)
-        self.assertEqual(0, result, json_lines(self.config.state_dir / "logs" / "events.jsonl"))
+        self.wait_idle()
         self.assertLess(time.monotonic() - before, 2)
         self.assertFalse(same_process(child))
         events = self.config.state_dir / "logs" / "events.jsonl"
@@ -277,6 +309,8 @@ class SupervisorTests(unittest.TestCase):
         self.terminal_id = "terminal-after-handoff"
         wait_until(lambda: self.store.read("runtime.json")["pane"]["terminal_id"] == self.terminal_id)
         self.assertTrue(same_process(child))
+        self.action("pause", send=False)
+        self.wait_idle()
         self.enabled = False
         self.assertEqual(0, self.process.wait(timeout=5))
         self.assertEqual("paused", self.store.intent()["desired"])
@@ -304,7 +338,7 @@ class SupervisorTests(unittest.TestCase):
             self.assertFalse(response["ok"])
         self.assertEqual("running", self.store.intent()["desired"])
         signal_verified(self.record, signal.SIGINT)
-        self.assertEqual(0, self.process.wait(timeout=5))
+        self.wait_idle()
         self.assertEqual("supervisor_interrupt", self.store.intent()["reason"])
 
     def test_malformed_control_fields_cannot_terminate_the_owned_gateway(self):
@@ -329,7 +363,7 @@ class SupervisorTests(unittest.TestCase):
         self.assertEqual(child["pid"], self.status()["gateway"]["pid"])
         self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=5))
+        self.wait_idle()
         self.assertFalse(same_process(child))
 
     def test_pause_works_with_corrupted_profile_yaml(self):
@@ -337,8 +371,58 @@ class SupervisorTests(unittest.TestCase):
         child = self.wait_child()
         private_file(self.config.profile_home / "config.yaml", "model: [broken")
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=5))
+        self.wait_idle()
         self.assertFalse(same_process(child))
+
+    def test_pause_cancels_pending_configuration_retry_and_monitor_stays_usable(self):
+        terminal = Terminal()
+        self.addCleanup(terminal.close)
+        private_file(self.config.profile_home / "config.yaml", "model: [broken")
+        self.start(terminal=terminal)
+        wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "BLOCKED")
+        wait_until(lambda: terminal.contains("Check Profile configuration"))
+        self.assertIsNone(self.process.poll())
+        self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
+        self.action("pause", send=False)
+        self.wait_idle()
+        self.fixture.write_profile()
+        time.sleep(0.3)
+        self.assertEqual("paused", self.store.intent()["desired"])
+        self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
+        self.assertFalse(terminal.restored())
+        self.shutdown()
+        self.assertTrue(terminal.restored())
+
+    def test_start_rechecks_configuration_after_a_pre_pause_inspection_finishes_late(self):
+        self.start({"hold_first_check": True})
+        wait_until(lambda: (self.fixture.root / "check-complete").exists())
+        self.action("pause", send=False)
+        self.wait_idle()
+        private_file(self.config.profile_home / "config.yaml", "model: [broken")
+        self.action("resume", send=False)
+        private_file(self.fixture.root / "check-release", "1")
+        wait_until(lambda: self.status()["state"] == "BLOCKED")
+        self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
+        self.fixture.write_profile()
+        self.wait_child()
+        wait_until(lambda: self.status()["state"] == "READY")
+        self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
+
+    def test_spawn_failure_keeps_dashboard_and_enter_retries_before_the_automatic_deadline(self):
+        terminal = Terminal()
+        self.addCleanup(terminal.close)
+        self.start({"fail_first_spawn": True, "limits": {"recheck": 30}}, terminal=terminal)
+        wait_until(lambda: (self.store.read("runtime.json") or {}).get("state") == "BLOCKED")
+        blocked = self.status()
+        self.assertEqual("SPAWN_FAILED", blocked["code"])
+        self.assertFalse(blocked["fused"])
+        wait_until(lambda: terminal.contains("Start [Enter]"))
+        terminal.send(b"\r")
+        self.wait_child()
+        wait_until(lambda: self.status()["state"] == "READY")
+        self.assertEqual(blocked["supervisor"], self.status()["supervisor"])
+        self.assertEqual(blocked["pane"], self.status()["pane"])
+        self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
 
     def test_resume_during_stop_waits_for_old_child_then_starts_once(self):
         self.start({"ignore_term": True})
@@ -352,7 +436,7 @@ class SupervisorTests(unittest.TestCase):
         self.assert_single()
         self.assertEqual("running", self.store.intent()["desired"])
         self.action("pause", send=False)
-        self.assertEqual(0, self.process.wait(timeout=5))
+        self.wait_idle()
 
     def test_fresh_socket_observations_reach_ready_and_lifetime_excludes_second_supervisor(self):
         self.start()
@@ -371,7 +455,7 @@ class SupervisorTests(unittest.TestCase):
         # Keep this crash-budget check independent of the fixture's very short
         # owner-loss deadlines; dedicated tests exercise owner expiry separately.
         self.start({"exits": [1], "exit_after": 0.02, "limits": {"rpc": 1, "owner_grace": 3}})
-        self.assertEqual(0, self.process.wait(timeout=5))
+        self.wait_idle("FUSED")
         self.assertEqual(6, len(json_lines(self.fixture.root / "launches.jsonl")))
         self.assertEqual("CRASH_LOOP", self.store.read("fuse.json")["reason"], self.store.read("runtime.json"))
         self.assert_single()

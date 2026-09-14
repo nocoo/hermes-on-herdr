@@ -1,0 +1,32 @@
+2026-09-14 / recovery validation
+
+Python 3.11 and Python 3.14:
+  python -I -B tests/run.py
+
+Python 311:
+----------------------------------------------------------------------
+Ran 206 tests in 66.326s
+
+OK
+Full output: /tmp/hermes-on-herdr-recovery-verified-python311.txt
+
+Python 314:
+----------------------------------------------------------------------
+Ran 206 tests in 69.227s
+
+OK
+Full output: /tmp/hermes-on-herdr-recovery-verified-python314.txt
+
+Native Herdr 0.9.0:
+  Isolated server, native TUI and cold restore: PASS
+  See recovery-native.txt for scope and the captured fallback view.
+
+Installed cherry:
+  hermes-on-herdr (no config/socket/Profile arguments): PASS
+  Recovery & Repair action registered: PASS
+  Recovery tab/pane labels saved in Herdr session.json: PASS
+  Gateway READY; supervisor PID 24128 and Gateway PID 24137 unchanged; intent revision 5 unchanged.
+  No restart of the user server, no Gateway restart, no platform messages sent.
+
+The earlier intermittent FIFO launcher timeout did not reproduce in these two runs;
+this is not a claim that its previously unknown root cause was fixed.

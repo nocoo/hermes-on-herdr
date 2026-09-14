@@ -26,7 +26,7 @@ def boot_fingerprint() -> str:
     return f"{sys.platform}:{psutil.boot_time():.6f}"
 
 
-def capture(pid: int) -> dict | None:
+def capture(pid: int, *, details: bool = True) -> dict | None:
     if type(pid) is not int or pid <= 0:
         raise GatewayError("INVALID_IDENTITY", "Invalid process id")
     try:
@@ -39,12 +39,14 @@ def capture(pid: int) -> dict | None:
             if sys.platform.startswith("linux"):
                 raw = Path(f"/proc/{pid}/stat").read_text()
                 kind, value = "linux_ticks", raw.rsplit(")", 1)[1].split()[19]
-            return {
+            record = {
                 "pid": pid, "uid": proc.uids().real, "ppid": proc.ppid(),
                 "start_fingerprint": {"kind": kind, "boot": boot_fingerprint(), "value": value},
                 "create_time": created, "sid": os.getsid(pid),
-                "exe": str(Path(proc.exe()).resolve()), "argv": proc.cmdline(),
             }
+            if details:
+                record.update(exe=str(Path(proc.exe()).resolve()), argv=proc.cmdline())
+            return record
     except (psutil.NoSuchProcess, ProcessLookupError, FileNotFoundError):
         return None
     except (psutil.AccessDenied, PermissionError) as exc:
@@ -71,7 +73,7 @@ def same_process(expected: dict, actual: dict | None = None) -> bool:
     if not isinstance(expected, dict) or not {"pid", "uid", "start_fingerprint"} <= expected.keys():
         raise GatewayError("INVALID_IDENTITY", "Incomplete process fingerprint")
     if actual is None:
-        actual = capture(expected["pid"])
+        actual = capture(expected["pid"], details=False)
     return actual is not None and all(actual.get(key) == expected.get(key)
                                       for key in ("pid", "uid", "start_fingerprint"))
 
@@ -88,7 +90,7 @@ def hermes_start_matches(record: dict, start_time: object) -> bool:
 
 
 def signal_verified(expected: dict, signum: int) -> bool:
-    actual = capture(expected["pid"])
+    actual = capture(expected["pid"], details=False)
     if actual is None:
         return False
     if not same_process(expected, actual) or actual["uid"] != os.getuid():
@@ -123,7 +125,7 @@ def descendants(parent: dict) -> list[dict]:
         return []
     try:
         children = psutil.Process(parent["pid"]).children(recursive=True)
-        candidates = [record for proc in children if (record := capture(proc.pid)) is not None]
+        candidates = [record for proc in children if (record := capture(proc.pid, details=False)) is not None]
         if not same_process(parent):
             return []
         # children() is only a snapshot of PIDs. Reused PIDs must still have a

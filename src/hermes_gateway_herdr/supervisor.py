@@ -53,6 +53,7 @@ class Supervisor:
         self.owner_lost = self.ready_since = None
         self.outcome = 0
         self.display = None
+        self.next_display = 0
 
     def _validate_ticket(self):
         self.config.check_binding(self.store.read("binding.json", required=True))
@@ -60,8 +61,7 @@ class Supervisor:
         pending = self.store.read("pending.json", required=True)
         if (pending["owner_key"] != self.config.key or pending["generation"] != self.generation
                 or pending.get("phase") not in {"pane_requested", "pane_known"}
-                or pending.get("intent_revision") != intent["revision"] or intent["desired"] != "running"
-                or effective_budget(intent, self.store.read("fuse.json"))["fused"]):
+                or pending.get("intent_revision") != intent["revision"]):
             raise GatewayError("STALE_REQUEST", "Pane launch ticket has been revoked")
         return intent
 
@@ -161,6 +161,8 @@ class Supervisor:
             "applied_revision": self.runtime["applied_revision"], "fused": budget["fused"],
             "reason": budget.get("reason"), "last_exit": self.runtime.get("last_exit"),
             "last_probe": self.runtime.get("last_probe"), "recovery": "next_owner_event",
+            "code": self.runtime.get("last_error"), "message": self.runtime.get("last_message"),
+            "retry_at": self.runtime.get("retry_at"),
             "dropped_log_chunks": self.log.dropped if self.log else 0,
         }
 
@@ -262,33 +264,42 @@ class Supervisor:
             if time.monotonic() >= state["deadline"]:
                 self._close_client(connection)
 
-    def _inspect(self, child, pane):
-        result = {"child": child, "owner": False}
+    def _inspect(self, child, pane, start_revision):
+        result = {"child": child, "owner": False, "start_revision": start_revision}
         try:
             self.herdr.deadline = time.monotonic() + self.limits.rpc
             self.herdr.available()
             if not self.herdr.enabled():
                 raise GatewayError("DISABLED")
             result.update(owner=True, pane=self.herdr.membership(pane, self.identity))
-            if child is None:
+            if child is None and start_revision is not None:
                 self.check(self.config)
                 if profile_in_use(self.config, timeout=self.limits.rpc):
                     raise GatewayError("OWNERSHIP_CONFLICT")
-            else:
+            elif child is not None:
                 result["probe"] = self.probe.inspect(child)
         except GatewayError as exc:
             result["error"] = exc.code
+            result["message"] = str(exc)
         except Exception:
             result["error"] = "INSPECTION_FAILED"
         self.results.put(result)
 
-    def _schedule_inspection(self, now):
+    def _schedule_inspection(self, now, intent, budget):
         if self.worker is not None or self.termination or self.shutdown or now < max(self.next_probe, self.retry_at):
             return
         child = self.child_identity
-        self.worker = threading.Thread(target=self._inspect, args=(child, dict(self.runtime["pane"])),
+        start_revision = intent["revision"] if intent["desired"] == "running" and not budget["fused"] else None
+        self.worker = threading.Thread(target=self._inspect, args=(child, dict(self.runtime["pane"]), start_revision),
                                        daemon=True, name="gateway-probe")
         self.worker.start()
+
+    def _blocked(self, code, message, now):
+        self.next_probe = now + self.limits.recheck
+        if self.runtime.get("last_error") != code or self.runtime["state"] != "BLOCKED":
+            self.log.event("startup_blocked", generation=self.generation, code=code)
+        self._save(state="BLOCKED", last_error=code, last_message=message,
+                   retry_at=time.time() + self.limits.recheck)
 
     def _collect_inspection(self, now):
         try:
@@ -313,12 +324,26 @@ class Supervisor:
                 self.shutdown = True
             return
         self.owner_lost = None
-        if error and self.child is None:
-            self._fuse(error)
-            return
-        self.runtime["pane"] = result["pane"]
+        if self.runtime["pane"] != result["pane"]:
+            self._save(pane=result["pane"])
         if self.child is None:
-            self._spawn()
+            intent = self.store.intent()
+            budget = effective_budget(intent, self.store.read("fuse.json"))
+            if intent["desired"] != "running" or budget["fused"]:
+                return
+            # An inspection begun before Pause / Start cannot authorize a new child.
+            if result["start_revision"] != intent["revision"]:
+                self.next_probe = 0
+                return
+            if error:
+                self._blocked(error, result.get("message", error), now)
+                return
+            try:
+                self._spawn(result["start_revision"])
+            except GatewayError as exc:
+                if self.child is not None or self.runtime.get("spawn_pending"):
+                    raise
+                self._blocked(exc.code, str(exc), now)
         else:
             probe = result.get("probe", {"level": 0, "state": "DEGRADED", "operational": False})
             if error:
@@ -335,10 +360,13 @@ class Supervisor:
                     self.store.write("fuse.json", budget)
                 self.ready_since = now
 
-    def _spawn(self):
+    def _spawn(self, revision):
         with self.store.mutation():
             intent = self.store.intent()
             budget = effective_budget(intent, self.store.read("fuse.json"))
+            if intent["revision"] != revision:
+                self.next_probe = 0
+                return
             if intent["desired"] != "running" or budget["fused"] or self.shutdown:
                 return
             current = self.store.read("runtime.json", required=True)
@@ -354,9 +382,7 @@ class Supervisor:
                                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=self.config.agent_cwd,
                                          env=self.config.child_env(self.env), close_fds=True, start_new_session=False, umask=0o077)
             except OSError as exc:
-                self.runtime.update(spawn_pending=False, state="FUSED")
-                budget.update(fused=True, reason="SPAWN_FAILED", updated_at=time.time())
-                self.store.write("fuse.json", budget)
+                self.runtime.update(spawn_pending=False)
                 self._persist()
                 raise GatewayError("SPAWN_FAILED") from exc
             self.child_identity = capture(self.child.pid)
@@ -369,7 +395,8 @@ class Supervisor:
             self.spawned_at = time.monotonic()
             self.exit_code = None
             self.runtime.update(gateway=self.child_identity, descendants=[], applied_revision=intent["revision"],
-                                state="STARTING", last_probe=None, retry_at=None, spawn_pending=False)
+                                state="STARTING", last_probe=None, retry_at=None, spawn_pending=False,
+                                last_error=None, last_message=None)
             self._persist()
         for stream in (self.child.stdout, self.child.stderr):
             os.set_blocking(stream.fileno(), False)
@@ -431,15 +458,6 @@ class Supervisor:
                                     deadline=now + (self.limits.stop if stage == "drain" else self.limits.kill))
             self.log.event("forced_termination", generation=self.generation, stage=self.termination["stage"])
             self._signal_all(signal.SIGTERM if stage == "drain" else signal.SIGKILL)
-
-    def _fuse(self, reason):
-        with self.store.mutation():
-            budget = effective_budget(self.store.intent(), self.store.read("fuse.json"))
-            budget.update(fused=True, reason=reason, updated_at=time.time())
-            self.store.write("fuse.json", budget)
-            self.runtime.update(state="FUSED")
-            self._persist()
-        self.log.event("fused", generation=self.generation, code=reason)
 
     def _finish_exit(self, now):
         code = self.exit_code
@@ -512,11 +530,25 @@ class Supervisor:
                 else:
                     self._finish_exit(now)
             self._advance_termination(now)
-        elif self.shutdown or intent["desired"] == "paused" or budget["fused"]:
-            self._save(state="FUSED" if budget["fused"] else "PAUSED" if intent["desired"] == "paused" else "ABSENT")
-            return False
+        if self.child is None:
+            intent = self.store.intent()
+            budget = effective_budget(intent, self.store.read("fuse.json"))
+            if self.shutdown:
+                self._save(state="FUSED" if budget["fused"] else "PAUSED" if intent["desired"] == "paused" else "ABSENT")
+                return False
+            if intent["desired"] == "paused" or budget["fused"]:
+                state = "UNKNOWN" if self.owner_lost is not None else "PAUSED" if intent["desired"] == "paused" else "FUSED"
+                if self.runtime["state"] != state or self.runtime["applied_revision"] != intent["revision"]:
+                    self.next_probe = 0
+                    self._save(state=state, applied_revision=intent["revision"], retry_at=None,
+                               last_error=None, last_message=None)
+                # Keep checking the owner while the dashboard waits for Start.
+                self.retry_at = 0
+            elif self.runtime["applied_revision"] != intent["revision"]:
+                self.next_probe = self.retry_at = 0
+                self._save(state="STARTING", applied_revision=intent["revision"], retry_at=None)
         self._collect_inspection(now)
-        self._schedule_inspection(now)
+        self._schedule_inspection(now, intent, budget)
         return True
 
     def _emergency_cleanup(self):
@@ -543,11 +575,23 @@ class Supervisor:
     def _update_display(self, action):
         # A best-effort view must never enter the supervisor's emergency cleanup path.
         try:
+            if action == "poll" and (self.display is None or getattr(self.display, "closed", False)):
+                if time.monotonic() < self.next_display:
+                    return
+                action = "start"
             if action == "start":
+                self.next_display = time.monotonic() + self.limits.display_retry
                 self.display = Display.start(self.config, self.env)
             elif self.display is not None:
-                if getattr(self.display, action)() and self.signal_received is None:
+                request = getattr(self.display, action)()
+                if request == "start":
+                    with self.store.mutation():
+                        if self.child is None or self.store.intent()["desired"] != "running":
+                            self.store.set_intent("start", reason="dashboard_start")
+                elif request == "pause" and self.signal_received is None:
                     self.signal_received = signal.SIGINT
+                if action == "poll" and getattr(self.display, "closed", False):
+                    self.next_display = time.monotonic() + self.limits.display_retry
         except Exception:
             with suppress(Exception):
                 if self.display is not None and action != "close":
@@ -567,7 +611,7 @@ class Supervisor:
             budget = effective_budget(self.store.intent(), self.store.read("fuse.json"))
             self.retry_at = time.monotonic() + min(self.limits.backoff[-1], max(0, budget.get("retry_not_before", 0) - time.time()))
             while self._tick():
-                self._io(self.limits.poll)
+                self._io(self.limits.poll if self.child else max(self.limits.poll, 0.2))
         except Exception as exc:
             self.outcome = exc.exit_code if isinstance(exc, GatewayError) else 30
             if self.log:

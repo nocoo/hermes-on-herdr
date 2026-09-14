@@ -93,7 +93,7 @@ def state_of(profile, now, interval, count):
 def state_color(state, theme):
     if state in {"READY", "RUNNING", "SHARED"}:
         return theme.success
-    if state in {"UNKNOWN", "STALE", "DEGRADED", "FUSED", "ORPHAN"}:
+    if state in {"UNKNOWN", "STALE", "DEGRADED", "FUSED", "ORPHAN", "BLOCKED"}:
         return theme.warning if state != "FUSED" else theme.danger
     return theme.muted if state in {"STOPPED", "PAUSED", "ABSENT", "DISABLED"} else theme.info
 
@@ -106,12 +106,10 @@ class ViewState:
     system: bool = True
     interval: int = 2
     animation: bool = True
-    auto_open: bool = False
     filter: str = ""
     filtering: bool = False
     help: bool = False
-    startup: bool = False
-    preference_error: str = ""
+    notice: str = ""
 
     def rows(self, snapshot):
         return [p for p in snapshot.profiles if self.filter.lower() in p.name.lower()]
@@ -123,12 +121,6 @@ class ViewState:
             self.selected = rows[max(0, min(len(rows) - 1, index + delta))].name
 
     def key(self, event, snapshot):
-        if self.startup:
-            if event.name == "space":
-                self.auto_open = not self.auto_open
-            elif event.name in {"enter", "m"}:
-                self.startup = False
-            return
         if self.filtering:
             if event.name in {"enter", "escape"}:
                 self.filtering = False
@@ -160,18 +152,17 @@ class ViewState:
             self.filter, self.help = "", False
         elif event.name in {"?", "f1"}:
             self.help = not self.help
-        elif event.name == "b":
-            self.startup, self.help = True, False
 
 
 class DashboardView:
-    def __init__(self, state, *, session="default", embedded=False, demo=False):
+    def __init__(self, state, *, session="default", embedded=False, demo=False, control=None):
         self.state, self.session, self.embedded, self.demo = state, text(session, 80), embedded, demo
         self._cache = None
         self._art_rect = None
+        self.control = control or (lambda action: None)
 
     def has_mascot(self, width, height):
-        return width >= 100 and height >= 34 and not self.state.help and not self.state.startup
+        return width >= 100 and height >= 34 and not self.state.help
 
     def _mascot(self, surface, pose):
         theme = surface.theme
@@ -225,11 +216,12 @@ class DashboardView:
         if snapshot.error:
             ui.text(f" Monitoring unavailable: {text(snapshot.error)}", w.TextStyle(fg=theme.warning), Layout(size=1))
             height -= 1
-        if state.startup:
-            self._startup(ui, owned)
-            return
+        if state.notice:
+            ui.text(text(state.notice), w.TextStyle(fg=theme.warning), Layout(size=1))
+            height -= 1
         if height < 10 or width < 36:
             ui.text(f"{text(owned.name)} [HERDR] {self._status(owned)}")
+            self._controls(ui)
             ui.label(f"{count} profiles / expand pane for details")
             ui.label(f"v{__version__}")
             return
@@ -291,52 +283,14 @@ class DashboardView:
         ui.spacer(1)
         self._footer(ui)
 
-    def _startup(self, ui, profile):
-        state, status = self.state, self._status(profile)
-        messages = {"READY": "Gateway started successfully.", "RUNNING": "Checking Gateway connections...",
-                    "STARTING": "Gateway is starting...", "SCANNING": "Checking Gateway startup...",
-                    "PENDING": "Waiting for Gateway startup...", "DEGRADED": "A Gateway connection needs attention.",
-                    "BACKOFF": "Waiting to retry Gateway startup.", "FUSED": "Startup stopped after repeated failures.",
-                    "PAUSED": "Gateway is paused.", "DRAINING": "Gateway is stopping...",
-                    "STOPPED": "Gateway is not running.", "ABSENT": "Gateway is not running."}
-        def content(p):
-            p.text(f"{text(profile.name, 32)} / HERDR MANAGED", w.TextStyle(fg=p.theme.accent, bold=True))
-            p.text("Gateway " + status, w.TextStyle(fg=state_color(status, p.theme), bold=True))
-            if p.height >= 9:
-                p.label(messages.get(status, "Gateway status is not confirmed."))
-                if profile.error:
-                    p.text(text(profile.error), w.TextStyle(fg=p.theme.warning))
-                elif profile.pid:
-                    p.label(f"PID {profile.pid} / seen {max(0, int(self._now - profile.observed))}s ago")
-                else:
-                    p.spacer(1)
-                p.spacer(1)
-            if p.height >= 7:
-                p.text("Open the monitoring dashboard?" if p.width >= 32 else "Open monitor?", w.TextStyle(fg=p.theme.title))
-            p.button(w.ButtonOptions(label="Open monitor [Enter]" if p.width >= 24 else "Open [Enter]", color=p.theme.accent),
-                     lambda: setattr(state, "startup", False))
-            p.checkbox(w.CheckboxOptions(label="Always open on startup [Space]" if p.width >= 36 else "Auto-open [Space]",
-                                         checked=state.auto_open, color=p.theme.accent),
-                       lambda: setattr(state, "auto_open", not state.auto_open))
-            if p.height >= 11:
-                p.label("Leave unchecked to keep this status page.")
-            if state.preference_error:
-                p.text(state.preference_error, w.TextStyle(fg=p.theme.warning))
-
-        ui.spacer()
-        def centered(r):
-            r.spacer()
-            r.panel(Panel(title=" hermes on herdr ", subtitle=" DEMO " if self.demo else "",
-                          footer=f" v{__version__} ",
-                          size=min(70, ui.width - 2), border_color=ui.theme.accent, background=ui.theme.surface), content)
-            r.spacer()
-        ui.row(Layout(size=min(14, max(6, ui.height - 2))), centered)
-        ui.spacer()
-        items = [w.StatusItem("Open", "Enter")]
-        if ui.width >= 60:
-            items += [w.StatusItem("Auto-open", "Space")]
-        items += [w.StatusItem("Pause", "^C")] if self.embedded else [w.StatusItem("Quit", "q")]
-        ui.status_bar(w.StatusBarOptions(items=items))
+    def _controls(self, ui):
+        if not self.embedded:
+            return
+        def buttons(row):
+            row.button(w.ButtonOptions(label="Start [Enter]", color=ui.theme.success), lambda: self.control("start"))
+            if ui.width >= 30:
+                row.button(w.ButtonOptions(label="Pause", color=ui.theme.warning), lambda: self.control("pause"))
+        ui.row(Layout(size=1, gap=1), buttons)
 
     def _status(self, profile):
         return state_of(profile, self._now, self.state.interval, self._count)
@@ -348,9 +302,9 @@ class DashboardView:
                        border_color=theme.accent if profile.managed else theme.border,
                        title_color=theme.accent if profile.managed else theme.title,
                        subtitle_color=theme.accent, background=theme.surface),
-                 lambda p: self._profile_content(p, profile, graphs=True))
+                 lambda p: self._profile_content(p, profile, graphs=True, controls=hero))
 
-    def _profile_content(self, p, profile, *, graphs=False):
+    def _profile_content(self, p, profile, *, graphs=False, controls=False):
         theme, status = p.theme, self._status(profile)
         usable = status not in {"STALE", "UNKNOWN", "SCANNING"}
         cpu, rss, active = (profile.cpu, profile.rss, profile.active) if usable else (None, None, None)
@@ -361,6 +315,8 @@ class DashboardView:
             age = f"seen {max(0, int(self._now - profile.observed))}s ago" if profile.observed else "pending sample"
             r.text(age, w.TextStyle(fg=theme.muted, align="right"), Layout(size=18))
         p.row(Layout(size=1), headline)
+        if controls:
+            self._controls(p)
         links = "  /  ".join(f"{name} {value}" for name, value in profile.platforms) if usable else "Connection status unavailable"
         if profile.shared_from:
             links = f"Shared Gateway via {profile.shared_from}; metrics belong to that process"
@@ -373,6 +329,8 @@ class DashboardView:
                w.TextStyle(fg=theme.foreground, bold=True))
         if profile.error:
             p.text(text(profile.error), w.TextStyle(fg=theme.warning))
+        if status == "BLOCKED":
+            p.label("Auto retry every 30s / Enter retries now")
         if graphs and p.height >= 10:
             p.spacer(1)
             def plots(r):
@@ -475,11 +433,11 @@ class DashboardView:
         p.label("Metadata only / message contents stay private")
 
     def _footer(self, ui):
-        items = [w.StatusItem("Help", "?"), w.StatusItem("Status" if self.embedded else "Quit", "q")]
+        items = [w.StatusItem("Help", "?"), w.StatusItem("Start", "Enter") if self.embedded else w.StatusItem("Quit", "q")]
         if ui.width >= 60:
             items += [w.StatusItem("Layout", "l"), w.StatusItem("Theme", "t")]
         if ui.width >= 100:
-            items += [w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/"), w.StatusItem("Startup", "b")]
+            items += [w.StatusItem("Select", "j/k"), w.StatusItem("Filter", "/")]
         if ui.width >= 120:
             items += [w.StatusItem("Motion " + ("on" if self.state.animation else "off"), "a")]
         if ui.width >= 150:
@@ -502,8 +460,7 @@ class DashboardView:
                          "l                 Layout: auto / cards / table", "t                 Theme: herdr / nord / high-contrast / monochrome",
                          "s                 Toggle lightweight system sampling", "+ / -             Sample faster / slower: 2s / 5s / 10s",
                          "a                 Toggle the caduceus glow",
-                         "b                 Gateway status and auto-open preference",
-                         "q                 Return to Gateway status" if self.embedded else "q / Ctrl+C        Close the monitor",
+                         "Enter             Start / retry the managed Gateway" if self.embedded else "q / Ctrl+C        Close the monitor",
                          "Ctrl+C            Pause the managed Gateway" if self.embedded else "",
                          "", "The pinned profile belongs to Herdr. Other profiles are observed only.",
                          "CPU is per Gateway process (100% = one core); RSS excludes descendants.",

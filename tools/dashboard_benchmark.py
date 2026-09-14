@@ -74,12 +74,6 @@ def embedded(profiles, width, height, seconds):
         if len(renderers) != 1:
             raise RuntimeError("Expected exactly one isolated renderer")
         renderer = renderers[0]
-        wait_until(lambda: terminal.contains("Open the monitoring dashboard?"))
-        time.sleep(2)
-        startup = measure(renderer, terminal, seconds)
-        if any(s.requests for s in servers):
-            raise RuntimeError("Startup sampled a background profile before the user opened monitoring")
-        terminal.send(b"\r")
         wait_until(lambda: terminal.contains("SYSTEM"))
         time.sleep(6)  # Warm imports, native identity probes, CPU deltas and the first graphs.
         foreground = measure(renderer, terminal, seconds)
@@ -90,13 +84,15 @@ def embedded(profiles, width, height, seconds):
         hidden = measure(renderer, terminal, seconds)
         started = time.monotonic()
         case.action("pause", send=False)
-        if case.process.wait(timeout=3) != 0 or not terminal.restored():
-            raise RuntimeError("Fixture supervisor did not stop and restore its terminal")
-        result = {"profiles": profiles, "terminal": [width, height], "startup": startup,
+        case.wait_idle()
+        pause_seconds = time.monotonic() - started
+        case.shutdown()
+        if not terminal.restored():
+            raise RuntimeError("Fixture supervisor did not restore its terminal on host shutdown")
+        result = {"profiles": profiles, "terminal": [width, height],
                   "foreground": foreground, "unfocused": hidden,
-                  "startup_background_native_requests": 0,
                   "background_profiles_seen_during_foreground": sampled, "background_native_requests": requests,
-                  "fixture_pause_seconds": round(time.monotonic() - started, 3)}
+                  "fixture_pause_seconds": round(pause_seconds, 3)}
         print(json.dumps(result), flush=True)
         return result
 
@@ -120,7 +116,7 @@ def render_cost(count, width, height, *, animation=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profiles", nargs="+", type=int, default=[2, 50])
-    parser.add_argument("--seconds", type=int, default=20, help="Steady-state window for startup, monitoring and unfocused phases")
+    parser.add_argument("--seconds", type=int, default=20, help="Steady-state window for monitoring and unfocused phases")
     parser.add_argument("--width", type=int, default=160)
     parser.add_argument("--height", type=int, default=44)
     parser.add_argument("--output", type=Path, required=True)

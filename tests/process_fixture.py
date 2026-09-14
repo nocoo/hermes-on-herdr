@@ -88,18 +88,23 @@ def supervise(config_path):
     config = Config.load(config_path)
     root = config.agent_cwd
     plan = json.loads((root / "plan.json").read_text())
-    settings = dict(poll=0.005, rpc=0.15, r0=1, probe=0.05, ready_spacing=0.03, ready=0.3,
+    settings = dict(poll=0.005, rpc=0.15, r0=1, probe=0.05, recheck=0.1, ready_spacing=0.03, ready=0.3,
                     owner_grace=0.4, stop=0.25, kill=0.25, restart=0.3, restart_spacing=0.03,
                     backoff=(0.02, 0.03, 0.05, 0.1, 0.15, 0.2))
     settings.update(plan.get("limits", {}))
     limits = replace(Limits(), **settings)
     launched = []
     launch_file = root / "launches.jsonl"
+    attempts = 0
     def launch(argv, **kwargs):
+        nonlocal attempts
         assert argv == config.gateway_argv(), argv
         assert kwargs["start_new_session"] is False
         assert kwargs["stdin"] == subprocess.DEVNULL
         assert kwargs["umask"] == 0o077
+        attempts += 1
+        if plan.get("fail_first_spawn") and attempts == 1:
+            raise OSError("fixture spawn failure")
         index = len(launch_file.read_text().splitlines()) if launch_file.exists() else 0
         append(launch_file, {"argv": argv, "active_previous": sum(same_process(item) for item in launched),
                              "stdin": "DEVNULL", "same_session": True})
@@ -110,6 +115,13 @@ def supervise(config_path):
         if record:
             launched.append(record)
         return child
+    def check(config):
+        profile_preflight(config)
+        if plan.get("hold_first_check") and not (root / "check-complete").exists():
+            private_file(root / "check-complete", "1")
+            deadline = time.monotonic() + 3
+            while not (root / "check-release").exists() and time.monotonic() < deadline:
+                time.sleep(0.005)
     if plan.get("dashboard_failure"):
         from unittest.mock import patch
         class BrokenDisplay:
@@ -127,8 +139,8 @@ def supervise(config_path):
                 if plan["dashboard_failure"] == "close":
                     raise RuntimeError("fixture display cleanup failure")
         with patch("hermes_gateway_herdr.supervisor.Display", BrokenDisplay):
-            return Supervisor(config, dict(os.environ), limits=limits, launch=launch, check=profile_preflight).run()
-    return Supervisor(config, dict(os.environ), limits=limits, launch=launch, check=profile_preflight).run()
+            return Supervisor(config, dict(os.environ), limits=limits, launch=launch, check=check).run()
+    return Supervisor(config, dict(os.environ), limits=limits, launch=launch, check=check).run()
 
 
 def dashboard_fixture(config_path, mode):
@@ -171,7 +183,7 @@ if __name__ == "__main__":
                 if point == "after_" + selected:
                     os._exit(91)
                 return result
-        Controller(config, check=profile_preflight, herdr=CrashHerdr(config)).ensure(dict(os.environ))
+        Controller(config, herdr=CrashHerdr(config)).ensure(dict(os.environ))
         raise SystemExit(0)
     if sys.argv[1] == "supervisor":
         raise SystemExit(supervise(Path(sys.argv[2])))

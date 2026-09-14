@@ -39,14 +39,13 @@ def main():
     parser.add_argument("--height", type=int, default=44)
     parser.add_argument("--layout", choices=("auto", "cards", "table"), default="auto")
     parser.add_argument("--selected", default="cherry")
-    parser.add_argument("--startup", action="store_true", help="Preview the default Gateway startup page")
     parser.add_argument("--pose", type=int, choices=(0, 1, 2), default=0, help="Caduceus glow phase for a still preview")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if not 20 <= args.width <= 300 or not 8 <= args.height <= 100:
         parser.error("Preview size must be 20..300 columns and 8..100 rows")
     data = demo_snapshot(args.profiles)
-    view = DashboardView(ViewState(selected=args.selected, layout=args.layout, startup=args.startup), embedded=True, demo=True)
+    view = DashboardView(ViewState(selected=args.selected, layout=args.layout), embedded=True, demo=True)
     screen = render_to_screen(args.width, args.height, theme_for("herdr"),
                               lambda ui: view.render(ui, data, now=data.updated, pose=args.pose))
     args.output.write_text(fixed_cell_html(screen))

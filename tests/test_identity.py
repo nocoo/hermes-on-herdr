@@ -12,7 +12,7 @@ from unittest.mock import Mock, patch
 import psutil
 
 from hermes_gateway_herdr.errors import GatewayError
-from hermes_gateway_herdr.identity import capture, descendants, hermes_start_matches, owner_key, signal_verified
+from hermes_gateway_herdr.identity import capture, descendants, hermes_start_matches, owner_key, same_process, signal_verified
 
 
 class IdentityTests(unittest.TestCase):
@@ -89,6 +89,15 @@ class IdentityTests(unittest.TestCase):
                 capture(os.getpid())
             self.assertEqual("UNKNOWN", error.exception.code)
 
+    def test_liveness_does_not_require_argv_but_still_rejects_a_different_start_time(self):
+        record = capture(os.getpid())
+        with patch.object(psutil.Process, "cmdline", side_effect=psutil.AccessDenied()) as argv, \
+                patch.object(psutil.Process, "exe", side_effect=psutil.AccessDenied()) as exe:
+            self.assertTrue(same_process(record))
+            self.assertFalse(same_process(dict(record, start_fingerprint=dict(record["start_fingerprint"], value="reused"))))
+            argv.assert_not_called()
+            exe.assert_not_called()
+
     def test_hermes_fingerprint_units_are_explicit(self):
         identity = capture(os.getpid())
         self.assertTrue(hermes_start_matches(identity, int(round(identity["create_time"] * 100))))
@@ -162,7 +171,7 @@ class IdentityTests(unittest.TestCase):
                     "start_fingerprint": {"kind": "fixture", "value": str(pid), "boot": "fixture"}}
         records = {10: record(10, 1), 11: record(11, 900), 12: record(12, 11),
                    13: record(13, 10), 14: record(14, 13, sid=14)}
-        with patch("hermes_gateway_herdr.identity.capture", side_effect=records.get), \
+        with patch("hermes_gateway_herdr.identity.capture", side_effect=lambda pid, **_: records.get(pid)), \
                 patch("hermes_gateway_herdr.identity.psutil.Process") as process:
             # PID 11 used to be a child; its replacement belongs to an unrelated parent.
             # Return the real grandchild before its parent to also exercise recursive discovery.

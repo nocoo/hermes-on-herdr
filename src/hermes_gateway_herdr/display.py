@@ -7,6 +7,8 @@ import subprocess
 import sys
 import termios
 
+from .bootstrap import RECOVERY_HINT
+
 RESTORE = b"\x1b[0m\x1b[?1004l\x1b[?2004l\x1b[?1000l\x1b[?1002l\x1b[?1003l\x1b[?1006l\x1b[?25h\x1b[?1049l"
 
 
@@ -19,7 +21,7 @@ def restore_terminal(mode, *, failed=False):
     fd = None
     try:
         fd = os.open(os.ttyname(sys.stdout.fileno()), os.O_WRONLY | os.O_NOCTTY | os.O_NONBLOCK)
-        message = b"\r\nDashboard unavailable. Gateway supervision continues; use Herdr Status/Logs.\r\n" if failed else b""
+        message = (f"\r\n{RECOVERY_HINT} Gateway supervision continues.\r\n").encode() if failed else b""
         os.write(fd, RESTORE + message)
     except (OSError, ValueError):
         pass
@@ -37,7 +39,7 @@ class Display:
     def start(cls, config, env):
         parent = child = None
         try:
-            if env.get("HGH_DASHBOARD") == "0" or env.get("TERM") == "dumb" or not (sys.stdin.isatty() and sys.stdout.isatty()):
+            if env.get("TERM") == "dumb" or not (sys.stdin.isatty() and sys.stdout.isatty()):
                 return None
             mode = termios.tcgetattr(sys.stdin.fileno())
             parent, child = socket.socketpair()
@@ -75,7 +77,7 @@ class Display:
             self.close(failed=True)
             return False
         # Only this direct child holds the other endpoint. No parent PID lookup or signals.
-        return b"p" in request
+        return "pause" if b"p" in request else "start" if b"s" in request else None
 
     def close(self, *, failed=False):
         if self.closed:

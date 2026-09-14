@@ -44,9 +44,12 @@ See the [context and Profile checks](../src/hermes_gateway_herdr/config.py), [He
 
 ## The experience
 
+`v0.1.2` keeps the full dashboard open by default and includes an independent recovery screen.
+
 ![hermes on herdr monitoring two Profiles with offline demo data](evidence/dashboard-two.png)
 
-- Start on the managed Gateway's status page. Press **Enter** to open monitoring. “Always open on startup” is off by default; save your choice with Space or a mouse click.
+- Herdr restores the dedicated `hermes on herdr` tab with the full dashboard open. Detach / reattach keeps the dashboard; persisted run intent starts the Gateway automatically.
+- Pausing the Gateway, a failed startup or a tripped circuit breaker leaves the dashboard available. Click **Start** or press **Enter** to start or retry. Failed configuration checks retry automatically every 30 seconds.
 - Monitor multiple Hermes Profiles, including status, CPU, memory and process trends, with the Herdr-managed instance highlighted. Adjust the layout, theme, animation and sampling interval; the default is two seconds.
 - Manage the Gateway with `start`, `pause`, `resume`, `stop` and `restart`. Read JSON diagnostics through `status`, `doctor` and `logs`.
 - The supervisor uses singleton locks, identity checks, bounded retries and circuit breaking. Unknown launch outcomes and live orphan processes are preserved for diagnosis before replacement.
@@ -55,12 +58,12 @@ See the [dashboard guide](14-hqtui监控面板.md) for previews, controls and re
 
 ## Get started
 
-**0.1.1** uses Herdr's native plugin installer; see the [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1) and [release guide](15-发布与安装.md) for distribution, installation and upgrades. The [first-run association wizard](16-首次安装与Profile关联.md) is planned. Manual configuration and `bind` are implemented.
+**0.1.2** uses Herdr's native plugin installer; see the [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.2) and [release guide](15-发布与安装.md) for distribution, installation and upgrades. The [first-run association wizard](16-首次安装与Profile关联.md) is planned. Manual configuration and `bind` are implemented.
 
 This is an early 0.x release. Use Python 3.11+ from a configured Hermes virtual environment with [psutil and PyYAML](../requirements.txt). The repository includes pinned hqtui source. Compatibility is pinned to Herdr v0.9.0 and Hermes Agent v0.21.1; exact versions and commits are recorded in the [source evidence](09-源码证据索引.md).
 
 ```sh
-herdr plugin install nocoo/hermes-on-herdr --ref v0.1.1
+herdr plugin install nocoo/hermes-on-herdr --ref v0.1.2
 herdr plugin config-dir nocoo.hermes-gateway
 herdr plugin list --plugin nocoo.hermes-gateway --json
 ```
@@ -87,17 +90,26 @@ Append these commands to `./bin/hermes-on-herdr --config /absolute/config.json`:
 | `bind --dry-run` | Show the binding plan for an existing dedicated Profile; also the default for `bind` |
 | `bind --apply` | Create paused control state; an explicit `start` then permits running |
 | `start` / `resume` | Save run intent and ensure the Gateway; check READY after the ACK |
-| `pause` / `stop` | Persist paused intent, then notify the supervisor |
-| `stop --wait 30` | Wait up to 30 seconds and verify shutdown before reporting completion |
+| `pause` / `stop` | Persist paused intent, then stop the Gateway while keeping the dashboard open |
+| `stop --wait 30` | Wait up to 30 seconds for the Gateway and owned descendants to exit; retain the supervisor and dashboard |
 | `restart` | Request a restart for an allowed instance, preserving paused intent |
 | `status --require-ready` | Succeed only when identity, runtime state and expected platforms satisfy READY |
 | `logs --lines 50` | Read structured lifecycle events |
-| `dashboard --startup` | Show startup status and offer the full monitor |
+| `monitor` | Restore and focus the dedicated dashboard, preserving paused Gateway intent |
+| `dashboard` | Open an independent read-only monitor; `q` exits without affecting the Gateway |
 | `dashboard --snapshot` / `dashboard --json` | Print one text or JSON monitoring snapshot |
 | `dashboard --demo-profiles 2` | Preview a two-Profile dashboard with synthetic data |
 | `dashboard --http-port 8767` | Serve a separate read-only page at `http://127.0.0.1:8767/` and `/health`; no Gateway control |
 
 For control commands outside a hook, supply the bound owner with the global `--owner-socket /absolute/bound.sock` option. The [command contract](12-离线实现与验证.md#124-当前命令契约) covers all flags, exit codes and retry rules.
+
+To return to the persistent dashboard through Herdr:
+
+```sh
+herdr plugin action invoke monitor --plugin nocoo.hermes-gateway
+```
+
+After installing the [shell shortcut](15-发布与安装.md#恢复命令的安装), run `hermes-on-herdr` with no arguments to open recovery, diagnose problems, restore the dashboard or start the Gateway. Herdr's command palette exposes **hermes on herdr: Recovery & Repair**. System Python runs recovery even when the configured runtime or configuration is broken; persisted tab and pane labels retain the recovery command. See [recovery behavior and limits](14-hqtui监控面板.md#149-故障恢复入口).
 
 ## Development and validation
 
@@ -107,7 +119,7 @@ cd hermes-on-herdr
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The [186-test run](evidence/release-0.1.1-unittest.txt) covers lifecycle races, control and configuration boundaries, damaged state, FIFOs, process identity, versions, monitoring and HTTP health checks. The [quality assessment](17-插件质量评估.md) records the added regressions and coverage. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. Resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
+Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The [206-test run](evidence/release-0.1.2-unittest.txt) covers the persistent dashboard, recovery, lifecycle races, control and configuration boundaries, process identity and HTTP health checks. [Recovery validation](evidence/recovery-validation.txt) separately records isolated native Herdr popup and label restoration checks, plus an earlier intermittent FIFO CLI timeout whose cause remains unknown. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. The [quality assessment](17-插件质量评估.md) retains the 0.1.1 coverage baseline; resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
 
 The [recorded v0.1.0 acceptance](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收) verified an official installation, Cherry READY, exactly one Gateway under Herdr/plugin ownership, Discord connected, the embedded terminal monitor, and HTTP health 200. These are historical runtime snapshots. Telegram and Slack are existing upstream Hermes channels; this plugin has no recorded live integration verification for them yet. A fresh message/model round trip, full host cold start and shutdown, explicit pane interaction, Linux live integration, and live Herdr update handoff remain unverified. The earlier user confirmation of messaging is preserved as historical evidence.
 
@@ -119,7 +131,7 @@ Detailed guides and research records are in Chinese.
 
 - [Documentation index](README.md): routes for users, developers and research, with current validation scope.
 - [Configuration examples](../examples/README.md): interpreter, dedicated Profile, private paths and binding.
-- [Dashboard guide](14-hqtui监控面板.md): startup page, layouts, controls, sampling and performance.
+- [Dashboard guide](14-hqtui监控面板.md): recovery, Gateway controls, layouts, sampling and performance.
 - [Security and operations](07-安全与运维.md): permissions, diagnostics, pause and upgrade boundaries.
 - [Architecture](02-系统架构.md) and [lifecycle](03-生命周期设计.md): controller, supervisor, locks and recovery.
 - [Brand identity](../assets/brand/README.md): logo usage, original source and Hexly presentation.

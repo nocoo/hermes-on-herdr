@@ -1,10 +1,10 @@
 # Runtime manifest. Validation scope and installation: docs/15-发布与安装.md.
 id = "nocoo.hermes-gateway"
 name = "hermes on herdr"
-version = "0.1.1"
+version = "0.1.2"
 min_herdr_version = "0.9.0"
 platforms = ["macos", "linux"]
-description = "Run Hermes in Herdr with optional monitoring"
+description = "Keep a Hermes dashboard and managed Gateway in Herdr"
 
 [[startup]]
 command = ["./bin/hermes-on-herdr", "ensure", "--source", "startup"]
@@ -23,9 +23,27 @@ command = ["./bin/hermes-on-herdr", "ensure", "--source", "event"]
 
 [[panes]]
 id = "gateway"
-title = "hermes on herdr"
+title = "Dashboard 未就绪？运行 hermes-on-herdr 查看原因并恢复。"
 placement = "tab"
 command = ["./bin/hermes-on-herdr", "supervise"]
+
+[[panes]]
+id = "recovery"
+title = "hermes on herdr · 恢复中心"
+placement = "popup"
+width = "90%"
+height = "90%"
+command = ["./bin/hermes-on-herdr", "recover"]
+
+[[actions]]
+id = "recover"
+title = "hermes on herdr: Recovery & Repair"
+command = ["./bin/hermes-on-herdr", "recover", "--open"]
+
+[[actions]]
+id = "monitor"
+title = "hermes on herdr: Open Dashboard"
+command = ["./bin/hermes-on-herdr", "monitor"]
 
 [[actions]]
 id = "start"

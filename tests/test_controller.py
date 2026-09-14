@@ -10,7 +10,6 @@ import time
 import unittest
 from unittest.mock import patch
 
-from hermes_gateway_herdr.config import profile_preflight
 from hermes_gateway_herdr.controller import Controller
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.identity import capture, same_process, signal_verified
@@ -33,7 +32,7 @@ class ControllerTests(unittest.TestCase):
             self.store.set_intent("resume")
 
     def controller(self, **kwargs):
-        return Controller(self.config, check=profile_preflight, **kwargs)
+        return Controller(self.config, **kwargs)
 
     def ensure(self):
         try:
@@ -144,6 +143,26 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(2, len(self.owner.workspaces))
         self.assertEqual(old["pane"]["workspace_id"], self.store.read("runtime.json")["pane"]["workspace_id"])
 
+    def test_startup_keeps_a_diagnostic_pane_and_recovers_after_profile_correction(self):
+        self.fixture.profile_data["terminal"]["backend"] = "docker"
+        self.fixture.write_profile()
+        Controller(self.config).ensure(self.fixture.context(), source="startup")
+        blocked = wait_until(lambda: (status := self.controller().status())["state"] == "BLOCKED" and status)
+        self.assertEqual("CONFIG_ERROR", blocked["code"])
+        self.assertIn("terminal", blocked["message"])
+        self.assertIsNone(blocked["gateway"])
+        self.assertFalse(blocked["fused"])
+        self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
+        self.fixture.profile_data["terminal"]["backend"] = "local"
+        self.fixture.write_profile()
+        ready = wait_until(lambda: (status := self.controller().status())["state"] == "READY" and status)
+        self.assertEqual(blocked["pane"], ready["pane"])
+        self.assertEqual(blocked["supervisor"], ready["supervisor"])
+        self.assertIsNone(ready["code"])
+        self.assertIsNone(ready["retry_at"])
+        self.assertEqual(1, len(self.owner.processes))
+        self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
+
     def test_held_lifetime_without_identifiable_socket_never_creates(self):
         with self.store.lease():
             self.assertEqual("UNKNOWN", self.ensure()["state"])
@@ -198,7 +217,7 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(raw, path.read_text())
         self.assertEqual([], self.owner.server.requests)
 
-    def test_nonowner_and_unrelated_exit_event_do_not_create_or_clear_pause(self):
+    def test_nonowner_and_unrelated_exit_event_do_not_create_and_owner_restores_paused_dashboard(self):
         with self.assertRaises(GatewayError) as error:
             self.controller().ensure({"HERDR_SOCKET_PATH": str(self.fixture.root / "other.sock")})
         self.assertEqual("NOT_OWNER", error.exception.code)
@@ -206,9 +225,17 @@ class ControllerTests(unittest.TestCase):
         env.update(HERDR_PLUGIN_EVENT="pane.exited", HERDR_PLUGIN_EVENT_JSON=json.dumps({
             "event": "pane.exited", "data": {"type": "pane_exited", "pane_id": "pane-user"}}))
         self.assertEqual("IGNORED", self.controller().ensure(env, source="event")["state"])
-        self.action("pause")
-        self.assertEqual("PAUSED", self.ensure()["state"])
         self.assertEqual([], self.owner.processes)
+        self.action("pause")
+        self.controller().ensure(self.fixture.context(), source="startup")
+        paused = wait_until(lambda: (runtime := self.store.read("runtime.json")) and runtime["state"] == "PAUSED" and runtime)
+        self.assertIsNone(paused["gateway"])
+        self.assertEqual("paused", self.store.intent()["desired"])
+        self.assertEqual(1, len(self.owner.processes))
+        self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
+        for _ in range(3):
+            self.assertEqual("PAUSED", self.ensure()["state"])
+        self.assertEqual(1, len(self.owner.processes))
 
     def test_status_is_read_only_and_reports_pause_without_creating_locks(self):
         self.action("pause")
@@ -223,6 +250,7 @@ class ControllerTests(unittest.TestCase):
         wait_until(lambda: self.owner.processes[0].poll() is not None)
         self.assertTrue(self.store.read("runtime.json")["spawn_pending"])
         self.assertEqual("UNKNOWN", self.ensure()["state"])
+        self.assertEqual("UNKNOWN", self.controller().ensure(self.fixture.context(), repair=True)["state"])
         self.assertEqual(1, len(self.owner.processes))
         # The orphan is stopped only by fixture cleanup, using its captured identity.
         wait_until(lambda: bool(json_lines(self.fixture.root / "children.jsonl")))
@@ -269,6 +297,7 @@ class ControllerTests(unittest.TestCase):
         signal_verified(self.owner.records[0], signal.SIGKILL)
         self.owner.processes[0].wait(timeout=3)
         self.assertEqual("ORPHAN", self.ensure()["state"])
+        self.assertEqual("ORPHAN", self.controller().ensure(self.fixture.context(), repair=True)["state"])
         self.assertTrue(self.action("pause")["accepted"])
         status = self.controller().status()
         self.assertEqual("ORPHAN", status["state"])
@@ -303,6 +332,22 @@ class ControllerTests(unittest.TestCase):
         self.assertTrue(same_process(self.gateway()))
         self.assertNotEqual(old, self.store.read("runtime.json")["generation"])
         self.assertEqual(1, len(self.owner.processes))
+
+    def test_manual_repair_rebuilds_after_dead_creator_without_resetting_running_fuse(self):
+        self.crash_controller("before_pane")
+        old = self.store.read("pending.json")["generation"]
+        reset = self.store.intent()["reset_revision"]
+        fuse = {"schema": 1, "fused": True, "failures": [], "restarts": [], "reset_revision": reset}
+        with self.store.mutation():
+            self.store.write("fuse.json", fuse)
+        self.assertIn("pane", self.controller().ensure(self.fixture.context(), repair=True))
+        runtime = wait_until(lambda: (item := self.store.read("runtime.json")) and item["state"] == "FUSED" and item)
+        self.assertNotEqual(old, runtime["generation"])
+        self.assertIsNone(runtime["gateway"])
+        self.assertEqual("running", self.store.intent()["desired"])
+        self.assertEqual(reset, self.store.intent()["reset_revision"])
+        self.assertEqual(fuse, self.store.read("fuse.json"))
+        self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
 
     def test_controller_crash_after_pane_response_adopts_surviving_supervisor(self):
         self.crash_controller("after_pane")

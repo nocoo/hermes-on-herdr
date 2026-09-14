@@ -26,11 +26,14 @@ def parser():
     result.add_argument("--config", type=Path, required=True)
     result.add_argument("--owner-socket", type=Path, help="Explicit owner context for commands outside a Herdr hook")
     commands = result.add_subparsers(dest="command", required=True)
-    for name in ("ensure", "supervise", *ACTIONS, "status", "doctor", "logs", "bind", "dashboard"):
+    for name in ("ensure", "supervise", *ACTIONS, "status", "doctor", "logs", "bind", "dashboard", "monitor", "recover"):
         command = commands.add_parser(name, allow_abbrev=False)
         command.add_argument("--json", action="store_true", help="JSON output" if name == "dashboard" else "JSON output (also the default)")
         if name == "ensure":
             command.add_argument("--source", choices=("manual", "startup", "event", "timer"), default="manual")
+        if name == "recover":
+            command.add_argument("--open", action="store_true", help="Open recovery in a native Herdr popup")
+            command.add_argument("--snapshot", action="store_true")
         if name in ACTIONS:
             command.add_argument("--request-id")
             command.add_argument("--expected-revision", type=int)
@@ -46,7 +49,7 @@ def parser():
             choice.add_argument("--dry-run", action="store_true", help="Show the binding plan (default)")
         if name == "dashboard":
             command.add_argument("--http-port", type=int, help="Serve a read-only loopback status page and /health (0 chooses a free port)")
-            command.add_argument("--startup", action="store_true", help="Show Gateway startup status and offer to open monitoring")
+            command.add_argument("--startup", action="store_true", help=argparse.SUPPRESS)
             command.add_argument("--snapshot", action="store_true", help="Print one read-only text frame and exit")
             command.add_argument("--demo-profiles", type=int, metavar="COUNT", help="Use offline demo profiles; no live sampling")
             command.add_argument("--width", type=int, default=100, help="Snapshot width (20..300)")
@@ -84,7 +87,7 @@ def doctor(config):
             inspect()
             checks.append({"name": name, "ok": True, "code": "OK"})
         except GatewayError as exc:
-            checks.append({"name": name, "ok": False, "code": exc.code})
+            checks.append({"name": name, "ok": False, "code": exc.code, "message": str(exc)})
     try:
         client = Herdr(config)
         client.deadline = deadline
@@ -135,9 +138,11 @@ def result_code(result, *, command, source="manual", require_ready=False):
     state = result.get("state")
     if command == "status":
         return 0 if not require_ready or state == "READY" else 10
+    if command == "monitor" and result.get("pane"):
+        return 0
     if result.get("accepted") or state in {"NOT_OWNER", "IGNORED", "CANCELLED", "DISABLED"}:
         return 0
-    if state in {"BUSY", "PENDING", "PENDING_UNKNOWN", "UNKNOWN", "ORPHAN", "DRAINING"}:
+    if state in {"BUSY", "PENDING", "PENDING_UNKNOWN", "UNKNOWN", "ORPHAN", "DRAINING", "BLOCKED"}:
         return 0 if command == "ensure" and source != "manual" else 10
     if state == "FUSED":
         return 20
@@ -147,6 +152,11 @@ def result_code(result, *, command, source="manual", require_ready=False):
 def main(argv=None):
     arguments = parser().parse_args(argv)
     try:
+        if arguments.command == "recover":
+            from .recovery import main as recover
+            flags = [flag for flag, enabled in (("--json", arguments.json), ("--open", arguments.open),
+                                                ("--snapshot", arguments.snapshot)) if enabled]
+            return recover(arguments.config, flags, owner_socket=arguments.owner_socket)
         if arguments.command in ACTIONS:
             if (arguments.request_id is None) != (arguments.expected_revision is None):
                 raise GatewayError("INVALID_ARGUMENT", "Explicit request IDs require an expected revision")
@@ -186,6 +196,12 @@ def main(argv=None):
                 result = controller.status()
             elif command == "ensure":
                 result = controller.ensure(env, source=arguments.source)
+            elif command == "monitor":
+                result = controller.ensure(env, repair=True)
+                if result.get("pane"):
+                    from .recovery import remember_hint
+                    remember_hint(controller.herdr, result["pane"])
+                    controller.herdr.call("pane.focus", {"pane_id": result["pane"]["pane_id"]})
             else:
                 result = controller.action(command, env, request_id=arguments.request_id, expected_revision=arguments.expected_revision)
                 if command in {"pause", "stop"} and arguments.wait is not None:
@@ -204,7 +220,8 @@ def main(argv=None):
         return result_code(result, command=command, source=getattr(arguments, "source", "manual"),
                            require_ready=getattr(arguments, "require_ready", False))
     except GatewayError as exc:
-        result = {"schema": 1, "state": "NOT_OWNER" if exc.code == "NOT_OWNER" else "ERROR", "code": exc.code}
+        result = {"schema": 1, "state": "NOT_OWNER" if exc.code == "NOT_OWNER" else "ERROR", "code": exc.code,
+                  "message": str(exc)}
         print(json.dumps(result))
         if exc.code == "NOT_OWNER" or (arguments.command == "ensure" and arguments.source != "manual" and exc.exit_code == 10):
             return 0

@@ -20,7 +20,7 @@ from .paths import json_object, private_bytes
 
 from hqtui import App, AppOptions, render_to_screen
 
-PREFERENCE_KEYS = ("layout", "theme", "system", "interval", "animation", "auto_open")
+PREFERENCE_KEYS = ("layout", "theme", "system", "interval", "animation")
 
 
 def preferences(state):
@@ -34,7 +34,7 @@ def load_preferences(config):
         if (type(data.get("schema")) is int and data["schema"] == 1
                 and data.get("layout") in LAYOUTS and data.get("theme") in THEMES
                 and type(data.get("system")) is bool and type(data.get("interval")) is int and data["interval"] in INTERVALS
-                and type(data.get("animation", True)) is bool and type(data.get("auto_open", False)) is bool):
+                and type(data.get("animation", True)) is bool):
             for key in PREFERENCE_KEYS:
                 setattr(state, key, data.get(key, getattr(state, key)))
     except (GatewayError, OSError, ValueError, TypeError):
@@ -84,15 +84,22 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
     if not parent_alive(parent_fd):
         return 0
     state = ViewState(selected="cherry") if demo_profiles is not None else load_preferences(config)
-    state.startup = (embedded or startup) and not state.auto_open
-    view = DashboardView(state, session=config.owner_session, embedded=embedded, demo=demo_profiles is not None)
-    monitor = Monitor(config, host=state.system and not state.startup) if demo_profiles is None else None
+    def control(action):
+        try:
+            os.write(parent_fd, b"s" if action == "start" else b"p")
+        except (OSError, ValueError):
+            state.notice = "Gateway controls unavailable."
+
+    # --startup remains accepted for older launchers; every launch opens the full dashboard.
+    view = DashboardView(state, session=config.owner_session, embedded=embedded,
+                         demo=demo_profiles is not None, control=control)
+    monitor = Monitor(config, host=state.system) if demo_profiles is None else None
 
     def collect():
         if monitor is None:
             return demo_snapshot(demo_profiles, now=time.time())
-        monitor.selected, monitor.host = state.selected, state.system and not state.startup
-        return monitor.collect(managed_only=state.startup)
+        monitor.selected, monitor.host = state.selected, state.system
+        return monitor.collect()
 
     if snapshot or json_output or not (sys.stdin.isatty() and sys.stdout.isatty()):
         data = collect()
@@ -146,7 +153,7 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
             remaining = last_started + interval - now
             if remaining > 0:
                 # Animation shares this wait, never the sampling deadline. Resting,
-                # startup and compact views add no animation wakeups or RPC calls.
+                # compact views add no animation wakeups or RPC calls.
                 wake.wait(max(0.001, min(remaining, next_pose)))
                 wake.clear()
                 continue
@@ -171,30 +178,28 @@ def run_dashboard(config, *, demo_profiles=None, snapshot=False, json_output=Fal
                 app.set_theme(theme_for(state.theme))
             if monitor is not None:
                 if save_preferences(config, state):
-                    state.preference_error = ""
+                    state.notice = ""
                 else:
-                    # Do not show an enabled startup promise that wasn't saved.
-                    state.auto_open = saved_preferences["auto_open"]
-                    state.preference_error = "Could not save preferences."
+                    state.notice = "Could not save preferences."
             saved_preferences = preferences(state)
         wake.set()
 
     def key(event):
         if event.key == "ctrl+c":
             if embedded:
-                # Preserve the supervisor's existing Ctrl+C -> durable Pause contract.
-                try:
-                    os.write(parent_fd, b"p")
-                except (OSError, ValueError):
-                    app.quit()
+                control("pause")
             else:
                 app.quit()
             return
         if event.name == "q" and not state.filtering:
             if embedded:
-                state.startup, state.help = True, False
+                state.help = False
             else:
                 app.quit()
+            wake.set()
+            return
+        if embedded and event.name == "enter" and not state.filtering:
+            control("start")
             wake.set()
             return
         state.key(event, data["snapshot"])

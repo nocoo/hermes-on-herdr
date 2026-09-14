@@ -10,8 +10,6 @@ terminal:
   cwd: /absolute/herdr-agent-work
   auto_source_bashrc: false
   shell_init_files: []
-plugins:
-  enabled: []
 gateway:
   multiplex_profiles: false
 multiplex_profiles: false

@@ -228,6 +228,13 @@ class MonitorTests(TestCase):
         sampled["state"] = "RUNNING"
         self.assertEqual(monitor.collect(now=5).profiles[0].state, "READY")
 
+    def test_blocked_startup_displays_the_configuration_check_instead_of_unknown(self):
+        monitor = Monitor(self.config, inspect=lambda c, p: (replace(p, state="STOPPED"), None), host=False,
+                          managed_status=lambda: {"state": "BLOCKED", "message": "Check Profile configuration: terminal"})
+        profile = monitor.collect(managed_only=True).profiles[0]
+        self.assertEqual("BLOCKED", profile.state)
+        self.assertEqual("Check Profile configuration: terminal", profile.error)
+
     def test_multiplexer_shows_shared_profile_without_double_counting_resources(self):
         self.profile("shared")
         def inspect(config, profile):

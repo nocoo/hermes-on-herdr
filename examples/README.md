@@ -11,6 +11,8 @@
 
 专用 Profile 的独立凭据、工作目录和期望平台需先配置好；初始化设计见 [04](../docs/04-Hermes专用Profile设计.md)。当前没有自动创建 Profile 的工具，示例不是可直接覆盖已有用户配置的完整文件。
 
+Hermes 自身的插件配置和加载开关由 Hermes 管理，本项目不检查 `plugins` 的内容，也不强制设置 `HERMES_ENABLE_PROJECT_PLUGINS`。运行配置检查失败会在常驻 dashboard 中显示检查项并每 30 秒重试；修正配置后可自动启动，也可点击 Start 立即重试。
+
 ```sh
 ./bin/hermes-on-herdr --config /absolute/config.json bind --dry-run
 ```

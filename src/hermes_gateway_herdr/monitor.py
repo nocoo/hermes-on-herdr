@@ -19,7 +19,7 @@ from .paths import json_object
 from .rpc import control_query, hermes_socket
 
 PROFILE_ID = re.compile(r"[a-z0-9][a-z0-9_-]{0,63}\Z")
-STATES = {"READY", "RUNNING", "STARTING", "DEGRADED", "DRAINING", "BACKOFF", "FUSED",
+STATES = {"READY", "RUNNING", "STARTING", "DEGRADED", "DRAINING", "BACKOFF", "FUSED", "BLOCKED",
           "PAUSED", "ABSENT", "UNKNOWN", "ORPHAN", "PENDING", "DISABLED", "STOPPED", "SHARED"}
 PLATFORM_STATES = {"connected", "connecting", "disconnected", "retrying", "error", "fatal", "stopped", "disabled"}
 HISTORY = 90
@@ -264,6 +264,7 @@ class Monitor:
                         current = replace(current, state="UNKNOWN", error="OWNERSHIP_MISMATCH")
                     elif state != "READY" or current.state == "RUNNING":
                         current = replace(current, state=state if state in STATES else "UNKNOWN",
+                                          error=text(owned.get("message") or owned.get("code") or owned.get("reason") or current.error, 160),
                                           pane=text((owned.get("pane") or {}).get("pane_id", ""), 80))
                 except (GatewayError, OSError, ValueError, TypeError):
                     current = replace(current, state="UNKNOWN", error="OWNER_UNAVAILABLE")

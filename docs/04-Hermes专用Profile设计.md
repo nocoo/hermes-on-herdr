@@ -57,7 +57,6 @@ env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config se
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set terminal.home_mode profile
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set terminal.auto_source_bashrc false
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set terminal.shell_init_files '[]'
-env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set plugins.enabled '[]'
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set gateway.multiplex_profiles false
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config set nous.keepalive_interval_seconds 0
 env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config get terminal.cwd --json
@@ -96,7 +95,7 @@ env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config ge
 
 选择其他平台时必须写该平台实际key，不能只配置CLI工具集。terminal包含process_manage，skills包含skill_manage；去掉file工具也阻止不了shell读写文件。插件/MCP可能合并工具，`disabled_toolsets`最后裁剪；验收需查看实际暴露的tool schemas及插件加载清单。[M14](09-源码证据索引.md#m14)
 
-`plugins.enabled=[]`限制可选用户插件，但bundled platform/backend有独立自动加载路径，不代表完全无插件。显式关闭 `HERMES_ENABLE_PROJECT_PLUGINS`；不启用额外pip entrypoints、memory provider、MCP或shell hooks，除非单独审阅其代码与权限。[M18](09-源码证据索引.md#m18)
+Hermes 自身的插件配置、启停和加载策略由 Hermes 管理。运行预检不检查 `plugins` 的内容或结构，也不加载插件代码；用户启用的 `vibe-island` 等插件不会成为本项目的启动拒绝条件。`HERMES_ENABLE_PROJECT_PLUGINS` 沿用用户设置，允许写在 Profile 的 `.env` 中，本项目不强制开关。MCP、shell hooks、multiplex 和 owner 环境覆盖等其他检查仍保留。[M18](09-源码证据索引.md#m18)
 
 现有 `herdr-agent-state`只负责CLI/TUI/desktop/ACP会话恢复，Gateway无需为了生命周期复制它。[H15](09-源码证据索引.md#h15) 如后续加入Hermes辅助plugin提供更窄的Herdr工具，必须明确其宿主仍是Hermes，且不能替代本项目的Herdr startup/pane supervisor。
 
@@ -112,7 +111,8 @@ env HERMES_HOME="$HGH_PROFILE_HOME" "$HGH_HERMES_BIN" -p herdr-control config ge
 | provider/bot secrets | 不继承hook／Herdr进程里的现有值；只让目标Profile解析独立凭据 |
 | PYTHONPATH / PYTHONHOME / shell启动注入 | 清理；不source未知用户初始化文件；不继承BASH_ENV/ENV |
 | INVOCATION_ID / XPC_SERVICE_NAME / LAUNCHD_SOCKET / HERMES_DESKTOP_MANAGED / HERMES_S6_SUPERVISED_CHILD | 清除native supervisor残留，避免Hermes误认supervisor来源 [M10](09-源码证据索引.md#m10) |
-| HERMES_ENABLE_PROJECT_PLUGINS / GATEWAY_MULTIPLEX_PROFILES | 显式关闭；配置和profile .env也须审计，不能被其覆盖开启 |
+| HERMES_ENABLE_PROJECT_PLUGINS | 保留显式环境设置，Profile `.env` 遵循 Hermes 原生加载规则；本项目不强制开关 |
+| GATEWAY_MULTIPLEX_PROFILES | 显式关闭；配置和profile .env也须审计，不能被其覆盖开启 |
 | HERMES_YOLO_MODE / HERMES_ACCEPT_HOOKS / HERMES_IGNORE_USER_CONFIG | 不继承，不为方便启动开启；保留正常授权和坏配置保护 |
 
 本地terminal会继承并筛选环境。[M13](09-源码证据索引.md#m13) 不把HERDR变量列入secret透传特例，也不为了恢复某个工具而开放整个env_passthrough。实际首轮terminal只读probe必须确认四个真实ID没有在Hermes内部或shell初始化中漂移。执行过程中移动pane会让继承环境过期，按03协调重建。

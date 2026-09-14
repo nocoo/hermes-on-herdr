@@ -14,7 +14,6 @@ from unittest.mock import patch
 
 from hermes_gateway_herdr import __version__, cli
 from hermes_gateway_herdr.config import profile_preflight
-from hermes_gateway_herdr.controller import Controller
 from hermes_gateway_herdr.identity import same_process, signal_verified
 from hermes_gateway_herdr.state import Store
 from fake_owner import FakeOwner
@@ -71,9 +70,7 @@ class CliTests(unittest.TestCase):
 
     def inline(self, *args):
         output = io.StringIO()
-        # The replacement exists only in the test process; production has no bypass flag.
-        with patch.object(cli, "Controller", side_effect=lambda config, **kwargs: Controller(config, check=profile_preflight, **kwargs)), \
-                patch.dict(os.environ, self.fixture.context(), clear=True), redirect_stdout(output):
+        with patch.dict(os.environ, self.fixture.context(), clear=True), redirect_stdout(output):
             code = cli.main(["--config", str(self.config.config_dir / "config.json"), *args])
         return code, json.loads(output.getvalue())
 
@@ -196,8 +193,18 @@ class CliTests(unittest.TestCase):
         self.assertEqual(0, code)
         self.assertTrue(stopped["completed"])
         self.assertEqual("PAUSED", stopped["runtime"]["state"])
-        self.assertFalse(self.store.lifetime_held())
+        self.assertTrue(self.store.lifetime_held())
         self.assertEqual(1, len(self.owner.processes))
+
+    def test_monitor_opens_and_focuses_the_same_dashboard_even_when_paused(self):
+        self.assertEqual(0, self.inline("monitor")[0])
+        paused = wait_until(lambda: (runtime := self.store.read("runtime.json")) and runtime["state"] == "PAUSED" and runtime)
+        self.assertIsNone(paused["gateway"])
+        self.assertEqual(0, self.inline("monitor")[0])
+        focused = [r["params"]["pane_id"] for r in self.owner.server.requests if r["method"] == "pane.focus"]
+        self.assertEqual([paused["pane"]["pane_id"]] * 2, focused)
+        self.assertEqual(1, len(self.owner.processes))
+        self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
 
     def test_disabled_start_arms_startup_without_launching_before_enable(self):
         self.owner.enabled = False
@@ -339,7 +346,7 @@ class CliTests(unittest.TestCase):
         self.assertEqual("hermes on herdr", manifest["name"])
         self.assertEqual("nocoo.hermes-gateway", manifest["id"])
         self.assertEqual(1, len(manifest["startup"]))
-        self.assertEqual(["gateway"], [pane["id"] for pane in manifest["panes"]])
+        self.assertEqual(["gateway", "recovery"], [pane["id"] for pane in manifest["panes"]])
         self.assertEqual({"workspace.focused", "pane.exited", "pane.closed"}, {event["on"] for event in manifest["events"]})
         for group in ("startup", "panes", "actions", "events"):
             for item in manifest[group]:

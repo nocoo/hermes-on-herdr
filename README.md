@@ -44,9 +44,12 @@ session 绑定限定的是插件的 owner、默认控制目标和受支持的操
 
 ## 使用体验
 
+`v0.1.2` 默认保持完整 dashboard 打开，并提供独立恢复中心。
+
 ![hermes on herdr 双 Profile 监控面板，使用离线演示数据](docs/evidence/dashboard-two.png)
 
-- 启动时先显示专用 Gateway 的状态，按 **Enter** 打开完整监控；“以后自动打开”默认关闭，可用空格或鼠标保存选择。
+- Herdr 启动后自动恢复 `hermes on herdr` 专用 tab，直接显示完整 dashboard；detach / reattach 保留面板，已有运行意图会自动拉起 Gateway。
+- Gateway 暂停、启动受阻或熔断时，dashboard 仍然可用。点击 **Start** 或按 **Enter** 即可启动／重试；配置检查失败每 30 秒自动重试，修正后无需再次操作。
 - 监控面板展示多个 Hermes Profile 的状态、CPU、内存和进程趋势，突出 Herdr 专属实例。布局、主题、动画与采样频率均可调整，默认每两秒采样。
 - `start`、`pause`、`resume`、`stop` 和 `restart` 管理 Gateway；`status`、`doctor` 和 `logs` 提供 JSON 诊断。
 - supervisor 使用单例锁、身份核验、有界重试和熔断；遇到未知启动结果或仍存活的孤儿进程时，会先保留现场供诊断。
@@ -55,12 +58,12 @@ session 绑定限定的是插件的 owner、默认控制目标和受支持的操
 
 ## 上手
 
-**0.1.1** 使用 Herdr 原生插件安装器，版本与附件见 [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.1)。[发布与安装](docs/15-发布与安装.md)说明接入、升级及版本约定；[首次关联方案](docs/16-首次安装与Profile关联.md)中的选择向导尚未实现，当前使用手动配置和 `bind`。
+**0.1.2** 使用 Herdr 原生插件安装器，版本与附件见 [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.2)。[发布与安装](docs/15-发布与安装.md)说明接入、升级及版本约定；[首次关联方案](docs/16-首次安装与Profile关联.md)中的选择向导尚未实现，当前使用手动配置和 `bind`。
 
 这是早期 0.x 版本，使用 Python 3.11+ 和已配置的 Hermes 虚拟环境。运行依赖是 [psutil 与 PyYAML](requirements.txt)，固定版本的 hqtui 源码随仓库提供。兼容基线固定为 Herdr v0.9.0、Hermes Agent v0.21.1；完整版本与提交见 [源码证据](docs/09-源码证据索引.md)。
 
 ```sh
-herdr plugin install nocoo/hermes-on-herdr --ref v0.1.1
+herdr plugin install nocoo/hermes-on-herdr --ref v0.1.2
 herdr plugin config-dir nocoo.hermes-gateway
 herdr plugin list --plugin nocoo.hermes-gateway --json
 ```
@@ -87,17 +90,32 @@ herdr plugin list --plugin nocoo.hermes-gateway --json
 | `bind --dry-run` | 查看已有专用 Profile 的绑定计划；也是 `bind` 的默认行为 |
 | `bind --apply` | 创建控制目录，初始暂停；随后显式 `start` 才允许运行 |
 | `start` / `resume` | 保存运行意图并执行 ensure；收到 ACK 后仍需检查 READY |
-| `pause` / `stop` | 先保存暂停意图，再通知 supervisor |
-| `stop --wait 30` | 最多等待 30 秒，核验退出完成后报告结果 |
+| `pause` / `stop` | 先保存暂停意图，再停止 Gateway；dashboard 保持打开 |
+| `stop --wait 30` | 最多等待 30 秒核验 Gateway 及受管后代退出；supervisor 与 dashboard 保留 |
 | `restart` | 对允许运行的实例请求重启，保留已有暂停意图 |
 | `status --require-ready` | 仅在身份、运行状态及期望平台满足 READY 时成功 |
 | `logs --lines 50` | 查看结构化生命周期事件 |
-| `dashboard --startup` | 显示启动状态页，按需进入完整监控 |
+| `monitor` | 恢复并聚焦专用 dashboard；保留已有 Gateway 暂停意图 |
+| `dashboard` | 打开独立只读监控；`q` 退出，不影响 Gateway |
 | `dashboard --snapshot` / `dashboard --json` | 输出一次文本或 JSON 监控快照 |
 | `dashboard --demo-profiles 2` | 使用合成数据预览双 Profile 面板 |
 | `dashboard --http-port 8767` | 启动独立只读网页 `http://127.0.0.1:8767/` 与 `/health`；不控制 Gateway |
 
 从 hook 外执行控制命令时，用全局 `--owner-socket /absolute/bound.sock` 指定绑定的 owner。全部参数、返回码与重试规则见 [命令契约](docs/12-离线实现与验证.md#124-当前命令契约)。
+
+也可直接通过 Herdr 插件动作回到常驻 dashboard：
+
+```sh
+herdr plugin action invoke monitor --plugin nocoo.hermes-gateway
+```
+
+安装 [shell 入口](docs/15-发布与安装.md#恢复命令的安装) 后，在终端输入下面这一条命令即可打开恢复中心，查看原因、恢复 Dashboard 或启动 Gateway，无需填写 Profile、socket 和配置路径：
+
+```sh
+hermes-on-herdr
+```
+
+Herdr 命令面板也提供 **hermes on herdr: Recovery & Repair**。恢复页使用系统 Python；缺少运行环境或配置损坏时仍能打开。专属 tab 和 pane 保留恢复命令提示。可修复的情况、按钮行为及限制见 [故障恢复入口](docs/14-hqtui监控面板.md#149-故障恢复入口)。
 
 ## 开发与验证
 
@@ -107,7 +125,7 @@ cd hermes-on-herdr
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。[186 项离线测试](docs/evidence/release-0.1.1-unittest.txt)覆盖生命周期竞态、控制协议与配置边界、损坏状态、FIFO、进程身份、版本、监控及 HTTP 健康检查；[质量评估](docs/17-插件质量评估.md)记录新增回归与覆盖率。[CI](.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14；资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
+测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。[206 项离线测试](docs/evidence/release-0.1.2-unittest.txt)覆盖常驻面板、恢复入口、生命周期竞态、控制与配置边界、进程身份及 HTTP 健康检查。[恢复验证](docs/evidence/recovery-validation.txt)另记录了隔离的原生 Herdr popup 和标签冷恢复检查，以及尚未定位根因的偶发 FIFO CLI 超时。[CI](.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14；[质量评估](docs/17-插件质量评估.md)保留 0.1.1 的覆盖率基线，资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
 
 `v0.1.0` 的[历史接入验收](docs/13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)记录了 cherry 通过官方安装器安装并达到 READY，以及唯一 Gateway 的 Herdr/plugin 归属、Discord 连接、嵌入终端监控和 HTTP 健康 200。这些是当时的运行快照。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动与退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证；此前用户确认的消息连通单独保留为历史记录。
 
@@ -117,7 +135,7 @@ cd hermes-on-herdr
 
 - [文档索引](docs/README.md)：按使用、开发和研究选择阅读路径，查看当前验证范围。
 - [配置示例](examples/README.md)：解释器、专用 Profile、私有目录和绑定规则。
-- [监控面板](docs/14-hqtui监控面板.md)：启动页、布局、快捷键、采样与性能。
+- [监控面板](docs/14-hqtui监控面板.md)：常驻恢复、启动按钮、布局、快捷键、采样与性能。
 - [安全与运维](docs/07-安全与运维.md)：权限、诊断、暂停和升级边界。
 - [系统架构](docs/02-系统架构.md)与[生命周期](docs/03-生命周期设计.md)：controller、supervisor、锁和恢复协议。
 - [品牌与标识](assets/brand/README.md)：Logo 用法、原始来源及 Hexly 展示。

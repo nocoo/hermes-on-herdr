@@ -4,10 +4,11 @@ import os
 import time
 import uuid
 
-from .config import Config, ID_PATTERN, PLUGIN_ID, preflight
+from .config import Config, ID_PATTERN, PLUGIN_ID
 from .errors import GatewayError
 from .identity import capture, public_identity, same_process
 from .lifecycle import effective_budget
+from .recovery import remember_hint
 from .rpc import Herdr, RemoteError, control_query, decode_object, profile_in_use, supervisor_socket
 from .state import Store
 
@@ -25,21 +26,13 @@ def pane_identity(value):
 
 
 class Controller:
-    def __init__(self, config: Config, *, check=None, herdr=None, budget: float = 4.5):
+    def __init__(self, config: Config, *, herdr=None, budget: float = 4.5):
         self.config = config
         self.herdr = herdr or Herdr(config)
         self.deadline = time.monotonic() + budget
-        self.check = check or (lambda config: preflight(config, deadline=self.deadline))
-        self.checked = False
         self.herdr.deadline = self.deadline
         self.creator = uuid.uuid4().hex
         self.identity = capture(os.getpid())
-
-    def _check(self):
-        if not self.checked:
-            self._remaining()
-            self.check(self.config)
-            self.checked = True
 
     def _remaining(self):
         remaining = self.deadline - time.monotonic()
@@ -95,7 +88,7 @@ class Controller:
             raise GatewayError("UNKNOWN", "Live child is missing from supervisor status")
         # Project onto a fixed public contract; never expose arbitrary socket payloads.
         fields = ("state", "desired", "intent_revision", "applied_revision", "fused", "reason", "last_exit",
-                  "last_probe", "recovery", "dropped_log_chunks")
+                  "last_probe", "recovery", "dropped_log_chunks", "code", "message", "retry_at")
         result = {key: response.get(key) for key in fields}
         result.update(schema=1, owner_key=self.config.key, generation=runtime["generation"],
                       pane=pane, supervisor=public_identity(runtime["supervisor"]), gateway=gateway)
@@ -148,7 +141,8 @@ class Controller:
                         state = "UNKNOWN"
                 except GatewayError:
                     state = "UNKNOWN"
-            return self._summary(intent, state, lifetime_held=held, fused=budget["fused"], reason=budget.get("reason"),
+            detail = {"code": "SPAWN_UNCONFIRMED"} if state == "UNKNOWN" and runtime and runtime.get("spawn_pending") else {}
+            return self._summary(intent, state, **detail, lifetime_held=held, fused=budget["fused"], reason=budget.get("reason"),
                                  generation=runtime["generation"] if runtime else pending["generation"] if pending else None,
                                  last_error=runtime.get("last_error") if runtime else None)
 
@@ -156,8 +150,6 @@ class Controller:
         self.config.check_context(env)
         with Store(self.config.state_dir) as store:
             self._binding(store)
-            if action in {"start", "resume", "restart"}:
-                self._check()
             with store.mutation():
                 intent = store.set_intent(action, request_id=request_id, expected_revision=expected_revision)
             # Do not undo a successful Pause if optional diagnostics are damaged.
@@ -194,7 +186,7 @@ class Controller:
         # Focus context is unrelated to the pane in an exit event.
         return bool(pane and any(record and record.get("pane", {}).get("pane_id") == pane for record in (runtime, pending)))
 
-    def ensure(self, env, *, source="manual"):
+    def ensure(self, env, *, source="manual", repair=False):
         self.config.check_context(env)
         with Store(self.config.state_dir) as store:
             self._binding(store)
@@ -202,14 +194,18 @@ class Controller:
                 intent, runtime, pending = store.intent(), self._runtime(store), self._pending(store)
                 if not self._relevant(env, source, runtime, pending):
                     return self._summary(intent, "IGNORED")
-                budget = effective_budget(intent, store.read("fuse.json"))
                 held = store.lifetime_held()
-            if intent["desired"] == "paused":
-                self._notify(intent, runtime)
-                live = self._live_records(runtime)
-                return self._summary(intent, "DRAINING" if held else "UNKNOWN" if live else "PAUSED")
-            if budget["fused"]:
-                return self._summary(intent, "FUSED", reason=budget.get("reason"))
+                if (repair and not held and pending and pending["intent_revision"] == intent["revision"]
+                        and pending["phase"] in {"workspace_requested", "pane_requested", "pane_known"}
+                        and pending.get("controller") and not same_process(pending["controller"])
+                        and not self._live_records(runtime) and not (runtime and runtime.get("spawn_pending"))):
+                    # An explicit recovery can revoke a dead creator's ticket. Hold
+                    # the lifetime lease as well, so a delayed pane cannot claim it
+                    # between our check and the durable revision change. Preserve
+                    # both Pause and the fuse; Start remains a separate choice.
+                    with store.lease():
+                        intent = store.set_intent("pause" if intent["desired"] == "paused" else "restart",
+                                                  reason="dashboard_recovery", expected_revision=intent["revision"])
             self.herdr.available()
             if not self.herdr.enabled():
                 return self._summary(intent, "DISABLED")
@@ -232,17 +228,16 @@ class Controller:
                 return observed
             live = self._live_records(runtime)
             if live or (runtime and runtime.get("spawn_pending")):
-                return self._summary(intent, "ORPHAN" if runtime and runtime.get("gateway") in live else "UNKNOWN")
+                detail = {"code": "SPAWN_UNCONFIRMED"} if not live and runtime and runtime.get("spawn_pending") else {}
+                return self._summary(intent, "ORPHAN" if runtime and runtime.get("gateway") in live else "UNKNOWN", **detail)
             if pending and pending["intent_revision"] == intent["revision"]:
                 # Only pre-send phases can be taken over after proven controller death.
                 if (pending["phase"] not in {"reserved", "workspace_known"} or not pending.get("controller")
                         or same_process(pending["controller"])):
                     return self._summary(intent, "PENDING_UNKNOWN" if pending["phase"].endswith("requested") else "PENDING",
                                          generation=pending["generation"])
-            self._check()
-            self._remaining()
-            if profile_in_use(self.config, timeout=self._remaining()):
-                return self._summary(intent, "UNKNOWN", code="PROFILE_IN_USE")
+            # Ensure the dashboard even while paused or misconfigured. Only the
+            # pane supervisor may validate the Profile and start its Gateway.
             # Reuse only a workspace recorded by a previous generation; labels are never authority.
             workspace = None
             known = runtime["pane"]["workspace_id"] if runtime else pending.get("workspace_id") if pending else None
@@ -254,8 +249,7 @@ class Controller:
                     workspace = known
             with store.mutation():
                 current_intent, current_pending, current_runtime = store.intent(), self._pending(store), self._runtime(store)
-                if (current_intent["revision"] != intent["revision"] or current_intent["desired"] != "running"
-                        or effective_budget(current_intent, store.read("fuse.json"))["fused"]
+                if (current_intent["revision"] != intent["revision"]
                         or current_pending != pending or current_runtime != runtime or store.lifetime_held()
                         or self._live_records(current_runtime)):
                     return self._summary(current_intent, "BUSY")
@@ -278,8 +272,7 @@ class Controller:
             if current is None and self._runtime(store) and self._runtime(store)["generation"] == ticket["generation"]:
                 return None  # The supervisor already consumed the ticket and registered R0.
             if (current is None or current["generation"] != ticket["generation"] or current.get("creator") != self.creator
-                    or current["phase"] != ticket["phase"] or intent["revision"] != ticket["intent_revision"]
-                    or intent["desired"] != "running"):
+                    or current["phase"] != ticket["phase"] or intent["revision"] != ticket["intent_revision"]):
                 raise GatewayError("STALE_REQUEST", "Creation ticket changed")
             updated = dict(current, phase=phase, **fields)
             store.write("pending.json", updated)
@@ -310,10 +303,12 @@ class Controller:
             if pane["workspace_id"] != ticket["workspace_id"]:
                 raise GatewayError("PROTOCOL_ERROR")
             updated = self._advance(store, ticket, "pane_known", pane=pane)
+            remember_hint(self.herdr, pane)
             if updated is None:
                 intent = store.intent()
-                return self._summary(intent, "STARTING" if intent["desired"] == "running" else "DRAINING", generation=ticket["generation"])
-            return self._summary(store.intent(), "PENDING", generation=ticket["generation"])
+                return self._summary(intent, "STARTING" if intent["desired"] == "running" else "PAUSED",
+                                     generation=ticket["generation"], pane=pane)
+            return self._summary(store.intent(), "PENDING", generation=ticket["generation"], pane=pane)
         except RemoteError as exc:
             # The pinned API can return some errors after mutation. Revoke this generation
             # before retrying even an explicit rejection; never assume an error rolls it back.

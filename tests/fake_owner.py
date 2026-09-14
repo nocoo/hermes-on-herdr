@@ -81,6 +81,16 @@ class FakeOwner:
             result = {"pane": pane}
         elif method == "pane.process_info":
             result = {"process_info": {"pane_id": params["pane_id"], "shell_pid": self.pids.get(params["pane_id"])}}
+        elif method == "pane.focus":
+            assert params["pane_id"] in self.panes
+            result = {}
+        elif method == "pane.rename":
+            assert params["pane_id"] in self.panes and params["pane_id"] != "pane-user"
+            self.panes[params["pane_id"]]["label"] = params["label"]
+            result = {}
+        elif method == "tab.rename":
+            assert params["tab_id"] != "tab-user" and any(p["tab_id"] == params["tab_id"] for p in self.panes.values())
+            result = {}
         else:
             raise AssertionError(f"Unexpected API mutation: {method}")
         return {"id": request["id"], "result": result}

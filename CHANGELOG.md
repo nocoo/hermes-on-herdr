@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.2 — 2026-09-14
+
+Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.2`. Follow the [upgrade sequence](docs/15-发布与安装.md#升级与回滚) for an existing installation: Stop now keeps the dashboard and supervisor alive, so disable the plugin and close its verified owned pane before replacing the checkout.
+
+- Open the full dashboard immediately in the dedicated Herdr tab. Keep it available while the Gateway is paused, blocked or fused; remove the initial dashboard question and ignore the old `auto_open` preference.
+- Restore through Herdr startup, workspace focus and pane lifecycle hooks. Preserve running/paused intent, singleton ownership and circuit breaking; `monitor` restores and focuses the dashboard without resuming a paused Gateway.
+- Start or retry the Gateway with the dashboard button or Enter. Retry blocked startup checks every 30 seconds and recover a failed dashboard renderer after about five seconds. A late startup check cannot override a newer Pause.
+- Add an independent recovery screen through the bare `hermes-on-herdr` command and the native **Recovery & Repair** action. System Python can display diagnosis when the configured runtime is unavailable, with explicit actions to restore the dashboard, repair the runtime or dependencies, and launch or attach the saved Herdr session.
+- Persist recovery instructions in the dedicated tab and pane labels. Explicit recovery can release creation tickets from proven-dead controllers; live orphans, unknown launches and ambiguous ownership still require diagnosis.
+- Leave Hermes's own plugin selection to Hermes. Stop inspecting its plugin configuration or forcing project plugins off. Reduce repeated process checks while retaining identity verification.
+- Bring the offline suite to 206 tests on both supported Python versions. An isolated native Herdr 0.9.0 check verifies fallback UI, the recovery popup and labels surviving server cold restart; see [recovery validation](docs/evidence/recovery-validation.txt).
+
+Plugin IDs, persistent schema and runtime dependencies remain unchanged. Other dashboard preferences are preserved. Compatibility remains Herdr 0.9.0 and Hermes v0.21.1 at `b7ac3ba1cdf89f94dfe86de27e01358b194f4053`. No OS autostart service or independent periodic ensure daemon is installed. Full live host restart, Linux integration, online Herdr upgrade handoff and fresh message/model round trips remain unverified. The earlier intermittent FIFO CLI test timeout did not recur in the two recorded local runs; its cause remains unidentified.
+
 ## 0.1.1 — 2026-09-12
 
 Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.1`. Existing installations must follow the [stop, verify, install and resume sequence](docs/15-发布与安装.md#升级与回滚); replacing the checkout does not update a running supervisor.
