@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "version": "0.1.2",
+  "commit": "5ca4fe349fc592d052a58f0a65bd5bf2afc74931",
+  "verified_at": "2026-09-14T01:02:18.653872+00:00",
+  "result": "PASS",
+  "source_kind": "github",
+  "requested_ref": "v0.1.2",
+  "plugin_root": "/Users/nocoo/.config/herdr/plugins/github/nocoo.hermes-gateway-83b783d49cce",
+  "managed_checkout_clean": true,
+  "enabled": true,
+  "old_owned_processes_exited": true,
+  "new_supervisor_loaded": true,
+  "runtime": {
+    "state": "READY",
+    "desired": "running",
+    "intent_revision": 7,
+    "applied_revision": 7,
+    "fused": false,
+    "reason": null,
+    "last_exit": null,
+    "last_probe": {
+      "level": 2,
+      "operational": true,
+      "platforms": {
+        "discord": {
+          "connected": true
+        }
+      },
+      "state": "READY",
+      "observed_at": 1789347734.559905
+    },
+    "recovery": "next_owner_event",
+    "dropped_log_chunks": 0,
+    "code": null,
+    "message": null,
+    "retry_at": null,
+    "schema": 1,
+    "owner_key": "7791dac447e99dfa15b2cc4a6e3cfa47204d4b6f3790760167bf61c4ba163a8e",
+    "generation": "71ad9b99fdc245c2bba510a7633cc774",
+    "pane": {
+      "workspace_id": "w35",
+      "tab_id": "w35:t6",
+      "pane_id": "w35:p6",
+      "terminal_id": "term_65b66f4cdfc0b2d"
+    },
+    "supervisor": {
+      "pid": 11815,
+      "uid": 501,
+      "sid": 11815,
+      "start_fingerprint": {
+        "kind": "epoch_centiseconds",
+        "boot": "darwin:1789337681.000000",
+        "value": "178934761219"
+      }
+    },
+    "gateway": {
+      "pid": 11819,
+      "uid": 501,
+      "sid": 11815,
+      "start_fingerprint": {
+        "kind": "epoch_centiseconds",
+        "boot": "darwin:1789337681.000000",
+        "value": "178934761249"
+      }
+    }
+  },
+  "native_probes": [
+    {
+      "level": 1,
+      "operational": true,
+      "platforms": {
+        "discord": {
+          "connected": true
+        }
+      },
+      "state": "STARTING"
+    },
+    {
+      "level": 2,
+      "operational": true,
+      "platforms": {
+        "discord": {
+          "connected": true
+        }
+      },
+      "state": "READY"
+    }
+  ],
+  "gateway_context_verified": true,
+  "doctor_checks_passed": [
+    "profile",
+    "hermes_version",
+    "owner"
+  ],
+  "dashboard_version_visible": true,
+  "recovery_command": "hermes-on-herdr",
+  "recovery_state": "READY",
+  "persistent_recovery_labels_verified": true,
+  "tab_label": "Hermes · 恢复: hermes-on-herdr",
+  "pane_label": "Dashboard 未就绪？运行 hermes-on-herdr 查看原因并恢复。",
+  "server_pid_unchanged": 4433,
+  "protected_panes_unchanged": [
+    "w35:p4"
+  ],
+  "other_gateway_pids_unchanged": [
+    1239
+  ],
+  "other_plugin_registrations_unchanged": true,
+  "static_config_and_skill_files_unchanged": 354,
+  "runtime_metadata_updated": [
+    "skills/.usage.json"
+  ],
+  "observation": {
+    "seconds": 30.104,
+    "samples": [
+      {
+        "elapsed": 0.014,
+        "state": "READY"
+      },
+      {
+        "elapsed": 3.024,
+        "state": "READY"
+      },
+      {
+        "elapsed": 6.035,
+        "state": "READY"
+      },
+      {
+        "elapsed": 9.043,
+        "state": "READY"
+      },
+      {
+        "elapsed": 12.05,
+        "state": "READY"
+      },
+      {
+        "elapsed": 15.065,
+        "state": "READY"
+      },
+      {
+        "elapsed": 18.071,
+        "state": "READY"
+      },
+      {
+        "elapsed": 21.076,
+        "state": "READY"
+      },
+      {
+        "elapsed": 24.086,
+        "state": "READY"
+      },
+      {
+        "elapsed": 27.095,
+        "state": "READY"
+      },
+      {
+        "elapsed": 30.104,
+        "state": "READY"
+      }
+    ]
+  },
+  "backup": "/Users/nocoo/.local/state/hermes-on-herdr/backups/20260914-official-012-005740-cy86zd3z",
+  "not_run": [
+    "New messaging/model round trip",
+    "Whole Herdr server or computer restart"
+  ]
+}

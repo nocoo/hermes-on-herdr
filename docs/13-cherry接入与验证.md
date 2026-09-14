@@ -8,7 +8,7 @@
 
 **0.1.1 的升级与运行观察见 13.8。** 该次记录包含升级前的 ORPHAN、升级后一次 UNKNOWN 退出及核验后的恢复；退出根因尚未定位，不能把恢复运行当作修复。
 
-**0.1.2 的发布与隔离安装验证见 13.9。** 本次发布保留了正在运行的 cherry，其正式安装尚未切换到新 tag。
+**0.1.2 的发布与隔离安装验证见 13.9，本机正式升级及运行验收见 13.10。** 发版时保留了正在运行的 cherry；随后按用户要求切换到正式 tag，并重建 supervisor。
 
 ## 13.1 实际观察
 
@@ -230,6 +230,16 @@ Herdr 返回的安装根目录为 `/Users/nocoo/.config/herdr/plugins/github/noc
 - 重新下载源码附件后，SHA-256、全部 **800 个 Git blob**、归档路径、launcher 执行权限、兼容 symlink、版本与 vendor 声明均通过。两个解压入口均报告 `hermes-on-herdr 0.1.2`。源码包 122,842,642 bytes，SHA-256 为 `655f799a78e4fc25555dccfd6440242001436197e634e62b29021c58fbaf75f4`，与 GitHub 附件摘要一致。
 - 在独立 XDG 目录、socket 和 Herdr 0.9.0 session 中执行官方 `plugin install nocoo/hermes-on-herdr --ref v0.1.2 --yes`，核对 GitHub 来源、requested_ref、resolved_commit、enabled 和干净 checkout。无 Profile 配置时，恢复入口显示 SETUP_REQUIRED，原生 Recovery action 和 popup 均已注册；测试结束后已关闭隔离 server。该安装检查没有启动真实 Hermes Gateway。
 
-本次发版没有重启本机 Herdr 或 cherry。最终只读检查为 READY、Discord connected，supervisor **24128** → Gateway **24137**，pane **w35:p5**，running 意图 revision **5**；进程身份、generation 和意图与发版前一致。当前本机注册仍为 `v0.1.1`，包含此前开发阶段安装的源码更新；**本次没有把本机正式安装切换为 `v0.1.2`，也没有重建 supervisor 加载新版本**。隔离安装成功不能代替本机升级验收。
+本次发版没有重启本机 Herdr 或 cherry。最终只读检查为 READY、Discord connected，supervisor **24128** → Gateway **24137**，pane **w35:p5**，running 意图 revision **5**；进程身份、generation 和意图与发版前一致。发版验证时，本机注册仍为 `v0.1.1`，包含此前开发阶段安装的源码更新；**本次没有把本机正式安装切换为 `v0.1.2`，也没有重建 supervisor 加载新版本**。隔离安装成功不能代替本机升级验收。
 
 恢复 UI、原生 popup 与标签在隔离 server 冷恢复后的检查见[恢复验证](evidence/recovery-validation.txt)。本机 Python 3.11 / 3.14 各 206 项代码回归通过；更新版本号后另重跑两个环境的版本／manifest 检查。此前偶发 FIFO CLI 超时在上述本机回归和两轮发布 CI 中均未复现，根因仍未定位。完整真实 Herdr 生命周期、电脑重启、Linux 原生安装、在线升级 handoff 和新消息／模型往返仍未验证。
+
+## 13.10 本机切换正式 0.1.2
+
+2026-09-14，按用户要求使用 Herdr 原生安装器，将本机 cherry 从包含开发更新的旧 checkout 切换到正式 `v0.1.2`。安装来源为 GitHub，resolved_commit 与发布 tag 一致：`5ca4fe349fc592d052a58f0a65bd5bf2afc74931`。实际安装目录未变，checkout 干净且插件已启用。[结构化验证记录](evidence/release-0.1.2-local-upgrade.json)记录最终状态与检查范围。
+
+升级前已备份私有配置、控制状态、Profile 配置及 skill、旧 checkout 的修改补丁和未跟踪文件。原生探针显示 active_agents=0；Stop 将意图从 running/revision=5 保存为 paused/revision=6，并确认 Gateway 已停止。随后禁用插件，核验 pane 与 supervisor 归属，只关闭旧专用 pane `w35:p5`。旧 supervisor 24128、renderer 24134 和 Gateway 24137 全部退出，lifetime lock 释放、Profile 不再占用后，才安装正式 tag；没有删除或替换原生锁。
+
+新版通过 Doctor 的 Profile、Hermes 版本和 owner 检查后，使用 expected_revision=6 的 Resume 恢复运行，意图变为 running/revision=7。新 supervisor **11815** → Gateway **11819** 位于专用 pane **w35:p6**；实际 pane shell PID、Gateway 的 PPID/SID、Profile 与 Herdr 控制环境均匹配。两个间隔 1.2 秒的原生探针确认 Discord connected，第二次达到 READY。真实终端 Dashboard 显示 **v0.1.2**，无参数恢复命令 `hermes-on-herdr` 的诊断也为 READY，恢复 tab/pane 标签已写入 Herdr 的 session 快照。随后 30.104 秒、11 次采样均保持同一 generation 的 READY；这次观察不代表长期稳定性证明。
+
+Herdr server **4433**、用户工作 pane **w35:p4**、其他 Gateway **1239** 及其他插件注册均保持不变；升级期间没有重启 Herdr server。354 个静态配置及 skill 文件的字节校验一致，包括插件配置、Profile 的 config.yaml、.env 和 SOUL。Hermes 的动态 `skills/.usage.json` 发生更新，保留其现有运行记录。私有备份位于 `~/.local/state/hermes-on-herdr/backups/20260914-official-012-005740-cy86zd3z/`。本次没有发起新消息／模型往返，也没有执行整个 Herdr server 或电脑重启。
