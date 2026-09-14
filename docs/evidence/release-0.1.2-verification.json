@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "version": "0.1.2",
+  "commit": "5ca4fe349fc592d052a58f0a65bd5bf2afc74931",
+  "release": "https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.2",
+  "published_at": "2026-09-14T00:46:24Z",
+  "verified_at": "2026-09-14T00:49:14.172508+00:00",
+  "ci": {
+    "main": {
+      "run_id": 34793490140,
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/34793490140",
+      "head_sha": "5ca4fe349fc592d052a58f0a65bd5bf2afc74931",
+      "attempt": 1,
+      "jobs_passed": 4,
+      "jobs": [
+        {
+          "name": "ubuntu-24.04 / Python 3.11 / Test (none on ubuntu-24.04)",
+          "conclusion": "success",
+          "tests": 206,
+          "seconds": 66.927
+        },
+        {
+          "name": "macos-latest / Python 3.14 / Test (none on macos-latest)",
+          "conclusion": "success",
+          "tests": 206,
+          "seconds": 79.133
+        },
+        {
+          "name": "macos-latest / Python 3.11 / Test (none on macos-latest)",
+          "conclusion": "success",
+          "tests": 206,
+          "seconds": 82.522
+        },
+        {
+          "name": "ubuntu-24.04 / Python 3.14 / Test (none on ubuntu-24.04)",
+          "conclusion": "success",
+          "tests": 206,
+          "seconds": 86.807
+        }
+      ]
+    },
+    "tag": {
+      "run_id": 34793615909,
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/34793615909",
+      "head_sha": "5ca4fe349fc592d052a58f0a65bd5bf2afc74931",
+      "attempt": 1,
+      "jobs_passed": 4,
+      "jobs": [
+        {
+          "name": "ubuntu-24.04 / Python 3.11 / Test (none on ubuntu-24.04)",
+          "conclusion": "success",
+          "tests": 206,
+          "seconds": 81.474
+        },
+        {
+          "name": "macos-latest / Python 3.11 / Test (none on macos-latest)",
+          "conclusion": "success",
+          "tests": 206,
+          "seconds": 82.992
+        },
+        {
+          "name": "ubuntu-24.04 / Python 3.14 / Test (none on ubuntu-24.04)",
+          "conclusion": "success",
+          "tests": 206,
+          "seconds": 87.215
+        },
+        {
+          "name": "macos-latest / Python 3.14 / Test (none on macos-latest)",
+          "conclusion": "success",
+          "tests": 206,
+          "seconds": 91.662
+        }
+      ]
+    },
+    "release": {
+      "run_id": 34793720083,
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/34793720083",
+      "head_sha": "5ca4fe349fc592d052a58f0a65bd5bf2afc74931",
+      "conclusion": "success"
+    }
+  },
+  "archive": {
+    "result": "PASS",
+    "version": "0.1.2",
+    "commit": "5ca4fe349fc592d052a58f0a65bd5bf2afc74931",
+    "archive": "hermes-on-herdr-0.1.2.tar.gz",
+    "bytes": 122842642,
+    "sha256": "655f799a78e4fc25555dccfd6440242001436197e634e62b29021c58fbaf75f4",
+    "all_tagged_blobs_verified": 800,
+    "annotated_tag": true,
+    "safe_paths": true,
+    "executable_launcher": true,
+    "compatibility_symlink": true,
+    "vendor_license": true,
+    "launcher_outputs": [
+      "hermes-on-herdr 0.1.2",
+      "hermes-on-herdr 0.1.2"
+    ]
+  },
+  "installation": {
+    "result": "PASS",
+    "environment": "isolated Herdr 0.9.0 session, no real Hermes Profile",
+    "source_kind": "github",
+    "requested_ref": "v0.1.2",
+    "resolved_commit": "5ca4fe349fc592d052a58f0a65bd5bf2afc74931",
+    "version": "0.1.2",
+    "enabled": true,
+    "managed_checkout_clean": true,
+    "launcher_version": "hermes-on-herdr 0.1.2",
+    "recovery_without_configuration": "SETUP_REQUIRED",
+    "recovery_action_and_popup_registered": true,
+    "live_cherry_installation_upgraded": false
+  },
+  "local_tests": {
+    "python311": {
+      "version": "3.11.15",
+      "passed": 206,
+      "seconds": 66.326
+    },
+    "python314": {
+      "version": "3.14.7",
+      "passed": 206,
+      "seconds": 69.227
+    },
+    "scope": "Full code regression before the metadata bump; three version/manifest tests passed again on both runtimes after the bump."
+  },
+  "live_cherry": {
+    "state": "READY",
+    "desired": "running",
+    "intent_revision": 5,
+    "supervisor_pid": 24128,
+    "gateway_pid": 24137,
+    "generation": "f29c8fb2452e47b88bc4ff966a2e0a80",
+    "pane": "w35:p5",
+    "platforms": {
+      "discord": {
+        "connected": true
+      }
+    },
+    "identities_and_intent_unchanged": true,
+    "registered_version": "0.1.1",
+    "registered_ref": "v0.1.1",
+    "prior_session_source_updates_present": true,
+    "official_installation_upgraded_for_release": false,
+    "herdr_or_gateway_restarted_for_release": false
+  },
+  "known_test_incident": "An earlier intermittent FIFO CLI timeout did not recur in the recorded local runs or either release CI matrix; its cause remains unidentified.",
+  "not_run": [
+    "Live Cherry upgrade to the v0.1.2 managed checkout",
+    "Whole live Herdr lifecycle or host reboot",
+    "Linux native installation",
+    "Live Herdr binary upgrade handoff",
+    "Fresh message/model round trip"
+  ]
+}
