@@ -60,11 +60,12 @@ Do not run recover/start/supervise against a production session from this handbo
 ## Verification
 
 Status: `enforced` | `planned` | `manual` | `N/A`.
-6DQ = L1/L2/L3 + G1/G2 + D1. Native coverage may expose fewer metrics — remaining gap stays planned. Required bar remains ≥ 95% where measurable.
+6DQ = L1/L2/L3 + G1/G2 + D1. Python coverage must identify unmeasured metrics as gaps.
+L1 requires statements/branches/functions/lines each ≥95%; no skipped or focused tests.
 
 | Change | Proof | Status | Evidence |
 |---|---|---|---|
-| Logic | L1 unittest of locks/identity/lifecycle | enforced | CI `tests.yml` matrix OS×Python 3.11/3.14 → `tests/run.py`. No 95% threshold in `tools/test_coverage.py` → coverage bar still **planned** |
+| Logic | L1 locks/identity/lifecycle with required coverage | planned | CI `tests.yml` matrix OS×Python 3.11/3.14 runs `tests/run.py`; `tools/test_coverage.py` has no 95% threshold and does not enforce all four metrics |
 | API / schema | L2 fake Herdr RPC / fake Gateway | enforced | same offline suite (`tests/test_rpc.py`, process fixtures). Not real Herdr HTTP |
 | UI path | L3 isolated real Herdr session + Profile | planned | docs/06 requires live E2E with `HGH_TEST_*`; CI does not run it |
 | Types / lint | G1 0 error, 0 warning | planned | no ruff/mypy/gate in CI |
