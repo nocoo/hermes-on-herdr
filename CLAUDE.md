@@ -74,7 +74,7 @@ Status: `enforced` | `planned` | `manual` | `N/A`.
 | Docs | numbered docs if behavior changed | manual | human review |
 | Release | tag matches `__version__` | enforced | tests.yml tag check; `release.yml` |
 
-CLI process E2E against a disposable Herdr session is L3, not N/A.
+CLI process E2E against a disposable Herdr session is L3, not N/A. No husky. Target (unmeasured): pre-commit G1+L1 on index snapshot <30s; pre-push G2 on stdin refs <3min. `--no-verify` forbidden.
 
 ## Resources / Isolation
 
