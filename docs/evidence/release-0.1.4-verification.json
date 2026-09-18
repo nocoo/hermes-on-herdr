@@ -1,0 +1,129 @@
+{
+  "verified_on": "2026-09-18",
+  "release": {
+    "tagName": "v0.1.4",
+    "url": "https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.4",
+    "publishedAt": "2026-09-18T06:56:06Z",
+    "isDraft": false,
+    "isPrerelease": false
+  },
+  "release_commit": "d1fb4cb597514ca804782763a5dec3c32897e3c7",
+  "annotated_tag": true,
+  "ci": {
+    "main": {
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35316682436",
+      "head_sha": "d1fb4cb597514ca804782763a5dec3c32897e3c7",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "ubuntu-24.04 / Python 3.11 / Test (none on ubuntu-24.04)",
+          "conclusion": "success"
+        },
+        {
+          "name": "macos-latest / Python 3.14 / Test (none on macos-latest)",
+          "conclusion": "success"
+        },
+        {
+          "name": "ubuntu-24.04 / Python 3.14 / Test (none on ubuntu-24.04)",
+          "conclusion": "success"
+        },
+        {
+          "name": "macos-latest / Python 3.11 / Test (none on macos-latest)",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "tag": {
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35316869736",
+      "head_sha": "d1fb4cb597514ca804782763a5dec3c32897e3c7",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "ubuntu-24.04 / Python 3.11 / Test (none on ubuntu-24.04)",
+          "conclusion": "success"
+        },
+        {
+          "name": "macos-latest / Python 3.11 / Test (none on macos-latest)",
+          "conclusion": "success"
+        },
+        {
+          "name": "ubuntu-24.04 / Python 3.14 / Test (none on ubuntu-24.04)",
+          "conclusion": "success"
+        },
+        {
+          "name": "macos-latest / Python 3.14 / Test (none on macos-latest)",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "release": {
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35317031643",
+      "head_sha": "d1fb4cb597514ca804782763a5dec3c32897e3c7",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "archive",
+          "conclusion": "success"
+        }
+      ]
+    }
+  },
+  "downloaded_archive": {
+    "filename": "hermes-on-herdr-0.1.4.tar.gz",
+    "sha256": "55a5defc810a62291b97b1eaa20f00ae43bb4673cc56ece48e2c1afd24beae16",
+    "bytes": 122881080,
+    "commit": "d1fb4cb597514ca804782763a5dec3c32897e3c7",
+    "verified_git_blobs": 811,
+    "paths_and_modes_verified": true,
+    "launchers_verified": true,
+    "manifest_and_runtime_version": "0.1.4",
+    "vendor_license_preserved": true
+  },
+  "official_isolated_upgrade": {
+    "release": "v0.1.4",
+    "commit": "d1fb4cb597514ca804782763a5dec3c32897e3c7",
+    "herdr": "0.9.1",
+    "installations": [
+      {
+        "tag": "v0.1.3",
+        "source_kind": "github",
+        "resolved_commit": "758531e0c84789261cc12e00a4503a3a414973f7",
+        "version_output": "hermes-on-herdr 0.1.3",
+        "enabled_on_install": true,
+        "checkout_clean": true
+      },
+      {
+        "tag": "v0.1.4",
+        "source_kind": "github",
+        "resolved_commit": "d1fb4cb597514ca804782763a5dec3c32897e3c7",
+        "version_output": "hermes-on-herdr 0.1.4",
+        "enabled_on_install": true,
+        "checkout_clean": true
+      }
+    ],
+    "unconfigured_recovery": {
+      "state": "ERROR",
+      "code": "SETUP_REQUIRED"
+    },
+    "installed_code_accepted_live_owner": {
+      "version": "0.9.1",
+      "protocol": 22
+    },
+    "configuration_preserved": true,
+    "hermes_gateway_started": false,
+    "isolation": "temporary XDG/config/socket/session; no Hermes Profile; default user installation untouched",
+    "server_exit_code": 0,
+    "temporary_directory_removed": true
+  },
+  "local_full_tests": {
+    "python_3_11": "216 passed",
+    "python_3_14": "216 passed",
+    "skipped": 0
+  },
+  "local_installation_evidence": "release-0.1.4-local-upgrade.json",
+  "not_verified": [
+    "native Linux Herdr integration",
+    "live Herdr server upgrade handoff",
+    "message/model round trips"
+  ]
+}

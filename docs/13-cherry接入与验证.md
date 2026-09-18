@@ -243,3 +243,14 @@ Herdr 返回的安装根目录为 `/Users/nocoo/.config/herdr/plugins/github/noc
 新版通过 Doctor 的 Profile、Hermes 版本和 owner 检查后，使用 expected_revision=6 的 Resume 恢复运行，意图变为 running/revision=7。新 supervisor **11815** → Gateway **11819** 位于专用 pane **w35:p6**；实际 pane shell PID、Gateway 的 PPID/SID、Profile 与 Herdr 控制环境均匹配。两个间隔 1.2 秒的原生探针确认 Discord connected，第二次达到 READY。真实终端 Dashboard 显示 **v0.1.2**，无参数恢复命令 `hermes-on-herdr` 的诊断也为 READY，恢复 tab/pane 标签已写入 Herdr 的 session 快照。随后 30.104 秒、11 次采样均保持同一 generation 的 READY；这次观察不代表长期稳定性证明。
 
 Herdr server **4433**、用户工作 pane **w35:p4**、其他 Gateway **1239** 及其他插件注册均保持不变；升级期间没有重启 Herdr server。354 个静态配置及 skill 文件的字节校验一致，包括插件配置、Profile 的 config.yaml、.env 和 SOUL。Hermes 的动态 `skills/.usage.json` 发生更新，保留其现有运行记录。私有备份位于 `~/.local/state/hermes-on-herdr/backups/20260914-official-012-005740-cy86zd3z/`。本次没有发起新消息／模型往返，也没有执行整个 Herdr server 或电脑重启。
+
+
+## 13.11 · 0.1.4 正式升级与兼容策略
+
+2026-09-18，本机通过 Herdr 原生安装器从正式 `v0.1.3` 升级到 `v0.1.4`，对应 commit `d1fb4cb597514ca804782763a5dec3c32897e3c7`。本版按实际 JSON API 响应和 pane 进程归属校验兼容性，移除 0.9.x 上限与终端 wire protocol 白名单；manifest 仍保留必需的最低安装基线 0.9.0。
+
+升级前备份私有配置和状态，确认 cherry 无活动任务后 Stop，核验 PAUSED，再禁用插件并关闭已验证归属的旧 pane；旧 supervisor 和 Gateway 均退出、lifetime lock 释放后才安装正式 tag。安装未绕过暂停意图；Doctor 通过后显式 Start。残留且未加载的 `ai.hermes.gateway-cherry.plist` 已移入私有备份，避免下次登录的 RunAtLoad/KeepAlive 与插件竞争。
+
+[发布证据](evidence/release-0.1.4-verification.json)包含 main/tag 的 OS × Python 四组 CI、附件摘要和全部 Git 文件核验，以及隔离环境中的官方升级。[本机证据](evidence/release-0.1.4-local-upgrade.json)记录：安装 checkout 干净，来源为 GitHub 的正式 tag；新 supervisor **93843** → Gateway **93848**，pane **w35:pB**；READY、单实例、两次新鲜 Discord connected 采样，最终 readiness level 2。配置、Profile 文件、default Gateway 身份和其他插件注册均保持不变。
+
+本次未进行真实消息/模型往返，也未升级 Herdr server，因此不能作为 Herdr 在线 handoff 的验收证据。

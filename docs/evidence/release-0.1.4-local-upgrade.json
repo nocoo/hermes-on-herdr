@@ -1,0 +1,41 @@
+{
+  "verified_at": "2026-09-18T06:58:04.778464+00:00",
+  "release": "v0.1.4",
+  "commit": "d1fb4cb597514ca804782763a5dec3c32897e3c7",
+  "previous_release": "v0.1.3",
+  "source_kind": "github",
+  "checkout_clean": true,
+  "herdr": {
+    "version": "0.9.1",
+    "protocol": 22
+  },
+  "profile": "cherry",
+  "state": "READY",
+  "desired": "running",
+  "supervisor_pid": 93843,
+  "gateway_pid": 93848,
+  "pane": "w35:pB",
+  "single_gateway": true,
+  "old_processes_exited": true,
+  "native_observations": [
+    {
+      "level": 1,
+      "operational": true,
+      "discord": "connected",
+      "active_agents": 0
+    },
+    {
+      "level": 2,
+      "operational": true,
+      "discord": "connected",
+      "active_agents": 0
+    }
+  ],
+  "profile_and_configuration_preserved": true,
+  "default_gateway_identity_preserved": true,
+  "other_plugin_registrations_preserved": true,
+  "native_autostart_removed_with_private_backup": true,
+  "doctor_passed": true,
+  "message_model_round_trip": "NOT_RUN",
+  "live_herdr_server_upgrade": "NOT_RUN"
+}
