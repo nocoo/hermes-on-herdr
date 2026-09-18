@@ -51,6 +51,21 @@ class ControllerTests(unittest.TestCase):
             return record if record and same_process(record) else None
         return wait_until(live)
 
+    def test_incompatible_owner_cannot_create_workspace_pane_or_gateway(self):
+        for fields, code in (({"protocol": 23}, "UNSUPPORTED_VERSION"),
+                             ({"version": "0.8.9"}, "UNSUPPORTED_VERSION"),
+                             ({"protocol": True}, "PROTOCOL_ERROR")):
+            with self.subTest(fields=fields):
+                self.owner.pong = {"type": "pong", "version": "0.9.1", "protocol": 22, **fields}
+                with self.assertRaises(GatewayError) as error:
+                    self.ensure()
+                self.assertEqual(code, error.exception.code)
+                self.assertIsNone(self.store.read("pending.json"))
+                self.assertIsNone(self.store.read("runtime.json"))
+        self.assertEqual([], self.owner.processes)
+        self.assertEqual(1, len(self.owner.workspaces))
+        self.assertEqual(["ping"] * 3, [r["method"] for r in self.owner.server.requests])
+
     def test_twenty_concurrent_hooks_create_one_gateway_without_focus_change(self):
         with ThreadPoolExecutor(max_workers=20) as pool:
             results = list(pool.map(lambda _: self.ensure(), range(20)))

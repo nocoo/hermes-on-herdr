@@ -13,6 +13,7 @@ import unicodedata
 import uuid
 
 from .bootstrap import PLUGIN_ID, RECOVERY_HINT, RECOVERY_TAB, ROOT, read_config, runtime_argv
+from .compatibility import check_herdr_compatibility
 from .errors import GatewayError
 from .paths import check_private, json_object, private_bytes, trusted_path
 from .transport import exchange
@@ -41,7 +42,7 @@ MESSAGES = {
     "RPC_UNAVAILABLE": ("暂时无法连接 Herdr server。", "外部终端可点击打开 Herdr，启动或连接原来的 session。"),
     "OWNER_UNAVAILABLE": ("暂时无法连接 Herdr server。", "外部终端可点击打开 Herdr，启动或连接原来的 session。"),
     "DISABLED": ("此 Herdr 插件已停用。", "在 Herdr 插件管理中启用 hermes on herdr，再重新检查。"),
-    "UNSUPPORTED_VERSION": ("Herdr 或 Hermes 安装与插件支持的版本不一致。", "恢复支持的安装版本后重新检查。"),
+    "UNSUPPORTED_VERSION": ("Herdr 协议或版本范围不受支持，或 Hermes 源码版本不匹配。", "查看 Doctor 的失败项和兼容要求，升级插件或恢复受支持的安装后重新检查。"),
     "STATE_SCHEMA": ("保存的管理状态不完整或版本不兼容。", "恢复管理状态的备份后重新检查；不会自动清空绑定或锁。"),
     "OWNERSHIP_CONFLICT": ("配置与原来的 Profile 或插件绑定不一致。", "恢复原绑定配置后重新检查。"),
     "NOT_OWNER": ("当前 Herdr session 不是此 Profile 的管理者。", "请在原来的 session，或外部终端运行 hermes-on-herdr。"),
@@ -216,6 +217,7 @@ def open_popup(config, *, owner_socket=None):
         if "error" in response or not isinstance(response.get("result"), dict):
             raise GatewayError("HERDR_ERROR")
         return response["result"]
+    check_herdr_compatibility(call("ping", {}))
     plugins = call("plugin.list", {"plugin_id": PLUGIN_ID}).get("plugins", [])
     if not isinstance(plugins, list):
         raise GatewayError("PROTOCOL_ERROR")

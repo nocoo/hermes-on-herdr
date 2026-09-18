@@ -44,7 +44,7 @@ See the [context and Profile checks](../src/hermes_gateway_herdr/config.py), [He
 
 ## The experience
 
-`v0.1.2` keeps the full dashboard open by default and includes an independent recovery screen.
+Since `v0.1.2`, the plugin keeps the full dashboard open by default and includes an independent recovery screen.
 
 ![hermes on herdr monitoring two Profiles with offline demo data](evidence/dashboard-two.png)
 
@@ -58,12 +58,12 @@ See the [dashboard guide](14-hqtui监控面板.md) for previews, controls and re
 
 ## Get started
 
-**0.1.2** uses Herdr's native plugin installer; see the [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.2) and [release guide](15-发布与安装.md) for distribution, installation and upgrades. The [first-run association wizard](16-首次安装与Profile关联.md) is planned. Manual configuration and `bind` are implemented.
+**0.1.3** uses Herdr's native plugin installer; see the [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.3) and [release guide](15-发布与安装.md) for distribution, installation and upgrades. The [first-run association wizard](16-首次安装与Profile关联.md) is planned. Manual configuration and `bind` are implemented.
 
-This is an early 0.x release. Use Python 3.11+ from a configured Hermes virtual environment with [psutil and PyYAML](../requirements.txt). The repository includes pinned hqtui source. Compatibility is pinned to Herdr v0.9.0 and Hermes Agent v0.21.1; exact versions and commits are recorded in the [source evidence](09-源码证据索引.md).
+This is an early 0.x release. Use Python 3.11+ from a configured Hermes virtual environment with [psutil and PyYAML](../requirements.txt). The repository includes pinned hqtui source. Herdr must report protocol 22 and a stable version in `>=0.9.0,<0.10.0`; patch releases are no longer pinned. The 0.9.0 and 0.9.1 interfaces have been checked. Hermes Agent remains pinned to its v0.21.1 source commit. See the [compatibility policy and evidence](18-Herdr兼容策略.md).
 
 ```sh
-herdr plugin install nocoo/hermes-on-herdr --ref v0.1.2
+herdr plugin install nocoo/hermes-on-herdr --ref v0.1.3
 herdr plugin config-dir nocoo.hermes-gateway
 herdr plugin list --plugin nocoo.hermes-gateway --json
 ```
@@ -119,7 +119,7 @@ cd hermes-on-herdr
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The [206-test run](evidence/release-0.1.2-unittest.txt) covers the persistent dashboard, recovery, lifecycle races, control and configuration boundaries, process identity and HTTP health checks. [Recovery validation](evidence/recovery-validation.txt) separately records isolated native Herdr popup and label restoration checks, plus an earlier intermittent FIFO CLI timeout whose cause remains unknown. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. The [quality assessment](17-插件质量评估.md) retains the 0.1.1 coverage baseline; resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
+Tests use temporary directories, fake Herdr RPC, controlled Gateway processes and real PTYs. They do not invoke installed Herdr/Hermes entry points. The [214-test run](evidence/release-0.1.3-unittest.txt) covers the persistent dashboard, recovery, lifecycle races, control and configuration boundaries, process identity and HTTP health checks. [Recovery validation](evidence/recovery-validation.txt) separately records isolated native Herdr popup and label restoration checks, plus an earlier intermittent FIFO CLI timeout whose cause remains unknown. [CI](../.github/workflows/tests.yml) runs Ubuntu / macOS with Python 3.11 / 3.14. The [quality assessment](17-插件质量评估.md) retains the 0.1.1 coverage baseline; resource measurements are in the [dashboard guide](14-hqtui监控面板.md#146-测试与测量).
 
 The [recorded v0.1.0 acceptance](13-cherry接入与验证.md#137-正式-010-发布安装与运行验收) verified an official installation, Cherry READY, exactly one Gateway under Herdr/plugin ownership, Discord connected, the embedded terminal monitor, and HTTP health 200. These are historical runtime snapshots. Telegram and Slack are existing upstream Hermes channels; this plugin has no recorded live integration verification for them yet. A fresh message/model round trip, full host cold start and shutdown, explicit pane interaction, Linux live integration, and live Herdr update handoff remain unverified. The earlier user confirmation of messaging is preserved as historical evidence.
 

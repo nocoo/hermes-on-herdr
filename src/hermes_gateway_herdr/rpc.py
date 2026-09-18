@@ -9,7 +9,8 @@ from pathlib import Path
 import time
 import uuid
 
-from .config import Config, HERDR_VERSION, HERMES_SHA, PLUGIN_ID, private_bytes
+from .compatibility import check_herdr_compatibility
+from .config import Config, HERMES_SHA, PLUGIN_ID, private_bytes
 from .errors import GatewayError
 from .identity import capture, hermes_start_matches, same_process
 from .paths import json_object as decode_object
@@ -45,10 +46,8 @@ class Herdr:
             raise GatewayError("PROTOCOL_ERROR", "Herdr omitted a result object")
         return result
 
-    def available(self) -> None:
-        result = self.call("ping")
-        if result.get("version") != HERDR_VERSION:
-            raise GatewayError("UNSUPPORTED_VERSION", "Herdr server is outside the pinned baseline")
+    def available(self) -> dict:
+        return check_herdr_compatibility(self.call("ping"))
 
     def enabled(self) -> bool:
         plugins = self.call("plugin.list", {"plugin_id": PLUGIN_ID}).get("plugins")

@@ -267,8 +267,24 @@ class CliTests(unittest.TestCase):
         data = json.loads(result.stdout)
         self.assertEqual("UNSUPPORTED_VERSION", data["checks"][1]["code"])
         self.assertEqual("NOT_RUN", data["real_validation"])
+        self.assertEqual({"version_range": ">=0.9.0,<0.10.0", "protocols": [22], "stable_only": True},
+                         data["baseline"]["herdr"])
+        self.assertEqual({"name": "owner", "ok": True, "code": "OK", "herdr": {"version": "0.9.1", "protocol": 22}},
+                         data["checks"][2])
         after = {str(path): path.read_bytes() for path in self.config.profile_home.rglob("*") if path.is_file()}
         self.assertEqual(before, after)
+        self.assertEqual([], self.owner.processes)
+
+    def test_doctor_explains_unsupported_herdr_protocol_without_echoing_peer_text(self):
+        self.owner.pong.update(protocol=23, message="fixture-private-sentinel")
+        result = self.invoke("doctor", "--json")
+        self.assertEqual(20, result.returncode)
+        owner = json.loads(result.stdout)["checks"][2]
+        self.assertFalse(owner["ok"])
+        self.assertEqual("UNSUPPORTED_VERSION", owner["code"])
+        self.assertIn("protocol", owner["message"])
+        self.assertIn("22", owner["message"])
+        self.assertNotIn("fixture-private-sentinel", result.stdout)
         self.assertEqual([], self.owner.processes)
 
     def test_binding_dry_run_then_apply_only_writes_control_state(self):

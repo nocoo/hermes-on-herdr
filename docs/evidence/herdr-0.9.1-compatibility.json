@@ -1,0 +1,37 @@
+{
+  "herdr": "0.9.1",
+  "source_commit": "065ef9d6a531c49fb8bee7e818ef837065b21ee9",
+  "binary_sha256": "154f2cc74f4fa47a7322d9e04634391a35c76b44813c10c842a6e07cf5100ed5",
+  "checks": [
+    "live ping accepted by plugin",
+    "plugin registration, code root and enablement",
+    "workspace.create, plugin.pane.open, pane.get and pane.process_info ownership",
+    "tab.rename, pane.rename, pane.focus and session.snapshot"
+  ],
+  "pong": {
+    "type": "pong",
+    "version": "0.9.1",
+    "protocol": 22,
+    "capabilities": {
+      "live_handoff": true,
+      "detached_server_daemon": true,
+      "endpoint_protocol_generation": 1,
+      "surface_interest": true,
+      "health_check": true
+    }
+  },
+  "negotiated": {
+    "version": "0.9.1",
+    "protocol": 22
+  },
+  "hermes_gateway_started": false,
+  "isolation": "dedicated temporary XDG/config/socket/session; no Hermes Profile configuration",
+  "server_exit_code": 0,
+  "temporary_directory_removed": true,
+  "original_main_result": {
+    "commit": "9abd7019421bc1880bbdfba5d1198792a5acb422",
+    "code": "UNSUPPORTED_VERSION",
+    "message": "Herdr server is outside the pinned baseline"
+  },
+  "checked_on": "2026-09-18"
+}

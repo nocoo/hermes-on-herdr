@@ -8,7 +8,8 @@ import time
 import uuid
 
 from . import __version__
-from .config import Config, HERDR_VERSION, HERMES_SHA, installation_preflight, preflight, profile_preflight
+from .compatibility import HERDR_PROTOCOLS, HERDR_VERSION_RANGE
+from .config import Config, HERMES_SHA, installation_preflight, preflight, profile_preflight
 from .controller import Controller
 from .errors import GatewayError
 from .paths import check_private
@@ -91,17 +92,18 @@ def doctor(config):
     try:
         client = Herdr(config)
         client.deadline = deadline
-        client.available()
+        herdr = client.available()
         enabled = client.enabled()
-        checks.append({"name": "owner", "ok": enabled, "code": "OK" if enabled else "DISABLED"})
+        checks.append({"name": "owner", "ok": enabled, "code": "OK" if enabled else "DISABLED", "herdr": herdr})
     except GatewayError as exc:
-        checks.append({"name": "owner", "ok": False, "code": exc.code})
+        checks.append({"name": "owner", "ok": False, "code": exc.code, "message": str(exc)})
     try:
         status = Controller(config, budget=max(0.01, deadline - time.monotonic())).status()
     except GatewayError as exc:
         status = {"state": "ERROR", "code": exc.code}
     return {"schema": 1, "state": "DIAGNOSIS", "checks": checks, "runtime": status,
-            "baseline": {"plugin": __version__, "herdr": HERDR_VERSION, "hermes_sha": HERMES_SHA},
+            "baseline": {"plugin": __version__, "herdr": {"version_range": HERDR_VERSION_RANGE,
+                         "protocols": list(HERDR_PROTOCOLS), "stable_only": True}, "hermes_sha": HERMES_SHA},
             "real_validation": "NOT_RUN", "recovery": "next_owner_event"}
 
 

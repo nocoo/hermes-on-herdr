@@ -16,7 +16,6 @@ from .paths import json_object, private_bytes, trusted_path
 from .state import CONTROL_DIR, check_private
 
 PLUGIN_ID = "nocoo.hermes-gateway"
-HERDR_VERSION = "0.9.0"
 HERMES_SHA = "b7ac3ba1cdf89f94dfe86de27e01358b194f4053"
 PANE_KEYS = ("HERDR_SOCKET_PATH", "HERDR_WORKSPACE_ID", "HERDR_TAB_ID", "HERDR_PANE_ID")
 ID_PATTERN = re.compile(r"[A-Za-z0-9_.:-]{1,160}\Z")

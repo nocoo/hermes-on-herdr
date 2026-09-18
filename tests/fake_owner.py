@@ -1,4 +1,4 @@
-"""Fake Herdr speaks the pinned API and only launches tests/process_fixture.py."""
+"""Fake Herdr speaks the supported API and only launches tests/process_fixture.py."""
 
 import json
 import os
@@ -22,6 +22,7 @@ class FakeOwner:
         self.panes = {"pane-user": {"workspace_id": "w-user", "tab_id": "tab-user", "pane_id": "pane-user", "terminal_id": "terminal-user"}}
         self.pids = {"pane-user": os.getpid()}
         self.enabled = True
+        self.pong = {"type": "pong", "version": "0.9.1", "protocol": 22}
         self.drop_workspace = self.drop_pane = False
         self.error_after_open = False
         self.before_open = self.after_open = None
@@ -31,7 +32,7 @@ class FakeOwner:
     def answer(self, request):
         method, params = request["method"], request.get("params", {})
         if method == "ping":
-            result = {"version": "0.9.0"}
+            result = dict(self.pong)
         elif method == "plugin.list":
             result = {"plugins": [{"plugin_id": PLUGIN_ID, "plugin_root": str(self.config.plugin_root), "enabled": self.enabled}]}
         elif method == "session.snapshot":

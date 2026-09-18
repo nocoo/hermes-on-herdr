@@ -27,6 +27,7 @@ class SupervisorTests(unittest.TestCase):
         self.config = self.fixture.config
         self.process = self.record = None
         self.enabled = True
+        self.pong = {"type": "pong", "version": "0.9.1", "protocol": 22}
         self.owner_offline = False
         self.terminal_id = "terminal-first"
         self.moved = False
@@ -41,7 +42,7 @@ class SupervisorTests(unittest.TestCase):
             return None
         method = request["method"]
         if method == "ping":
-            result = {"version": "0.9.0"}
+            result = dict(self.pong)
         elif method == "plugin.list":
             result = {"plugins": [{"plugin_id": PLUGIN_ID, "plugin_root": str(self.config.plugin_root), "enabled": self.enabled}]}
         elif method == "pane.get":
@@ -123,6 +124,23 @@ class SupervisorTests(unittest.TestCase):
 
     def assert_single(self):
         self.assertTrue(all(item["active_previous"] == 0 for item in json_lines(self.fixture.root / "launches.jsonl")))
+
+    def test_patch_upgrade_keeps_gateway_but_protocol_change_stops_it(self):
+        self.pong["version"] = "0.9.0"
+        self.start()
+        child = self.wait_child()
+        wait_until(lambda: self.status()["state"] == "READY")
+        self.pong["version"] = "0.9.1"
+        before = sum(r["method"] == "pane.process_info" for r in self.server.requests)
+        wait_until(lambda: sum(r["method"] == "pane.process_info" for r in self.server.requests) >= before + 2)
+        self.assertEqual("READY", self.status()["state"])
+        self.assertTrue(same_process(child))
+        self.assertIsNone(self.process.poll())
+        self.pong["protocol"] = 23
+        self.assertEqual(0, self.process.wait(timeout=5))
+        self.assertFalse(same_process(child))
+        self.assertFalse(self.store.lifetime_held())
+        self.assertEqual(1, len(json_lines(self.fixture.root / "launches.jsonl")))
 
     def display_failure(self, stage):
         self.start({"dashboard_failure": stage})

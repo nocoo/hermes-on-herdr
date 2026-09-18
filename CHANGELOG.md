@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.3 — 2026-09-18
+
+Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.3`. Existing installations must follow the [upgrade sequence](docs/15-发布与安装.md#升级与回滚) so the supervisor loads the new code.
+
+- Replace the exact Herdr 0.9.0 check with live protocol 22 validation and the stable `>=0.9.0,<0.10.0` compatibility range. Herdr 0.9.1 and later compatible patches no longer fail solely because their release number changed.
+- Reject unknown protocols, missing or malformed handshake fields, prereleases and releases outside the reviewed API family before creating resources. Recheck the live server during supervision; an incompatible protocol change stops the owned Gateway safely.
+- Apply the same check to the dependency-free recovery popup. Doctor reports the accepted server version/protocol, supported range and useful rejection messages.
+- Add eight regression tests; the complete offline suite contains 214 tests. Verify real 0.9.1 plugin registration, workspace/pane creation, ownership and supporting RPCs in an isolated native session. See the [compatibility policy and evidence](docs/18-Herdr兼容策略.md).
+
+No runtime dependencies, persistent schemas, plugin IDs or Hermes source requirements changed. Native Linux, real Gateway handoff and message/model round trips are not established by this release's isolated checks.
+
 ## 0.1.2 — 2026-09-14
 
 Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.2`. Follow the [upgrade sequence](docs/15-发布与安装.md#升级与回滚) for an existing installation: Stop now keeps the dashboard and supervisor alive, so disable the plugin and close its verified owned pane before replacing the checkout.
