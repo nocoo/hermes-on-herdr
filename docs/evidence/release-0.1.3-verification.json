@@ -1,0 +1,130 @@
+{
+  "verified_on": "2026-09-18",
+  "release": {
+    "tagName": "v0.1.3",
+    "url": "https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.3",
+    "publishedAt": "2026-09-18T06:12:19Z",
+    "isDraft": false,
+    "isPrerelease": false
+  },
+  "release_commit": "758531e0c84789261cc12e00a4503a3a414973f7",
+  "annotated_tag": true,
+  "ci": {
+    "main": {
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35313490713",
+      "head_sha": "758531e0c84789261cc12e00a4503a3a414973f7",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "ubuntu-24.04 / Python 3.11 / Test (none on ubuntu-24.04)",
+          "conclusion": "success"
+        },
+        {
+          "name": "ubuntu-24.04 / Python 3.14 / Test (none on ubuntu-24.04)",
+          "conclusion": "success"
+        },
+        {
+          "name": "macos-latest / Python 3.11 / Test (none on macos-latest)",
+          "conclusion": "success"
+        },
+        {
+          "name": "macos-latest / Python 3.14 / Test (none on macos-latest)",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "tag": {
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35313686153",
+      "head_sha": "758531e0c84789261cc12e00a4503a3a414973f7",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "macos-latest / Python 3.14 / Test (none on macos-latest)",
+          "conclusion": "success"
+        },
+        {
+          "name": "macos-latest / Python 3.11 / Test (none on macos-latest)",
+          "conclusion": "success"
+        },
+        {
+          "name": "ubuntu-24.04 / Python 3.14 / Test (none on ubuntu-24.04)",
+          "conclusion": "success"
+        },
+        {
+          "name": "ubuntu-24.04 / Python 3.11 / Test (none on ubuntu-24.04)",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "release": {
+      "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35313855785",
+      "head_sha": "758531e0c84789261cc12e00a4503a3a414973f7",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "archive",
+          "conclusion": "success"
+        }
+      ]
+    }
+  },
+  "downloaded_archive": {
+    "filename": "hermes-on-herdr-0.1.3.tar.gz",
+    "sha256": "687c89b94c03c4c9cd4a4eb6aace0e919c382271e27b0243af247c9694326977",
+    "bytes": 122869772,
+    "commit": "758531e0c84789261cc12e00a4503a3a414973f7",
+    "verified_git_blobs": 808,
+    "paths_and_modes_verified": true,
+    "launchers_verified": true,
+    "manifest_and_runtime_version": "0.1.3",
+    "vendor_license_preserved": true
+  },
+  "official_install_and_upgrade": {
+    "release": "v0.1.3",
+    "commit": "758531e0c84789261cc12e00a4503a3a414973f7",
+    "herdr": "0.9.1",
+    "installations": [
+      {
+        "tag": "v0.1.2",
+        "source_kind": "github",
+        "resolved_commit": "5ca4fe349fc592d052a58f0a65bd5bf2afc74931",
+        "version_output": "hermes-on-herdr 0.1.2",
+        "enabled_on_install": true,
+        "checkout_clean": true
+      },
+      {
+        "tag": "v0.1.3",
+        "source_kind": "github",
+        "resolved_commit": "758531e0c84789261cc12e00a4503a3a414973f7",
+        "version_output": "hermes-on-herdr 0.1.3",
+        "enabled_on_install": true,
+        "checkout_clean": true
+      }
+    ],
+    "unconfigured_recovery": {
+      "state": "ERROR",
+      "code": "SETUP_REQUIRED"
+    },
+    "installed_code_accepted_live_owner": {
+      "version": "0.9.1",
+      "protocol": 22
+    },
+    "configuration_preserved": true,
+    "hermes_gateway_started": false,
+    "isolation": "temporary XDG/config/socket/session; no Hermes Profile; default user installation untouched",
+    "server_exit_code": 0,
+    "temporary_directory_removed": true
+  },
+  "local_full_tests": {
+    "python_3_11": "214 passed",
+    "python_3_14": "214 passed",
+    "skipped": 0
+  },
+  "native_api_evidence": "herdr-0.9.1-compatibility.json",
+  "not_verified": [
+    "native Linux Herdr integration",
+    "live Hermes Gateway handoff",
+    "message/model round trips"
+  ],
+  "default_user_installation_changed": false
+}
