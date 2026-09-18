@@ -51,10 +51,10 @@ class ControllerTests(unittest.TestCase):
             return record if record and same_process(record) else None
         return wait_until(live)
 
-    def test_incompatible_owner_cannot_create_workspace_pane_or_gateway(self):
-        for fields, code in (({"protocol": 23}, "UNSUPPORTED_VERSION"),
-                             ({"version": "0.8.9"}, "UNSUPPORTED_VERSION"),
-                             ({"protocol": True}, "PROTOCOL_ERROR")):
+    def test_invalid_json_endpoint_cannot_create_workspace_pane_or_gateway(self):
+        for fields, code in (({"type": "ok"}, "PROTOCOL_ERROR"),
+                             ({"type": None}, "PROTOCOL_ERROR"),
+                             ({"type": True}, "PROTOCOL_ERROR")):
             with self.subTest(fields=fields):
                 self.owner.pong = {"type": "pong", "version": "0.9.1", "protocol": 22, **fields}
                 with self.assertRaises(GatewayError) as error:
@@ -65,6 +65,30 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual([], self.owner.processes)
         self.assertEqual(1, len(self.owner.workspaces))
         self.assertEqual(["ping"] * 3, [r["method"] for r in self.owner.server.requests])
+
+    def test_new_release_and_wire_protocol_can_start_a_verified_gateway(self):
+        self.owner.pong.update(version="1.0.0", protocol=23)
+        self.ensure()
+        child = self.gateway()
+        wait_until(lambda: self.controller().status()["state"] == "READY")
+        self.assertTrue(same_process(child))
+        self.assertEqual(1, len(self.owner.processes))
+
+    def test_missing_required_api_blocks_creation_on_a_newer_release(self):
+        self.owner.pong.update(version="1.0.0", protocol=23)
+        original = self.owner.answer
+        def answer(request):
+            if request["method"] == "plugin.list":
+                return {"id": request["id"], "error": {"code": "method_not_found"}}
+            return original(request)
+        self.owner.server.handler = answer
+        with self.assertRaises(GatewayError) as error:
+            self.ensure()
+        self.assertEqual("HERDR_ERROR", error.exception.code)
+        self.assertEqual(["ping", "plugin.list"], [r["method"] for r in self.owner.server.requests])
+        self.assertIsNone(self.store.read("pending.json"))
+        self.assertIsNone(self.store.read("runtime.json"))
+        self.assertEqual([], self.owner.processes)
 
     def test_twenty_concurrent_hooks_create_one_gateway_without_focus_change(self):
         with ThreadPoolExecutor(max_workers=20) as pool:

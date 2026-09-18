@@ -12,7 +12,7 @@ This file is the **contract**. Hooks, CI, and config are **enforcement**. If the
 |---|---|
 | Agent handbook | this file |
 | Human docs | README.md, `docs/NN-*.md` |
-| Version | `herdr-plugin.toml` / package `__version__` `0.1.3`, display `v0.1.3` |
+| Version | `herdr-plugin.toml` / package `__version__` `0.1.4`, display `v0.1.4` |
 | Enforcement | `.github/workflows/tests.yml`, `tests/run.py` |
 | Machine rules | global `AGENTS.md`, `rules/git-commit.md` |
 | Accidents | [Retrospective.md](Retrospective.md) |

@@ -29,6 +29,7 @@ class SupervisorTests(unittest.TestCase):
         self.enabled = True
         self.pong = {"type": "pong", "version": "0.9.1", "protocol": 22}
         self.owner_offline = False
+        self.missing_method = None
         self.terminal_id = "terminal-first"
         self.moved = False
         self.server = SocketServer(self.config.owner_socket, self.answer)
@@ -41,6 +42,8 @@ class SupervisorTests(unittest.TestCase):
         if self.owner_offline:
             return None
         method = request["method"]
+        if method == self.missing_method:
+            return {"id": request["id"], "error": {"code": "method_not_found"}}
         if method == "ping":
             result = dict(self.pong)
         elif method == "plugin.list":
@@ -125,18 +128,18 @@ class SupervisorTests(unittest.TestCase):
     def assert_single(self):
         self.assertTrue(all(item["active_previous"] == 0 for item in json_lines(self.fixture.root / "launches.jsonl")))
 
-    def test_patch_upgrade_keeps_gateway_but_protocol_change_stops_it(self):
+    def test_release_and_wire_upgrade_keep_gateway_but_missing_required_api_stops_it(self):
         self.pong["version"] = "0.9.0"
         self.start()
         child = self.wait_child()
         wait_until(lambda: self.status()["state"] == "READY")
-        self.pong["version"] = "0.9.1"
+        self.pong.update(version="1.0.0", protocol=23)
         before = sum(r["method"] == "pane.process_info" for r in self.server.requests)
         wait_until(lambda: sum(r["method"] == "pane.process_info" for r in self.server.requests) >= before + 2)
         self.assertEqual("READY", self.status()["state"])
         self.assertTrue(same_process(child))
         self.assertIsNone(self.process.poll())
-        self.pong["protocol"] = 23
+        self.missing_method = "pane.process_info"
         self.assertEqual(0, self.process.wait(timeout=5))
         self.assertFalse(same_process(child))
         self.assertFalse(self.store.lifetime_held())

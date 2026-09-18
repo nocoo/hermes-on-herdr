@@ -1,18 +1,33 @@
 # 18 · Herdr compatibility
 
-Version 0.1.3 replaces the exact `ping.version == "0.9.0"` gate. The checked starting point was main `9abd7019421bc1880bbdfba5d1198792a5acb422`; the installed Herdr binary reported 0.9.1. Its live JSON API reports `type: "pong"`, `version: "0.9.1"`, and `protocol: 22`.
+Version 0.1.4 uses the JSON API contract and verified pane ownership to decide whether a live Herdr owner can manage the Gateway. It does not pin a Herdr release family or binary wire protocol. Version 0.1.3's `>=0.9.0,<0.10.0` and protocol 22 gates are removed.
 
 ## Acceptance contract
 
-The running owner server must return a well-formed pong with an integer protocol in `{22}` and a stable semantic version in `>=0.9.0,<0.10.0`. Build metadata is allowed. Patch versions are compared numerically, without an allowlist of individual releases. Previews and release candidates are rejected. The installed CLI's version or bundled schema cannot substitute for the live server response after an upgrade.
+The live JSON endpoint must answer `ping` with a result object whose `type` is `pong`. The existing transport still requires a private same-user Unix socket, a matching response ID, bounded response size and a deadline. A malformed envelope or non-pong response is `PROTOCOL_ERROR`.
 
-The lower bound limits acceptance to the researched plugin API family. Protocol 22 also exists in older Herdr releases, so protocol alone is insufficient. The exclusive 0.10.0 upper bound is deliberate: Herdr is pre-1.0, and its protocol number describes the wire format rather than a separately versioned plugin API. A new minor release needs a source/API review before expanding this range. Future protocol numbers must also be reviewed, even if the release still says 0.9.x. The manifest retains `min_herdr_version = "0.9.0"`; runtime enforcement supplies the additional checks.
+`version` and `protocol` are diagnostic metadata only. A printable version string of at most 128 characters and an unsigned 32-bit integer protocol are reported by Doctor; absent or malformed metadata is reported as `null`. Neither missing metadata, a newer major/minor release, a prerelease nor a changed wire protocol causes rejection. Unknown fields and capabilities are ignored. This does not claim that every future binary works: each required API response must still satisfy the contract below.
 
-Herdr 0.9.1's advertised capabilities (`live_handoff`, `detached_server_daemon`, `endpoint_protocol_generation`, `surface_interest`, `health_check`) concern server/client features. They do not advertise the plugin methods this project consumes. `herdr api schema --json` is bundled CLI metadata, not live method negotiation. The plugin therefore does not invent capability flags, require unrelated features, or probe mutating methods to discover support. Optional capabilities and extra pong fields are ignored. If upstream adds a versioned plugin capability contract, that can replace the release-family guard after verification.
+Herdr's `ping.protocol` comes from `protocol::PROTOCOL_VERSION`, which versions its binary terminal/internal transport. This plugin sends newline-delimited JSON directly over the API socket and never implements that binary protocol. Herdr's own CLI checks its compiled protocol against the server; that CLI/server pairing remains Herdr's responsibility and is separate from the plugin's JSON calls. The configured CLI should be upgraded with its server so Hermes' terminal tools continue to work.
 
-Missing fields, a non-pong result, malformed versions, booleans/floats/strings in place of the protocol, and negative protocols return `PROTOCOL_ERROR`. A well-formed but unsupported protocol or release returns `UNSUPPORTED_VERSION`. Neither path creates a workspace, pane or Gateway. The supervisor rechecks the live owner each inspection without caching acceptance across upgrades; an unsupported protocol triggers its existing owned-process shutdown. Invalid responses also prevent startup/readiness and use the existing bounded owner-loss cleanup. Pause/Stop retain their local intent and process-safety semantics.
+Herdr requires `min_herdr_version` in plugin manifests. The manifest keeps `0.9.0` as the earliest researched installation baseline, with no upper bound; it admits 0.10 and 1.x releases. Lowering this baseline would require validating the plugin manifest, actions, hooks and pane API on older Herdr. It is not a runtime 0.9.x restriction.
 
-The normal RPC client and the dependency-free recovery popup share the same check. Doctor's `baseline.herdr` now contains `version_range`, `protocols` and `stable_only`; a successful owner check includes the observed `herdr.version` and `herdr.protocol`. Rejections include a locally generated explanation without echoing arbitrary peer text. Hermes remains pinned to commit `b7ac3ba1cdf89f94dfe86de27e01358b194f4053`; its control protocol 1 is unrelated to Herdr protocol 22.
+## Required interfaces and failure behavior
+
+| Interface | Contract used by this plugin |
+| --- | --- |
+| `plugin.list` | Registered plugin ID, enabled boolean, absolute code root matching the installed plugin |
+| `workspace.create`, `plugin.pane.open` | Requested entrypoint, workspace/pane identifiers and ownership metadata; existing creation tickets prevent blind retries after ambiguous responses |
+| `pane.get`, `pane.process_info` | Workspace/tab/pane identity, terminal ID, shell PID matching the verified supervisor process |
+| `session.snapshot` | Workspace/pane records used to reconcile pending creation |
+| Manifest, hooks and environment | Registered actions and pane entrypoints; owner socket/workspace/tab/pane environment; startup and pane lifecycle events |
+| `tab.rename`, `pane.rename`, `pane.focus` | Recovery labels and explicit focus; cosmetic rename errors remain best effort |
+
+There is no new capability registry, mutating discovery probe or per-release adapter. Checks run through the existing operations. A successful pong alone never authorizes Gateway startup: plugin registration, pane membership, process identity and Profile exclusivity must also pass. Missing methods or malformed required fields still prevent the dependent operation from proceeding. Failed calls are not automatically retried if they may already have created resources.
+
+The supervisor keeps checking the live owner. A version/wire metadata change with valid API responses leaves the same Gateway running. Loss of required ownership APIs enters UNKNOWN and triggers the existing bounded owner-loss cleanup; confirmed ownership conflicts stop the owned process. Pause/Stop retain their persistent intent and identity-checked process safety.
+
+Normal RPC and the dependency-free recovery popup share the ping check. Doctor reports `baseline.herdr.policy = "json-api-contract"` and observed metadata in the owner check. It does not claim to have exercised all mutating interfaces. Hermes remains pinned to commit `b7ac3ba1cdf89f94dfe86de27e01358b194f4053`; its control protocol 1 is separate from Herdr's protocol.
 
 ## Source and interface evidence
 
@@ -30,9 +45,8 @@ Reviewed tags: Herdr 0.9.0 at `b99002ac99b09e00b4ca692436cb15a6b0d676f1`, and an
 
 ## Verification
 
-- [Native 0.9.1 evidence](evidence/herdr-0.9.1-compatibility.json): the actual installed binary's SHA-256, live pong and successful plugin RPC/ownership checks. The test used a temporary `/tmp/hgh-native-*` root, dedicated XDG/config/socket/session, `/bin/sh` in non-login mode and disabled update checks. `HGH_TEST_HERDR_BIN` explicitly selected the binary. No real Hermes Profile was configured. The captured server was stopped and the temporary root removed.
-- [Full offline output](evidence/release-0.1.3-unittest.txt): Python 3.11 and 3.14, 214 tests each, including patch acceptance, strict handshake validation, rejection before resource creation, live upgrade rechecking, incompatible-protocol cleanup, Doctor and recovery popup coverage. Fixtures now advertise a realistic 0.9.1 / protocol 22 pong. The suite invokes neither installed Herdr nor Hermes.
-- [Post-release verification](evidence/release-0.1.3-verification.json): exact main/tag/release CI SHAs, downloaded archive digest and all 808 Git blobs, launcher/version/license checks, and an official isolated 0.1.2 → 0.1.3 installation replacement preserving configuration. The installed code accepts the live 0.9.1 / protocol 22 pong. With no Profile configured, recovery correctly returns `state=ERROR, code=SETUP_REQUIRED`. The default user installation was not upgraded.
-- [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.3): immutable tag, source SHA, the four OS/Python CI jobs and verified source archive. Installation and replacement of an existing supervisor follow [the release guide](15-发布与安装.md#升级与回滚).
+The [216-test suite on both Python versions](evidence/release-0.1.4-unittest.txt) covers future minor/major/prerelease metadata and changed wire protocols, startup and recovery on the same required JSON contract, optional malformed metadata, rejection of non-pong endpoints, missing required APIs before creation, and safe cleanup when a running owner loses `pane.process_info`. Synthetic future versions verify policy, not unreleased Herdr binaries.
 
-These checks do not establish native Linux integration, a real Hermes Gateway's online handoff, or message/model round trips. The synthetic future patch versions exercise the policy; they are not claims of testing unreleased Herdr binaries.
+The [native validation](evidence/release-0.1.4-native.json) uses an isolated real Herdr 0.9.1 session, dedicated temporary XDG/config/socket directories and no Hermes Profile. It checks registration, workspace/pane creation, ownership and supporting read/rename/focus methods. Release CI runs the offline suite on Ubuntu and macOS with Python 3.11 and 3.14. Native Linux, a real Herdr server upgrade handoff and message/model round trips remain separate validation work.
+
+Historical evidence for 0.1.3 remains in [its release record](evidence/release-0.1.3-verification.json) and [native 0.9.1 checks](evidence/herdr-0.9.1-compatibility.json). These records describe the earlier policy, not the current acceptance rules. Installation and replacement of a supervisor follow [the release guide](15-发布与安装.md#升级与回滚).

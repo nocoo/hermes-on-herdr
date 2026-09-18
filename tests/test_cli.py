@@ -267,7 +267,7 @@ class CliTests(unittest.TestCase):
         data = json.loads(result.stdout)
         self.assertEqual("UNSUPPORTED_VERSION", data["checks"][1]["code"])
         self.assertEqual("NOT_RUN", data["real_validation"])
-        self.assertEqual({"version_range": ">=0.9.0,<0.10.0", "protocols": [22], "stable_only": True},
+        self.assertEqual({"policy": "json-api-contract"},
                          data["baseline"]["herdr"])
         self.assertEqual({"name": "owner", "ok": True, "code": "OK", "herdr": {"version": "0.9.1", "protocol": 22}},
                          data["checks"][2])
@@ -275,15 +275,14 @@ class CliTests(unittest.TestCase):
         self.assertEqual(before, after)
         self.assertEqual([], self.owner.processes)
 
-    def test_doctor_explains_unsupported_herdr_protocol_without_echoing_peer_text(self):
-        self.owner.pong.update(protocol=23, message="fixture-private-sentinel")
+    def test_doctor_explains_invalid_json_ping_without_echoing_peer_text(self):
+        self.owner.pong.update(type="invalid", message="fixture-private-sentinel")
         result = self.invoke("doctor", "--json")
         self.assertEqual(20, result.returncode)
         owner = json.loads(result.stdout)["checks"][2]
         self.assertFalse(owner["ok"])
-        self.assertEqual("UNSUPPORTED_VERSION", owner["code"])
-        self.assertIn("protocol", owner["message"])
-        self.assertIn("22", owner["message"])
+        self.assertEqual("PROTOCOL_ERROR", owner["code"])
+        self.assertIn("pong", owner["message"])
         self.assertNotIn("fixture-private-sentinel", result.stdout)
         self.assertEqual([], self.owner.processes)
 

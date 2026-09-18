@@ -59,50 +59,35 @@ class RpcTests(unittest.TestCase):
         self.addCleanup(server.close)
         return server
 
-    def test_herdr_accepts_stable_patch_releases_with_the_supported_protocol(self):
-        pong = {"type": "pong", "protocol": 22}
+    def test_herdr_accepts_release_and_wire_changes_with_the_same_json_api(self):
+        pong = {"type": "pong"}
         server = self.serve(self.config.owner_socket, lambda req: {"id": req["id"], "result": dict(pong)})
         client = Herdr(self.config)
-        for version in ("0.9.0", "0.9.1", "0.9.2", "0.9.99", "0.9.1+build.7"):
-            for capabilities in (None, {}, {"live_handoff": False}, {"future_capability": True}):
-                with self.subTest(version=version, capabilities=capabilities):
-                    pong.update(version=version, capabilities=capabilities, future_field="ignored")
-                    self.assertEqual({"version": version, "protocol": 22}, client.available())
-        self.assertEqual(["ping"] * 20, [r["method"] for r in server.requests])
+        for version in ("0.9.0", "0.9.1", "0.10.0", "1.0.0", "2.3.4", "0.10.0-rc.1", "dev-build"):
+            for protocol in (21, 22, 23, 999):
+                with self.subTest(version=version, protocol=protocol):
+                    pong.update(version=version, protocol=protocol, capabilities={"future": True})
+                    self.assertEqual({"version": version, "protocol": protocol}, client.available())
+        self.assertEqual(["ping"] * 28, [r["method"] for r in server.requests])
 
-    def test_herdr_rejects_unknown_protocols_and_unreviewed_release_ranges(self):
-        pong = {}
-        server = self.serve(self.config.owner_socket, lambda req: {"id": req["id"], "result": dict(pong)})
-        for fields in ({"protocol": 0}, {"protocol": 21}, {"protocol": 23}, {"protocol": 999},
-                       {"version": "0.8.9"}, {"version": "0.10.0"}, {"version": "1.0.0"},
-                       {"version": "0.9.1-preview.7"}, {"version": "0.9.2-rc.1+build.7"}):
-            with self.subTest(fields=fields):
-                pong.clear()
-                pong.update(type="pong", version="0.9.1", protocol=22)
-                pong.update(fields)
-                with self.assertRaises(GatewayError) as error:
-                    Herdr(self.config).available()
-                self.assertEqual("UNSUPPORTED_VERSION", error.exception.code)
-        self.assertTrue(all(r["method"] == "ping" for r in server.requests))
+    def test_herdr_metadata_is_optional_and_sanitized_without_becoming_a_gate(self):
+        pong = {"type": "pong"}
+        self.serve(self.config.owner_socket, lambda req: {"id": req["id"], "result": dict(pong)})
+        self.assertEqual({"version": None, "protocol": None}, Herdr(self.config).available())
+        for version in (None, True, [], {}, "", "bad\nversion", "x" * 129):
+            for protocol in (None, True, "22", 22.0, -1, [], {}, 2 ** 32):
+                with self.subTest(version=version, protocol=protocol):
+                    pong.update(version=version, protocol=protocol)
+                    self.assertEqual({"version": None, "protocol": None}, Herdr(self.config).available())
 
-    def test_herdr_rejects_missing_or_malformed_handshake_fields(self):
+    def test_herdr_rejects_non_pong_responses_without_echoing_peer_text(self):
         pong = {}
         self.serve(self.config.owner_socket, lambda req: {"id": req["id"], "result": dict(pong)})
-        missing = object()
-        cases = [(key, missing) for key in ("type", "version", "protocol")]
-        cases += [("protocol", value) for value in (None, True, False, "22", 22.0, -1, [], {})]
-        cases += [("version", value) for value in (None, True, 0.91, [], {}, "", "v0.9.1", "0.9", "00.9.1",
-                                                   "0.09.1", "0.9.01", "0.9.1\n", "0.9.1+", "0.9.1+bad..id",
-                                                   "0.9." + "9" * 129, "fixture-private-sentinel")]
-        cases += [("type", value) for value in (True, [], {}, "ok")]
-        for key, value in cases:
-            with self.subTest(key=key, value=value):
+        for fields in ({}, {"type": None}, {"type": True}, {"type": []}, {"type": {}},
+                       {"type": "fixture-private-sentinel"}):
+            with self.subTest(fields=fields):
                 pong.clear()
-                pong.update(type="pong", version="0.9.1", protocol=22)
-                if value is missing:
-                    pong.pop(key)
-                else:
-                    pong[key] = value
+                pong.update(fields)
                 with self.assertRaises(GatewayError) as error:
                     Herdr(self.config).available()
                 self.assertEqual("PROTOCOL_ERROR", error.exception.code)
@@ -113,12 +98,12 @@ class RpcTests(unittest.TestCase):
         server = self.serve(self.config.owner_socket, lambda req: {"id": req["id"], "result": dict(pong)})
         client = Herdr(self.config)
         self.assertEqual("0.9.0", client.available()["version"])
-        pong["version"] = "0.9.1"
-        self.assertEqual("0.9.1", client.available()["version"])
-        pong["protocol"] = 23
+        pong.update(version="1.0.0", protocol=23)
+        self.assertEqual({"version": "1.0.0", "protocol": 23}, client.available())
+        pong["type"] = "incompatible-response"
         with self.assertRaises(GatewayError) as error:
             client.available()
-        self.assertEqual("UNSUPPORTED_VERSION", error.exception.code)
+        self.assertEqual("PROTOCOL_ERROR", error.exception.code)
         self.assertEqual(["ping"] * 3, [r["method"] for r in server.requests])
 
     def test_plugin_registration_requires_an_explicit_absolute_root(self):

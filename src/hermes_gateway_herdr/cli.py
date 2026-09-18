@@ -8,7 +8,6 @@ import time
 import uuid
 
 from . import __version__
-from .compatibility import HERDR_PROTOCOLS, HERDR_VERSION_RANGE
 from .config import Config, HERMES_SHA, installation_preflight, preflight, profile_preflight
 from .controller import Controller
 from .errors import GatewayError
@@ -102,8 +101,7 @@ def doctor(config):
     except GatewayError as exc:
         status = {"state": "ERROR", "code": exc.code}
     return {"schema": 1, "state": "DIAGNOSIS", "checks": checks, "runtime": status,
-            "baseline": {"plugin": __version__, "herdr": {"version_range": HERDR_VERSION_RANGE,
-                         "protocols": list(HERDR_PROTOCOLS), "stable_only": True}, "hermes_sha": HERMES_SHA},
+            "baseline": {"plugin": __version__, "herdr": {"policy": "json-api-contract"}, "hermes_sha": HERMES_SHA},
             "real_validation": "NOT_RUN", "recovery": "next_owner_event"}
 
 

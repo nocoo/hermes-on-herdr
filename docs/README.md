@@ -20,7 +20,7 @@ hermes on herdr 通过 Herdr plugin，把用户显式选择的专用 trusted Her
 
 ## 当前验证范围
 
-0.1.3 提供 Controller、supervisor、CLI、常驻 Dashboard、独立恢复中心与只读 HTTP 健康面板；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.3)。[发版回归](evidence/release-0.1.3-unittest.txt)记录两个 Python 版本各 214 项离线测试。[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14。[质量评估](17-插件质量评估.md)的行覆盖率 88.54%、分支覆盖率 81.32% 属于 0.1.1 基线，未在本版重新测量。首次 Profile 选择向导仍是设计方案。
+0.1.4 提供 Controller、supervisor、CLI、常驻 Dashboard、独立恢复中心与只读 HTTP 健康面板；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.4)。[发版回归](evidence/release-0.1.4-unittest.txt)记录两个 Python 版本各 216 项离线测试。[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14。[质量评估](17-插件质量评估.md)的行覆盖率 88.54%、分支覆盖率 81.32% 属于 0.1.1 基线，未在本版重新测量。首次 Profile 选择向导仍是设计方案。
 
 常驻 Dashboard 提供 Gateway 启停按钮、配置受阻重试和 renderer 自动恢复；独立恢复中心提供无参数命令、原生 popup 和持久标签提示。行为及恢复矩阵见 [监控面板](14-hqtui监控面板.md)；[恢复验证](evidence/recovery-validation.txt)记录隔离原生检查、本机运行观察和此前未定位根因的偶发 FIFO CLI 超时。
 

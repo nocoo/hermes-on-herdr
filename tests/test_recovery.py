@@ -191,6 +191,7 @@ class RecoveryTests(unittest.TestCase):
                                  request["params"])
                 return {"id": request["id"], "result": {"type": "ok"}}
             return original(request)
+        self.owner.pong.update(version="1.0.0", protocol=23)
         self.owner.server.handler = answer
         private_file(self.config, "broken JSON")
         result = self.launch("recover", "--open")
@@ -198,11 +199,11 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual("ok", json.loads(result.stdout)["type"])
         self.assertEqual([], self.owner.processes)
 
-    def test_native_recovery_popup_rejects_incompatible_owner_before_opening(self):
-        self.owner.pong["protocol"] = 23
+    def test_native_recovery_popup_rejects_invalid_json_endpoint_before_opening(self):
+        self.owner.pong["type"] = "invalid"
         result = self.launch("recover", "--open")
         self.assertEqual(20, result.returncode)
-        self.assertEqual("UNSUPPORTED_VERSION", json.loads(result.stdout)["code"])
+        self.assertEqual("PROTOCOL_ERROR", json.loads(result.stdout)["code"])
         self.assertEqual(["ping"], [r["method"] for r in self.owner.server.requests])
 
     def test_attach_uses_native_herdr_and_saved_session_without_a_shell_command(self):

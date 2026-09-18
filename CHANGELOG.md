@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.4 — 2026-09-18
+
+Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.4`. Follow the [upgrade sequence](docs/15-发布与安装.md#升级与回滚) to replace the old supervisor safely.
+
+- Remove the Herdr minor-release upper bound and binary wire protocol whitelist. Compatibility follows the JSON API responses and verified pane ownership actually used by the plugin.
+- Keep Herdr version/protocol as optional, sanitized diagnostic metadata. New minor/major releases and prereleases can work without a plugin release when the required API contract is unchanged.
+- Preserve registration, process identity, singleton and bounded cleanup checks. Missing required APIs still block startup or stop the owned Gateway after the existing owner-loss grace period.
+- Share the policy with Doctor and the recovery popup. Keep the mandatory manifest minimum at the verified installation baseline 0.9.0, with no upper bound.
+- Cover newer-server startup, recovery, live metadata changes and real API loss with isolated regression tests. No new dependencies or persistent schema changes; Hermes source requirements remain unchanged.
+
 ## 0.1.3 — 2026-09-18
 
 Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.3`. Existing installations must follow the [upgrade sequence](docs/15-发布与安装.md#升级与回滚) so the supervisor loads the new code.
