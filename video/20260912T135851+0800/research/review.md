@@ -8,6 +8,6 @@ The reviewer accepted the central wording, **does not automatically inherit**, b
 
 The reviewer flagged the risk of hiding channel verification and host-online requirements in side notes. Later composition work must use the storyboard's `requiredVisibleCaption` text alongside the relevant short claim. This preparation does not promote existing connectivity evidence into a new end-to-end demonstration.
 
-Known platform scope comes from the repository's [English README](../../../docs/README.en.md#development-and-validation): Discord connectivity is recorded; Telegram/Slack plugin integration, fresh complete message-to-pane round trips, full cold-start/exit cleanup, Linux live integration and online handoff are not independently closed out by this task.
+Known platform scope comes from the repository's [English README](../../../docs/README.en.md#tests): Discord connectivity is recorded; Telegram/Slack plugin integration, fresh complete message-to-pane round trips, full cold-start/exit cleanup, Linux live integration and online handoff are not independently closed out by this task.
 
 The follow-up identity review confirmed `website/docusaurus.config.ts` lines 119–124 uses `src: 'img/logo.png'`, `alt: 'Hermes Agent'`, and navbar title `Hermes Agent`. That makes it a docs navigation asset; it does not turn the visible anime avatar into a caduceus. No separate staff/caduceus vector was found in the pinned upstream SVG inventory. The TUI caduceus is authored ANSI in `ui-tui/src/banner.ts`. The typographic cubie treatment was retained.

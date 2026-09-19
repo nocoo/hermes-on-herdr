@@ -10,7 +10,7 @@ hermes on herdr 通过 Herdr plugin，把用户显式选择的专用 trusted Her
 
 | 目的 | 阅读路径 |
 | --- | --- |
-| 理解控制上下文缺口、M2 与消息渠道 | [为什么需要插件](../README.md#为什么需要这个插件) → [架构与信任边界](../README.md#架构与信任边界) |
+| 理解控制上下文缺口、M2 与消息渠道 | [为什么需要插件](../README.md#这是什么) → [架构与信任边界](../README.md#架构与信任边界) |
 | 安装、升级、发版与版本约定 | [发布与安装](15-发布与安装.md) → [首次关联方案](16-首次安装与Profile关联.md) |
 | 准备配置、接入专用 Profile | [配置示例](../examples/README.md) → [实现及验收计划](05-实现步骤.md) → [cherry 接入记录](13-cherry接入与验证.md) |
 | 使用常驻 dashboard 和 Gateway 启停按钮 | [监控面板](14-hqtui监控面板.md) |
