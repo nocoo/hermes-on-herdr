@@ -13,7 +13,7 @@ import threading
 import time
 import uuid
 
-from .config import Config, ID_PATTERN, preflight
+from .config import Config, ID_PATTERN, profile_preflight
 from .display import Display
 from .errors import GatewayError
 from .event_log import EventLog
@@ -25,7 +25,7 @@ from .state import Store, check_private
 
 class Supervisor:
     def __init__(self, config: Config, env: dict, *, limits: Limits = Limits(),
-                 launch=subprocess.Popen, check=preflight, herdr=None, probe=None):
+                 launch=subprocess.Popen, check=profile_preflight, herdr=None, probe=None):
         self.config, self.env, self.limits = config, dict(env), limits
         self.launch, self.check = launch, check
         self.herdr = herdr or Herdr(config, timeout=limits.rpc)
@@ -320,7 +320,7 @@ class Supervisor:
         if not result["owner"]:
             self.owner_lost = now if self.owner_lost is None else self.owner_lost
             self._save(state="UNKNOWN")
-            if error in {"ENV_STALE", "PANE_MISMATCH", "OWNERSHIP_CONFLICT", "UNSUPPORTED_VERSION"}:
+            if error in {"ENV_STALE", "PANE_MISMATCH", "OWNERSHIP_CONFLICT"}:
                 self.shutdown = True
             return
         self.owner_lost = None

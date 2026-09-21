@@ -8,7 +8,7 @@ import time
 import uuid
 
 from . import __version__
-from .config import Config, HERMES_SHA, installation_preflight, preflight, profile_preflight
+from .config import Config, profile_preflight
 from .controller import Controller
 from .errors import GatewayError
 from .paths import check_private
@@ -59,7 +59,7 @@ def parser():
 
 
 def binding_plan(config, *, apply=False):
-    preflight(config)
+    profile_preflight(config)
     binding = config.binding(uuid.uuid4().hex)
     exists = config.state_dir.exists() or config.state_dir.is_symlink()
     if exists:
@@ -81,13 +81,11 @@ def binding_plan(config, *, apply=False):
 def doctor(config):
     deadline = time.monotonic() + 4.5
     checks = []
-    for name, inspect in (("profile", lambda: profile_preflight(config)),
-                          ("hermes_version", lambda: installation_preflight(config, deadline=deadline))):
-        try:
-            inspect()
-            checks.append({"name": name, "ok": True, "code": "OK"})
-        except GatewayError as exc:
-            checks.append({"name": name, "ok": False, "code": exc.code, "message": str(exc)})
+    try:
+        profile_preflight(config)
+        checks.append({"name": "profile", "ok": True, "code": "OK"})
+    except GatewayError as exc:
+        checks.append({"name": "profile", "ok": False, "code": exc.code, "message": str(exc)})
     try:
         client = Herdr(config)
         client.deadline = deadline
@@ -101,7 +99,8 @@ def doctor(config):
     except GatewayError as exc:
         status = {"state": "ERROR", "code": exc.code}
     return {"schema": 1, "state": "DIAGNOSIS", "checks": checks, "runtime": status,
-            "baseline": {"plugin": __version__, "herdr": {"policy": "json-api-contract"}, "hermes_sha": HERMES_SHA},
+            "baseline": {"plugin": __version__, "herdr": {"policy": "json-api-contract"},
+                         "hermes": {"policy": "gateway-api-contract", "control_protocol": 1}},
             "real_validation": "NOT_RUN", "recovery": "next_owner_event"}
 
 

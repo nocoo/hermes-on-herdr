@@ -13,7 +13,6 @@ from urllib.parse import urlsplit
 from unittest.mock import patch
 
 from hermes_gateway_herdr import __version__, cli
-from hermes_gateway_herdr.config import profile_preflight
 from hermes_gateway_herdr.identity import same_process, signal_verified
 from hermes_gateway_herdr.state import Store
 from fake_owner import FakeOwner
@@ -263,14 +262,16 @@ class CliTests(unittest.TestCase):
     def test_doctor_is_read_only_and_never_executes_configured_upstream_binaries(self):
         before = {str(path): path.read_bytes() for path in self.config.profile_home.rglob("*") if path.is_file()}
         result = self.invoke("doctor", "--json")
-        self.assertEqual(20, result.returncode)  # Fake root deliberately is not the pinned Hermes checkout.
+        self.assertEqual(0, result.returncode, result.stdout)
         data = json.loads(result.stdout)
-        self.assertEqual("UNSUPPORTED_VERSION", data["checks"][1]["code"])
+        self.assertEqual(["profile", "owner"], [check["name"] for check in data["checks"]])
+        self.assertEqual({"policy": "gateway-api-contract", "control_protocol": 1}, data["baseline"]["hermes"])
+        self.assertNotIn("hermes_sha", data["baseline"])
         self.assertEqual("NOT_RUN", data["real_validation"])
         self.assertEqual({"policy": "json-api-contract"},
                          data["baseline"]["herdr"])
         self.assertEqual({"name": "owner", "ok": True, "code": "OK", "herdr": {"version": "0.9.1", "protocol": 22}},
-                         data["checks"][2])
+                         data["checks"][1])
         after = {str(path): path.read_bytes() for path in self.config.profile_home.rglob("*") if path.is_file()}
         self.assertEqual(before, after)
         self.assertEqual([], self.owner.processes)
@@ -279,7 +280,7 @@ class CliTests(unittest.TestCase):
         self.owner.pong.update(type="invalid", message="fixture-private-sentinel")
         result = self.invoke("doctor", "--json")
         self.assertEqual(20, result.returncode)
-        owner = json.loads(result.stdout)["checks"][2]
+        owner = json.loads(result.stdout)["checks"][1]
         self.assertFalse(owner["ok"])
         self.assertEqual("PROTOCOL_ERROR", owner["code"])
         self.assertIn("pong", owner["message"])
@@ -290,20 +291,19 @@ class CliTests(unittest.TestCase):
         fresh = Fixture()
         self.addCleanup(fresh.close)
         before = {path.name: path.read_bytes() for path in fresh.profile.iterdir()}
-        with patch.object(cli, "preflight", profile_preflight):
-            plan = cli.binding_plan(fresh.config)
-            self.assertEqual("PLAN", plan["state"])
-            self.assertFalse(fresh.config.state_dir.exists())
-            bound = cli.binding_plan(fresh.config, apply=True)
-            self.assertEqual("paused", bound["desired"])
-            with Store(fresh.config.state_dir) as store:
-                with store.mutation():
-                    store.set_intent("resume")
-                    store.set_intent("pause", reason="operator_latch")
-                intent = store.intent()
-            cli.binding_plan(fresh.config, apply=True)
-            with Store(fresh.config.state_dir) as store:
-                self.assertEqual(intent, store.intent())
+        plan = cli.binding_plan(fresh.config)
+        self.assertEqual("PLAN", plan["state"])
+        self.assertFalse(fresh.config.state_dir.exists())
+        bound = cli.binding_plan(fresh.config, apply=True)
+        self.assertEqual("paused", bound["desired"])
+        with Store(fresh.config.state_dir) as store:
+            with store.mutation():
+                store.set_intent("resume")
+                store.set_intent("pause", reason="operator_latch")
+            intent = store.intent()
+        cli.binding_plan(fresh.config, apply=True)
+        with Store(fresh.config.state_dir) as store:
+            self.assertEqual(intent, store.intent())
         self.assertEqual(before, {name: (fresh.profile / name).read_bytes() for name in before})
         self.assertFalse(plan["creates_profile"])
 

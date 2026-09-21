@@ -11,7 +11,6 @@ import termios
 import threading
 import time
 
-import yaml
 
 from hermes_gateway_herdr.config import Config
 
@@ -135,7 +134,7 @@ class Fixture:
         private_file(self.config_dir / "runtime-python", str(self.config.python_bin) + "\n")
 
     def write_profile(self):
-        private_file(self.profile / "config.yaml", yaml.safe_dump(self.profile_data))
+        private_file(self.profile / "config.yaml", json.dumps(self.profile_data))
 
     def context(self, generation="generation"):
         return {"HERDR_SOCKET_PATH": str(self.config.owner_socket), "HERDR_WORKSPACE_ID": "w-fixture",

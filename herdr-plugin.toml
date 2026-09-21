@@ -1,7 +1,7 @@
 # Runtime manifest. Validation scope and installation: docs/15-发布与安装.md.
 id = "nocoo.hermes-gateway"
 name = "hermes on herdr"
-version = "0.1.4"
+version = "0.1.5"
 min_herdr_version = "0.9.0"
 platforms = ["macos", "linux"]
 description = "Keep a Hermes dashboard and managed Gateway in Herdr"

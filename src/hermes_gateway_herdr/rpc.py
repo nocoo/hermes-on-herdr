@@ -10,7 +10,7 @@ import time
 import uuid
 
 from .compatibility import check_herdr_compatibility
-from .config import Config, HERMES_SHA, PLUGIN_ID, private_bytes
+from .config import Config, PLUGIN_ID, private_bytes
 from .errors import GatewayError
 from .identity import capture, hermes_start_matches, same_process
 from .paths import json_object as decode_object
@@ -171,7 +171,7 @@ def evaluate_gateway(config: Config, child: dict, identity: dict, status: dict) 
     def identity_matches(payload):
         return (payload.get("kind") == "hermes-gateway" and type(payload.get("pid")) is int
                 and payload["pid"] == child["pid"] and hermes_start_matches(child, payload.get("start_time"))
-                and payload.get("code_sha") == HERMES_SHA and type(payload.get("protocol")) is int
+                and type(payload.get("protocol")) is int
                 and payload["protocol"] == 1)
 
     def home_matches(payload):

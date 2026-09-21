@@ -1,6 +1,6 @@
-# 18 · Herdr compatibility
+# 18 · Herdr and Hermes compatibility
 
-Version 0.1.4 uses the JSON API contract and verified pane ownership to decide whether a live Herdr owner can manage the Gateway. It does not pin a Herdr release family or binary wire protocol. Version 0.1.3's `>=0.9.0,<0.10.0` and protocol 22 gates are removed.
+Version 0.1.5 uses the JSON API contract and verified pane ownership to decide whether a live Herdr owner can manage the Gateway. It does not pin a Herdr release family or binary wire protocol. Version 0.1.3's `>=0.9.0,<0.10.0` and protocol 22 gates are removed.
 
 ## Acceptance contract
 
@@ -27,7 +27,17 @@ There is no new capability registry, mutating discovery probe or per-release ada
 
 The supervisor keeps checking the live owner. A version/wire metadata change with valid API responses leaves the same Gateway running. Loss of required ownership APIs enters UNKNOWN and triggers the existing bounded owner-loss cleanup; confirmed ownership conflicts stop the owned process. Pause/Stop retain their persistent intent and identity-checked process safety.
 
-Normal RPC and the dependency-free recovery popup share the ping check. Doctor reports `baseline.herdr.policy = "json-api-contract"` and observed metadata in the owner check. It does not claim to have exercised all mutating interfaces. Hermes remains pinned to commit `b7ac3ba1cdf89f94dfe86de27e01358b194f4053`; its control protocol 1 is separate from Herdr's protocol.
+Normal RPC and the dependency-free recovery popup share the ping check. Doctor reports `baseline.herdr.policy = "json-api-contract"` and observed metadata in the owner check. It does not claim to have exercised all mutating interfaces. Hermes follows the Gateway contract below; its control protocol 1 is separate from Herdr's protocol.
+
+## Hermes Gateway contract
+
+The plugin starts the configured `hermes -p PROFILE gateway run --external-supervisor` inside its owned Herdr pane. It does not inspect Git, require a particular release or commit, or reject modified and non-Git installations. `code_sha` and `code_version` are not process identity or readiness gates; they may be absent.
+
+Live `identify` and `status` must satisfy the control protocol 1 contract: the launched PID/start fingerprint, bound Profile/home, external supervisor, fresh answering PID and expected platform writers. Serving another Profile is rejected. Socket privacy, matching response IDs, bounded requests, singleton fences and identity-checked cleanup remain necessary to manage the configured process. A missing or incompatible interface is reported through the existing runtime diagnosis; passing Doctor does not certify a Gateway that has not run.
+
+Hermes owns `config.yaml`, including models, credentials, toolsets, plugins, MCP, hooks, terminal settings and keepalive. The plugin neither parses nor rewrites that file and imposes no toolset whitelist or disabled-toolset list. Invalid Hermes settings are diagnosed by Hermes. No `terminal` toolset is required by the plugin. PyYAML is no longer a plugin dependency.
+
+The launch environment still selects the bound `HERMES_HOME`, passes the real `HERDR_*` pane context and sets `GATEWAY_MULTIPLEX_PROFILES=0`. Hermes gives this explicit environment setting precedence over its YAML settings. The optional Profile `.env` may configure Hermes but cannot redirect the Profile, locks, supervisor or `HERDR_*` / `HGH_*` control context. Other Hermes policy variables are left to Hermes. The plugin does not install, upgrade or configure Hermes.
 
 ## Source and interface evidence
 
@@ -44,6 +54,8 @@ Reviewed tags: Herdr 0.9.0 at `b99002ac99b09e00b4ca692436cb15a6b0d676f1`, and an
 | CLI protocol guard and installer | [cli/protocol_guard.rs](https://github.com/herdrdev/herdr/blob/065ef9d6a531c49fb8bee7e818ef837065b21ee9/src/cli/protocol_guard.rs), [cli/plugin.rs](https://github.com/herdrdev/herdr/blob/065ef9d6a531c49fb8bee7e818ef837065b21ee9/src/cli/plugin.rs#L154); the official installer accepts `--ref` and `--yes` and replaces managed GitHub checkouts |
 
 ## Verification
+
+The [0.1.5 offline suite](evidence/release-0.1.5-unittest.txt) covers arbitrary and absent Hermes build metadata, required protocol and ownership checks, non-Git binding and Doctor, unrestricted Hermes configuration, protected launch context and lifecycle regressions. The following 0.1.4 records remain historical evidence for the unchanged Herdr contract.
 
 The [216-test suite on both Python versions](evidence/release-0.1.4-unittest.txt) covers future minor/major/prerelease metadata and changed wire protocols, startup and recovery on the same required JSON contract, optional malformed metadata, rejection of non-pong endpoints, missing required APIs before creation, and safe cleanup when a running owner loses `pane.process_info`. Synthetic future versions verify policy, not unreleased Herdr binaries.
 

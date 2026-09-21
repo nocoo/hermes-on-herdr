@@ -7,7 +7,7 @@ from pathlib import Path
 import time
 import unittest
 
-from hermes_gateway_herdr.config import HERMES_SHA, PLUGIN_ID
+from hermes_gateway_herdr.config import PLUGIN_ID
 from hermes_gateway_herdr.errors import GatewayError
 from hermes_gateway_herdr.identity import capture
 from hermes_gateway_herdr.paths import private_bytes
@@ -21,7 +21,7 @@ def gateway_payloads(config, child):
              else int(round(child["create_time"] * 100)))
     identity = {"protocol": 1, "kind": "hermes-gateway", "pid": child["pid"],
                 "start_time": start, "hermes_home": str(config.profile_home),
-                "profile": config.profile_id, "supervisor": "external", "code_sha": HERMES_SHA}
+                "profile": config.profile_id, "supervisor": "external", "code_sha": "fixture-future-build"}
     status = dict(identity, answering_pid=child["pid"], answered_at=time.time(), gateway_state="running",
                   platforms={"telegram": {"state": "connected", "writer_pid": child["pid"],
                                           "writer_start_time": identity["start_time"]}})
@@ -178,11 +178,31 @@ class RpcTests(unittest.TestCase):
         self.status["platforms"] = {}
         self.assertFalse(evaluate_gateway(self.config, self.child, self.identity, self.status)["operational"])
 
-    def test_live_wrong_home_pid_version_and_multiplex_are_rejected(self):
-        for patch in ({"hermes_home": "/other"}, {"pid": 1}, {"start_time": 1}, {"code_sha": "new-version"},
+    def test_hermes_build_metadata_does_not_gate_readiness(self):
+        for metadata in ({}, {"code_sha": "3b7eda0", "code_version": "future-release"},
+                         {"code_sha": "local-modifications"}, {"code_sha": None}, {"code_sha": []}):
+            with self.subTest(metadata=metadata):
+                identity, status = copy.deepcopy((self.identity, self.status))
+                for payload in (identity, status):
+                    payload.pop("code_sha")
+                    payload.update(metadata)
+                probe = GatewayProbe(self.config)
+                self.assertEqual(1, probe.observe(self.child, identity, status, 0)["level"])
+                self.assertEqual("READY", probe.observe(self.child, identity, status, 1)["state"])
+
+    def test_live_wrong_home_pid_and_multiplex_are_rejected(self):
+        for patch in ({"hermes_home": "/other"}, {"pid": 1}, {"start_time": 1},
                       {"supervisor": "manual"}, {"served_profiles": ["default"]}, {"hermes_home": None}):
             with self.subTest(patch=patch), self.assertRaises(GatewayError):
                 evaluate_gateway(self.config, self.child, dict(self.identity, **patch), self.status)
+
+    def test_hermes_required_control_protocol_is_still_checked_in_both_payloads(self):
+        for protocol in (None, True, "1", 2):
+            for target in ("identify", "status"):
+                with self.subTest(protocol=protocol, target=target), self.assertRaises(GatewayError):
+                    identity, status = copy.deepcopy((self.identity, self.status))
+                    (identity if target == "identify" else status)["protocol"] = protocol
+                    evaluate_gateway(self.config, self.child, identity, status)
 
     def test_probe_uses_new_socket_connections_and_matches_response_ids(self):
         def handler(request):

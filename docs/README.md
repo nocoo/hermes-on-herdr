@@ -20,7 +20,7 @@ hermes on herdr 通过 Herdr plugin，把用户显式选择的专用 trusted Her
 
 ## 当前验证范围
 
-0.1.4 提供 Controller、supervisor、CLI、常驻 Dashboard、独立恢复中心与只读 HTTP 健康面板；正式分发记录见 [Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.4)。[发版回归](evidence/release-0.1.4-unittest.txt)记录两个 Python 版本各 216 项离线测试。[CI](../.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14。[质量评估](17-插件质量评估.md)的行覆盖率 88.54%、分支覆盖率 81.32% 属于 0.1.1 基线，未在本版重新测量。首次 Profile 选择向导仍是设计方案。
+Version 0.1.5 retains the Controller, supervisor, CLI, persistent Dashboard, recovery UI and read-only HTTP monitor. It removes Hermes source pins and Profile configuration policy checks; see the [compatibility contract](18-Herdr兼容策略.md). The [local regression record](evidence/release-0.1.5-unittest.txt) covers Python 3.11 and 3.14; [CI](../.github/workflows/tests.yml) also covers Ubuntu and macOS. The 0.1.1 [coverage assessment](17-插件质量评估.md) is historical and has not been remeasured. The first-run Profile wizard remains a design proposal.
 
 常驻 Dashboard 提供 Gateway 启停按钮、配置受阻重试和 renderer 自动恢复；独立恢复中心提供无参数命令、原生 popup 和持久标签提示。行为及恢复矩阵见 [监控面板](14-hqtui监控面板.md)；[恢复验证](evidence/recovery-validation.txt)记录隔离原生检查、本机运行观察和此前未定位根因的偶发 FIFO CLI 超时。
 
@@ -51,7 +51,7 @@ hermes on herdr 通过 Herdr plugin，把用户显式选择的专用 trusted Her
 | 15 | [发布与安装](15-发布与安装.md) | GitHub 分发、原生安装、SemVer、升级回滚和 Linux 兼容 |
 | 16 | [首次安装与 Profile 关联](16-首次安装与Profile关联.md) | 已有 Profile 的关联向导设计、配置差异和接管流程 |
 | 17 | [插件质量评估](17-插件质量评估.md) | ponytail 评估、异常输入回归、覆盖率与复现命令 |
-| 18 | [Herdr compatibility](18-Herdr兼容策略.md) | Protocol and release range, source comparison, native 0.9.1 evidence |
+| 18 | [Herdr and Hermes compatibility](18-Herdr兼容策略.md) | Required APIs, launch ownership and native Herdr evidence |
 
 ## 命名约定
 

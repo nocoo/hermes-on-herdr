@@ -42,7 +42,6 @@ MESSAGES = {
     "RPC_UNAVAILABLE": ("暂时无法连接 Herdr server。", "外部终端可点击打开 Herdr，启动或连接原来的 session。"),
     "OWNER_UNAVAILABLE": ("暂时无法连接 Herdr server。", "外部终端可点击打开 Herdr，启动或连接原来的 session。"),
     "DISABLED": ("此 Herdr 插件已停用。", "在 Herdr 插件管理中启用 hermes on herdr，再重新检查。"),
-    "UNSUPPORTED_VERSION": ("Hermes 源码版本与插件支持的版本不匹配。", "查看 Doctor 的失败项和兼容要求，升级插件或恢复受支持的 Hermes 安装后重新检查。"),
     "STATE_SCHEMA": ("保存的管理状态不完整或版本不兼容。", "恢复管理状态的备份后重新检查；不会自动清空绑定或锁。"),
     "OWNERSHIP_CONFLICT": ("配置与原来的 Profile 或插件绑定不一致。", "恢复原绑定配置后重新检查。"),
     "NOT_OWNER": ("当前 Herdr session 不是此 Profile 的管理者。", "请在原来的 session，或外部终端运行 hermes-on-herdr。"),
@@ -233,7 +232,7 @@ def open_popup(config, *, owner_socket=None):
 def lines(report):
     result = ["hermes on herdr · 恢复中心", f"Profile: {report['profile']}    状态: {clean(report['state'])}",
               "", report["reason"], report["next_step"], ""]
-    names = {"profile": "Profile 配置", "hermes_version": "Hermes 安装", "owner": "Herdr server"}
+    names = {"profile": "Profile 配置", "owner": "Herdr server"}
     for check in report["checks"]:
         result.append(f"{'✓' if check['ok'] else '×'} {names.get(check['name'], check['name'])}: {check['code']}")
         if not check["ok"] and check["message"]:

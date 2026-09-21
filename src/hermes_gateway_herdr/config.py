@@ -4,11 +4,6 @@ from dataclasses import dataclass
 import os
 from pathlib import Path
 import re
-import subprocess
-import time
-from urllib.parse import parse_qsl, urlsplit
-
-import yaml
 
 from .errors import GatewayError
 from .identity import owner_key
@@ -16,7 +11,6 @@ from .paths import json_object, private_bytes, trusted_path
 from .state import CONTROL_DIR, check_private
 
 PLUGIN_ID = "nocoo.hermes-gateway"
-HERMES_SHA = "b7ac3ba1cdf89f94dfe86de27e01358b194f4053"
 PANE_KEYS = ("HERDR_SOCKET_PATH", "HERDR_WORKSPACE_ID", "HERDR_TAB_ID", "HERDR_PANE_ID")
 ID_PATTERN = re.compile(r"[A-Za-z0-9_.:-]{1,160}\Z")
 
@@ -127,110 +121,18 @@ class Config:
         return env
 
 
-class _UniqueYaml(yaml.SafeLoader):
-    pass
-
-
-def _unique_mapping(loader, node, deep=False):
-    pairs = loader.construct_pairs(node, deep=deep)
-    result = {}
-    for key, value in pairs:
-        if key in result:
-            raise ValueError("Duplicate YAML key")
-        result[key] = value
-    return result
-
-
-_UniqueYaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _unique_mapping)
-
-
 def profile_preflight(config: Config) -> None:
-    """Structural and policy checks only; platform/model credentials still need real E2E."""
+    """Keep the selected Profile and supervisor context intact; Hermes owns its settings."""
+    path = config.profile_home / ".env"
+    if not path.exists() and not path.is_symlink():
+        return
     try:
-        data = yaml.load(private_bytes(config.profile_home / "config.yaml"), Loader=_UniqueYaml)
-        if not isinstance(data, dict):
-            raise ValueError("mapping")
-        model = data.get("model", {})
-        if (not isinstance(model, dict) or not isinstance(model.get("provider"), str)
-                or model["provider"].strip() in {"", "auto"}
-                or not isinstance(model.get("default"), str) or not model["default"].strip()):
-            raise ValueError("model")
-        if any(key in model for key in ("token", "password", "secret")):
-            raise ValueError("model secret")
-        # Hermes setup writes literal ${NAME} references; only Hermes resolves the private .env.
-        if "api_key" in model and (not isinstance(model["api_key"], str)
-                                   or not re.fullmatch(r"\$\{[A-Za-z_][A-Za-z0-9_]*\}", model["api_key"])):
-            raise ValueError("model secret")
-        for key in ("base_url", "api_base"):
-            if model.get(key):
-                url = urlsplit(model[key])
-                if url.username or url.password or any(k.lower() in {"key", "api_key", "token", "secret", "password"}
-                                                      for k, _ in parse_qsl(url.query)):
-                    raise ValueError("URL credential")
-        terminal = data.get("terminal", {})
-        if (terminal.get("backend") != "local" or terminal.get("home_mode") != "profile"
-                or not isinstance(terminal.get("cwd"), str) or not Path(terminal["cwd"]).is_absolute()
-                or Path(terminal["cwd"]).resolve() != config.agent_cwd.resolve()
-                or terminal.get("auto_source_bashrc") is not False or terminal.get("shell_init_files") != []):
-            raise ValueError("terminal")
-        # Hermes owns its plugin configuration and loading policy.
-        if (data.get("gateway", {}).get("multiplex_profiles") is not False
-                or data.get("multiplex_profiles", False) is not False
-                or type(data.get("nous", {}).get("keepalive_interval_seconds")) is not int
-                or data["nous"]["keepalive_interval_seconds"] != 0
-                or data.get("mcp_servers") or data.get("hooks")):
-            raise ValueError("shared state")
-        tools = data.get("platform_toolsets", {})
-        for platform in config.expected_platforms:
-            selected = tools.get(platform)
-            if (not isinstance(selected, list) or "terminal" not in selected
-                    or not set(selected) <= {"terminal", "skills", "memory"}):
-                raise ValueError("toolsets")
-        disabled = data.get("agent", {}).get("disabled_toolsets", [])
-        if not isinstance(disabled, list) or not {"cronjob", "browser", "file"} <= set(disabled):
-            raise ValueError("disabled tools")
-        # .env is for secrets. Never let it rewrite identity or turn policy switches back on.
-        dotenv = private_bytes(config.profile_home / ".env").decode("utf-8-sig").replace("\r", "\n")
-        forbidden = {"HERMES_HOME", "HOME", "PATH", "PYTHONPATH", "PYTHONHOME", "BASH_ENV", "ENV",
-                     "GATEWAY_MULTIPLEX_PROFILES", "GATEWAY_ALLOW_ALL_USERS",
-                     "HERMES_YOLO_MODE", "HERMES_ACCEPT_HOOKS", "HERMES_IGNORE_USER_CONFIG", "INVOCATION_ID",
-                     "HERMES_GATEWAY_LOCK_DIR",
-                     "XPC_SERVICE_NAME", "LAUNCHD_SOCKET", "HERMES_DESKTOP_MANAGED", "HERMES_S6_SUPERVISED_CHILD"}
+        dotenv = private_bytes(path).decode("utf-8-sig").replace("\r", "\n")
+        reserved = {"HERMES_HOME", "GATEWAY_MULTIPLEX_PROFILES", "HERMES_GATEWAY_LOCK_DIR",
+                    "HERMES_GATEWAY_EXTERNAL_SUPERVISOR", "INVOCATION_ID", "XPC_SERVICE_NAME",
+                    "LAUNCHD_SOCKET", "HERMES_DESKTOP_MANAGED", "HERMES_S6_SUPERVISED_CHILD"}
         for match in re.finditer(r"(?m)^\s*(?:export\s+)?('?)([A-Za-z_][A-Za-z0-9_]*)\1\s*=", dotenv):
-            key = match[2]
-            if key in forbidden or key.startswith(("HERDR_", "HGH_")) or key.endswith("_ALLOW_ALL_USERS"):
+            if match[2] in reserved or match[2].startswith(("HERDR_", "HGH_")):
                 raise ValueError("environment override")
-    except (ValueError, TypeError, AttributeError, RecursionError, yaml.YAMLError, UnicodeError) as exc:
-        # Only our fixed check names are public; parser exceptions can contain secrets.
-        checks = {"mapping", "model", "model secret", "URL credential", "terminal", "shared state",
-                  "toolsets", "disabled tools", "environment override", "Duplicate YAML key"}
-        check = str(exc) if type(exc) is ValueError and str(exc) in checks else "YAML structure"
-        raise GatewayError("CONFIG_ERROR", f"Check Profile configuration: {check}") from exc
-
-
-def installation_preflight(config: Config, *, deadline: float | None = None) -> None:
-    """Inspect the pinned checkout using git; never run the Hermes CLI for preflight."""
-    try:
-        deadline = deadline if deadline is not None else time.monotonic() + 4
-        def remaining():
-            duration = min(2, deadline - time.monotonic())
-            if duration <= 0:
-                raise GatewayError("UNSUPPORTED_VERSION", "Installation inspection deadline exhausted")
-            return duration
-        result = subprocess.run(["/usr/bin/git", "-C", str(config.hermes_root), "rev-parse", "HEAD"],
-                                stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=remaining(),
-                                env={"PATH": "/usr/bin:/bin", "GIT_OPTIONAL_LOCKS": "0"})
-        if result.returncode != 0 or result.stdout.strip() != HERMES_SHA:
-            raise GatewayError("UNSUPPORTED_VERSION", "Hermes checkout is outside the pinned baseline")
-        dirty = subprocess.run(["/usr/bin/git", "-C", str(config.hermes_root), "diff", "--quiet", "HEAD", "--"],
-                               stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                               timeout=remaining(), env={"PATH": "/usr/bin:/bin", "GIT_OPTIONAL_LOCKS": "0"})
-        if dirty.returncode != 0:
-            raise GatewayError("UNSUPPORTED_VERSION", "Hermes tracked source is modified")
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        raise GatewayError("UNSUPPORTED_VERSION", "Cannot verify the Hermes installation") from exc
-
-
-def preflight(config: Config, *, deadline: float | None = None) -> None:
-    profile_preflight(config)
-    installation_preflight(config, deadline=deadline)
+    except (ValueError, UnicodeError) as exc:
+        raise GatewayError("CONFIG_ERROR", "Check Profile configuration: launch environment override or encoding") from exc

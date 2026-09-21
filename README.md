@@ -58,12 +58,12 @@ session 绑定限定的是插件的 owner、默认控制目标和受支持的操
 
 ## 使用
 
-**0.1.4** 使用 Herdr 原生插件安装器，版本与附件见 [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.4)。[发布与安装](docs/15-发布与安装.md)说明接入、升级及版本约定；[首次关联方案](docs/16-首次安装与Profile关联.md)中的选择向导尚未实现，当前使用手动配置和 `bind`。
+**0.1.5** 使用 Herdr 原生插件安装器，版本与附件见 [GitHub Release](https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.5)。[发布与安装](docs/15-发布与安装.md)说明接入、升级及版本约定；[首次关联方案](docs/16-首次安装与Profile关联.md)中的选择向导尚未实现，当前使用手动配置和 `bind`。
 
-这是早期 0.x 版本，使用 Python 3.11+ 和已配置的 Hermes 虚拟环境。运行依赖是 [psutil 与 PyYAML](requirements.txt)，固定版本的 hqtui 源码随仓库提供。Herdr 安装最低版本为 `0.9.0`，运行时按实际 JSON API 和 pane 归属校验，不限制后续 minor/major 版本或终端 wire protocol；已核对 0.9.0／0.9.1 的接口。Hermes Agent 仍固定 v0.21.1 的源码提交。边界与证据见 [兼容策略](docs/18-Herdr兼容策略.md)。
+这是早期 0.x 版本，使用 Python 3.11+ 和已配置的 Hermes 虚拟环境。运行依赖是 [psutil](requirements.txt)，固定版本的 hqtui 源码随仓库提供。Herdr 安装最低版本为 `0.9.0`，运行时按实际 JSON API 和 pane 归属校验，不限制后续 minor/major 版本或终端 wire protocol；已核对 0.9.0／0.9.1 的接口。Hermes 按实际 Gateway 接口校验，不绑定版本、commit 或 Git 工作区状态。模型、工具集（含 connections）、插件、MCP 和 terminal 配置均由 Hermes 管理。边界与证据见 [兼容策略](docs/18-Herdr兼容策略.md)。
 
 ```sh
-herdr plugin install nocoo/hermes-on-herdr --ref v0.1.4
+herdr plugin install nocoo/hermes-on-herdr --ref v0.1.5
 herdr plugin config-dir nocoo.hermes-gateway
 herdr plugin list --plugin nocoo.hermes-gateway --json
 ```
@@ -132,7 +132,7 @@ cd hermes-on-herdr
 /absolute/path/to/hermes/venv/bin/python -I -B tests/run.py
 ```
 
-测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。[离线测试记录](docs/evidence/release-0.1.4-unittest.txt)覆盖常驻面板、恢复入口、生命周期竞态、控制与配置边界、进程身份及 HTTP 健康检查。[恢复验证](docs/evidence/recovery-validation.txt)另记录了隔离的原生 Herdr popup 和标签冷恢复检查，以及尚未定位根因的偶发 FIFO CLI 超时。[CI](.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14；[质量评估](docs/17-插件质量评估.md)保留 0.1.1 的覆盖率基线，资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
+测试使用临时目录、假 Herdr RPC、受控 Gateway 进程和真实 PTY，不调用已安装的 Herdr／Hermes 入口。[离线测试记录](docs/evidence/release-0.1.5-unittest.txt)覆盖常驻面板、恢复入口、生命周期竞态、控制与配置边界、进程身份及 HTTP 健康检查。[恢复验证](docs/evidence/recovery-validation.txt)另记录了隔离的原生 Herdr popup 和标签冷恢复检查，以及尚未定位根因的偶发 FIFO CLI 超时。[CI](.github/workflows/tests.yml)覆盖 Ubuntu / macOS 与 Python 3.11 / 3.14；[质量评估](docs/17-插件质量评估.md)保留 0.1.1 的覆盖率基线，资源测量见 [监控面板指南](docs/14-hqtui监控面板.md#146-测试与测量)。
 
 `v0.1.0` 的[历史接入验收](docs/13-cherry接入与验证.md#137-正式-010-发布安装与运行验收)记录了 cherry 通过官方安装器安装并达到 READY，以及唯一 Gateway 的 Herdr/plugin 归属、Discord 连接、嵌入终端监控和 HTTP 健康 200。这些是当时的运行快照。Telegram、Slack 是 Hermes 上游已有渠道，当前尚无本插件对应的真实接入验收记录。新消息/模型往返、完整冷启动与退出清理、指定 pane 双向交互、Linux 真实接入和 Herdr 在线升级 handoff 仍待验证；此前用户确认的消息连通单独保留为历史记录。
 

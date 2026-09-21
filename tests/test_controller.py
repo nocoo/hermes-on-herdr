@@ -183,17 +183,15 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(old["pane"]["workspace_id"], self.store.read("runtime.json")["pane"]["workspace_id"])
 
     def test_startup_keeps_a_diagnostic_pane_and_recovers_after_profile_correction(self):
-        self.fixture.profile_data["terminal"]["backend"] = "docker"
-        self.fixture.write_profile()
+        private_file(self.config.profile_home / ".env", "HERMES_HOME=/wrong")
         Controller(self.config).ensure(self.fixture.context(), source="startup")
         blocked = wait_until(lambda: (status := self.controller().status())["state"] == "BLOCKED" and status)
         self.assertEqual("CONFIG_ERROR", blocked["code"])
-        self.assertIn("terminal", blocked["message"])
+        self.assertIn("launch environment", blocked["message"])
         self.assertIsNone(blocked["gateway"])
         self.assertFalse(blocked["fused"])
         self.assertEqual([], json_lines(self.fixture.root / "launches.jsonl"))
-        self.fixture.profile_data["terminal"]["backend"] = "local"
-        self.fixture.write_profile()
+        private_file(self.config.profile_home / ".env", "")
         ready = wait_until(lambda: (status := self.controller().status())["state"] == "READY" and status)
         self.assertEqual(blocked["pane"], ready["pane"])
         self.assertEqual(blocked["supervisor"], ready["supervisor"])

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.5 — 2026-09-21
+
+Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.5`. Follow the [upgrade sequence](docs/15-发布与安装.md#升级与回滚) to replace the running supervisor.
+
+- Remove Hermes release/commit and clean-Git-checkout requirements, including live `code_sha` readiness checks. Compatibility follows the Gateway interfaces actually used.
+- Leave Hermes configuration to Hermes: remove model, toolset, disabled-toolset, plugin/MCP/hook, terminal and keepalive policy checks. `connections` and future toolsets no longer require plugin updates.
+- Stop parsing `config.yaml`; remove PyYAML and the obsolete Profile policy template. Protect only launch ownership fields in the optional `.env`.
+- Preserve the configured Profile/session binding, single-instance locks, pane/process identity, control protocol, readiness and safe lifecycle handling. Doctor reports API policy instead of a pinned SHA.
+- Keep Herdr runtime compatibility based on JSON API responses, with no release upper bound or binary wire protocol gate. The mandatory manifest installation minimum remains 0.9.0.
+
+No persistent schema changes. Offline regressions cover newer/absent build metadata, unrestricted Hermes settings and retained ownership boundaries; they do not certify every future upstream API or message/model round trips.
+
 ## 0.1.4 — 2026-09-18
 
 Install with `herdr plugin install nocoo/hermes-on-herdr --ref v0.1.4`. Follow the [upgrade sequence](docs/15-发布与安装.md#升级与回滚) to replace the old supervisor safely.
