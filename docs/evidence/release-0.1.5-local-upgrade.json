@@ -1,0 +1,44 @@
+{
+  "verified_at": "2026-09-21T01:09:05.946513+00:00",
+  "release": "v0.1.5",
+  "commit": "2b4a30d358eead4ef57126c1c0dc0d4759c0762c",
+  "previous_release": "v0.1.4",
+  "source_kind": "github",
+  "checkout_clean": true,
+  "profile": "cherry",
+  "state": "READY",
+  "desired": "running",
+  "supervisor_pid": 72260,
+  "gateway_pid": 72389,
+  "pane": "w35:pD",
+  "single_gateway": true,
+  "old_processes_exited": true,
+  "native_observations": [
+    {
+      "level": 1,
+      "operational": true,
+      "platforms": {
+        "discord": {
+          "connected": true
+        }
+      },
+      "state": "STARTING"
+    },
+    {
+      "level": 2,
+      "operational": true,
+      "platforms": {
+        "discord": {
+          "connected": true
+        }
+      },
+      "state": "READY"
+    }
+  ],
+  "profile_and_configuration_preserved": true,
+  "default_gateway_identity_preserved": true,
+  "other_plugin_registrations_preserved": true,
+  "doctor_passed": true,
+  "dashboard_version_visible": true,
+  "message_model_round_trip": "NOT_RUN"
+}

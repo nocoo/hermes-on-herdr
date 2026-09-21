@@ -254,3 +254,12 @@ Herdr server **4433**、用户工作 pane **w35:p4**、其他 Gateway **1239** �
 [发布证据](evidence/release-0.1.4-verification.json)包含 main/tag 的 OS × Python 四组 CI、附件摘要和全部 Git 文件核验，以及隔离环境中的官方升级。[本机证据](evidence/release-0.1.4-local-upgrade.json)记录：安装 checkout 干净，来源为 GitHub 的正式 tag；新 supervisor **93843** → Gateway **93848**，pane **w35:pB**；READY、单实例、两次新鲜 Discord connected 采样，最终 readiness level 2。配置、Profile 文件、default Gateway 身份和其他插件注册均保持不变。
 
 本次未进行真实消息/模型往返，也未升级 Herdr server，因此不能作为 Herdr 在线 handoff 的验收证据。
+
+
+## 13.12 · 0.1.5 release and local upgrade
+
+On 2026-09-21, native Herdr installation upgraded `cherry` from v0.1.4 to v0.1.5 at `2b4a30d358eead4ef57126c1c0dc0d4759c0762c`. [Release evidence](evidence/release-0.1.5-verification.json) records exact main/tag CI and archive verification, including the earlier timing failures and unchanged test deadlines. All 813 published Git blobs, paths, modes and symlinks match the tag.
+
+After backing up private configuration and state, the old CLI completed Stop, then Herdr disabled the plugin. Herdr automatically removed the old pane before the subsequent pane lookup. That lookup failed but the shell still continued to installation; the sequencing error is recorded in [Retrospective](../Retrospective.md). Before Resume, follow-up inspection verified all captured old processes had exited, both Profile and supervisor locks were free, and intent remained paused. No lock was removed or replaced.
+
+The [local record](evidence/release-0.1.5-local-upgrade.json) verifies native GitHub installation, a clean checkout, Doctor, the new supervisor/Gateway and pane ownership, one Gateway, two fresh Discord-connected observations reaching READY, and v0.1.5 in the actual Dashboard. Plugin and Profile configuration bytes, the default Gateway identity and other plugin registrations were preserved. No message/model round trip or Herdr server upgrade was performed. The `tomato` report concerns another machine; this local acceptance covers `cherry`.

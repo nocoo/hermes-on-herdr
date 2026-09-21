@@ -1,0 +1,81 @@
+{
+  "release": "v0.1.5",
+  "commit": "2b4a30d358eead4ef57126c1c0dc0d4759c0762c",
+  "release_url": "https://github.com/nocoo/hermes-on-herdr/releases/tag/v0.1.5",
+  "main_ci": {
+    "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35549213522",
+    "head_sha": "2b4a30d358eead4ef57126c1c0dc0d4759c0762c",
+    "jobs": [
+      {
+        "name": "ubuntu-24.04 / Python 3.14 / Test (none on ubuntu-24.04)",
+        "conclusion": "success"
+      },
+      {
+        "name": "macos-latest / Python 3.14 / Test (none on macos-latest)",
+        "conclusion": "success"
+      },
+      {
+        "name": "macos-latest / Python 3.11 / Test (none on macos-latest)",
+        "conclusion": "success"
+      },
+      {
+        "name": "ubuntu-24.04 / Python 3.11 / Test (none on ubuntu-24.04)",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "tag_ci": {
+    "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35549356912",
+    "head_sha": "2b4a30d358eead4ef57126c1c0dc0d4759c0762c",
+    "attempt": 3,
+    "jobs": [
+      {
+        "name": "ubuntu-24.04 / Python 3.14 / Test (none on ubuntu-24.04)",
+        "conclusion": "success"
+      },
+      {
+        "name": "ubuntu-24.04 / Python 3.11 / Test (none on ubuntu-24.04)",
+        "conclusion": "success"
+      },
+      {
+        "name": "macos-latest / Python 3.14 / Test (none on macos-latest)",
+        "conclusion": "success"
+      },
+      {
+        "name": "macos-latest / Python 3.11 / Test (none on macos-latest)",
+        "conclusion": "success"
+      }
+    ],
+    "earlier_attempts": [
+      {
+        "attempt": 1,
+        "failure": "Ubuntu Python 3.11 timed out waiting for READY."
+      },
+      {
+        "attempt": 2,
+        "failure": "Ubuntu Python 3.14 exceeded a mutation-lock deadline and observed UNKNOWN instead of ORPHAN."
+      }
+    ],
+    "timing_failure_root_cause": "NOT_ESTABLISHED",
+    "test_assertions_and_deadlines_weakened": false
+  },
+  "release_workflow": {
+    "url": "https://github.com/nocoo/hermes-on-herdr/actions/runs/35549768901",
+    "conclusion": "success"
+  },
+  "archive": {
+    "release": "v0.1.5",
+    "commit": "2b4a30d358eead4ef57126c1c0dc0d4759c0762c",
+    "sha256": "bb85e8c5ecc1733875df57aa968f613dd1a3cd3926147fbb07cbbf88781945e9",
+    "bytes": 122894428,
+    "verified_git_blobs": 813,
+    "paths_modes_symlinks_and_contents_match": true
+  },
+  "hermes_source_review": {
+    "sha": "3b7eda08878cf520d04a6085f1a32926ea018026",
+    "control_protocol": 1,
+    "identity_status_and_platform_writer_fields_present": true,
+    "environment_multiplex_override_present": true,
+    "live_runtime_test": "NOT_RUN"
+  }
+}
