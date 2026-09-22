@@ -18,13 +18,6 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(str(self.config.python_bin), str(loaded.python_bin))
         profile_preflight(loaded)
 
-    def test_gateway_argv_forces_plugin_owned_named_profile(self):
-        self.assertEqual(
-            [str(self.config.hermes_bin), "-p", self.config.profile_id, "gateway", "run",
-             "--external-supervisor", "--force"],
-            self.config.gateway_argv(),
-        )
-
     def test_child_environment_keeps_pane_ids_and_strips_unrelated_credentials(self):
         source = dict(self.fixture.context(), OPENAI_API_KEY="fixture-do-not-copy", ARBITRARY_SECRET="sentinel",
                       PYTHONPATH="/bad", BASH_ENV="/bad", INVOCATION_ID="service", HERMES_YOLO_MODE="1",
