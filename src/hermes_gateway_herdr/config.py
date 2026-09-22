@@ -103,7 +103,7 @@ class Config:
         return result
 
     def gateway_argv(self) -> list[str]:
-        return [str(self.hermes_bin), "-p", self.profile_id, "gateway", "run", "--external-supervisor"]
+        return [str(self.hermes_bin), "-p", self.profile_id, "gateway", "run", "--external-supervisor", "--force"]
 
     def child_env(self, source: dict) -> dict:
         self.check_context(source, pane=True)
